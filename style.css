@@ -259,3 +259,40 @@ footer { text-align: center; color: #60829a; padding: 36px 20px 60px; font-size:
   padding: 0 7px;
 }
 .cat-hint { color: var(--muted); font-size: 13px; min-height: 1.4em; margin: 0 0 12px; }
+/* 对话段卡片 */
+.chat-list li.block {
+  max-width: none;
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px 16px 12px;
+  margin: 18px 0;
+}
+.block-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.block-time { font-size: 12px; color: var(--muted); letter-spacing: .06em; }
+.chip {
+  font-size: 11px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 240, 208, .3);
+  color: var(--accent2);
+}
+.chip.mushy { border-color: rgba(255, 160, 200, .4); color: #ffb3d1; }
+.chip.scold { border-color: rgba(255, 190, 120, .4); color: #ffd08a; }
+.turns { display: grid; gap: 8px; }
+.turn {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  max-width: 86%;
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: var(--card);
+}
+.turn.her { border-bottom-left-radius: 4px; }
+.turn.me { margin-left: auto; background: rgba(88, 199, 255, .15); border-bottom-right-radius: 4px; }
+.turn .who { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+.turn.her .who { color: #7ef0d0; }
+.turn .body { white-space: pre-wrap; font-size: 14.5px; }
+.turn .hm { font-size: 10px; color: rgba(159, 196, 221, .55); white-space: nowrap; margin-left: auto; }
+.chat-list li.mini { max-width: 86%; padding: 8px 13px; font-size: 13.5px; }
