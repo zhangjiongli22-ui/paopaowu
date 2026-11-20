@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b2f4b"/>
+      <stop offset="0.38" stop-color="#082237"/>
+      <stop offset="0.72" stop-color="#041524"/>
+      <stop offset="1" stop-color="#020a12"/>
+    </linearGradient>
+    <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b6ecff" stop-opacity="0.16"/>
+      <stop offset="0.55" stop-color="#9fe3ff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#9fe3ff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#58c7ff" stop-opacity="0.3"/>
+      <stop offset="0.6" stop-color="#3ba6d8" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#3ba6d8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7ef0d0" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#7ef0d0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="soft8" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="tiny" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sea)"/>
+
+  <!-- 顶部光晕 -->
+  <ellipse cx="330" cy="90" rx="560" ry="320" fill="url(#glow)" filter="url(#soft)"/>
+  <ellipse cx="1320" cy="60" rx="460" ry="280" fill="url(#glow2)" filter="url(#soft)"/>
+  <ellipse cx="820" cy="960" rx="720" ry="300" fill="url(#glow)" opacity="0.5" filter="url(#soft)"/>
+
+  <!-- 光柱 -->
+  <g filter="url(#soft8)">
+    <polygon points="500,0 610,0 780,900 540,900" fill="url(#ray)"/>
+    <polygon points="760,0 828,0 1010,900 812,900" fill="url(#ray)" opacity="0.85"/>
+    <polygon points="990,0 1052,0 1290,900 1082,900" fill="url(#ray)" opacity="0.6"/>
+  </g>
+
+  <!-- 水面波纹 -->
+  <g fill="none" stroke="#a9e9ff" stroke-opacity="0.07" stroke-width="2">
+    <path d="M0 118 C 180 96, 320 140, 500 118 S 820 92, 1000 120 S 1360 146, 1600 116"/>
+    <path d="M0 168 C 200 148, 340 190, 520 168 S 840 142, 1020 170 S 1380 194, 1600 164"/>
+    <path d="M0 62 C 160 44, 300 84, 460 62 S 780 36, 960 64 S 1320 88, 1600 58"/>
+  </g>
+
+  <!-- 远处鲸鱼 -->
+  <g opacity="0.09" fill="#d5f4ff" filter="url(#soft8)" transform="translate(1160 520) scale(1.15)">
+    <ellipse cx="0" cy="0" rx="130" ry="62"/>
+    <path d="M-118 0 L-186 -52 L-162 0 L-186 52 Z"/>
+    <path d="M28 44 L74 92 L40 78 Z"/>
+    <ellipse cx="96" cy="-16" rx="6" ry="6" fill="#0b2f4b" opacity="0.5"/>
+  </g>
+  <g opacity="0.06" fill="#d5f4ff" filter="url(#soft8)" transform="translate(240 640) scale(0.62) scale(-1 1)">
+    <ellipse cx="0" cy="0" rx="130" ry="62"/>
+    <path d="M-118 0 L-186 -52 L-162 0 L-186 52 Z"/>
+    <path d="M28 44 L74 92 L40 78 Z"/>
+  </g>
+
+  <!-- 漂浮气泡 -->
+  <g fill="#daf6ff" filter="url(#tiny)">
+    <circle cx="180" cy="300" r="3" opacity="0.35"/>
+    <circle cx="260" cy="420" r="2" opacity="0.28"/>
+    <circle cx="120" cy="520" r="4" opacity="0.22"/>
+    <circle cx="420" cy="250" r="2.5" opacity="0.3"/>
+    <circle cx="700" cy="360" r="2" opacity="0.24"/>
+    <circle cx="900" cy="300" r="3.5" opacity="0.26"/>
+    <circle cx="1180" cy="420" r="2" opacity="0.3"/>
+    <circle cx="1320" cy="300" r="3" opacity="0.22"/>
+    <circle cx="1420" cy="520" r="4" opacity="0.2"/>
+    <circle cx="540" cy="600" r="2.5" opacity="0.26"/>
+    <circle cx="1000" cy="640" r="3" opacity="0.2"/>
+    <circle cx="1480" cy="700" r="2" opacity="0.24"/>
+  </g>
+
+  <!-- 底部海床微光 -->
+  <ellipse cx="800" cy="900" rx="900" ry="140" fill="#0e4a6b" opacity="0.35" filter="url(#soft)"/>
+</svg>
