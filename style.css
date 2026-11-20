@@ -191,3 +191,36 @@ footer { text-align: center; color: #60829a; padding: 36px 20px 60px; font-size:
   .hero { min-height: 70vh; }
   figure img { height: 220px; }
 }
+
+/* 日记式对话气泡 */
+.chat-list { gap: 8px; }
+.chat-list li.day {
+  max-width: none;
+  margin: 26px 0 10px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+}
+.chat-list li.day::before { content: "· "; }
+.chat-list li.day::after { content: " ·"; }
+.chat-list li.her, .chat-list li.me {
+  max-width: 78%;
+  padding: 10px 15px;
+  line-height: 1.72;
+  position: relative;
+}
+.chat-list li.her { border-bottom-left-radius: 6px; }
+.chat-list li.me { border-bottom-right-radius: 6px; }
+.chat-list li .body { white-space: pre-wrap; }
+.chat-list li .who {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+  margin-bottom: 2px;
+}
+.chat-list li.her .who { color: #7ef0d0; }
+.chat-list li.mini { font-size: 13.5px; padding: 8px 13px; }
