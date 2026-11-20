@@ -224,3 +224,38 @@ footer { text-align: center; color: #60829a; padding: 36px 20px 60px; font-size:
 }
 .chat-list li.her .who { color: #7ef0d0; }
 .chat-list li.mini { font-size: 13.5px; padding: 8px 13px; }
+/* 分类泡泡 */
+.cat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 8px 0 12px;
+}
+.cat-bubble {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 240, 208, .35);
+  background: radial-gradient(circle at 30% 20%, rgba(126, 240, 208, .18), rgba(88, 199, 255, .06));
+  color: var(--ink);
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+.cat-bubble:hover { transform: translateY(-3px) scale(1.02); border-color: var(--accent2); }
+.cat-bubble.on {
+  background: radial-gradient(circle at 30% 20%, rgba(126, 240, 208, .35), rgba(88, 199, 255, .15));
+  border-color: var(--accent2);
+  box-shadow: 0 0 24px rgba(126, 240, 208, .22);
+}
+.cat-bubble .cat-name { letter-spacing: .04em; }
+.cat-bubble .cat-n {
+  font-size: 11px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 7px;
+}
+.cat-hint { color: var(--muted); font-size: 13px; min-height: 1.4em; margin: 0 0 12px; }
