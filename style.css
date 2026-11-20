@@ -296,3 +296,36 @@ footer { text-align: center; color: #60829a; padding: 36px 20px 60px; font-size:
 .turn .body { white-space: pre-wrap; font-size: 14.5px; }
 .turn .hm { font-size: 10px; color: rgba(159, 196, 221, .55); white-space: nowrap; margin-left: auto; }
 .chat-list li.mini { max-width: 86%; padding: 8px 13px; font-size: 13.5px; }
+/* 灯箱 */
+figure img.zoomable { cursor: zoom-in; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  padding: 4vh 4vw;
+  background: rgba(3, 10, 18, .92);
+  backdrop-filter: blur(6px);
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  max-width: 92vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+}
+.lb-bar { display: flex; gap: 10px; }
+.lb-btn {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 240, 208, .45);
+  background: rgba(126, 240, 208, .12);
+  color: var(--ink);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.lb-btn:hover { background: rgba(126, 240, 208, .25); }
+body.lb-open { overflow: hidden; }
