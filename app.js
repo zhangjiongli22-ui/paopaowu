@@ -137,3 +137,39 @@ async function loadData() {
   }
   draw();
 })();
+
+// 图集：点击放大 + 下载
+(() => {
+  const grid = document.querySelector(".gallery-grid");
+  if (!grid) return;
+
+  const box = document.createElement("div");
+  box.className = "lightbox";
+  box.hidden = true;
+  box.innerHTML = '<img alt=""><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+  document.body.appendChild(box);
+  const big = box.querySelector("img");
+  const dl = box.querySelector("a");
+  const close = box.querySelector(".lb-close");
+
+  const hide = () => { box.hidden = true; document.body.classList.remove("lb-open"); };
+  close.addEventListener("click", hide);
+  box.addEventListener("click", (e) => { if (e.target === box) hide(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
+
+  for (const fig of grid.querySelectorAll("figure")) {
+    const img = fig.querySelector("img");
+    if (!img) continue;
+    img.classList.add("zoomable");
+    img.addEventListener("click", () => {
+      const src = img.currentSrc || img.src;
+      big.src = src;
+      big.alt = img.alt || "";
+      dl.href = src;
+      const name = src.split("/").pop() || "image";
+      dl.setAttribute("download", name);
+      box.hidden = false;
+      document.body.classList.add("lb-open");
+    });
+  }
+})();
