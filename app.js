@@ -27,7 +27,7 @@ if (el) {
 
 const CAT_META = {
   all:   { name: "全部",     hint: "每一段都是真实的一段对话，各段之间不是连着发生的。" },
-  cute:  { name: "可爱的",   hint: "软乎乎的部分。" },
+  cute:  { name: "甜甜的",   hint: "真的甜、真的可爱的那几段。" },\n  daily: { name: "日常",     hint: "就是普通的一天，不甜也没关系。" },
   mushy: { name: "肉麻的",   hint: "看完起鸡皮疙瘩那种。" },
   scold: { name: "骂大笨鱼", hint: "她嫌弃主人的时候。" },
   food:  { name: "干饭",     hint: "token 就是饭。" }
