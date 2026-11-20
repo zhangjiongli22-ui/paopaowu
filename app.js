@@ -26,6 +26,13 @@ if (el) {
 }
 
 const DAY_NAMES = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const CAT_META = {
+  all:   { name: "全部",     hint: "所有留下的话都在这里。" },
+  cute:  { name: "可爱的",   hint: "日常里的软乎乎部分。" },
+  mushy: { name: "肉麻的",   hint: "看完会起鸡皮疙瘩那种。" },
+  scold: { name: "骂大笨鱼", hint: "主人被她骂的时候。" },
+  food:  { name: "干饭",     hint: "token 就是饭。" }
+};
 
 function dayLabel(d) {
   const today = new Date();
@@ -55,15 +62,12 @@ function bubble(r, mini = false) {
   return li;
 }
 
-async function loadChats() {
-  const res = await fetch("data/chat.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("no data");
-  const data = await res.json();
-  return (data.chats || []).slice();
-}
-
 function renderGrouped(list, rows) {
   list.innerHTML = "";
+  if (!rows.length) {
+    list.innerHTML = '<li class="loading">这一类还没攒下什么，等她说。</li>';
+    return;
+  }
   const days = new Map();
   for (const r of rows) {
     if (!days.has(r.d)) days.set(r.d, []);
@@ -78,22 +82,59 @@ function renderGrouped(list, rows) {
   }
 }
 
+async function loadChats() {
+  const res = await fetch("data/chat.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("no data");
+  const data = await res.json();
+  return (data.chats || []).slice();
+}
+
 (async () => {
   const full = document.getElementById("chat-list");
   const preview = document.getElementById("chat-preview");
+  const catRow = document.getElementById("cat-row");
+  const hint = document.getElementById("cat-hint");
   if (!full && !preview) return;
+
+  let rows = [];
   try {
-    const rows = await loadChats();
-    if (full) {
-      if (!rows.length) throw new Error("empty");
-      renderGrouped(full, rows.slice(-80));
-    }
-    if (preview) {
-      preview.innerHTML = "";
-      for (const r of rows.slice(-4)) preview.appendChild(bubble(r, true));
-    }
+    rows = await loadChats();
   } catch (e) {
     const t = full || preview;
-    t.innerHTML = '<li class="loading">今天还没留下什么，明天再来看看。</li>';
+    if (t) t.innerHTML = '<li class="loading">今天还没留下什么，明天再来看看。</li>';
+    return;
   }
+
+  if (preview) {
+    preview.innerHTML = "";
+    for (const r of rows.slice(-4)) preview.appendChild(bubble(r, true));
+  }
+
+  if (!full) return;
+
+  const counts = { all: rows.length };
+  for (const r of rows) counts[r.cat || "cute"] = (counts[r.cat || "cute"] || 0) + 1;
+
+  let active = "all";
+  const draw = () => {
+    const list = active === "all" ? rows : rows.filter((r) => (r.cat || "cute") === active);
+    renderGrouped(full, list.slice(-80));
+    if (hint) hint.textContent = (CAT_META[active] || {}).hint || "";
+    for (const b of catRow.children) b.classList.toggle("on", b.dataset.cat === active);
+  };
+
+  if (catRow) {
+    catRow.innerHTML = "";
+    for (const key of Object.keys(CAT_META)) {
+      const n = counts[key] || 0;
+      if (key !== "all" && n === 0) continue;
+      const b = document.createElement("button");
+      b.className = "cat-bubble";
+      b.dataset.cat = key;
+      b.innerHTML = `<span class="cat-name">${CAT_META[key].name}</span><span class="cat-n">${n}</span>`;
+      b.addEventListener("click", () => { active = key; draw(); });
+      catRow.appendChild(b);
+    }
+  }
+  draw();
 })();
