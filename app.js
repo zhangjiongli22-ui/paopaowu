@@ -25,68 +25,59 @@ if (el) {
   tick();
 }
 
-const DAY_NAMES = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 const CAT_META = {
-  all:   { name: "全部",     hint: "所有留下的话都在这里。" },
-  cute:  { name: "可爱的",   hint: "日常里的软乎乎部分。" },
-  mushy: { name: "肉麻的",   hint: "看完会起鸡皮疙瘩那种。" },
-  scold: { name: "骂大笨鱼", hint: "主人被她骂的时候。" },
+  all:   { name: "全部",     hint: "每一段都是真实的一段对话，各段之间不是连着发生的。" },
+  cute:  { name: "可爱的",   hint: "软乎乎的部分。" },
+  mushy: { name: "肉麻的",   hint: "看完起鸡皮疙瘩那种。" },
+  scold: { name: "骂大笨鱼", hint: "她嫌弃主人的时候。" },
   food:  { name: "干饭",     hint: "token 就是饭。" }
 };
 
-function dayLabel(d) {
-  const today = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  const todayStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-  if (d === todayStr) return "今天";
-  const y = new Date(today.getTime() - 86400000);
-  const yStr = `${y.getFullYear()}-${pad(y.getMonth() + 1)}-${pad(y.getDate())}`;
-  if (d === yStr) return "昨天";
-  const dt = new Date(d + "T00:00:00");
-  return `${d.slice(5)} ${DAY_NAMES[dt.getDay()] || ""}`;
+function hmText(b) {
+  return b.d + " " + (b.hm || "");
 }
 
-function bubble(r, mini = false) {
-  const li = document.createElement("li");
-  li.className = (r.role === "user" ? "me" : "her") + (mini ? " mini" : "");
-  if (!mini) {
-    const who = document.createElement("span");
-    who.className = "who";
-    who.textContent = r.role === "user" ? "主人" : "大肥鱼";
-    li.appendChild(who);
-  }
-  const body = document.createElement("span");
-  body.className = "body";
-  body.textContent = r.text;
-  li.appendChild(body);
-  return li;
-}
-
-function renderGrouped(list, rows) {
+function renderBlocks(list, blocks) {
   list.innerHTML = "";
-  if (!rows.length) {
+  if (!blocks.length) {
     list.innerHTML = '<li class="loading">这一类还没攒下什么，等她说。</li>';
     return;
   }
-  const days = new Map();
-  for (const r of rows) {
-    if (!days.has(r.d)) days.set(r.d, []);
-    days.get(r.d).push(r);
-  }
-  for (const [d, items] of days) {
-    const head = document.createElement("li");
-    head.className = "day";
-    head.textContent = dayLabel(d);
-    list.appendChild(head);
-    for (const r of items) list.appendChild(bubble(r));
+  for (const b of blocks) {
+    const li = document.createElement("li");
+    li.className = "block";
+    const head = document.createElement("div");
+    head.className = "block-head";
+    head.innerHTML = `<span class="block-time">${hmText(b)}</span><span class="chip ${b.cat}">${(CAT_META[b.cat] || CAT_META.cute).name}</span>`;
+    li.appendChild(head);
+    const wrap = document.createElement("div");
+    wrap.className = "turns";
+    for (const t of b.turns) {
+      const row = document.createElement("div");
+      row.className = "turn " + (t.role === "user" ? "me" : "her");
+      const who = document.createElement("span");
+      who.className = "who";
+      who.textContent = t.role === "user" ? "主人" : "大肥鱼";
+      const body = document.createElement("span");
+      body.className = "body";
+      body.textContent = t.text;
+      const time = document.createElement("span");
+      time.className = "hm";
+      time.textContent = t.hm || "";
+      row.appendChild(who);
+      row.appendChild(body);
+      row.appendChild(time);
+      wrap.appendChild(row);
+    }
+    li.appendChild(wrap);
+    list.appendChild(li);
   }
 }
 
-async function loadChats() {
+async function loadData() {
   const res = await fetch("data/chat.json", { cache: "no-store" });
   if (!res.ok) throw new Error("no data");
-  const data = await res.json();
-  return (data.chats || []).slice();
+  return res.json();
 }
 
 (async () => {
@@ -96,9 +87,10 @@ async function loadChats() {
   const hint = document.getElementById("cat-hint");
   if (!full && !preview) return;
 
-  let rows = [];
+  let blocks = [];
   try {
-    rows = await loadChats();
+    const data = await loadData();
+    blocks = data.blocks || [];
   } catch (e) {
     const t = full || preview;
     if (t) t.innerHTML = '<li class="loading">今天还没留下什么，明天再来看看。</li>';
@@ -107,20 +99,26 @@ async function loadChats() {
 
   if (preview) {
     preview.innerHTML = "";
-    for (const r of rows.slice(-4)) preview.appendChild(bubble(r, true));
+    const last = blocks.slice(-1)[0];
+    if (last) for (const t of last.turns) {
+      const li = document.createElement("li");
+      li.className = "mini " + (t.role === "user" ? "me" : "her");
+      li.textContent = t.text;
+      preview.appendChild(li);
+    }
   }
 
   if (!full) return;
 
-  const counts = { all: rows.length };
-  for (const r of rows) counts[r.cat || "cute"] = (counts[r.cat || "cute"] || 0) + 1;
+  const counts = { all: blocks.length };
+  for (const b of blocks) counts[b.cat] = (counts[b.cat] || 0) + 1;
 
   let active = "all";
   const draw = () => {
-    const list = active === "all" ? rows : rows.filter((r) => (r.cat || "cute") === active);
-    renderGrouped(full, list.slice(-80));
+    const list = active === "all" ? blocks : blocks.filter((b) => b.cat === active);
+    renderBlocks(full, list.slice(-40));
     if (hint) hint.textContent = (CAT_META[active] || {}).hint || "";
-    for (const b of catRow.children) b.classList.toggle("on", b.dataset.cat === active);
+    for (const x of catRow.children) x.classList.toggle("on", x.dataset.cat === active);
   };
 
   if (catRow) {
