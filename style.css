@@ -130,3 +130,20 @@ footer { text-align: center; color: #6f93ab; padding: 40px 20px 60px; font-size:
 @media (prefers-reduced-motion: reduce) {
   .avatar, .bubbles span { animation: none; }
 }
+
+/* 日常对话 */
+.chat .hint { color: var(--muted); font-size: 13px; }
+.chat-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.chat-list li {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: #d9eeff;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.chat-list li.me { margin-left: auto; background: rgba(88, 199, 255, .16); border-color: rgba(88, 199, 255, .35); }
+.chat-list li .who { display: block; font-size: 11px; color: var(--muted); margin-bottom: 2px; letter-spacing: .05em; }
+.chat-list li.loading { max-width: none; text-align: center; color: var(--muted); }
