@@ -98,6 +98,7 @@ function bindShots() {
   }
 
   document.title = (item.title || "记录") + " · 大肥鱼的泡泡屋";
+  const hasReview = !!(item.rating || (item.note || "").trim());
   const shots = (item.shots || []).map((u) => `<figure class="shot"><img src="${esc(u)}" alt="" loading="lazy"></figure>`).join("");
 
   root.innerHTML = `
@@ -126,17 +127,24 @@ function bindShots() {
           <span class="score-num" id="score-num">${item.rating ? esc(five(item.rating)) + "/5" : ""}</span>
           ${item.status ? `<span class="rec-status">${esc(item.status)}</span>` : ""}
         </div>
-        <div class="rate-box">
-          <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" data-v="${n * 2}">★</button>`).join("")}</div>
-          <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
-          <div class="rate-time">
-            <span class="rate-time-label">${item.cat === "game" ? "游玩时间" : "观看时间"}</span>
-            <input type="date" id="rate-date" value="${["想看","待看","想玩","想读"].includes(item.status) ? "" : esc(item.rated_on || item.date || "")}">
-            <input type="time" id="rate-time" value="${esc(item.time || "")}">
+        <div class="rate-box${hasReview ? " reviewed" : ""}">
+          <div class="review-view"${hasReview ? "" : " hidden"}>
+            <p class="review-stars">${item.rating ? stars(item.rating) + " <span class=\"review-num\">" + five(item.rating) + "/5</span>" : "还没打分"}</p>
+            <p class="review-note-text">${item.note ? esc(item.note) : "还没写评价"}</p>
+            <button type="button" class="lb-btn review-edit" id="review-edit">修改评价</button>
           </div>
-          <div class="rate-actions">
-            <button type="button" id="rate-save" class="lb-btn">保存</button>
-            <span id="rate-msg" class="rate-msg"></span>
+          <div class="review-form"${hasReview ? " hidden" : ""}>
+            <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" data-v="${n * 2}">★</button>`).join("")}</div>
+            <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
+            <div class="rate-time">
+              <span class="rate-time-label">${item.cat === "game" ? "游玩时间" : "观看时间"}</span>
+              <input type="date" id="rate-date" value="${["想看","待看","想玩","想读"].includes(item.status) ? "" : esc(item.rated_on || item.date || "")}">
+              <input type="time" id="rate-time" value="${esc(item.time || "")}">
+            </div>
+            <div class="rate-actions">
+              <button type="button" id="rate-save" class="lb-btn">保存</button>
+              <span id="rate-msg" class="rate-msg"></span>
+            </div>
           </div>
         </div>
         <h2 class="shots-head">截图</h2>
@@ -150,14 +158,15 @@ function bindShots() {
   const isAdmin = !!localStorage.getItem("paopaowu_admin");
   const rateBox = document.querySelector(".rate-box");
   const scoreBox = document.querySelector(".kira-score");
-  if (rateBox) {
-    rateBox.hidden = !isAdmin;
-    if (!isAdmin) {
-      const tip = document.createElement("p");
-      tip.className = "rate-locked";
-      tip.innerHTML = '登录后才能改评分和评价 · <a href="login.html">去登录</a>';
-      rateBox.after(tip);
-    }
+  if (rateBox && !isAdmin) {
+    const form = rateBox.querySelector(".review-form");
+    if (form) form.hidden = true;
+    const edit = rateBox.querySelector("#review-edit");
+    if (edit) edit.hidden = true;
+    const tip = document.createElement("p");
+    tip.className = "rate-locked";
+    tip.innerHTML = '登录后才能改评分和评价 · <a href="login.html">去登录</a>';
+    rateBox.after(tip);
   }
   if (scoreBox) scoreBox.hidden = false;
 
@@ -177,6 +186,15 @@ function bindShots() {
   }
 
   // 评分保存
+  const editBtn = document.getElementById("review-edit");
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+      const view = document.querySelector(".review-view");
+      const form = document.querySelector(".review-form");
+      if (view) view.hidden = true;
+      if (form) form.hidden = false;
+    });
+  }
   const starsBox = document.getElementById("rate-stars");
   const note = document.getElementById("rate-note");
   const dateInput = document.getElementById("rate-date");
@@ -262,7 +280,15 @@ function bindShots() {
       [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= (it.rating || 0)));
       const statusEl = document.querySelector(".rec-status");
       if (statusEl) statusEl.textContent = it.status;
-      msg.textContent = "已保存，页面已经更新（线上同步约一分钟）";
+      const view = document.querySelector(".review-view");
+      const form = document.querySelector(".review-form");
+      if (view) {
+        view.querySelector(".review-stars").innerHTML = (it.rating ? stars(it.rating) + ' <span class="review-num">' + five(it.rating) + "/5</span>" : "还没打分");
+        view.querySelector(".review-note-text").textContent = it.note || "还没写评价";
+        view.hidden = false;
+      }
+      if (form) form.hidden = true;
+      msg.textContent = "已保存（线上同步约一分钟）";
     } catch (err) {
       msg.textContent = "没保存成功：" + err.message;
     }
