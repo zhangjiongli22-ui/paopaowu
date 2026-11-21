@@ -88,151 +88,21 @@ function metaRow(k, v) {
   // 截图太多时折叠
   const shotBox = document.querySelector(".shots");
   if (shotBox && shotBox.children.length > 12) {
-    [...shotBox.children].slice(12).forEach((el) => el.classList.add("shot-hidden"));
+    const items = [...shotBox.children];
+    let expanded = false;
+    const apply = () => {
+      items.forEach((el, i) => el.classList.toggle("shot-hidden", !expanded && i >= 12));
+    };
+    apply();
     const btn = document.createElement("button");
     btn.className = "shots-more";
-    btn.textContent = "显示全部（" + shotBox.children.length + " 张）";
+    const label = () => (expanded ? "收起" : "显示全部（" + items.length + " 张）");
+    btn.textContent = label();
     btn.addEventListener("click", () => {
-      const hidden = shotBox.querySelectorAll(".shot-hidden");
-      const opening = hidden.length > 0;
-      hidden.forEach((el) => el.classList.toggle("shot-hidden", !opening));
-      btn.textContent = opening ? "收起" : "显示全部（" + shotBox.children.length + " 张）";
+      expanded = !expanded;
+      apply();
+      btn.textContent = label();
     });
     shotBox.after(btn);
   }
-})();
 
-
-// ---- 评分 & 保存 ----
-(() => {
-  const starsBox = document.getElementById("rate-stars");
-  const note = document.getElementById("rate-note");
-  const save = document.getElementById("rate-save");
-  const msg = document.getElementById("rate-msg");
-  const tokenLink = document.getElementById("set-token");
-  if (!starsBox) return;
-
-  let value = 0;
-  const id = new URLSearchParams(location.search).get("id");
-  const KEY = "paopaowu_token";
-  const API = "https://api.github.com/repos/zhangjiongli22-ui/paopaowu/contents/data/records.json";
-
-  starsBox.addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-v]");
-    if (!b) return;
-    value = Number(b.dataset.v);
-    [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= value));
-    msg.textContent = value + "/10";
-  });
-
-  tokenLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    const t = prompt("粘贴 GitHub token（只存在这台设备的浏览器里）");
-    if (t) { localStorage.setItem(KEY, t.trim()); msg.textContent = "token 已保存"; }
-  });
-
-  save.addEventListener("click", async () => {
-    const token = localStorage.getItem(KEY);
-    if (!token) { msg.textContent = "先设置保存权限（右上角链接）"; return; }
-    if (!value && !note.value.trim()) { msg.textContent = "先打个分或写点感想"; return; }
-    msg.textContent = "保存中…";
-    try {
-      const get = await fetch(API + "?ref=main&t=" + Date.now(), {
-        headers: { Authorization: "token " + token, Accept: "application/vnd.github+json" },
-      });
-      if (!get.ok) throw new Error("读不到数据 " + get.status);
-      const file = await get.json();
-      const json = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, "")))));
-      const item = (json.items || []).find((x) => String(x.id) === String(id));
-      if (!item) throw new Error("找不到这条记录");
-      if (value) item.rating = value;
-      item.note = note.value.trim();
-      item.updated = new Date().toISOString().slice(0, 10);
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
-      const put = await fetch(API, {
-        method: "PUT",
-        headers: { Authorization: "token " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
-        body: JSON.stringify({ message: "rate: " + (item.title || id), content, sha: file.sha, branch: "main" }),
-      });
-      if (!put.ok) throw new Error("写入失败 " + put.status);
-      msg.textContent = "保存好了，一分钟左右刷新可见";
-      document.getElementById("score-num").textContent = value ? value + "/10" : "";
-      document.getElementById("score-stars").textContent = value >= 9 ? "★★★★★" : value >= 7 ? "★★★★☆" : value >= 5 ? "★★★☆☆" : value >= 3 ? "★★☆☆☆" : value ? "★☆☆☆☆" : "还没评分";
-    } catch (err) {
-      msg.textContent = "没保存成功：" + err.message;
-    }
-  });
-})();
-
-
-// 截图点开大图：左右切换 + 居中
-function bindShots() {
-  const shots = document.querySelector(".shots");
-  if (!shots) return;
-  const imgs = [...shots.querySelectorAll("img")];
-  if (!imgs.length) return;
-
-  let box = document.querySelector(".lightbox.shotbox");
-  if (!box) {
-    box = document.createElement("div");
-    box.className = "lightbox shotbox";
-    box.hidden = true;
-    box.innerHTML = '<div class="lb-zone left"></div><div class="lb-zone right"></div><button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><button class="lb-close" type="button">关闭</button><a class="lb-dl" download>下载原图</a>';
-    document.body.appendChild(box);
-    box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; document.body.classList.remove("lb-open"); });
-    box.addEventListener("click", (e) => { if (e.target === box) box.hidden = true; });
-    document.addEventListener("keydown", (e) => {
-      if (box.hidden) return;
-      if (e.key === "Escape") { box.hidden = true; document.body.classList.remove("lb-open"); }
-      if (e.key === "ArrowLeft") box.querySelector(".lb-nav.prev").click();
-      if (e.key === "ArrowRight") box.querySelector(".lb-nav.next").click();
-    });
-  }
-  const big = box.querySelector("img");
-  const dl = box.querySelector("a");
-  let idx = 0;
-
-  const show = (i) => {
-    idx = (i + imgs.length) % imgs.length;
-    const src = imgs[idx].src;
-    big.src = src;
-    dl.href = src;
-    dl.setAttribute("download", src.split("/").pop() || "shot.jpg");
-  };
-
-  box.querySelector(".lb-nav.prev").onclick = (e) => { e.stopPropagation(); show(idx - 1); };
-  box.querySelector(".lb-nav.next").onclick = (e) => { e.stopPropagation(); show(idx + 1); };
-  const zL = box.querySelector(".lb-zone.left");
-  const zR = box.querySelector(".lb-zone.right");
-  if (zL) zL.onclick = (e) => { e.stopPropagation(); show(idx - 1); };
-  if (zR) zR.onclick = (e) => { e.stopPropagation(); show(idx + 1); };
-
-  imgs.forEach((img, i) => {
-    img.addEventListener("click", () => openAt(i));
-  });
-
-  let lastWheel = 0;
-  const onWheel = (e) => {
-    if (box.hidden) return;
-    e.preventDefault();
-    const now = Date.now();
-    if (now - lastWheel < 260 || Math.abs(e.deltaY) < 6) return;
-    lastWheel = now;
-    show(idx + (e.deltaY > 0 ? 1 : -1));
-  };
-  window.addEventListener("wheel", onWheel, { passive: false });
-  const origShow = show;
-  const openAt = (i) => {
-    origShow(i);
-    box.hidden = false;
-    document.body.classList.add("lb-open");
-  };
-  box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
-
-  let sx = 0;
-  box.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
-  box.addEventListener("touchend", (e) => {
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 60) show(idx + (dx < 0 ? 1 : -1));
-  }, { passive: true });
-}
