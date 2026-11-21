@@ -55,7 +55,8 @@ function card(r, mode) {
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
-  const start = r.play_since || r.date || "";
+  let start = r.play_since || r.date || "";
+  if (/^\d{4}-\d{2}$/.test(start)) start += "-01";
   let subText = start || "未记";
   if (mode === "timeline") {
     const md = /^\d{4}-\d{2}-\d{2}$/.test(start) ? start.slice(5) : start;
