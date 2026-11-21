@@ -202,11 +202,7 @@ function drawMain(pool) {
     drawTimeline(pool.filter((x) => !isWish(x)));
     return;
   }
-  if (group === "hobby") {
-    const wish = items.filter((x) => GROUPS[group].cats.includes(x.cat)).filter(isWish);
-    if (wish.length) addWish(wish);
-  }
-  main.appendChild(gridOf(summarised(pool.filter((x) => !isWish(x)))));
+  main.appendChild(gridOf(summarised(pool)));
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
