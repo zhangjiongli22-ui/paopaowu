@@ -126,8 +126,8 @@ function bindShots() {
           <div class="rate-stars" id="rate-stars">${[1,2,3,4,5,6,7,8,9,10].map((n) => `<button type="button" data-v="${n}">★</button>`).join("")}</div>
           <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
           <div class="rate-time">
-            <span class="rate-time-label">完成时间</span>
-            <input type="date" id="rate-date" value="${esc(item.rated_on || item.date || "")}">
+            <span class="rate-time-label">${item.cat === "game" ? "游玩时间" : "观看时间"}</span>
+            <input type="date" id="rate-date" value="${["想看","待看","想玩","想读"].includes(item.status) ? "" : esc(item.rated_on || item.date || "")}">
             <input type="time" id="rate-time" value="${esc(item.time || "")}">
           </div>
           <div class="rate-actions">
