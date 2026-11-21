@@ -26,6 +26,10 @@ let group = "hobby";
 let cat = "all";
 let view = "summary";
 
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
 function el(tag, cls, text) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
