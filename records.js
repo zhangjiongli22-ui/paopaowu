@@ -55,7 +55,8 @@ function card(r, sub) {
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
-  a.appendChild(el("p", "poster-sub", sub !== undefined ? sub : (r.time || "")));
+  const subText = sub !== undefined ? sub : ((r.play_since || r.date || "").slice(5) + " " + (r.time || "")).trim();
+  a.appendChild(el("p", "poster-sub", subText));
   return a;
 }
 
@@ -107,7 +108,7 @@ function drawMain(pool) {
       const label = /^\d{4}-\d{2}$/.test(m) ? m.slice(0, 4) + " 年 " + Number(m.slice(5)) + " 月" : m;
       main.appendChild(el("h2", "sec-title date", label));
       const g = el("div", "rec-grid");
-      rows.forEach(({ r, d }) => g.appendChild(card(r, d.slice(5) + (r.time ? " " + r.time : ""))));
+      rows.forEach(({ r, d }) => g.appendChild(card(r, (d.slice(5) + " " + (r.time || "")).trim())));
       main.appendChild(g);
     }
     return;
