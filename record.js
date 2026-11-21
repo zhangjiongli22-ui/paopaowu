@@ -193,7 +193,15 @@ function bindShots() {
       if (!it) throw new Error("找不到这条记录");
       if (value) it.rating = value;
       it.note = note.value.trim();
-      it.updated = new Date().toISOString().slice(0, 10);
+      const today = new Date();
+      const pad = (n) => String(n).padStart(2, "0");
+      const ymd = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+      const hhmm = `${pad(today.getHours())}:${pad(today.getMinutes())}`;
+      it.status = it.cat === "game" ? "玩过" : "看过";
+      if (!it.date) it.date = ymd;
+      if (!it.time) it.time = hhmm;
+      it.rated_on = ymd;
+      it.updated = ymd;
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
       const put = await fetch(API, {
         method: "PUT",
