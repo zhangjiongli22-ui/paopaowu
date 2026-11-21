@@ -1115,3 +1115,30 @@ body.lb-open { overflow: hidden; }
   object-fit: contain;
   border-radius: 0;
 }
+/* 灯箱底部：只留关闭，下载缩到右下角小字 */
+.lb-close {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  padding: 8px 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(10, 22, 32, .45);
+  backdrop-filter: blur(8px);
+  color: rgba(234, 246, 255, .85);
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 82;
+}
+.lb-close:hover { background: rgba(88, 199, 255, .2); color: #fff; }
+.lb-dl {
+  position: fixed;
+  right: 16px;
+  bottom: 14px;
+  font-size: 11px;
+  color: rgba(234, 246, 255, .42);
+  text-decoration: underline;
+  z-index: 82;
+}
+.lb-dl:hover { color: rgba(234, 246, 255, .8); }
