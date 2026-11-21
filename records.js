@@ -216,8 +216,17 @@ function drawMain(pool) {
     box.appendChild(gridOf(summarised(rows)));
     main.appendChild(box);
   };
-  section("待看", wishRows, true);
-  section("看过", seenRows, true);
+  const LABEL = {
+    game: ["想玩", "玩过"],
+    anime: ["想看", "看过"],
+    tv: ["想看", "看过"],
+    film: ["想看", "看过"],
+    book: ["想读", "读过"],
+    all: ["心愿单", "已完成"],
+  };
+  const [wLabel, sLabel] = LABEL[group === "hobby" && cat !== "all" ? cat : "all"] || ["心愿单", "已完成"];
+  section(wLabel, wishRows, true);
+  section(sLabel, seenRows, true);
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
