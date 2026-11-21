@@ -94,7 +94,7 @@ function drawMain(pool) {
   }
   if (view === "timeline") {
     const byDate = new Map();
-    pool
+    items
       .slice()
       .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
       .forEach((r) => {
