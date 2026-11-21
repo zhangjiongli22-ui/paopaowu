@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 · Kira的大世界</title>
+<link rel="icon" href="assets/avatar.png">
+<link rel="stylesheet" href="style.css?v=36">
+</head>
+<body>
+<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<nav class="nav">
+  <a class="brand" href="index.html">Home</a>
+  <div class="links">
+    <a href="about.html">大肥鱼</a>
+    <a href="kira.html">Kira</a>
+    <a href="records.html">Kira的大世界</a>
+    <a href="chat.html">日常</a>
+    <a href="gallery.html">图集</a>
+  </div>
+</nav>
+
+<main class="page">
+  <header class="page-head">
+    <p class="kicker">ADMIN</p>
+    <h1>登录</h1>
+    <p class="lead">登录之后才能改评分和评价。</p>
+  </header>
+
+  <form class="login-box" id="login-form">
+    <label>账号<input type="text" id="login-user" autocomplete="username" placeholder="kira"></label>
+    <label>密码<input type="password" id="login-pass" autocomplete="current-password"></label>
+    <button type="submit" class="lb-btn">登录</button>
+    <p class="rate-msg" id="login-msg"></p>
+  </form>
+</main>
+
+<footer>
+  <p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a></p>
+</footer>
+
+<script>
+const HASH = "6c756f5e8ec37eeca9f010d92efdf573e8b64a7e0546bb8d4b6801270b7d004e";
+async function sha256(t) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const u = document.getElementById("login-user").value.trim();
+  const p = document.getElementById("login-pass").value;
+  const msg = document.getElementById("login-msg");
+  const h = await sha256(`${u}:${p}:paopaowu`);
+  if (h === HASH) {
+    localStorage.setItem("paopaowu_admin", String(Date.now()));
+    msg.textContent = "登录成功，回去改评分吧";
+    setTimeout(() => location.href = "records.html", 600);
+  } else {
+    msg.textContent = "账号或密码不对";
+  }
+});
+</script>
+</body>
+</html>
