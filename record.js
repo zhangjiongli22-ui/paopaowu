@@ -1,4 +1,4 @@
-const CATS = { idea: "巧思", movie: "影视", game: "游戏", book: "读书", fitness: "健身", plan: "计划" };
+const CATS = { idea: "巧思", anime: "动画", tv: "剧集", film: "电影", game: "游戏", book: "读书", fitness: "健身", plan: "计划" };
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
