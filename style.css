@@ -1067,3 +1067,12 @@ body.lb-open { overflow: hidden; }
   .lb-nav.prev { left: 8px; }
   .lb-nav.next { right: 8px; }
 }
+/* 录屏：两列网格，不超出屏宽 */
+.video-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.video-item { margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,.03); }
+.video-item figcaption { font-size: 12px; color: var(--muted); padding: 8px 12px 4px; letter-spacing: .05em; }
+.video-item video { width: 100%; aspect-ratio: 16 / 9; max-height: 300px; object-fit: cover; display: block; background: #000; }
+@media (max-width: 720px) {
+  .video-list { grid-template-columns: 1fr; }
+  .video-item video { max-height: 240px; }
+}
