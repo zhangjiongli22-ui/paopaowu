@@ -138,7 +138,7 @@ function drawLog(pool) {
 
 
 function dateOf(x) {
-  return String(x.play_since || x.date || "");
+  return String(x.rated_on || x.play_since || x.date || "");
 }
 
 function drawTimeline(pool) {
