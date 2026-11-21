@@ -1761,3 +1761,16 @@ body.lb-open { overflow: hidden; }
   border-color: rgba(255,215,106,.5) !important;
   background: rgba(4,12,20,.62) !important;
 }
+
+
+/* 星数改回紧凑版，贴近名字 */
+.poster-stars {
+  display: block;
+  width: auto;
+  margin: 2px 0 2px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 1.5px;
+}
+.rate-stars { gap: 2px; }
+.star-btn { font-size: 23px; padding: 0 1px; }
