@@ -147,11 +147,13 @@ function draw() {
   // 小字视图切换，靠最右
   const drawViews = () => {
     viewRow.innerHTML = "";
-    [["summary", "汇总"], ["timeline", "时间线"]].forEach(([k, name]) => {
-      const b = el("button", "view-link" + (k === view ? " on" : ""), name);
-      b.addEventListener("click", () => { view = k; drawViews(); draw(); });
-      viewRow.appendChild(b);
+    const b = el("button", "view-link", view === "summary" ? "时间线" : "返回汇总");
+    b.addEventListener("click", () => {
+      view = view === "summary" ? "timeline" : "summary";
+      drawViews();
+      draw();
     });
+    viewRow.appendChild(b);
   };
   drawViews();
 
