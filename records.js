@@ -197,21 +197,25 @@ function drawMain(pool) {
     }
     return;
   }
+  const isWish = (x) => WISH.includes(x.status);
   if (view === "timeline") {
-    drawTimeline(pool);
-  } else {
-    main.appendChild(gridOf(summarised(pool)));
+    drawTimeline(pool.filter((x) => !isWish(x)));
+    return;
   }
-  if (group === "hobby" && view !== "timeline") addWish(poolAll);
+  if (group === "hobby") {
+    const wish = poolAll.filter(isWish);
+    if (wish.length) addWish(wish);
+  }
+  main.appendChild(gridOf(summarised(pool.filter((x) => !isWish(x)))));
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
 
-function addWish(all) {
-  const wish = all.filter((x) => WISH.includes(x.status));
-  if (!wish.length) return;
+function addWish(wish) {
+  if (!wish || !wish.length) return;
   const box = document.createElement("details");
   box.className = "wish";
+  box.open = true;
   box.innerHTML = `<summary class="wish-head">待看 · ${wish.length}</summary>`;
   const chips = el("div", "cat-row wish-cats");
   const list = el("div", "wish-list");
