@@ -96,9 +96,9 @@ function drawMain(pool) {
     const byDate = new Map();
     pool
       .slice()
-      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
+      .sort((a, b) => ((b.play_since || b.date || "") + (b.time || "")).localeCompare((a.play_since || a.date || "") + (a.time || "")))
       .forEach((r) => {
-        const d = r.date || "未记日期";
+        const d = r.play_since || r.date || "未记日期";
         if (!byDate.has(d)) byDate.set(d, []);
         byDate.get(d).push(r);
       });
