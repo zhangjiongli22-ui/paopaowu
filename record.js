@@ -154,7 +154,7 @@ function bindShots() {
     box = document.createElement("div");
     box.className = "lightbox shotbox";
     box.hidden = true;
-    box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button><div class="lb-zone left"></div><div class="lb-zone right"></div></div>';
+    box.innerHTML = '<div class="lb-zone left"></div><div class="lb-zone right"></div><button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
     document.body.appendChild(box);
     box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
     box.addEventListener("click", (e) => { if (e.target === box) box.hidden = true; });
@@ -185,18 +185,22 @@ function bindShots() {
   if (zR) zR.onclick = (e) => { e.stopPropagation(); show(idx + 1); };
 
   imgs.forEach((img, i) => {
-    img.addEventListener("click", () => { show(i); box.hidden = false; });
+    img.addEventListener("click", () => openAt(i));
   });
 
   let lastWheel = 0;
-  box.addEventListener("wheel", (e) => {
+  const onWheel = (e) => {
     if (box.hidden) return;
     e.preventDefault();
     const now = Date.now();
     if (now - lastWheel < 260 || Math.abs(e.deltaY) < 6) return;
     lastWheel = now;
     show(idx + (e.deltaY > 0 ? 1 : -1));
-  }, { passive: false });
+  };
+  window.addEventListener("wheel", onWheel, { passive: false });
+  const origShow = show;
+  const openAt = (i) => { origShow(i); box.hidden = false; };
+  box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
 
   let sx = 0;
   box.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
