@@ -945,3 +945,42 @@ body.lb-open { overflow: hidden; }
 /* 游玩录屏 */
 .video-wrap { display: block; }
 .video-wrap video { width: 100%; max-height: 520px; border-radius: 12px; border: 1px solid var(--line); background: #000; }
+/* 灯箱：居中 + 左右翻页 */
+.lightbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.lightbox img {
+  margin: auto;
+  max-width: 92vw;
+  max-height: 76vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+.lb-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(8,20,30,.55);
+  color: #eaf6ff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 80;
+}
+.lb-nav.prev { left: 12px; }
+.lb-nav.next { right: 12px; }
+.lb-nav:hover { background: rgba(88,199,255,.25); }
+@media (max-width: 720px) {
+  .lb-nav { width: 38px; height: 38px; font-size: 20px; }
+  .lightbox img { max-height: 68vh; }
+}
