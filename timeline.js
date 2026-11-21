@@ -1,5 +1,4 @@
-const CATS = { anime: "动画", tv: "剧集", film: "电影", game: "游戏", book: "读书", log: "日志", idea: "巧思" };
-const KINDS = { fitness: "健身", game: "游戏", piano: "钢琴", study: "学习", media: "影视", work: "工作" };
+const CATS = { anime: "动画", tv: "剧集", film: "电影", game: "游戏", book: "读书", idea: "巧思" };
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -8,9 +7,29 @@ function el(tag, cls, text) {
   return e;
 }
 
+function card(r) {
+  const a = el("a", "poster");
+  a.href = "record.html?id=" + encodeURIComponent(r.id);
+  const box = el("div", "poster-box");
+  if (r.cover) {
+    const img = el("img");
+    img.src = r.cover;
+    img.loading = "lazy";
+    img.alt = "";
+    img.onerror = () => { img.remove(); box.appendChild(el("div", "poster-fallback", (r.title || "?")[0])); };
+    box.appendChild(img);
+  } else {
+    box.appendChild(el("div", "poster-fallback", (r.title || "?")[0]));
+  }
+  if (r.rating) box.appendChild(el("span", "poster-rating", "★".repeat(Math.max(0, Math.min(5, Math.round(r.rating / 2))))));
+  a.appendChild(box);
+  a.appendChild(el("p", "poster-title", r.title || ""));
+  a.appendChild(el("p", "poster-sub", ((r.play_since || r.date || "").slice(5) + " " + (r.time || "")).trim()));
+  return a;
+}
+
 (async () => {
   const root = document.getElementById("tl");
-  const filterRow = document.getElementById("tl-filter");
   let items = [];
   try {
     const res = await fetch("data/records.json", { cache: "no-store" });
@@ -20,56 +39,22 @@ function el(tag, cls, text) {
     return;
   }
 
-  // 统一成「时间线事件」
-  const events = [];
-  items.forEach((it) => {
-    if (it.cat === "log") {
-      events.push({ date: it.date, time: it.time, cat: "log", kind: it.kind, title: (KINDS[it.kind] || "") + " · " + (it.text || ""), link: null });
-    } else if (it.cat === "idea") {
-      events.push({ date: it.date, time: it.time, cat: "idea", status: it.status, title: it.title, link: null });
-    } else {
-      events.push({ date: it.play_since || it.date, time: it.time, cat: it.cat, title: it.title, link: "record.html?id=" + encodeURIComponent(it.id) });
-    }
+  const rows = items
+    .filter((x) => x.cat !== "log" && (x.play_since || x.date))
+    .sort((a, b) => ((b.play_since || b.date || "") + (b.time || "")).localeCompare((a.play_since || a.date || "") + (a.time || "")));
+
+  const byMonth = new Map();
+  rows.forEach((r) => {
+    const d = r.play_since || r.date;
+    const m = String(d).slice(0, 7);
+    if (!byMonth.has(m)) byMonth.set(m, []);
+    byMonth.get(m).push(r);
   });
 
-  const filters = ["all", "game", "anime", "tv", "film", "log", "idea"];
-  let active = "all";
-  const draw = () => {
-    root.innerHTML = "";
-    const rows = events
-      .filter((e) => e.date)
-      .filter((e) => active === "all" || e.cat === active)
-      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")));
-
-    let lastMonth = "";
-    let line = el("div", "tl-wrap");
-    rows.forEach((e) => {
-      const month = String(e.date).slice(0, 7);
-      if (month !== lastMonth) {
-        lastMonth = month;
-        line.appendChild(el("h2", "tl-month", month.replace("-", " 年 ") + " 月"));
-      }
-      const row = el(e.link ? "a" : "div", "tl-event");
-      if (e.link) row.href = e.link;
-      row.innerHTML = `<span class="tl-dot"></span>
-        <span class="tl-day">${String(e.date).slice(5)}</span>
-        <span class="tl-tag t-${e.cat}">${CATS[e.cat] || e.cat}</span>
-        <span class="tl-title">${e.title || ""}</span>
-        <span class="tl-time">${e.time || ""}</span>`;
-      line.appendChild(row);
-    });
-    root.appendChild(line);
-    [...filterRow.children].forEach((b) => b.classList.toggle("on", b.dataset.k === active));
-  };
-
-  filters.forEach((k) => {
-    const n = k === "all" ? events.length : events.filter((e) => e.cat === k).length;
-    if (k !== "all" && !n) return;
-    const b = el("button", "cat-bubble", null);
-    b.dataset.k = k;
-    b.innerHTML = `<span class="cat-name">${k === "all" ? "全部" : CATS[k]}</span><span class="cat-n">${n}</span>`;
-    b.addEventListener("click", () => { active = k; draw(); });
-    filterRow.appendChild(b);
-  });
-  draw();
+  for (const [m, list] of byMonth) {
+    root.appendChild(el("h2", "sec-title date", m.slice(0, 4) + " 年 " + Number(m.slice(5)) + " 月"));
+    const g = el("div", "rec-grid");
+    list.forEach((r) => g.appendChild(card(r)));
+    root.appendChild(g);
+  }
 })();
