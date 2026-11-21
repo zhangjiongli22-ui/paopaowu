@@ -5341,7 +5341,7 @@
   },
   {
    "id": "anime-db778b8f",
-   "cat": "anime",
+   "cat": "film",
    "title": "永生守卫",
    "status": "想看",
    "date": "2026-11-22",
@@ -5712,7 +5712,7 @@
   },
   {
    "id": "film-daa41fd3",
-   "cat": "book",
+   "cat": "anime",
    "title": "宿命回想",
    "status": "想看",
    "date": "2026-11-22",
@@ -5856,7 +5856,7 @@
   },
   {
    "id": "film-b109b450",
-   "cat": "book",
+   "cat": "film",
    "title": "陷阱",
    "status": "想看",
    "date": "2026-11-22",
