@@ -201,7 +201,6 @@ async function loadData() {
       show(i);
       box.hidden = false;
       document.body.classList.add("lb-open");
-      if (box.requestFullscreen) box.requestFullscreen().catch(() => {});
     });
   });
 })();
