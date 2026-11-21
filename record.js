@@ -156,11 +156,11 @@ function bindShots() {
     box.hidden = true;
     box.innerHTML = '<div class="lb-zone left"></div><div class="lb-zone right"></div><button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
     document.body.appendChild(box);
-    box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
+    box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; document.body.classList.remove("lb-open"); });
     box.addEventListener("click", (e) => { if (e.target === box) box.hidden = true; });
     document.addEventListener("keydown", (e) => {
       if (box.hidden) return;
-      if (e.key === "Escape") box.hidden = true;
+      if (e.key === "Escape") { box.hidden = true; document.body.classList.remove("lb-open"); }
       if (e.key === "ArrowLeft") box.querySelector(".lb-nav.prev").click();
       if (e.key === "ArrowRight") box.querySelector(".lb-nav.next").click();
     });
@@ -199,7 +199,7 @@ function bindShots() {
   };
   window.addEventListener("wheel", onWheel, { passive: false });
   const origShow = show;
-  const openAt = (i) => { origShow(i); box.hidden = false; };
+  const openAt = (i) => { origShow(i); box.hidden = false; document.body.classList.add("lb-open"); };
   box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
 
   let sx = 0;
