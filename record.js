@@ -129,9 +129,11 @@ function bindShots() {
         </div>
         <div class="rate-box${hasReview ? " reviewed" : ""}">
           <div class="review-view"${hasReview ? "" : " hidden"}>
-            <p class="review-stars">${item.rating ? stars(item.rating) + " <span class=\"review-num\">" + five(item.rating) + "/5</span>" : "还没打分"}</p>
-            <p class="review-note-text">${item.note ? esc(item.note) : "还没写评价"}</p>
-            <button type="button" class="lb-btn review-edit" id="review-edit">修改评价</button>
+            ${item.note ? `<blockquote class="review-quote">${esc(item.note)}</blockquote>` : '<p class="review-empty">只打了分，还没写评价。</p>'}
+            <div class="review-foot">
+              <span class="review-when">${item.rated_on ? esc(item.rated_on) + " 评价" : ""}</span>
+              <button type="button" class="review-edit" id="review-edit">修改评价</button>
+            </div>
           </div>
           <div class="review-form"${hasReview ? " hidden" : ""}>
             <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" data-v="${n * 2}">★</button>`).join("")}</div>
@@ -283,8 +285,10 @@ function bindShots() {
       const view = document.querySelector(".review-view");
       const form = document.querySelector(".review-form");
       if (view) {
-        view.querySelector(".review-stars").innerHTML = (it.rating ? stars(it.rating) + ' <span class="review-num">' + five(it.rating) + "/5</span>" : "还没打分");
-        view.querySelector(".review-note-text").textContent = it.note || "还没写评价";
+        const q = view.querySelector(".review-quote");
+        if (q) q.textContent = it.note || "";
+        const when = view.querySelector(".review-when");
+        if (when) when.textContent = it.rated_on ? it.rated_on + " 评价" : "";
         view.hidden = false;
       }
       if (form) form.hidden = true;
