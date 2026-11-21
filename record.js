@@ -215,7 +215,7 @@ function bindShots() {
     }
   }
 
-  let token = null;
+  let token = sessionStorage.getItem("paopaowu_sess");
 
   tokenLink.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -225,6 +225,7 @@ function bindShots() {
     if (!p1) return;
     await savePassword(t.trim(), p1);
     token = t.trim();
+    sessionStorage.setItem("paopaowu_sess", token);
     msg.textContent = "密码设好了，以后用密码保存";
   });
   save.addEventListener("click", async () => {
@@ -234,6 +235,7 @@ function bindShots() {
       if (!pass) return;
       token = await tokenFromPassword(pass);
       if (!token) { msg.textContent = "密码不对"; return; }
+      sessionStorage.setItem("paopaowu_sess", token);
     }
     msg.textContent = "保存中…";
     try {
