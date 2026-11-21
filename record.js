@@ -214,34 +214,20 @@ function bindShots() {
     statusBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (!ensureToken()) { msg.textContent = "打不开保存权限，稍后再试"; return; }
       const cur = statusBtn.textContent.trim();
       const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
       const next = cur === fmt[0] ? fmt[1] : fmt[0];
-      statusBtn.textContent = next;
       statusBtn.disabled = true;
       msg.textContent = "切换中…";
       try {
-        const get = await fetch(API + "?ref=main&t=" + Date.now(), {
-          headers: { Authorization: "token " + token, Accept: "application/vnd.github+json" },
-        });
-        const file = await get.json();
-        const json = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, "")))));
-        const it = (json.items || []).find((x) => String(x.id) === String(id));
-        if (!it) throw new Error("找不到");
-        it.status = next;
-        if (next === fmt[1]) delete it.rated_on;
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
-        const put = await fetch(API, {
-          method: "PUT",
-          headers: { Authorization: "token " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
-          body: JSON.stringify({ message: "status: " + (it.title || id), content, sha: file.sha, branch: "main" }),
-        });
-        if (!put.ok) throw new Error("写入失败 " + put.status);
-        msg.textContent = "已切换为「" + next + "」，一分钟内在其他设备刷新可见";
-      } catch (e) {
-        statusBtn.textContent = cur;
-        msg.textContent = "切换失败：" + e.message;
+        const payload = { id, status: next };
+        if (next === fmt[1]) payload.rated_on = null;
+        const saved = await apiRate(payload);
+        it = { ...item, ...saved };
+        statusBtn.textContent = saved.status || next;
+        msg.textContent = "已切换为「" + (saved.status || next) + "」";
+      } catch (err) {
+        msg.textContent = "切换失败：" + err.message;
       } finally {
         statusBtn.disabled = false;
       }
@@ -249,13 +235,13 @@ function bindShots() {
   }
 
   const starsBox = document.getElementById("rate-stars");
+  const save = document.getElementById("rate-save");
   const note = document.getElementById("rate-note");
+  const msg = document.getElementById("rate-msg");
   const dateInput = document.getElementById("rate-date");
   const timeInput = document.getElementById("rate-time");
-  const save = document.getElementById("rate-save");
-  const msg = document.getElementById("rate-msg");
-  const API = "https://api.github.com/repos/zhangjiongli22-ui/paopaowu/contents/data/records.json";
-  let value = 0;
+  let value = item.rating || 0;
+  let it = { ...item };
 
   function paintStars() {
     [...starsBox.querySelectorAll(".star-btn")].forEach((btn) => {
@@ -264,8 +250,7 @@ function bindShots() {
       btn.classList.toggle("half", value === n * 2 - 1);
     });
   }
-
-  if (item.rating) { value = item.rating; paintStars(); }
+  paintStars();
 
   starsBox.addEventListener("click", (e) => {
     const hit = e.target.closest("[data-v]");
@@ -275,93 +260,62 @@ function bindShots() {
     msg.textContent = value / 2 + "/5";
   });
 
-  const BLOB = "CgEbKgF3f2EiMw4BZF4OVT8ZLEZlW2lKGAApRkUMQA8UAFk7U0p8DA==";
-  const PASS = "miku1998";
-
-  function unlock() {
-    try {
-      const raw = atob(BLOB);
-      let out = "";
-      for (let i = 0; i < raw.length; i++) {
-        out += String.fromCharCode(raw.charCodeAt(i) ^ PASS.charCodeAt(i % PASS.length));
-      }
-      return out;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  let token = sessionStorage.getItem("paopaowu_sess");
-
-  function ensureToken() {
-    if (token) return true;
-    token = unlock();
-    if (!token) return false;
-    sessionStorage.setItem("paopaowu_sess", token);
-    return true;
+  async function apiRate(payload) {
+    const res = await fetch("/api/rate", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ...payload, pass: "kira:miku1998:paopaowu" }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(data.error || "保存失败 " + res.status);
+    return data.item;
   }
 
   save.addEventListener("click", async () => {
-    if (!ensureToken()) { msg.textContent = "打不开保存权限，稍后再试"; return; }
     msg.textContent = "保存中…";
     try {
-      const get = await fetch(API + "?ref=main&t=" + Date.now(), {
-        headers: { Authorization: "token " + token, Accept: "application/vnd.github+json" },
-      });
-      if (!get.ok) throw new Error("读不到数据 " + get.status);
-      const file = await get.json();
-      const json = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, "")))));
-      const it = (json.items || []).find((x) => String(x.id) === String(id));
-      if (!it) throw new Error("找不到这条记录");
       const noteText = note.value.trim();
-      if (value) it.rating = value; else delete it.rating;
-      if (noteText) it.note = noteText; else delete it.note;
-      const cleared = !it.rating && !it.note;
-      if (cleared) {
-        delete it.rated_on;
-        it.status = it.cat === "game" ? "想玩" : "想看";
-      }
       const pad = (n) => String(n).padStart(2, "0");
       const now = new Date();
       const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
       const nowTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
       const ymd = dateInput && dateInput.value ? dateInput.value : today;
       const hhmm = timeInput && timeInput.value ? timeInput.value : nowTime;
+      const cleared = !value && !noteText;
       const filledDate = !!(dateInput && dateInput.value);
       const finished = !cleared && (value > 0 || !!noteText || filledDate);
-      if (finished) it.status = it.cat === "game" ? "玩过" : "看过";
-      if (!it.added) it.added = it.date || "";
-      it.date = ymd;
-      it.time = hhmm;
-      if (finished) it.rated_on = ymd;
-      it.updated = today;
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
-      const put = await fetch(API, {
-        method: "PUT",
-        headers: { Authorization: "token " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
-        body: JSON.stringify({ message: "rate: " + (it.title || id), content, sha: file.sha, branch: "main" }),
-      });
-      if (!put.ok) throw new Error("写入失败 " + put.status);
+      const payload = { id, rating: value || null, note: noteText, date: ymd, time: hhmm };
+      if (cleared) {
+        payload.status = item.cat === "game" ? "想玩" : "想看";
+        payload.rated_on = null;
+      } else if (finished) {
+        payload.status = item.cat === "game" ? "玩过" : "看过";
+        payload.rated_on = ymd;
+      }
+      const saved = await apiRate(payload);
+      it = { ...item, ...saved };
       const scoreStars = document.getElementById("score-stars");
       const scoreNum = document.getElementById("score-num");
-      if (scoreStars) scoreStars.textContent = it.rating ? stars(it.rating) : "还没评分";
-      if (scoreNum) scoreNum.textContent = it.rating ? five(it.rating) + "/5" : "";
-      value = it.rating || value;
-      paintStars();
+      if (scoreStars) scoreStars.textContent = saved.rating ? stars(saved.rating) : "还没评分";
+      if (scoreNum) scoreNum.textContent = saved.rating ? five(saved.rating) + "/5" : "";
       const statusEl = document.querySelector(".rec-status");
-      if (statusEl) statusEl.textContent = it.status;
+      if (statusEl) statusEl.textContent = saved.status || item.status;
       const view = document.querySelector(".review-view");
       const form = document.querySelector(".review-form");
       if (view) {
         const q = view.querySelector(".review-quote");
-        if (q) q.textContent = it.note || "";
+        if (q) q.textContent = saved.note || "";
         const when = view.querySelector(".review-when");
-        if (when) when.textContent = it.rated_on ? it.rated_on + " 评价" : "";
-        view.hidden = false;
+        if (when) when.textContent = saved.rated_on ? saved.rated_on + " 评价" : "";
       }
-      if (cleared) { if (view) view.hidden = true; if (form) form.hidden = false; }
-      else if (form) form.hidden = true;
-      msg.textContent = cleared ? "已删除评价（线上同步约一分钟）" : "已保存（线上同步约一分钟）";
+      if (cleared) {
+        if (view) view.hidden = true;
+        if (form) form.hidden = false;
+      } else if (form) {
+        form.hidden = true;
+        if (view) view.hidden = false;
+      }
+      msg.textContent = cleared ? "已删除评价" : "已保存，刷新立刻可见";
     } catch (err) {
       msg.textContent = "没保存成功：" + err.message;
     }
