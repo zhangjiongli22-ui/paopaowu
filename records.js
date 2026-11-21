@@ -203,7 +203,7 @@ function drawMain(pool) {
     return;
   }
   if (group === "hobby") {
-    const wish = poolAll.filter(isWish);
+    const wish = items.filter((x) => GROUPS[group].cats.includes(x.cat)).filter(isWish);
     if (wish.length) addWish(wish);
   }
   main.appendChild(gridOf(summarised(pool.filter((x) => !isWish(x)))));
