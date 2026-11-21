@@ -97,6 +97,7 @@ function drawMain(pool) {
 }
 
 function drawSide(pool) {
+  if (!side) return;
   side.innerHTML = "";
   side.appendChild(el("p", "side-title", "时间线"));
   if (!pool.length) return;
@@ -144,7 +145,7 @@ function draw() {
   }
 
   drawMain(pool);
-  drawSide(poolCat);
+  if (side) drawSide(poolCat);
 }
 
 (async () => {
