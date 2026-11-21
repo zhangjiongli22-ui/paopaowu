@@ -41,21 +41,24 @@
 </footer>
 
 <script>
-const HASH = "6c756f5e8ec37eeca9f010d92efdf573e8b64a7e0546bb8d4b6801270b7d004e";
-async function sha256(t) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
-  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+const HASH = "6f65bb65";
+function h(s) {
+  let x = 5381;
+  for (let i = 0; i < s.length; i++) {
+    x = ((x << 5) + x) ^ s.charCodeAt(i);
+    x >>>= 0;
+  }
+  return x.toString(16);
 }
-document.getElementById("login-form").addEventListener("submit", async (e) => {
+document.getElementById("login-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const u = document.getElementById("login-user").value.trim();
   const p = document.getElementById("login-pass").value;
   const msg = document.getElementById("login-msg");
-  const h = await sha256(`${u}:${p}:paopaowu`);
-  if (h === HASH) {
+  if (h(`${u}:${p}:paopaowu`) === HASH) {
     localStorage.setItem("paopaowu_admin", String(Date.now()));
     msg.textContent = "登录成功，回去改评分吧";
-    setTimeout(() => location.href = "records.html", 600);
+    setTimeout(() => (location.href = "records.html"), 600);
   } else {
     msg.textContent = "账号或密码不对";
   }
