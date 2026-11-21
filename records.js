@@ -59,6 +59,7 @@ function card(r, mode) {
     box.appendChild(el("div", "poster-fallback", (r.title || "?").slice(0, 1)));
   }
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
+  if (r.rating || (r.note || "").trim()) box.appendChild(el("span", "poster-badge", "已评价"));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
   let start = r.play_since || r.date || "";
