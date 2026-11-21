@@ -11,9 +11,9 @@ const CATS = {
 };
 
 const GROUPS = {
-  hobby: { name: "爱好", cats: ["anime", "tv", "film", "game", "book", "fitness"] },
+  hobby: { name: "爱好", cats: ["anime", "tv", "film", "game", "book"] },
   idea:  { name: "巧思", cats: ["idea"] },
-  plan:  { name: "每日计划", cats: ["plan"] }
+  plan:  { name: "每日计划", cats: ["plan", "fitness"] }
 };
 
 const main = document.getElementById("rec-main");
@@ -134,7 +134,6 @@ function draw() {
     poolAll.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
     ["all", ...GROUPS.hobby.cats].forEach((k) => {
       const n = k === "all" ? poolAll.length : counts[k] || 0;
-      if (k !== "all" && !n) return;
       const b = el("button", "cat-bubble", null);
       b.innerHTML = `<span class="cat-name">${CATS[k].name}</span><span class="cat-n">${n}</span>`;
       b.classList.toggle("on", k === cat);
