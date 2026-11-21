@@ -198,8 +198,9 @@ function bindShots() {
       const ymd = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
       const hhmm = `${pad(today.getHours())}:${pad(today.getMinutes())}`;
       it.status = it.cat === "game" ? "玩过" : "看过";
-      if (!it.date) it.date = ymd;
-      if (!it.time) it.time = hhmm;
+      if (!it.added) it.added = it.date || "";
+      it.date = ymd;
+      it.time = hhmm;
       it.rated_on = ymd;
       it.updated = ymd;
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
