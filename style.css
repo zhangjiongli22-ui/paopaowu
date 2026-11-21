@@ -1050,3 +1050,20 @@ body.lb-open { overflow: hidden; }
 @media (max-width: 720px) {
   .lb-nav { width: 56px; height: 56px; font-size: 28px; }
 }
+/* 翻页按钮再加大 */
+.lb-nav {
+  width: 112px;
+  height: 112px;
+  font-size: 56px;
+  border-radius: 50%;
+  background: rgba(10, 22, 32, .28);
+  border: 1px solid rgba(255,255,255,.16);
+  opacity: .8;
+}
+.lb-nav.prev { left: 18px; }
+.lb-nav.next { right: 18px; }
+@media (max-width: 900px) {
+  .lb-nav { width: 70px; height: 70px; font-size: 34px; }
+  .lb-nav.prev { left: 8px; }
+  .lb-nav.next { right: 8px; }
+}
