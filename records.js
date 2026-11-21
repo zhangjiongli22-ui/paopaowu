@@ -12,9 +12,9 @@ const CATS = {
 };
 
 const GROUPS = {
-  hobby: { name: "爱好", cats: ["anime", "tv", "film", "game", "book"] },
-  idea:  { name: "巧思", cats: ["idea"] },
-  plan:  { name: "每日计划", cats: ["log"] }
+  hobby: { name: "精神食粮", cats: ["anime", "tv", "film", "game", "book"] },
+  idea:  { name: "有一些小巧思", cats: ["idea"] },
+  plan:  { name: "每日统计", cats: ["log"] }
 };
 
 const main = document.getElementById("rec-main");
