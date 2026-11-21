@@ -256,6 +256,9 @@
    "name_cn": "异环",
    "play_since": "2026-04-29",
    "shots": [
+    "assets/shots/nte-neverness-to-everness/s01-34bb3366.jpg",
+    "assets/shots/nte-neverness-to-everness/s02-11b8ace7.jpg",
+    "assets/shots/nte-neverness-to-everness/s03-a2799bf6.jpg",
     "assets/shots/ntegame/s01-76821f73.jpg",
     "assets/shots/ntegame/s02-32a05b6c.jpg"
    ]
@@ -498,6 +501,46 @@
    "title": "Eclipsium",
    "status": "在玩",
    "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-5b2f0118",
+   "cat": "game",
+   "title": "No, I'm Not A Human",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-4ffcca9a",
+   "cat": "game",
+   "title": "Forza Horizon 6",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-e5c9ab10",
+   "cat": "game",
+   "title": "Warframe",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-818b3ef5",
+   "cat": "game",
+   "title": "星穹铁道",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-e611e9bb",
+   "cat": "game",
+   "title": "Eclipsium",
+   "status": "在玩",
+   "date": "2026-11-21",
    "time": "21:00",
    "shots": [
     "assets/shots/eclipsium/s01-564f8463.jpg",
@@ -508,7 +551,7 @@
    ]
   },
   {
-   "id": "game-5b2f0118",
+   "id": "game-5cbf12b1",
    "cat": "game",
    "title": "No, I'm Not A Human",
    "status": "在玩",
@@ -522,7 +565,7 @@
    ]
   },
   {
-   "id": "game-4ffcca9a",
+   "id": "game-5b1b5a15",
    "cat": "game",
    "title": "Forza Horizon 6",
    "status": "在玩",
@@ -535,7 +578,7 @@
    ]
   },
   {
-   "id": "game-e5c9ab10",
+   "id": "game-9fc73e11",
    "cat": "game",
    "title": "Warframe",
    "status": "在玩",
@@ -546,7 +589,7 @@
    ]
   },
   {
-   "id": "game-818b3ef5",
+   "id": "game-0c2ebe42",
    "cat": "game",
    "title": "星穹铁道",
    "status": "在玩",
