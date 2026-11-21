@@ -1659,3 +1659,20 @@ body.lb-open { overflow: hidden; }
 .review-num { font-size: 12px; color: var(--muted); letter-spacing: 0; }
 .review-note-text { font-size: 13.5px; color: var(--muted); line-height: 1.8; margin: 0 0 12px; white-space: pre-wrap; }
 .review-edit { margin-top: 4px; }
+/* 卡片：已评价角标与星数 */
+.poster-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(126,240,208,.16);
+  color: #9ff5dc;
+  border: 1px solid rgba(126,240,208,.4);
+  backdrop-filter: blur(4px);
+}
+.poster-stars { margin: 3px 0 0; font-size: 12px; letter-spacing: 1px; }
+.poster-stars .stars-on { color: var(--accent2); }
+.poster-stars .stars-off { color: rgba(159,196,221,.35); }
+.poster-stars .stars-num { font-size: 10.5px; color: var(--muted); margin-left: 6px; letter-spacing: 0; }
