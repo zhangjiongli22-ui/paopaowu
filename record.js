@@ -211,7 +211,9 @@ function bindShots() {
   }
   const statusBtn = document.getElementById("status-toggle");
   if (statusBtn) {
-    statusBtn.addEventListener("click", async () => {
+    statusBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       if (!ensureToken()) { msg.textContent = "打不开保存权限，稍后再试"; return; }
       const cur = statusBtn.textContent.trim();
       const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
