@@ -162,7 +162,7 @@ async function loadData() {
     dl.setAttribute("download", src.split("/").pop() || "image");
   };
 
-  const hide = () => { box.hidden = true; };
+  const hide = () => { box.hidden = true; document.body.classList.remove("lb-open"); };
   box.querySelector(".lb-close").addEventListener("click", hide);
   box.querySelector(".lb-nav.prev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
   box.querySelector(".lb-nav.next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
@@ -197,6 +197,6 @@ async function loadData() {
 
   imgs.forEach((img, i) => {
     img.classList.add("zoomable");
-    img.addEventListener("click", () => { show(i); box.hidden = false; });
+    img.addEventListener("click", () => { show(i); box.hidden = false; document.body.classList.add("lb-open"); });
   });
 })();
