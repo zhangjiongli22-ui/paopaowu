@@ -71,8 +71,14 @@ function card(r, mode) {
   }
   if (r.rating) {
     const row = el("p", "poster-stars");
-    const n = Math.max(0, Math.min(5, Math.round(r.rating / 2)));
-    row.innerHTML = '<span class="stars-on">' + "★".repeat(n) + '</span><span class="stars-off">' + "☆".repeat(5 - n) + '</span>';
+    const v = Math.max(0, Math.min(10, Math.round(r.rating)));
+    let html = "";
+    for (let i = 1; i <= 5; i++) {
+      if (v >= i * 2) html += '<span class="st on">★</span>';
+      else if (v === i * 2 - 1) html += '<span class="st half">★</span>';
+      else html += '<span class="st off">★</span>';
+    }
+    row.innerHTML = html;
     a.appendChild(row);
   }
   a.appendChild(el("p", "poster-sub", subText));
