@@ -37,7 +37,7 @@ function stars(r) {
   return "★".repeat(n);
 }
 
-function card(r) {
+function card(r, sub) {
   const a = el("a", "poster");
   a.href = "record.html?id=" + encodeURIComponent(r.id);
   const box = el("div", "poster-box");
@@ -55,7 +55,7 @@ function card(r) {
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
-  if (view === "timeline") a.appendChild(el("p", "poster-sub", (r.date || "") + (r.time ? " " + r.time : "")));
+  a.appendChild(el("p", "poster-sub", sub !== undefined ? sub : (r.time || "")));
   return a;
 }
 
@@ -93,18 +93,22 @@ function drawMain(pool) {
     return;
   }
   if (view === "timeline") {
-    const byDate = new Map();
+    const byMonth = new Map();
     pool
       .slice()
       .sort((a, b) => ((b.play_since || b.date || "") + (b.time || "")).localeCompare((a.play_since || a.date || "") + (a.time || "")))
       .forEach((r) => {
         const d = r.play_since || r.date || "未记日期";
-        if (!byDate.has(d)) byDate.set(d, []);
-        byDate.get(d).push(r);
+        const m = /^\d{4}-\d{2}/.test(d) ? d.slice(0, 7) : "未记日期";
+        if (!byMonth.has(m)) byMonth.set(m, []);
+        byMonth.get(m).push({ r, d });
       });
-    for (const [d, rows] of byDate) {
-      main.appendChild(el("h2", "sec-title date", d));
-      main.appendChild(gridOf(rows));
+    for (const [m, rows] of byMonth) {
+      const label = /^\d{4}-\d{2}$/.test(m) ? m.slice(0, 4) + " 年 " + Number(m.slice(5)) + " 月" : m;
+      main.appendChild(el("h2", "sec-title date", label));
+      const g = el("div", "rec-grid");
+      rows.forEach(({ r, d }) => g.appendChild(card(r, d.slice(5) + (r.time ? " " + r.time : ""))));
+      main.appendChild(g);
     }
     return;
   }
