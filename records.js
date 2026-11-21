@@ -95,10 +95,22 @@ function drawMain(pool) {
   if (group === "idea") {
     const planning = pool.filter((x) => x.status !== "已达成");
     const done = pool.filter((x) => x.status === "已达成");
+    const rows = (arr, doneFlag) => {
+      if (!arr.length) return '<p class="detail-empty">还没有。</p>';
+      return '<ul class="todo-list">' + arr
+        .slice()
+        .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
+        .map((x) => `<li class="todo-item${doneFlag ? " done" : ""}">
+          <span class="todo-mark">${doneFlag ? "✓" : "○"}</span>
+          <span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span>
+          <span class="todo-date">${esc((x.date || "").slice(5))}</span>
+        </li>`)
+        .join("") + "</ul>";
+    };
     main.appendChild(el("h2", "sec-title", "计划中"));
-    main.appendChild(gridOf(planning));
+    main.insertAdjacentHTML("beforeend", rows(planning, false));
     main.appendChild(el("h2", "sec-title", "已达成"));
-    main.appendChild(gridOf(done));
+    main.insertAdjacentHTML("beforeend", rows(done, true));
     return;
   }
   if (view === "timeline") {
