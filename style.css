@@ -1035,3 +1035,18 @@ body.lb-open { overflow: hidden; }
 }
 .lb-zone.left { left: 0; }
 .lb-zone.right { right: 0; }
+/* 翻页按钮加大 */
+.lb-nav {
+  width: 84px;
+  height: 84px;
+  font-size: 42px;
+  background: rgba(10, 22, 32, .32);
+  border-color: rgba(255,255,255,.18);
+  opacity: .8;
+}
+.lb-nav.prev { left: 10px; }
+.lb-nav.next { right: 10px; }
+.lb-nav:hover { transform: translateY(-50%) scale(1.06); }
+@media (max-width: 720px) {
+  .lb-nav { width: 56px; height: 56px; font-size: 28px; }
+}
