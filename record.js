@@ -77,6 +77,29 @@ function metaRow(k, v) {
     </div>
   `;
   bindShots();
+  // single-play: 同一时间只播一个视频
+  const vids = [...document.querySelectorAll(".video-list video, .video-wrap video")];
+  vids.forEach((v) => {
+    v.setAttribute("playsinline", "");
+    v.addEventListener("play", () => {
+      vids.forEach((o) => { if (o !== v && !o.paused) o.pause(); });
+    });
+  });
+  // 截图太多时折叠
+  const shotBox = document.querySelector(".shots");
+  if (shotBox && shotBox.children.length > 12) {
+    [...shotBox.children].slice(12).forEach((el) => el.classList.add("shot-hidden"));
+    const btn = document.createElement("button");
+    btn.className = "shots-more";
+    btn.textContent = "显示全部（" + shotBox.children.length + " 张）";
+    btn.addEventListener("click", () => {
+      const hidden = shotBox.querySelectorAll(".shot-hidden");
+      const opening = hidden.length > 0;
+      hidden.forEach((el) => el.classList.toggle("shot-hidden", !opening));
+      btn.textContent = opening ? "收起" : "显示全部（" + shotBox.children.length + " 张）";
+    });
+    shotBox.after(btn);
+  }
 })();
 
 
