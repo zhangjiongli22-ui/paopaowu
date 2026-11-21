@@ -1512,3 +1512,97 @@ body.lb-open { overflow: hidden; }
   padding: 7px 10px;
   color-scheme: dark;
 }
+/* Kira 个人页 */
+.kira-hero {
+  position: relative;
+  max-width: 980px;
+  margin: 26px auto 8px;
+  padding: 44px 28px 34px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,214,160,.16);
+  background:
+    radial-gradient(120% 140% at 12% 0%, rgba(255,196,120,.18), transparent 58%),
+    radial-gradient(120% 140% at 88% 100%, rgba(88,199,255,.14), transparent 60%),
+    rgba(12,32,48,.5);
+  overflow: hidden;
+}
+.kira-hero::after {
+  content: "";
+  position: absolute;
+  right: -70px;
+  top: -70px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,196,120,.18), transparent 70%);
+}
+.kira-hero-inner { position: relative; text-align: center; }
+.kira-kicker { font-size: 10.5px; letter-spacing: .3em; color: rgba(255,214,160,.75); margin: 0 0 10px; }
+.kira-name {
+  font-size: clamp(40px, 9vw, 68px);
+  line-height: 1;
+  margin: 0 0 12px;
+  letter-spacing: .02em;
+  background: linear-gradient(100deg, #fff3e2 10%, #ffcf9a 45%, #9cdcff 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kira-sub { font-size: 13.5px; color: var(--muted); margin: 0 0 18px; }
+.kira-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.kira-chips span {
+  font-size: 12px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(234,246,255,.8);
+  background: rgba(255,255,255,.03);
+}
+
+.kira-main { max-width: 980px; margin: 0 auto; padding: 0 22px 40px; }
+
+.kira-now {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 18px;
+  margin: 6px 0 22px;
+  border-radius: 14px;
+  border-left: 2px solid var(--accent);
+  background: rgba(16,40,60,.4);
+}
+.kira-now-label { font-size: 11px; letter-spacing: .22em; color: var(--muted); flex: none; }
+.kira-now-text { font-size: 14px; margin: 0; color: var(--ink); }
+
+.kira-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.kira-card {
+  padding: 20px 20px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(14,36,54,.42);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.kira-card:hover { border-color: rgba(255,214,160,.32); transform: translateY(-2px); }
+.kira-card-k { font-size: 11px; letter-spacing: .18em; color: rgba(255,214,160,.8); margin: 0 0 10px; }
+.kira-card-t { font-size: 15.5px; color: var(--ink); margin: 0 0 8px; line-height: 1.5; }
+.kira-card-d { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.7; }
+
+.kira-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.kira-link {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255,255,255,.14);
+  color: var(--ink);
+  transition: border-color .2s ease, background .2s ease;
+}
+.kira-link:hover { border-color: rgba(88,199,255,.45); background: rgba(22,52,76,.35); }
+.kira-link-k { font-size: 14px; }
+.kira-link-d { font-size: 12px; color: var(--muted); }
