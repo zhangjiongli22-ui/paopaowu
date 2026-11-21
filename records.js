@@ -69,13 +69,13 @@ function card(r, mode) {
     const md = /^\d{4}-\d{2}-\d{2}$/.test(start) ? start.slice(5) : start;
     subText = (md + " " + (r.time || "")).trim() || "未记";
   }
-  a.appendChild(el("p", "poster-sub", subText));
   if (r.rating) {
     const row = el("p", "poster-stars");
     const n = Math.max(0, Math.min(5, Math.round(r.rating / 2)));
-    row.innerHTML = '<span class="stars-on">' + "★".repeat(n) + '</span><span class="stars-off">' + "☆".repeat(5 - n) + '</span><span class="stars-num">' + (Math.round(r.rating / 2 * 10) / 10) + '</span>';
+    row.innerHTML = '<span class="stars-on">' + "★".repeat(n) + '</span><span class="stars-off">' + "☆".repeat(5 - n) + '</span>';
     a.appendChild(row);
   }
+  a.appendChild(el("p", "poster-sub", subText));
   return a;
 }
 
