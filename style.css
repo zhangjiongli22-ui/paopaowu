@@ -1805,3 +1805,16 @@ body.lb-open { overflow: hidden; }
 .rec-status:active { transform: scale(.97); }
 
 .rec-status.wish { color: var(--muted); border-color: var(--line); }
+
+/* 状态胶囊：不随状态变色、不位移 */
+.rec-status,
+.rec-status.wish {
+  color: var(--muted) !important;
+  border: 1px solid var(--line) !important;
+  background: transparent !important;
+  transition: none !important;
+  transform: none !important;
+  outline: none;
+}
+.rec-status:active,
+.rec-status.wish:active { transform: none !important; }
