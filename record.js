@@ -42,7 +42,8 @@ function metaRow(k, v) {
           <div class="meta-row"><span class="meta-k">分类</span><span class="meta-v">${esc(CATS[item.cat] || item.cat || "")}</span></div>
           ${metaRow("中文名", item.name_cn)}
           ${metaRow("话数", item.eps)}
-          ${metaRow("开始", item.air)}
+          ${metaRow(item.cat === "game" ? "发售" : "开始", item.air)}
+          ${metaRow("开始玩", item.play_since)}
           ${metaRow("导演/开发", item.director)}
           ${metaRow("制作", item.staff)}
           ${metaRow("Bangumi 评分", item.bgm_rating)}
