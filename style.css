@@ -1272,3 +1272,23 @@ body.lb-open { overflow: hidden; }
   margin: 18px 0 4px;
   padding-left: 2px;
 }
+/* 已达成更明显 */
+.todo-item.done { opacity: .62; }
+.todo-item.done .todo-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(126, 240, 208, .85);
+  color: rgba(234, 246, 255, .55);
+}
+.todo-item.done .todo-mark {
+  color: #0b1f2a;
+  background: #7ef0d0;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 11px;
+  line-height: 1;
+  margin-top: 2px;
+}
