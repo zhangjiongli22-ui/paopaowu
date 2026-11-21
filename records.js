@@ -321,6 +321,15 @@ function draw() {
     return;
   }
 
+  window.addEventListener("pageshow", async (e) => {
+    if (!e.persisted) return;
+    try {
+      const res = await fetch("data/records.json", { cache: "no-store" });
+      items = (await res.json()).items || [];
+      draw();
+    } catch (err) {}
+  });
+
   const gp = new URLSearchParams(location.search).get("group") || location.hash.replace("#", "");
   if (gp && GROUPS[gp]) group = gp;
 
