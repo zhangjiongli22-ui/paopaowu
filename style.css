@@ -1231,3 +1231,36 @@ body.lb-open { overflow: hidden; }
 .log-kind.k-media { color: #c9b8ff; border-color: rgba(200,180,255,.35); }
 .log-text { flex: 1; font-size: 14.5px; color: var(--ink); }
 .log-min { flex: none; font-size: 12.5px; color: var(--muted); }
+/* 时间线 */
+.tl-wrap { position: relative; padding-left: 20px; margin-top: 10px; }
+.tl-wrap::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: rgba(255,255,255,.12); }
+.tl-month { font-size: 13px; color: var(--muted); letter-spacing: .12em; margin: 26px 0 8px; }
+.tl-event {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  position: relative;
+  padding: 7px 0;
+  color: var(--ink);
+}
+.tl-dot {
+  position: absolute;
+  left: -17px;
+  top: 13px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(88,199,255,.14);
+}
+.tl-day { font-size: 11.5px; color: var(--muted); width: 38px; flex: none; }
+.tl-tag {
+  font-size: 10.5px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  flex: none;
+}
+.tl-title { flex: 1; font-size: 14px; min-width: 0; }
+.tl-time { font-size: 11px; color: rgba(159,196,221,.6); flex: none; }
