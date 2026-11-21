@@ -221,7 +221,7 @@ function draw() {
     return;
   }
 
-  const gp = new URLSearchParams(location.search).get("group");
+  const gp = new URLSearchParams(location.search).get("group") || location.hash.replace("#", "");
   if (gp && GROUPS[gp]) group = gp;
 
   // 小字视图切换，靠最右
@@ -242,6 +242,9 @@ function draw() {
     b.addEventListener("click", () => {
       group = k;
       cat = "all";
+      const u = new URL(location.href);
+      u.searchParams.set("group", k);
+      history.replaceState(null, "", u);
       [...groupRow.children].forEach((x) => x.classList.toggle("on", x === b));
       draw();
     });
