@@ -1,0 +1,15 @@
+{
+  "cats": ["idea", "movie", "game", "book", "fitness"],
+  "items": [
+    { "id": "m-2077", "cat": "movie", "title": "孤独摇滚！", "note": "手绘线条和情绪都好，壁纸都存了一堆。", "status": "看过", "date": "2026-11" },
+    { "id": "m-2078", "cat": "movie", "title": "BanG Dream! MyGO!!!!!", "note": "春日影那段反复看。", "status": "看过", "date": "2026-11" },
+    { "id": "m-2079", "cat": "movie", "title": "EVA", "note": "压箱底的那部，隔几年翻一次。", "status": "看过", "date": "2026-11" },
+    { "id": "m-2080", "cat": "movie", "title": "电锯人", "note": "画风和节奏都对我胃口。", "status": "看过", "date": "2026-11" },
+    { "id": "m-2081", "cat": "movie", "title": "伊藤润二精选集", "note": "夜里看，越看越精神。", "status": "看过", "date": "2026-11" },
+    { "id": "g-1001", "cat": "game", "title": "塞尔达 王国之泪", "note": "能玩到后半夜的那种。", "status": "在玩", "date": "2026-11" },
+    { "id": "g-1002", "cat": "game", "title": "明日方舟：终末地", "note": "刚开，慢慢摸。", "status": "在玩", "date": "2026-11" },
+    { "id": "g-1003", "cat": "game", "title": "绝区零", "note": "剪辑和立绘都很顶。", "status": "在玩", "date": "2026-11" },
+    { "id": "g-1004", "cat": "game", "title": "我的世界", "note": "想搭点什么就一直开着。", "status": "常驻", "date": "2026-11" },
+    { "id": "g-1005", "cat": "game", "title": "CS2", "note": "手感和亮度调好才算开始。", "status": "常驻", "date": "2026-11" }
+  ]
+}
