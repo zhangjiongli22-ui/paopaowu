@@ -1023,3 +1023,15 @@ body.lb-open { overflow: hidden; }
   .lb-nav { width: 40px; height: 40px; font-size: 20px; left: 8px; right: 8px; }
   .lb-nav.next { left: auto; right: 8px; }
 }
+/* 左右大面积点击区 */
+.lb-zone {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 30%;
+  z-index: 78;
+  cursor: pointer;
+  background: transparent;
+}
+.lb-zone.left { left: 0; }
+.lb-zone.right { right: 0; }
