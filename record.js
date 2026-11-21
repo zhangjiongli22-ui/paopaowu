@@ -147,6 +147,20 @@ function bindShots() {
 
   bindShots();
 
+  const isAdmin = !!localStorage.getItem("paopaowu_admin");
+  const rateBox = document.querySelector(".rate-box");
+  const scoreBox = document.querySelector(".kira-score");
+  if (rateBox) {
+    rateBox.hidden = !isAdmin;
+    if (!isAdmin) {
+      const tip = document.createElement("p");
+      tip.className = "rate-locked";
+      tip.innerHTML = '登录后才能改评分和评价 · <a href="login.html">去登录</a>';
+      rateBox.after(tip);
+    }
+  }
+  if (scoreBox) scoreBox.hidden = false;
+
   // 截图折叠
   const shotBox = document.querySelector(".shots");
   if (shotBox && shotBox.children.length > 12) {
