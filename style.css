@@ -1479,3 +1479,8 @@ body.lb-open { overflow: hidden; }
 .sec-fold-head::-webkit-details-marker { display: none; }
 .sec-fold-head::after { content: " ▾"; font-size: 11px; color: var(--muted); }
 .sec-fold[open] .sec-fold-head::after { content: " ▴"; }
+/* 声明页 */
+.prose { max-width: 720px; margin: 0 auto; padding: 0 22px 40px; line-height: 1.85; }
+.prose h2 { font-size: 15px; letter-spacing: .08em; color: var(--accent2); margin: 28px 0 8px; }
+.prose p { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+.prose a { color: var(--accent); }
