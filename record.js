@@ -154,7 +154,7 @@ function bindShots() {
     box = document.createElement("div");
     box.className = "lightbox shotbox";
     box.hidden = true;
-    box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+    box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button><div class="lb-zone left"></div><div class="lb-zone right"></div></div>';
     document.body.appendChild(box);
     box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
     box.addEventListener("click", (e) => { if (e.target === box) box.hidden = true; });
@@ -179,6 +179,10 @@ function bindShots() {
 
   box.querySelector(".lb-nav.prev").onclick = (e) => { e.stopPropagation(); show(idx - 1); };
   box.querySelector(".lb-nav.next").onclick = (e) => { e.stopPropagation(); show(idx + 1); };
+  const zL = box.querySelector(".lb-zone.left");
+  const zR = box.querySelector(".lb-zone.right");
+  if (zL) zL.onclick = (e) => { e.stopPropagation(); show(idx - 1); };
+  if (zR) zR.onclick = (e) => { e.stopPropagation(); show(idx + 1); };
 
   imgs.forEach((img, i) => {
     img.addEventListener("click", () => { show(i); box.hidden = false; });
