@@ -1076,3 +1076,12 @@ body.lb-open { overflow: hidden; }
   .video-list { grid-template-columns: 1fr; }
   .video-item video { max-height: 240px; }
 }
+/* 灯箱近似全屏 */
+.lightbox { padding: 0; }
+.lightbox img {
+  max-width: 96vw;
+  max-height: 86vh;
+  border-radius: 8px;
+}
+.lightbox:fullscreen img { max-height: 82vh; }
+.lightbox:fullscreen { background: #02080e; }
