@@ -137,6 +137,15 @@ function bindShots() {
           <div class="rate-pass-row">
             <input type="password" id="rate-pass" class="rate-pass" placeholder="保存密码（设置过一次就只输这个）" autocomplete="current-password">
           </div>
+          <details class="pass-setup">
+            <summary>第一次用？在这里设置</summary>
+            <div class="pass-setup-body">
+              <input type="password" id="setup-token" class="rate-pass" placeholder="粘贴 GitHub token">
+              <input type="password" id="setup-pass" class="rate-pass" placeholder="设一个保存密码">
+              <button type="button" id="setup-save" class="lb-btn">保存设置</button>
+              <span id="setup-msg" class="rate-msg"></span>
+            </div>
+          </details>
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
@@ -224,6 +233,20 @@ function bindShots() {
   }
 
   let token = sessionStorage.getItem("paopaowu_sess");
+
+  const setupBtn = document.getElementById("setup-save");
+  if (setupBtn) {
+    setupBtn.addEventListener("click", async () => {
+      const t = (document.getElementById("setup-token").value || "").trim();
+      const p1 = (document.getElementById("setup-pass").value || "").trim();
+      const box = document.getElementById("setup-msg");
+      if (!t || !p1) { box.textContent = "两项都要填"; return; }
+      await savePassword(t, p1);
+      token = t;
+      sessionStorage.setItem("paopaowu_sess", token);
+      box.textContent = "设好了，以后只输密码";
+    });
+  }
 
   tokenLink.addEventListener("click", async (e) => {
     e.preventDefault();
