@@ -21,6 +21,7 @@ const catRow = document.getElementById("cat-row");
 
 let items = [];
 let group = "hobby";
+let view = "summary";
 let cat = "all";
 let dayFilter = "";
 
@@ -91,6 +92,22 @@ function drawMain(pool) {
     main.appendChild(gridOf(planning));
     main.appendChild(el("h2", "sec-title", "已达成"));
     main.appendChild(gridOf(done));
+    return;
+  }
+  if (view === "timeline") {
+    const byDate = new Map();
+    pool
+      .slice()
+      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
+      .forEach((r) => {
+        const d = r.date || "未记日期";
+        if (!byDate.has(d)) byDate.set(d, []);
+        byDate.get(d).push(r);
+      });
+    for (const [d, rows] of byDate) {
+      main.appendChild(el("h2", "sec-title date", d));
+      main.appendChild(gridOf(rows));
+    }
     return;
   }
   main.appendChild(gridOf(summarised(pool)));
@@ -166,7 +183,6 @@ function draw() {
   }
 
   drawMain(pool);
-  if (side) drawSide(poolCat);
 }
 
 (async () => {
@@ -181,6 +197,17 @@ function draw() {
 
   const gp = new URLSearchParams(location.search).get("group");
   if (gp && GROUPS[gp]) group = gp;
+
+  const viewRow = document.getElementById("view-row");
+  const drawViews = () => {
+    viewRow.innerHTML = "";
+    [["summary", "汇总"], ["timeline", "时间线"]].forEach(([k, name]) => {
+      const b = el("button", "view-btn" + (k === view ? " on" : ""), name);
+      b.addEventListener("click", () => { view = k; drawViews(); draw(); });
+      viewRow.appendChild(b);
+    });
+  };
+  drawViews();
 
   Object.keys(GROUPS).forEach((k) => {
     const b = el("button", "group-btn" + (k === group ? " on" : ""), GROUPS[k].name);
