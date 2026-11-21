@@ -1709,3 +1709,7 @@ body.lb-open { overflow: hidden; }
   cursor: pointer;
 }
 .review-edit:hover { color: var(--ink); border-color: rgba(88,199,255,.45); }
+/* 卡片星数：黄色，放在名字下 */
+.poster-stars { margin: 4px 0 2px; font-size: 12.5px; letter-spacing: 2px; line-height: 1; }
+.poster-stars .stars-on { color: #ffd76a; }
+.poster-stars .stars-off { color: rgba(255,215,106,.22); }
