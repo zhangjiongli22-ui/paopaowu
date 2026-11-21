@@ -9,6 +9,10 @@ function stars(n) {
   return "★".repeat(v) + "☆".repeat(5 - v);
 }
 
+function five(n) {
+  return (Math.round((n || 0) / 2 * 10) / 10).toString();
+}
+
 function metaRow(k, v) {
   if (!v) return "";
   return `<div class="meta-row"><span class="meta-k">${esc(k)}</span><span class="meta-v">${esc(v)}</span></div>`;
@@ -119,11 +123,11 @@ function bindShots() {
         <div class="kira-score">
           <span class="score-label">Kira 评分</span>
           <span class="score-stars" id="score-stars">${item.rating ? stars(item.rating) : "还没评分"}</span>
-          <span class="score-num" id="score-num">${item.rating ? esc(item.rating) + "/10" : ""}</span>
+          <span class="score-num" id="score-num">${item.rating ? esc(five(item.rating)) + "/5" : ""}</span>
           ${item.status ? `<span class="rec-status">${esc(item.status)}</span>` : ""}
         </div>
         <div class="rate-box">
-          <div class="rate-stars" id="rate-stars">${[1,2,3,4,5,6,7,8,9,10].map((n) => `<button type="button" data-v="${n}">★</button>`).join("")}</div>
+          <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" data-v="${n * 2}">★</button>`).join("")}</div>
           <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
           <div class="rate-time">
             <span class="rate-time-label">${item.cat === "game" ? "游玩时间" : "观看时间"}</span>
@@ -175,7 +179,7 @@ function bindShots() {
     if (!b) return;
     value = Number(b.dataset.v);
     [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= value));
-    msg.textContent = value + "/10";
+    msg.textContent = value / 2 + "/5";
   });
 
   const KEY = "paopaowu_pass";
