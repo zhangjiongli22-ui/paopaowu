@@ -1803,3 +1803,5 @@ body.lb-open { overflow: hidden; }
   transition: color .18s ease, border-color .18s ease, background .18s ease;
 }
 .rec-status:active { transform: scale(.97); }
+
+.rec-status.wish { color: var(--muted); border-color: var(--line); }
