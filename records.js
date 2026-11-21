@@ -21,7 +21,6 @@ const catRow = document.getElementById("cat-row");
 
 let items = [];
 let group = "hobby";
-let view = "summary";
 let cat = "all";
 let dayFilter = "";
 
@@ -60,14 +59,13 @@ function card(r) {
   return a;
 }
 
-function gridOf(rows, cls) {
-  const g = el("div", cls || "rec-grid");
+function gridOf(rows) {
+  const g = el("div", "rec-grid");
   if (!rows.length) g.appendChild(el("p", "detail-empty", "还没有。"));
   rows.forEach((r) => g.appendChild(card(r)));
   return g;
 }
 
-/* 汇总：同名合并 */
 function summarised(rows) {
   const map = new Map();
   rows.forEach((r) => {
@@ -94,59 +92,26 @@ function drawMain(pool) {
     main.appendChild(gridOf(done));
     return;
   }
-  if (view === "timeline") {
-    const byDate = new Map();
-    pool
-      .slice()
-      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
-      .forEach((r) => {
-        const d = r.date || "未记日期";
-        if (!byDate.has(d)) byDate.set(d, []);
-        byDate.get(d).push(r);
-      });
-    for (const [d, rows] of byDate) {
-      main.appendChild(el("h2", "sec-title date", d));
-      main.appendChild(gridOf(rows));
-    }
-    return;
-  }
   main.appendChild(gridOf(summarised(pool)));
 }
 
 function drawSide(pool) {
   if (!side) return;
   side.innerHTML = "";
-  const head = el("p", "side-title", "时间线");
-  side.appendChild(head);
+  side.appendChild(el("p", "side-title", "时间线"));
   if (!pool.length) return;
 
   const dates = new Map();
   pool.forEach((r) => {
     const d = r.date || "未记日期";
-    if (!dates.has(d)) dates.set(d, []);
-    dates.get(d).push(r);
+    dates.set(d, (dates.get(d) || 0) + 1);
   });
 
   const list = el("div", "side-list");
   [...dates.keys()].sort((a, b) => b.localeCompare(a)).forEach((d) => {
-    const rows = dates.get(d);
     const b = el("button", "side-date" + (d === dayFilter ? " on" : ""));
-    const thumb = el("span", "side-thumb");
-    const cover = rows.find((x) => x.cover);
-    if (cover) {
-      const img = el("img");
-      img.src = cover.cover;
-      img.alt = "";
-      img.loading = "lazy";
-      thumb.appendChild(img);
-    } else {
-      thumb.appendChild(el("span", "poster-fallback", (rows[0].title || "?")[0]));
-    }
-    b.appendChild(thumb);
-    const body = el("span", "side-body");
-    body.appendChild(el("span", "side-d", d));
-    body.appendChild(el("span", "side-n", rows.length + " 条"));
-    b.appendChild(body);
+    b.appendChild(el("span", "side-d", d));
+    b.appendChild(el("span", "side-n", dates.get(d)));
     b.addEventListener("click", () => {
       dayFilter = dayFilter === d ? "" : d;
       draw();
@@ -166,7 +131,6 @@ function draw() {
   const poolCat = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
   const pool = dayFilter ? poolCat.filter((x) => (x.date || "未记日期") === dayFilter) : poolCat;
 
-  // 分类 chips（只在爱好里显示）
   catRow.innerHTML = "";
   if (group === "hobby") {
     const counts = {};
@@ -183,13 +147,13 @@ function draw() {
   }
 
   drawMain(pool);
+  drawSide(poolCat);
 }
 
 (async () => {
   try {
     const res = await fetch("data/records.json", { cache: "no-store" });
-    const data = await res.json();
-    items = data.items || [];
+    items = (await res.json()).items || [];
   } catch (e) {
     main.innerHTML = '<p class="loading-bar">还没连上记录。</p>';
     return;
@@ -197,17 +161,6 @@ function draw() {
 
   const gp = new URLSearchParams(location.search).get("group");
   if (gp && GROUPS[gp]) group = gp;
-
-  const viewRow = document.getElementById("view-row");
-  const drawViews = () => {
-    viewRow.innerHTML = "";
-    [["summary", "汇总"], ["timeline", "时间线"]].forEach(([k, name]) => {
-      const b = el("button", "view-btn" + (k === view ? " on" : ""), name);
-      b.addEventListener("click", () => { view = k; drawViews(); draw(); });
-      viewRow.appendChild(b);
-    });
-  };
-  drawViews();
 
   Object.keys(GROUPS).forEach((k) => {
     const b = el("button", "group-btn" + (k === group ? " on" : ""), GROUPS[k].name);
