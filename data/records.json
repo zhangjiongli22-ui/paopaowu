@@ -126,31 +126,8 @@
    "bgm_rating": 5.6,
    "bgm_id": 374638,
    "name_cn": "明日方舟：终末地",
+   "play_since": "2026-01-26",
    "shots": [
-    "assets/shots/endfield/s01-490af16e-490af16e.jpg",
-    "assets/shots/endfield/s02-e1920df7-e1920df7.jpg",
-    "assets/shots/endfield/s03-c1858b3c-c1858b3c.jpg",
-    "assets/shots/endfield/s04-f647d293-f647d293.jpg",
-    "assets/shots/endfield/s05-8b287fa9-8b287fa9.jpg",
-    "assets/shots/endfield/s06-202c74c9-202c74c9.jpg",
-    "assets/shots/endfield/s07-63fcf574-63fcf574.jpg",
-    "assets/shots/endfield/s08-9f99b7c7-9f99b7c7.jpg",
-    "assets/shots/endfield/s09-39b17882-39b17882.jpg",
-    "assets/shots/endfield/s10-b39f9f02-b39f9f02.jpg",
-    "assets/shots/endfield/s11-42b7af60-42b7af60.jpg",
-    "assets/shots/endfield/s12-0b310d5f-0b310d5f.jpg",
-    "assets/shots/endfield/s01-490af16e-490af16e.jpg",
-    "assets/shots/endfield/s02-e1920df7-e1920df7.jpg",
-    "assets/shots/endfield/s03-c1858b3c-c1858b3c.jpg",
-    "assets/shots/endfield/s04-f647d293-f647d293.jpg",
-    "assets/shots/endfield/s05-8b287fa9-8b287fa9.jpg",
-    "assets/shots/endfield/s06-202c74c9-202c74c9.jpg",
-    "assets/shots/endfield/s07-63fcf574-63fcf574.jpg",
-    "assets/shots/endfield/s08-9f99b7c7-9f99b7c7.jpg",
-    "assets/shots/endfield/s09-39b17882-39b17882.jpg",
-    "assets/shots/endfield/s10-b39f9f02-b39f9f02.jpg",
-    "assets/shots/endfield/s11-42b7af60-42b7af60.jpg",
-    "assets/shots/endfield/s12-0b310d5f-0b310d5f.jpg",
     "assets/shots/endfield/s01-f10de8ff.jpg",
     "assets/shots/endfield/s02-7224435a.jpg",
     "assets/shots/endfield/s03-89f95828.jpg",
@@ -177,8 +154,7 @@
     "assets/shots/endfield/s24-b39f9f02.jpg",
     "assets/shots/endfield/s25-42b7af60.jpg",
     "assets/shots/endfield/s26-0b310d5f.jpg"
-   ],
-   "play_since": "2026-01-26"
+   ]
   },
   {
    "id": "g-1003",
@@ -250,23 +226,10 @@
    "bgm_rating": 6.4,
    "bgm_id": 425633,
    "name_cn": "反恐精英2",
+   "play_since": "2026-03-20",
+   "director": "",
+   "staff": "",
    "shots": [
-    "assets/shots/counter-strike-2/s01-b88d289d-b88d289d.jpg",
-    "assets/shots/counter-strike-2/s02-ea882a7c-ea882a7c.jpg",
-    "assets/shots/counter-strike-2/s03-a7bba278-a7bba278.jpg",
-    "assets/shots/counter-strike-2/s04-84baff15-84baff15.jpg",
-    "assets/shots/counter-strike-2/s05-96cc7d62-96cc7d62.jpg",
-    "assets/shots/counter-strike-2/s06-f0678f97-f0678f97.jpg",
-    "assets/shots/counter-strike-2/s07-f2ddf3d4-f2ddf3d4.jpg",
-    "assets/shots/counter-strike-2/s08-f8f2bc84-f8f2bc84.jpg",
-    "assets/shots/counter-strike-2/s01-b88d289d-b88d289d.jpg",
-    "assets/shots/counter-strike-2/s02-ea882a7c-ea882a7c.jpg",
-    "assets/shots/counter-strike-2/s03-a7bba278-a7bba278.jpg",
-    "assets/shots/counter-strike-2/s04-84baff15-84baff15.jpg",
-    "assets/shots/counter-strike-2/s05-96cc7d62-96cc7d62.jpg",
-    "assets/shots/counter-strike-2/s06-f0678f97-f0678f97.jpg",
-    "assets/shots/counter-strike-2/s07-f2ddf3d4-f2ddf3d4.jpg",
-    "assets/shots/counter-strike-2/s08-f8f2bc84-f8f2bc84.jpg",
     "assets/shots/counter-strike-2/s01-b88d289d.jpg",
     "assets/shots/counter-strike-2/s02-ea882a7c.jpg",
     "assets/shots/counter-strike-2/s03-a7bba278.jpg",
@@ -275,10 +238,7 @@
     "assets/shots/counter-strike-2/s06-f0678f97.jpg",
     "assets/shots/counter-strike-2/s07-f2ddf3d4.jpg",
     "assets/shots/counter-strike-2/s08-f8f2bc84.jpg"
-   ],
-   "play_since": "2026-03-20",
-   "director": "",
-   "staff": ""
+   ]
   },
   {
    "id": "game-8e3534d1",
@@ -287,20 +247,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/ntegame/s01-76821f73-76821f73.jpg",
-    "assets/shots/ntegame/s02-32a05b6c-32a05b6c.jpg",
-    "assets/shots/nte-neverness-to-everness/s01-34bb3366-34bb3366.jpg",
-    "assets/shots/nte-neverness-to-everness/s02-11b8ace7-11b8ace7.jpg",
-    "assets/shots/nte-neverness-to-everness/s03-a2799bf6-a2799bf6.jpg",
-    "assets/shots/ntegame/s01-76821f73-76821f73.jpg",
-    "assets/shots/ntegame/s02-32a05b6c-32a05b6c.jpg",
-    "assets/shots/nte-neverness-to-everness/s01-34bb3366.jpg",
-    "assets/shots/nte-neverness-to-everness/s02-11b8ace7.jpg",
-    "assets/shots/nte-neverness-to-everness/s03-a2799bf6.jpg",
-    "assets/shots/ntegame/s01-76821f73.jpg",
-    "assets/shots/ntegame/s02-32a05b6c.jpg"
-   ],
    "desc": "《异环》是Hotta Studio自主研发的超自然都市开放世界RPG。故事将从海特洛市启篇，作为首位「无证上岗」的「异象猎人」，你将成为接取民间异象委托维持周转的古董店「伊波恩」的一员，与个性迥异、能力非凡的伙伴们一起探索各城市的大小谜团，历经有笑有泪的各式奇遇，演绎独属于你们的都市物语。",
    "air": "2026-04-23",
    "director": "Hotta Studio",
@@ -308,7 +254,11 @@
    "cover": "assets/covers/game-8e3534d1-bgm-dc54c00e.jpg",
    "bgm_id": 503983,
    "name_cn": "异环",
-   "play_since": "2026-04-29"
+   "play_since": "2026-04-29",
+   "shots": [
+    "assets/shots/ntegame/s01-76821f73.jpg",
+    "assets/shots/ntegame/s02-32a05b6c.jpg"
+   ]
   },
   {
    "id": "game-7a097846",
@@ -317,13 +267,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/eclipsium/s01-564f8463-564f8463.jpg",
-    "assets/shots/eclipsium/s02-7328afba-7328afba.jpg",
-    "assets/shots/eclipsium/s03-28244e74-28244e74.jpg",
-    "assets/shots/eclipsium/s04-163f1df3-163f1df3.jpg",
-    "assets/shots/eclipsium/s05-b8bd978b-b8bd978b.jpg"
-   ],
    "desc": "这是一款迷幻的复古风格恐怖游戏，你将跨越众多超现实的地域，不断深入更为异常的世界，在沉浸式的非欧几里得时空中逐渐失去对时间与空间的感知。在高塔之后，还有什么在等待着你呢？\r\n\r\n莫停步\r\n蚀之境无庇护，亦无慰藉。\r\n\r\n惟有那苍白微光，引你踏上荆棘之途。\r\n\r\n入螺旋\r\n心脏高悬，光芒黯淡，五感亦随之湮灭。\r\n\r\n唯其沉缓鼓动，仍在这自噬的世界中回响不止——\r\n\r\n饥饿之意，潜伏于你肌肤之下。\r\n\r\n寻她去\r\n她残光微弱，如今仅是记忆深处的一缕低语，\r\n\r\n却仍牵引你步步向前。\r\n\r\n即便为诱引之谋，于这苦难蚀夜中，\r\n\r\n亦是你唯一的希望。",
    "air": "2025-09-19",
    "director": "Housefire",
@@ -340,12 +283,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/no-i-m-not-a-human/s01-4f427145-4f427145.jpg",
-    "assets/shots/no-i-m-not-a-human/s02-0c56e915-0c56e915.jpg",
-    "assets/shots/no-i-m-not-a-human/s03-24c65e7f-24c65e7f.jpg",
-    "assets/shots/no-i-m-not-a-human/s04-19ec4ac4-19ec4ac4.jpg"
-   ],
    "play_since": "2026-04-12"
   },
   {
@@ -355,11 +292,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/forza-horizon-6/s01-3d3f12ca-3d3f12ca.jpg",
-    "assets/shots/forza-horizon-6/s02-1a6a9714-1a6a9714.jpg",
-    "assets/shots/forza-horizon-6/s03-3a49f607-3a49f607.jpg"
-   ],
    "desc": "驾驶超过 550 辆真实存在的车辆，探索日本的绝美风光，在地平线嘉年华成为竞速传奇。以游客身份在日本开启你的旅程，探索充满劲歌金曲与日本文化的游戏世界。建造山谷地产、购买梦幻住宅，在全面定制的车库中展示你最珍贵的车辆收藏！与好友一起上街巡游，加入日本各地的车友会，充分发挥想象游玩 EventLab，加入地平线 CoLab 与其他玩家一起建造！\r\n\r\n你的地平线传奇之旅即刻开始——日本的大好山河等待你的探索！\r\n\r\n体验 极限竞速：地平线 最大的游戏世界——东京\r\n\r\n欢迎来到东京！在这里，乡村与城市景观有机融合，伴你在地平线有史以来密度最高的地图中探索隐藏秘密，体验精密的纵向设计，游览设计丰富的生态环境，享受绝佳驾驶体验。漫游东京，在郊区和极具标志性的市区街道尽情兜风，在码头与工业区挑战自己的驾驶技术，饱览极限竞速：地平线系列史上最大的城市区域风光，尽情畅游这座车迷家园。\r\n\r\n\r\n沉浸式体验日本浓厚的汽车文化\r\n\r\n驾驶超过 550 辆真实存在的车辆——其中不乏人气超高、粉丝热捧的 JDM 经典车型。车辆配备精致引擎声浪与全面更新的转向动画，更有全面更新的高达 540 度的方向盘转向动画。探索日本的过程中，你还有机会收集带有极限改装的极限竞速特别版车辆、寻获可供试驾和购买的稀有改装车辆。你将在名利双收的赛车之旅中遇到各位地平线嘉年华传奇、参与山道赛，体验根植于日本传奇汽车文化、原",
    "air": "2026-05-19",
    "director": "Playground Games",
@@ -376,9 +308,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/warframe/s01-e3d98cf3-e3d98cf3.jpg"
-   ],
    "desc": "Warframe（中文名：星际战甲）是一个2013年的第三人称射击游戏，由Digital Extremes开发，可在Microsoft Windows、PlayStation 4、Xbox One的平台上游玩，采免费游玩制。\r\n\r\n玩家扮演一个Tenno的成员，Tenno是一群使用刀刃与枪械的古老战士，擅长使用Warframes装甲，从人体冷冻中醒来后发现他们正陷入和Grineer、Corpus以及Infested三个派系的内战中。Grineer是一种军事化的克隆人种族，Corpus是一个拥有先进机械与雷射技术的巨型企业，Infested是被Technocyte病毒感染的受害者。为了对抗这些敌人，Tenno使用了拥有独特能力的先进外骨骼装甲Warframes.",
    "air": "2013-03-26",
    "bgm_rating": 6.6,
@@ -394,10 +323,6 @@
    "status": "在玩",
    "date": "2026-11-21",
    "time": "21:00",
-   "shots": [
-    "assets/shots/星穹铁道/s01-437546a9-437546a9.jpg",
-    "assets/shots/星穹铁道/s02-d7f5780f-d7f5780f.jpg"
-   ],
    "desc": "这片银河中有名为「星神」的存在，祂们造就现实，抹消星辰，在无数「世界」中留下祂们的痕迹。\r\n\r\n你——一名特殊的旅客，将与继承「开拓」意志的同伴一起，乘坐星穹列车穿越银河，沿着某位「星神」曾经所行之途前进。\r\n\r\n你将由此探索新的文明，结识新的伙伴，在无数光怪陆离的「世界」与「世界」之间展开新的冒险。所有你想知道的，都将在群星中找到答案。\r\n\r\n那么，准备好开始这段「开拓」之旅了吗？\r\n\r\n《崩坏：星穹铁道》是米哈游自研的全新银河冒险策略游戏。你将在游戏中登上星穹列车，造访寓居宇宙的万象世界，携手形形色色的旅伴，解救「星核」引发的种种危机，对抗「星神」践踏文明的意图。",
    "air": "2023-04-26",
    "director": "米哈游",
@@ -413,14 +338,7 @@
    "title": "Eclipsium",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/eclipsium/s01-564f8463-564f8463.jpg",
-    "assets/shots/eclipsium/s02-7328afba-7328afba.jpg",
-    "assets/shots/eclipsium/s03-28244e74-28244e74.jpg",
-    "assets/shots/eclipsium/s04-163f1df3-163f1df3.jpg",
-    "assets/shots/eclipsium/s05-b8bd978b-b8bd978b.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-5535c73a",
@@ -428,13 +346,7 @@
    "title": "No, I'm Not A Human",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/no-i-m-not-a-human/s01-4f427145-4f427145.jpg",
-    "assets/shots/no-i-m-not-a-human/s02-0c56e915-0c56e915.jpg",
-    "assets/shots/no-i-m-not-a-human/s03-24c65e7f-24c65e7f.jpg",
-    "assets/shots/no-i-m-not-a-human/s04-19ec4ac4-19ec4ac4.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-4f1da5c2",
@@ -442,12 +354,7 @@
    "title": "Forza Horizon 6",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/forza-horizon-6/s01-3d3f12ca-3d3f12ca.jpg",
-    "assets/shots/forza-horizon-6/s02-1a6a9714-1a6a9714.jpg",
-    "assets/shots/forza-horizon-6/s03-3a49f607-3a49f607.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-8b2e23be",
@@ -455,10 +362,7 @@
    "title": "Warframe",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/warframe/s01-e3d98cf3-e3d98cf3.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-158edd86",
@@ -466,11 +370,7 @@
    "title": "星穹铁道",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/星穹铁道/s01-437546a9-437546a9.jpg",
-    "assets/shots/星穹铁道/s02-d7f5780f-d7f5780f.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-2a80a6d0",
@@ -478,14 +378,7 @@
    "title": "Eclipsium",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/eclipsium/s01-564f8463-564f8463.jpg",
-    "assets/shots/eclipsium/s02-7328afba-7328afba.jpg",
-    "assets/shots/eclipsium/s03-28244e74-28244e74.jpg",
-    "assets/shots/eclipsium/s04-163f1df3-163f1df3.jpg",
-    "assets/shots/eclipsium/s05-b8bd978b-b8bd978b.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-3c0fca63",
@@ -493,13 +386,7 @@
    "title": "No, I'm Not A Human",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/no-i-m-not-a-human/s01-4f427145-4f427145.jpg",
-    "assets/shots/no-i-m-not-a-human/s02-0c56e915-0c56e915.jpg",
-    "assets/shots/no-i-m-not-a-human/s03-24c65e7f-24c65e7f.jpg",
-    "assets/shots/no-i-m-not-a-human/s04-19ec4ac4-19ec4ac4.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-a878529f",
@@ -507,12 +394,7 @@
    "title": "Forza Horizon 6",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/forza-horizon-6/s01-3d3f12ca-3d3f12ca.jpg",
-    "assets/shots/forza-horizon-6/s02-1a6a9714-1a6a9714.jpg",
-    "assets/shots/forza-horizon-6/s03-3a49f607-3a49f607.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-fbec0e26",
@@ -520,10 +402,7 @@
    "title": "Warframe",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/warframe/s01-e3d98cf3-e3d98cf3.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-84db9ad1",
@@ -531,11 +410,7 @@
    "title": "星穹铁道",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/星穹铁道/s01-437546a9-437546a9.jpg",
-    "assets/shots/星穹铁道/s02-d7f5780f-d7f5780f.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-b0f14bef",
@@ -543,14 +418,7 @@
    "title": "Eclipsium",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/eclipsium/s01-564f8463-564f8463.jpg",
-    "assets/shots/eclipsium/s02-7328afba-7328afba.jpg",
-    "assets/shots/eclipsium/s03-28244e74-28244e74.jpg",
-    "assets/shots/eclipsium/s04-163f1df3-163f1df3.jpg",
-    "assets/shots/eclipsium/s05-b8bd978b-b8bd978b.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-5e3b77fc",
@@ -558,13 +426,7 @@
    "title": "No, I'm Not A Human",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/no-i-m-not-a-human/s01-4f427145-4f427145.jpg",
-    "assets/shots/no-i-m-not-a-human/s02-0c56e915-0c56e915.jpg",
-    "assets/shots/no-i-m-not-a-human/s03-24c65e7f-24c65e7f.jpg",
-    "assets/shots/no-i-m-not-a-human/s04-19ec4ac4-19ec4ac4.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-4e2178d8",
@@ -572,12 +434,7 @@
    "title": "Forza Horizon 6",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/forza-horizon-6/s01-3d3f12ca-3d3f12ca.jpg",
-    "assets/shots/forza-horizon-6/s02-1a6a9714-1a6a9714.jpg",
-    "assets/shots/forza-horizon-6/s03-3a49f607-3a49f607.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-97a9e265",
@@ -585,10 +442,7 @@
    "title": "Warframe",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/warframe/s01-e3d98cf3-e3d98cf3.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-fc36a64b",
@@ -596,14 +450,50 @@
    "title": "星穹铁道",
    "status": "在玩",
    "date": "2026-11-21",
-   "time": "21:00",
-   "shots": [
-    "assets/shots/星穹铁道/s01-437546a9-437546a9.jpg",
-    "assets/shots/星穹铁道/s02-d7f5780f-d7f5780f.jpg"
-   ]
+   "time": "21:00"
   },
   {
    "id": "game-c604823c",
+   "cat": "game",
+   "title": "Eclipsium",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-4845ac57",
+   "cat": "game",
+   "title": "No, I'm Not A Human",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-27f5d3ae",
+   "cat": "game",
+   "title": "Forza Horizon 6",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-647b803b",
+   "cat": "game",
+   "title": "Warframe",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-02130e62",
+   "cat": "game",
+   "title": "星穹铁道",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00"
+  },
+  {
+   "id": "game-1c03de78",
    "cat": "game",
    "title": "Eclipsium",
    "status": "在玩",
@@ -618,7 +508,7 @@
    ]
   },
   {
-   "id": "game-4845ac57",
+   "id": "game-5b2f0118",
    "cat": "game",
    "title": "No, I'm Not A Human",
    "status": "在玩",
@@ -632,7 +522,7 @@
    ]
   },
   {
-   "id": "game-27f5d3ae",
+   "id": "game-4ffcca9a",
    "cat": "game",
    "title": "Forza Horizon 6",
    "status": "在玩",
@@ -645,7 +535,7 @@
    ]
   },
   {
-   "id": "game-647b803b",
+   "id": "game-e5c9ab10",
    "cat": "game",
    "title": "Warframe",
    "status": "在玩",
@@ -656,7 +546,7 @@
    ]
   },
   {
-   "id": "game-02130e62",
+   "id": "game-818b3ef5",
    "cat": "game",
    "title": "星穹铁道",
    "status": "在玩",
