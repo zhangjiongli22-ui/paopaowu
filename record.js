@@ -47,6 +47,7 @@ function metaRow(k, v) {
           ${metaRow("制作", item.staff)}
           ${metaRow("Bangumi 评分", item.bgm_rating)}
         </div>
+        ${item.desc ? `<div class="subject-desc">${esc(item.desc).replace(/\n/g, "<br>")}</div>` : ""}
       </aside>
       <section class="subject-main">
         <h1 class="subject-title">${esc(item.title)}</h1>
@@ -58,19 +59,17 @@ function metaRow(k, v) {
         </div>
         <div class="rate-box">
           <div class="rate-stars" id="rate-stars">${[1,2,3,4,5,6,7,8,9,10].map((n) => `<button type="button" data-v="${n}">★</button>`).join("")}</div>
-          <textarea id="rate-note" class="rate-note" placeholder="写点感想…">${esc(item.note || "")}</textarea>
+          <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
             <a href="#" id="set-token" class="rate-token">设置保存权限</a>
           </div>
         </div>
-        ${item.desc ? `<div class="subject-desc">${esc(item.desc).replace(/\n/g, "<br>")}</div>` : ""}
-        ${item.note ? `<p class="subject-note">${esc(item.note)}</p>` : ""}
-        ${item.why ? `<p class="subject-why">为什么记：${esc(item.why)}</p>` : ""}
-        ${item.video ? `<h2 class="shots-head">片段</h2><div class="shots"><video src="${esc(item.video)}" controls preload="metadata"></video></div>` : ""}
         <h2 class="shots-head">截图</h2>
         ${shots ? `<div class="shots">${shots}</div>` : `<p class="detail-empty">还没有截图。</p>`}
+        <h2 class="shots-head">游玩录屏</h2>
+        ${item.video ? `<div class="shots video-wrap"><video src="${esc(item.video)}" controls preload="metadata"></video></div>` : `<p class="detail-empty">还没有录屏。</p>`}
       </section>
     </div>
   `;
