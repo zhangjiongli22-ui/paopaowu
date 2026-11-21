@@ -1461,3 +1461,6 @@ body.lb-open { overflow: hidden; }
   letter-spacing: .04em;
   margin: 18px 0 8px;
 }
+/* 待看：置顶，与看过分开 */
+.wish { margin: 14px auto 22px; }
+.wish .wish-cats { margin-top: 4px; }
