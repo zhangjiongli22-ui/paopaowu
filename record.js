@@ -194,23 +194,17 @@ function bindShots() {
     msg.textContent = value / 2 + "/5";
   });
 
-  const VAULT = {"salt":"2jJpW+jCcAeJx9deIpuS6A==","iv":"vEA38pifgnGWMUdN","ct":"bUR8277kuyVW7UqoFRHYcBKj+uMhzLDH7xHMneG/c2GIcx/RTYfMLklLVc/FAmYGL0qjgBRCaJc="};
-  const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
-  const unb64 = (str) => Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
-  const enc = new TextEncoder();
+  const BLOB = "CgEbKgF3f2EiMw4BZF4OVT8ZLEZlW2lKGAApRkUMQA8UAFk7U0p8DA==";
+  const PASS = "miku1998";
 
-  async function unlock() {
+  function unlock() {
     try {
-      const base = await crypto.subtle.importKey("raw", enc.encode("miku1998"), "PBKDF2", false, ["deriveKey"]);
-      const key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: unb64(VAULT.salt), iterations: 150000, hash: "SHA-256" },
-        base,
-        { name: "AES-GCM", length: 256 },
-        false,
-        ["decrypt"]
-      );
-      const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(VAULT.iv) }, key, unb64(VAULT.ct));
-      return new TextDecoder().decode(pt);
+      const raw = atob(BLOB);
+      let out = "";
+      for (let i = 0; i < raw.length; i++) {
+        out += String.fromCharCode(raw.charCodeAt(i) ^ PASS.charCodeAt(i % PASS.length));
+      }
+      return out;
     } catch (e) {
       return null;
     }
@@ -218,16 +212,16 @@ function bindShots() {
 
   let token = sessionStorage.getItem("paopaowu_sess");
 
-  async function ensureToken() {
+  function ensureToken() {
     if (token) return true;
-    token = await unlock();
+    token = unlock();
     if (!token) return false;
     sessionStorage.setItem("paopaowu_sess", token);
     return true;
   }
 
   save.addEventListener("click", async () => {
-    if (!token || !(await ensureToken())) { msg.textContent = "打不开保存权限，稍后再试"; return; }
+    if (!ensureToken()) { msg.textContent = "打不开保存权限，稍后再试"; return; }
     msg.textContent = "保存中…";
     try {
       const get = await fetch(API + "?ref=main&t=" + Date.now(), {
