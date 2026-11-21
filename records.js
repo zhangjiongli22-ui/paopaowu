@@ -146,6 +146,15 @@ function draw() {
   try {
     const res = await fetch("data/records.json", { cache: "no-store" });
     items = (await res.json()).items || [];
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const hhmm = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    items.forEach((it) => {
+      if (!it.date) it.date = today;
+      if (!it.time) it.time = hhmm;
+      if (it.cat === "game" && !it.play_since) it.play_since = it.date;
+    });
   } catch (e) {
     main.innerHTML = '<p class="loading-bar">还没连上记录。</p>';
     return;
