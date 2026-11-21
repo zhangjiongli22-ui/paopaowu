@@ -883,3 +883,21 @@ body.lb-open { overflow: hidden; }
   padding-bottom: 6px;
   border-bottom: 1px solid var(--line);
 }
+/* 右侧时间线：小字日期 */
+.side-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.side-date .side-d { color: var(--ink); font-size: 12px; }
+.side-date .side-n { color: var(--muted); font-size: 11px; }
+.side-date:hover { background: rgba(255,255,255,.05); }
+.side-date.on { background: rgba(88,199,255,.16); }
