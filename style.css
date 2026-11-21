@@ -1187,3 +1187,19 @@ body.lb-open { overflow: hidden; }
 @media (max-width: 720px) {
   .video-item video { max-height: 220px; }
 }
+/* 巧思：清单式 */
+.todo-list { list-style: none; margin: 0 0 8px; padding: 0; }
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.todo-mark { color: var(--accent); font-size: 15px; line-height: 1.6; width: 16px; flex: none; }
+.todo-item.done .todo-mark { color: #7ef0d0; }
+.todo-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.todo-title { font-size: 15px; color: var(--ink); }
+.todo-item.done .todo-title { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(126,240,208,.5); }
+.todo-note { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.todo-date { font-size: 11.5px; color: rgba(159,196,221,.65); flex: none; padding-top: 2px; }
