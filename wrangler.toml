@@ -5,4 +5,8 @@ compatibility_date = "2025-01-01"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
-run_worker_first = ["/data/records.json", "/data/chat.json"]
+run_worker_first = ["/data/records.json", "/data/chat.json", "/api/rate"]
+
+[[kv_namespaces]]
+binding = "RATINGS"
+id = "87a2a3299e8a4b6ca3c411000d4f5811"
