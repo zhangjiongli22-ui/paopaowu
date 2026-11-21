@@ -206,11 +206,13 @@ function bindShots() {
       const nowTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
       const ymd = dateInput && dateInput.value ? dateInput.value : today;
       const hhmm = timeInput && timeInput.value ? timeInput.value : nowTime;
-      if (value) it.status = it.cat === "game" ? "玩过" : "看过";
+      const filledDate = !!(dateInput && dateInput.value);
+      const finished = value > 0 || filledDate;
+      if (finished) it.status = it.cat === "game" ? "玩过" : "看过";
       if (!it.added) it.added = it.date || "";
       it.date = ymd;
       it.time = hhmm;
-      if (value) it.rated_on = ymd;
+      if (finished) it.rated_on = ymd;
       it.updated = today;
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
       const put = await fetch(API, {
