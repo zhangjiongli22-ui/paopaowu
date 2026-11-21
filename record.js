@@ -219,6 +219,7 @@ function bindShots() {
       const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
       const next = cur === fmt[0] ? fmt[1] : fmt[0];
       statusBtn.textContent = next;
+      statusBtn.disabled = true;
       msg.textContent = "切换中…";
       try {
         const get = await fetch(API + "?ref=main&t=" + Date.now(), {
@@ -237,10 +238,12 @@ function bindShots() {
           body: JSON.stringify({ message: "status: " + (it.title || id), content, sha: file.sha, branch: "main" }),
         });
         if (!put.ok) throw new Error("写入失败 " + put.status);
-        msg.textContent = "已切换为「" + next + "」";
+        msg.textContent = "已切换为「" + next + "」，一分钟内在其他设备刷新可见";
       } catch (e) {
         statusBtn.textContent = cur;
         msg.textContent = "切换失败：" + e.message;
+      } finally {
+        statusBtn.disabled = false;
       }
     });
   }
