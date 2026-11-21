@@ -219,7 +219,6 @@ function bindShots() {
       const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
       const next = cur === fmt[0] ? fmt[1] : fmt[0];
       statusBtn.textContent = next;
-      statusBtn.classList.toggle("wish", next === fmt[1]);
       msg.textContent = "切换中…";
       try {
         const get = await fetch(API + "?ref=main&t=" + Date.now(), {
