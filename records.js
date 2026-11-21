@@ -31,6 +31,7 @@ function stars(r) {
 function card(r) {
   const a = el("a", "poster");
   a.href = "javascript:void(0)";
+  a.addEventListener("click", () => openDetail(r));
   const box = el("div", "poster-box");
   if (r.cover) {
     const img = el("img");
@@ -48,6 +49,35 @@ function card(r) {
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
   a.appendChild(el("p", "poster-sub", r.cat && CATS[r.cat] ? CATS[r.cat].name : ""));
   return a;
+}
+
+function openDetail(r) {
+  let box = document.querySelector(".detail-box");
+  if (!box) {
+    box = el("div", "detail-box");
+    box.innerHTML = '<div class="detail-card"><button class="detail-close" type="button">关闭</button><div class="detail-body"></div></div>';
+    document.body.appendChild(box);
+    box.addEventListener("click", (e) => { if (e.target === box || e.target.classList.contains("detail-close")) box.hidden = true; });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") box.hidden = true; });
+  }
+  const body = box.querySelector(".detail-body");
+  const cat = (CATS[r.cat] || {}).name || "";
+  const stars = r.rating ? "★".repeat(Math.max(0, Math.min(5, Math.round(r.rating / 2)))) : "";
+  const shots = (r.shots || []).map((u) => `<img src="${u}" alt="" loading="lazy">`).join("");
+  body.innerHTML = `
+    <div class="detail-top">
+      ${r.cover ? `<img class="detail-cover" src="${r.cover}" alt="">` : ""}
+      <div class="detail-meta">
+        <span class="chip ${r.cat}">${cat}</span>
+        <h2>${r.title || ""}</h2>
+        <p class="detail-line">${stars}${r.rating ? " " + r.rating + "/10" : ""}${r.status ? " · " + r.status : ""}${r.date ? " · " + r.date : ""}</p>
+        ${r.note ? `<p class="detail-note">${r.note}</p>` : ""}
+        ${r.why ? `<p class="detail-why">为什么记：${r.why}</p>` : ""}
+      </div>
+    </div>
+    ${shots ? `<div class="detail-shots">${shots}</div>` : `<p class="detail-empty">还没有截图。</p>`}
+  `;
+  box.hidden = false;
 }
 
 function grid(rows) {
