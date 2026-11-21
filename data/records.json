@@ -108,7 +108,21 @@
    "director": "鹰角网络峘形山工作室",
    "bgm_rating": 5.6,
    "bgm_id": 374638,
-   "name_cn": "明日方舟：终末地"
+   "name_cn": "明日方舟：终末地",
+   "shots": [
+    "assets/shots/endfield/s01.jpg",
+    "assets/shots/endfield/s02.jpg",
+    "assets/shots/endfield/s03.jpg",
+    "assets/shots/endfield/s04.jpg",
+    "assets/shots/endfield/s05.jpg",
+    "assets/shots/endfield/s06.jpg",
+    "assets/shots/endfield/s07.jpg",
+    "assets/shots/endfield/s08.jpg",
+    "assets/shots/endfield/s09.jpg",
+    "assets/shots/endfield/s10.jpg",
+    "assets/shots/endfield/s11.jpg",
+    "assets/shots/endfield/s12.jpg"
+   ]
   },
   {
    "id": "g-1003",
@@ -155,7 +169,107 @@
    "air": "2023-09-27",
    "bgm_rating": 6.4,
    "bgm_id": 425633,
-   "name_cn": "反恐精英2"
+   "name_cn": "反恐精英2",
+   "shots": [
+    "assets/shots/counter-strike-2/s01.jpg",
+    "assets/shots/counter-strike-2/s02.jpg",
+    "assets/shots/counter-strike-2/s03.jpg",
+    "assets/shots/counter-strike-2/s04.jpg",
+    "assets/shots/counter-strike-2/s05.jpg",
+    "assets/shots/counter-strike-2/s06.jpg",
+    "assets/shots/counter-strike-2/s07.jpg",
+    "assets/shots/counter-strike-2/s08.jpg"
+   ]
+  },
+  {
+   "id": "game-8e3534d1",
+   "cat": "game",
+   "title": "异环",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/nte-neverness-to-everness/s01.jpg",
+    "assets/shots/nte-neverness-to-everness/s02.jpg",
+    "assets/shots/nte-neverness-to-everness/s03.jpg",
+    "assets/shots/ntegame/s01.jpg",
+    "assets/shots/ntegame/s02.jpg"
+   ]
+  },
+  {
+   "id": "game-7a097846",
+   "cat": "game",
+   "title": "Eclipsium",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/eclipsium/s01.jpg",
+    "assets/shots/eclipsium/s02.jpg",
+    "assets/shots/eclipsium/s03.jpg",
+    "assets/shots/eclipsium/s04.jpg",
+    "assets/shots/eclipsium/s05.jpg"
+   ]
+  },
+  {
+   "id": "game-7bd18d59",
+   "cat": "game",
+   "title": "No, I'm Not A Human",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/no-i-m-not-a-human/s01.jpg",
+    "assets/shots/no-i-m-not-a-human/s02.jpg",
+    "assets/shots/no-i-m-not-a-human/s03.jpg",
+    "assets/shots/no-i-m-not-a-human/s04.jpg"
+   ]
+  },
+  {
+   "id": "game-b2c62266",
+   "cat": "game",
+   "title": "Forza Horizon 6",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/forza-horizon-6/s01.jpg",
+    "assets/shots/forza-horizon-6/s02.jpg",
+    "assets/shots/forza-horizon-6/s03.jpg"
+   ]
+  },
+  {
+   "id": "game-4d0828ee",
+   "cat": "game",
+   "title": "Warframe",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/warframe/s01.jpg"
+   ]
+  },
+  {
+   "id": "game-9951678e",
+   "cat": "game",
+   "title": "星穹铁道",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/星穹铁道/s01.jpg",
+    "assets/shots/星穹铁道/s02.jpg"
+   ]
+  },
+  {
+   "id": "movie-demo-video",
+   "cat": "movie",
+   "title": "视频测试：东京喰种 OP 混音",
+   "note": "试试网页里直接放视频，压到 20 秒 720p，200 多 KB。",
+   "status": "测试",
+   "date": "2026-11-21",
+   "time": "22:00",
+   "video": "assets/videos/demo.mp4"
   }
  ]
 }
