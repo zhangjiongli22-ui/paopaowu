@@ -1789,3 +1789,7 @@ body.lb-open { overflow: hidden; }
 .poster-sub { margin: 1px 0 0; }
 
 .review-acts { display: flex; gap: 8px; }
+
+.rec-status { cursor: pointer; background: rgba(4,12,20,.5); }
+.rec-status:hover { border-color: rgba(88,199,255,.5); }
+.rec-status.wish { color: #ffd76a; border-color: rgba(255,215,106,.45); }
