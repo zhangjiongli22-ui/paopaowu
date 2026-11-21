@@ -203,7 +203,6 @@ function bindShots() {
     origShow(i);
     box.hidden = false;
     document.body.classList.add("lb-open");
-    if (box.requestFullscreen) box.requestFullscreen().catch(() => {});
   };
   box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
 
