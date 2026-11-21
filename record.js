@@ -125,6 +125,11 @@ function bindShots() {
         <div class="rate-box">
           <div class="rate-stars" id="rate-stars">${[1,2,3,4,5,6,7,8,9,10].map((n) => `<button type="button" data-v="${n}">★</button>`).join("")}</div>
           <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
+          <div class="rate-time">
+            <span class="rate-time-label">完成时间</span>
+            <input type="date" id="rate-date" value="${esc(item.rated_on || item.date || "")}">
+            <input type="time" id="rate-time" value="${esc(item.time || "")}">
+          </div>
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
@@ -157,6 +162,8 @@ function bindShots() {
   // 评分保存
   const starsBox = document.getElementById("rate-stars");
   const note = document.getElementById("rate-note");
+  const dateInput = document.getElementById("rate-date");
+  const timeInput = document.getElementById("rate-time");
   const save = document.getElementById("rate-save");
   const msg = document.getElementById("rate-msg");
   const tokenLink = document.getElementById("set-token");
@@ -193,16 +200,18 @@ function bindShots() {
       if (!it) throw new Error("找不到这条记录");
       if (value) it.rating = value;
       it.note = note.value.trim();
-      const today = new Date();
       const pad = (n) => String(n).padStart(2, "0");
-      const ymd = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-      const hhmm = `${pad(today.getHours())}:${pad(today.getMinutes())}`;
-      it.status = it.cat === "game" ? "玩过" : "看过";
+      const now = new Date();
+      const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      const nowTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const ymd = dateInput && dateInput.value ? dateInput.value : today;
+      const hhmm = timeInput && timeInput.value ? timeInput.value : nowTime;
+      if (value) it.status = it.cat === "game" ? "玩过" : "看过";
       if (!it.added) it.added = it.date || "";
       it.date = ymd;
       it.time = hhmm;
-      it.rated_on = ymd;
-      it.updated = ymd;
+      if (value) it.rated_on = ymd;
+      it.updated = today;
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
       const put = await fetch(API, {
         method: "PUT",
