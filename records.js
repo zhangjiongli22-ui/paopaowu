@@ -4,7 +4,14 @@ const CATS = {
   movie:   { name: "影视" },
   game:    { name: "游戏" },
   book:    { name: "读书" },
-  fitness: { name: "健身" }
+  fitness: { name: "健身" },
+  plan:    { name: "每日计划" }
+};
+
+const GROUPS = {
+  hobby: { name: "爱好", cats: ["movie", "game", "book", "fitness"] },
+  idea:  { name: "巧思", cats: ["idea"] },
+  plan:  { name: "每日计划", cats: ["plan"] }
 };
 
 const list = document.getElementById("rec-list");
@@ -14,6 +21,7 @@ const hint = document.getElementById("rec-hint");
 let items = [];
 let active = "all";
 let view = "timeline";
+let group = "hobby";
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -127,7 +135,8 @@ function summary(rows) {
 }
 
 function draw() {
-  const rows = active === "all" ? items : items.filter((x) => x.cat === active);
+  const pool = items.filter((x) => GROUPS[group].cats.includes(x.cat));
+  const rows = active === "all" ? pool : pool.filter((x) => x.cat === active);
   if (view === "timeline") timeline(rows); else summary(rows);
   if (hint) hint.textContent = view === "timeline" ? "按日期排，看到每天做了什么。" : "按条目合并，看总共做过什么。";
   document.querySelectorAll(".view-btn").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
@@ -155,8 +164,25 @@ function draw() {
 
   const counts = { all: items.length };
   items.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
-  Object.keys(CATS).forEach((k) => {
-    const n = counts[k] || 0;
+
+  const groupParam = new URLSearchParams(location.search).get("group");
+  if (groupParam && GROUPS[groupParam]) group = groupParam;
+
+  // 分组切换
+  const gRow = el("div", "group-row");
+  Object.keys(GROUPS).forEach((gk) => {
+    const b = el("button", "group-btn" + (gk === group ? " on" : ""), GROUPS[gk].name);
+    b.addEventListener("click", () => {
+      group = gk;
+      location.search = "?group=" + gk;
+    });
+    gRow.appendChild(b);
+  });
+  row.parentNode.insertBefore(gRow, row.parentNode.firstChild);
+
+  const allowed = ["all", ...GROUPS[group].cats];
+  allowed.forEach((k) => {
+    const n = k === "all" ? GROUPS[group].cats.reduce((a, c) => a + (counts[c] || 0), 0) : counts[k] || 0;
     if (k !== "all" && n === 0) return;
     const b = el("button", "cat-bubble", null);
     b.dataset.cat = k;
