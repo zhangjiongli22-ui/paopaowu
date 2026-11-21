@@ -7,13 +7,14 @@ const CATS = {
   game:    { name: "游戏" },
   book:    { name: "读书" },
   fitness: { name: "健身" },
-  plan:    { name: "每日计划" }
+  plan:    { name: "每日计划" },
+  log:     { name: "日志" }
 };
 
 const GROUPS = {
   hobby: { name: "爱好", cats: ["anime", "tv", "film", "game", "book"] },
   idea:  { name: "巧思", cats: ["idea"] },
-  plan:  { name: "每日计划", cats: ["plan", "fitness"] }
+  plan:  { name: "每日计划", cats: ["log"] }
 };
 
 const main = document.getElementById("rec-main");
@@ -94,8 +95,50 @@ function summarised(rows) {
   return [...map.values()].sort((a, b) => (b.last || "").localeCompare(a.last || ""));
 }
 
+const KINDS = { fitness: "健身", game: "游戏", piano: "钢琴", study: "学习", media: "影视", work: "工作" };
+
+function fmtMin(m) {
+  m = Number(m) || 0;
+  const h = Math.floor(m / 60), mm = m % 60;
+  return h ? (mm ? h + "h" + mm + "m" : h + "h") : mm + "m";
+}
+
+function drawLog(pool) {
+  main.innerHTML = "";
+  if (!pool.length) {
+    main.innerHTML = '<p class="detail-empty">还没有记录。</p>';
+    return;
+  }
+  const byDate = new Map();
+  pool.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || ""))).forEach((r) => {
+    const d = r.date || "未记日期";
+    if (!byDate.has(d)) byDate.set(d, []);
+    byDate.get(d).push(r);
+  });
+  for (const [d, rows] of byDate) {
+    const totals = {};
+    rows.forEach((r) => { totals[r.kind] = (totals[r.kind] || 0) + (Number(r.minutes) || 0); });
+    const sum = Object.values(totals).reduce((a, b) => a + b, 0);
+    const head = el("div", "day-block");
+    head.innerHTML = `<h2 class="log-date">${esc(d)}</h2>
+      <p class="log-sum">${Object.keys(KINDS).filter((k) => totals[k]).map((k) => `${KINDS[k]} ${fmtMin(totals[k])}`).join(" · ")}${sum ? ` · 共 ${fmtMin(sum)}` : ""}</p>`;
+    main.appendChild(head);
+    const list = el("ul", "log-list");
+    rows.slice().sort((a, b) => String(a.time || "").localeCompare(String(b.time || ""))).forEach((r) => {
+      const li = el("li", "log-row");
+      li.innerHTML = `<span class="log-time">${esc(r.time || "")}</span>
+        <span class="log-kind k-${esc(r.kind || "")}">${esc(KINDS[r.kind] || r.kind || "")}</span>
+        <span class="log-text">${esc(r.text || r.title || "")}</span>
+        <span class="log-min">${r.minutes ? fmtMin(r.minutes) : ""}</span>`;
+      list.appendChild(li);
+    });
+    main.appendChild(list);
+  }
+}
+
 function drawMain(pool) {
   main.innerHTML = "";
+  if (group === "plan") { drawLog(pool); return; }
   if (group === "idea") {
     const planning = pool.filter((x) => x.status !== "已达成");
     const done = pool.filter((x) => x.status === "已达成");
