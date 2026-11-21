@@ -134,22 +134,9 @@ function bindShots() {
             <input type="date" id="rate-date" value="${["想看","待看","想玩","想读"].includes(item.status) ? "" : esc(item.rated_on || item.date || "")}">
             <input type="time" id="rate-time" value="${esc(item.time || "")}">
           </div>
-          <div class="rate-pass-row">
-            <input type="password" id="rate-pass" class="rate-pass" placeholder="保存密码（设置过一次就只输这个）" autocomplete="current-password">
-          </div>
-          <details class="pass-setup">
-            <summary>第一次用？在这里设置</summary>
-            <div class="pass-setup-body">
-              <input type="password" id="setup-token" class="rate-pass" placeholder="粘贴 GitHub token">
-              <input type="password" id="setup-pass" class="rate-pass" placeholder="设一个保存密码">
-              <button type="button" id="setup-save" class="lb-btn">保存设置</button>
-              <span id="setup-msg" class="rate-msg"></span>
-            </div>
-          </details>
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
-            <a href="#" id="set-token" class="rate-token">设置保存密码</a>
           </div>
         </div>
         <h2 class="shots-head">截图</h2>
@@ -178,12 +165,10 @@ function bindShots() {
   // 评分保存
   const starsBox = document.getElementById("rate-stars");
   const note = document.getElementById("rate-note");
-  const passInput = document.getElementById("rate-pass");
   const dateInput = document.getElementById("rate-date");
   const timeInput = document.getElementById("rate-time");
   const save = document.getElementById("rate-save");
   const msg = document.getElementById("rate-msg");
-  const tokenLink = document.getElementById("set-token");
   const API = "https://api.github.com/repos/zhangjiongli22-ui/paopaowu/contents/data/records.json";
   let value = 0;
 
@@ -195,37 +180,22 @@ function bindShots() {
     msg.textContent = value / 2 + "/5";
   });
 
-  const KEY = "paopaowu_pass";
+  const VAULT = {"salt":"2jJpW+jCcAeJx9deIpuS6A==","iv":"vEA38pifgnGWMUdN","ct":"bUR8277kuyVW7UqoFRHYcBKj+uMhzLDH7xHMneG/c2GIcx/RTYfMLklLVc/FAmYGL0qjgBRCaJc="};
   const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
   const unb64 = (str) => Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
   const enc = new TextEncoder();
 
-  async function deriveKey(pass, salt) {
-    const base = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
-    return crypto.subtle.deriveKey(
-      { name: "PBKDF2", salt, iterations: 150000, hash: "SHA-256" },
-      base,
-      { name: "AES-GCM", length: 256 },
-      false,
-      ["encrypt", "decrypt"]
-    );
-  }
-
-  async function savePassword(token, pass) {
-    const salt = crypto.getRandomValues(new Uint8Array(16));
-    const iv = crypto.getRandomValues(new Uint8Array(12));
-    const key = await deriveKey(pass, salt);
-    const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(token));
-    localStorage.setItem(KEY, JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(ct) }));
-  }
-
-  async function tokenFromPassword(pass) {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return null;
+  async function unlock() {
     try {
-      const { salt, iv, ct } = JSON.parse(raw);
-      const key = await deriveKey(pass, unb64(salt));
-      const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv) }, key, unb64(ct));
+      const base = await crypto.subtle.importKey("raw", enc.encode("miku1998"), "PBKDF2", false, ["deriveKey"]);
+      const key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: unb64(VAULT.salt), iterations: 150000, hash: "SHA-256" },
+        base,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["decrypt"]
+      );
+      const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(VAULT.iv) }, key, unb64(VAULT.ct));
       return new TextDecoder().decode(pt);
     } catch (e) {
       return null;
@@ -234,41 +204,16 @@ function bindShots() {
 
   let token = sessionStorage.getItem("paopaowu_sess");
 
-  const setupBtn = document.getElementById("setup-save");
-  if (setupBtn) {
-    setupBtn.addEventListener("click", async () => {
-      const t = (document.getElementById("setup-token").value || "").trim();
-      const p1 = (document.getElementById("setup-pass").value || "").trim();
-      const box = document.getElementById("setup-msg");
-      if (!t || !p1) { box.textContent = "两项都要填"; return; }
-      await savePassword(t, p1);
-      token = t;
-      sessionStorage.setItem("paopaowu_sess", token);
-      box.textContent = "设好了，以后只输密码";
-    });
+  async function ensureToken() {
+    if (token) return true;
+    token = await unlock();
+    if (!token) return false;
+    sessionStorage.setItem("paopaowu_sess", token);
+    return true;
   }
 
-  tokenLink.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const t = prompt("先粘贴一次 GitHub token（只会加密存在这台设备）");
-    if (!t) return;
-    const p1 = prompt("给这个网站设一个保存密码，以后输它就行");
-    if (!p1) return;
-    await savePassword(t.trim(), p1);
-    token = t.trim();
-    sessionStorage.setItem("paopaowu_sess", token);
-    msg.textContent = "密码设好了，以后用密码保存";
-  });
   save.addEventListener("click", async () => {
-    if (!token) {
-      if (!localStorage.getItem(KEY)) { msg.textContent = "先点下面的「设置保存密码」"; return; }
-      const pass = (passInput && passInput.value || "").trim();
-      if (!pass) { msg.textContent = "先输保存密码"; passInput && passInput.focus(); return; }
-      token = await tokenFromPassword(pass);
-      if (!token) { msg.textContent = "密码不对"; return; }
-      sessionStorage.setItem("paopaowu_sess", token);
-      if (passInput) passInput.value = "";
-    }
+    if (!token || !(await ensureToken())) { msg.textContent = "打不开保存权限，稍后再试"; return; }
     msg.textContent = "保存中…";
     try {
       const get = await fetch(API + "?ref=main&t=" + Date.now(), {
