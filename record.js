@@ -326,7 +326,7 @@ function bindShots() {
       const ymd = dateInput && dateInput.value ? dateInput.value : today;
       const hhmm = timeInput && timeInput.value ? timeInput.value : nowTime;
       const filledDate = !!(dateInput && dateInput.value);
-      const finished = !cleared && (value > 0 || filledDate);
+      const finished = !cleared && (value > 0 || !!noteText || filledDate);
       if (finished) it.status = it.cat === "game" ? "玩过" : "看过";
       if (!it.added) it.added = it.date || "";
       it.date = ymd;
