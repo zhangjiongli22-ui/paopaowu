@@ -11,7 +11,6 @@
    "id": "m-2077",
    "cat": "anime",
    "title": "孤独摇滚！",
-   "note": "手绘线条和情绪都好，壁纸都存了一堆。",
    "status": "想看",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2077-bgm-45ccb3a8.jpg",
@@ -29,7 +28,6 @@
    "id": "m-2078",
    "cat": "anime",
    "title": "BanG Dream! MyGO!!!!!",
-   "note": "",
    "status": "看过",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2078-bgm-d9a4896b.jpg",
@@ -41,17 +39,12 @@
    "staff": "",
    "bgm_rating": 7.9,
    "name_cn": "BanG Dream! It's MyGO!!!!!",
-   "bgm_id": 428735,
-   "added": "2026-11-01",
-   "time": "04:29",
-   "rated_on": "2026-11-01",
-   "updated": "2026-11-22"
+   "bgm_id": 428735
   },
   {
    "id": "m-2079",
    "cat": "anime",
    "title": "EVA",
-   "note": "压箱底的那部，隔几年翻一次。",
    "status": "看过",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2079-bgm-b91a16f2.jpg",
@@ -68,7 +61,6 @@
    "id": "m-2080",
    "cat": "anime",
    "title": "电锯人",
-   "note": "画风和节奏都对我胃口。",
    "status": "想看",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2080-bgm-02054870.jpg",
@@ -86,7 +78,6 @@
    "id": "m-2081",
    "cat": "anime",
    "title": "伊藤润二精选集",
-   "note": "夜里看，越看越精神。",
    "status": "看过",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2081-bgm-a04377c4.jpg",
@@ -103,7 +94,6 @@
    "id": "g-1001",
    "cat": "game",
    "title": "塞尔达 王国之泪",
-   "note": "能玩到后半夜的那种。",
    "status": "在玩",
    "date": "2026-11-01",
    "cover": "assets/covers/g-1001-bgm-086301b6.jpg",
@@ -119,7 +109,6 @@
    "id": "g-1002",
    "cat": "game",
    "title": "明日方舟：终末地",
-   "note": "刚开，慢慢摸。",
    "status": "在玩",
    "date": "2026-11-01",
    "cover": "assets/covers/g-1002-bgm-de3085f9.jpg",
@@ -164,7 +153,6 @@
    "id": "g-1003",
    "cat": "game",
    "title": "绝区零",
-   "note": "剪辑和立绘都很顶。",
    "status": "在玩",
    "date": "2026-11-01",
    "cover": "assets/covers/g-1003-bgm-ee06075d.jpg",
@@ -181,7 +169,6 @@
    "id": "g-1004",
    "cat": "game",
    "title": "我的世界",
-   "note": "想搭点什么就一直开着。",
    "status": "常驻",
    "date": "2026-11-01",
    "cover": "assets/covers/g-1004-bgm-25139613.jpg",
@@ -198,7 +185,6 @@
    "id": "g-1005",
    "cat": "game",
    "title": "CS2",
-   "note": "手感和亮度调好才算开始。",
    "status": "常驻",
    "date": "2026-11-01",
    "cover": "assets/covers/g-1005-bgm-c832b822.jpg",
@@ -548,12 +534,7 @@
    "bgm_rating": 6.2,
    "bgm_id": 263927,
    "name_cn": "白色巨塔",
-   "cover": "assets/covers/tv-2e403aff-bgm.jpg",
-   "rating": 10,
-   "note": "神中神",
-   "added": "2026-11-22",
-   "rated_on": "2026-11-22",
-   "updated": "2026-11-22"
+   "cover": "assets/covers/tv-2e403aff-bgm.jpg"
   },
   {
    "id": "tv-4a7fbaec",
@@ -1074,7 +1055,6 @@
    "id": "idea-6683fc0a",
    "cat": "idea",
    "title": "泡泡屋搬上 Cloudflare",
-   "note": "从 GitHub Pages 换到 Cloudflare Workers，绑了 kiraanddafeiyu.live，访问快了很多。",
    "status": "已达成",
    "date": "2026-11-22",
    "time": "01:55"
@@ -1083,7 +1063,6 @@
    "id": "idea-ca9f71be",
    "cat": "idea",
    "title": "记录页做成海报墙",
-   "note": "游戏、动画、剧集、电影统一成封面墙，详情页能评分、写评价、看图。",
    "status": "已达成",
    "date": "2026-11-22",
    "time": "01:55"
@@ -1092,7 +1071,6 @@
    "id": "idea-696acdbd",
    "cat": "idea",
    "title": "截图全部高清了",
-   "note": "游戏截图按原分辨率导进站，超过 12 张自动折叠。",
    "status": "已达成",
    "date": "2026-11-22",
    "time": "01:55"
@@ -1101,7 +1079,6 @@
    "id": "idea-a602087e",
    "cat": "idea",
    "title": "收录了 H 盘的剧和电影",
-   "note": "剧集 12 部、电影 38 部，能匹配到的都配了官方封面。",
    "status": "已达成",
    "date": "2026-11-22",
    "time": "01:55"
@@ -1110,7 +1087,6 @@
    "id": "idea-1be43efd",
    "cat": "idea",
    "title": "B站那边能看图了",
-   "note": "加了看图工具，她能读本地截图和封面，不再说看不见。",
    "status": "已达成",
    "date": "2026-11-22",
    "time": "01:55"
@@ -1119,7 +1095,6 @@
    "id": "idea-8fd463da",
    "cat": "idea",
    "title": "钢琴视频剪辑",
-   "note": "练琴录下来的片段剪成一条，配字幕。",
    "status": "计划中",
    "date": "2026-11-22",
    "time": "02:05"
@@ -1128,7 +1103,6 @@
    "id": "idea-93b5164b",
    "cat": "idea",
    "title": "B站视频剪辑",
-   "note": "把 B 站那边的素材剪成一条完整的投稿。",
    "status": "计划中",
    "date": "2026-11-22",
    "time": "02:05"
@@ -5942,7 +5916,6 @@
    "id": "idea-2026-11-22-0-1795291202",
    "cat": "idea",
    "title": "看浅草小子",
-   "note": "还没看",
    "status": "计划中",
    "date": "2026-11-22",
    "time": "23:00"
