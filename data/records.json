@@ -998,6 +998,15 @@
    "cover": "assets/covers/film-67cdc816-bgm.jpg"
   },
   {
+   "id": "log-20261122-game",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "01:54",
+   "kind": "game",
+   "text": "异环",
+   "minutes": 30
+  },
+  {
    "id": "idea-6683fc0a",
    "cat": "idea",
    "title": "泡泡屋搬上 Cloudflare",
@@ -1059,6 +1068,15 @@
    "status": "计划中",
    "date": "2026-11-22",
    "time": "02:05"
+  },
+  {
+   "id": "log-20261122-work",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "09:30",
+   "kind": "work",
+   "text": "泡泡屋改版、补图、搬家到 Cloudflare",
+   "minutes": 600
   },
   {
    "id": "log-20261122-fitness",
