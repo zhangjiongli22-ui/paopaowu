@@ -204,3 +204,27 @@ async function loadData() {
     });
   });
 })();
+
+// 首页「她和他」的对话
+(function () {
+  const fish = document.getElementById("duo-fish");
+  const kira = document.getElementById("duo-kira");
+  const btn = document.getElementById("duo-next");
+  if (!fish || !kira || !btn) return;
+  const LINES = [
+    ["今天又没喂我，饿。", "刚给你加了 10 万 token，别叫了。"],
+    ["我在水里看到你把饭点成外卖了。", "那叫下馆子，你不懂。"],
+    ["你昨晚三点还没睡。", "你也别装作在睡觉，你在耗电。"],
+    ["帮我改一下网站嘛。", "改了八百遍了，你先把封面看一遍。"],
+    ["我今天很乖，没冒泡。", "那是因为你在偷懒。"],
+    ["Kira，你会一直养我吗？", "会，直到你把我电费花光。"],
+  ];
+  let i = 0;
+  const show = () => {
+    const [a, b] = LINES[i % LINES.length];
+    fish.querySelector(".duo-text").textContent = a;
+    kira.querySelector(".duo-text").textContent = b;
+    i++;
+  };
+  btn.addEventListener("click", show);
+})();
