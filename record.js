@@ -133,7 +133,7 @@ function bindShots() {
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
-            <a href="#" id="set-token" class="rate-token">设置保存权限</a>
+            <a href="#" id="set-token" class="rate-token">设置保存密码</a>
           </div>
         </div>
         <h2 class="shots-head">截图</h2>
@@ -167,7 +167,6 @@ function bindShots() {
   const save = document.getElementById("rate-save");
   const msg = document.getElementById("rate-msg");
   const tokenLink = document.getElementById("set-token");
-  const KEY = "paopaowu_token";
   const API = "https://api.github.com/repos/zhangjiongli22-ui/paopaowu/contents/data/records.json";
   let value = 0;
 
@@ -179,15 +178,63 @@ function bindShots() {
     msg.textContent = value + "/10";
   });
 
-  tokenLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    const t = prompt("粘贴 GitHub token（只存在这台设备的浏览器里）");
-    if (t) { localStorage.setItem(KEY, t.trim()); msg.textContent = "token 已保存"; }
-  });
+  const KEY = "paopaowu_pass";
+  const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const unb64 = (str) => Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
+  const enc = new TextEncoder();
 
+  async function deriveKey(pass, salt) {
+    const base = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 150000, hash: "SHA-256" },
+      base,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["encrypt", "decrypt"]
+    );
+  }
+
+  async function savePassword(token, pass) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(pass, salt);
+    const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(token));
+    localStorage.setItem(KEY, JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(ct) }));
+  }
+
+  async function tokenFromPassword(pass) {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+    try {
+      const { salt, iv, ct } = JSON.parse(raw);
+      const key = await deriveKey(pass, unb64(salt));
+      const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv) }, key, unb64(ct));
+      return new TextDecoder().decode(pt);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  let token = null;
+
+  tokenLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const t = prompt("先粘贴一次 GitHub token（只会加密存在这台设备）");
+    if (!t) return;
+    const p1 = prompt("给这个网站设一个保存密码，以后输它就行");
+    if (!p1) return;
+    await savePassword(t.trim(), p1);
+    token = t.trim();
+    msg.textContent = "密码设好了，以后用密码保存";
+  });
   save.addEventListener("click", async () => {
-    const token = localStorage.getItem(KEY);
-    if (!token) { msg.textContent = "先设置保存权限"; return; }
+    if (!token) {
+      if (!localStorage.getItem(KEY)) { msg.textContent = "先点「设置保存密码」"; return; }
+      const pass = prompt("输入保存密码");
+      if (!pass) return;
+      token = await tokenFromPassword(pass);
+      if (!token) { msg.textContent = "密码不对"; return; }
+    }
     msg.textContent = "保存中…";
     try {
       const get = await fetch(API + "?ref=main&t=" + Date.now(), {
