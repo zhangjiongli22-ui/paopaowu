@@ -18,7 +18,15 @@ async function mergeOverrides(json, env) {
     const values = await Promise.all(list.keys.map((k) => env.RATINGS.get(k.name, "json")));
     const byId = new Map();
     values.filter(Boolean).forEach((v) => byId.set(String(v.id), v));
-    json.items = (json.items || []).map((it) => (byId.has(String(it.id)) ? { ...it, ...byId.get(String(it.id)) } : it));
+    json.items = (json.items || []).map((it) => {
+      const ov = byId.get(String(it.id));
+      if (!ov) return it;
+      const merged = { ...it, ...ov };
+      Object.keys(ov).forEach((k) => {
+        if (ov[k] === null || ov[k] === undefined) delete merged[k];
+      });
+      return merged;
+    });
   } catch (e) {}
   return json;
 }
@@ -41,16 +49,14 @@ export default {
         const existing = (await env.RATINGS.get("item:" + id, "json")) || { id };
         const next = { ...existing, id };
         if (typeof body.rating === "number") next.rating = body.rating;
-        if (body.rating === null) delete next.rating;
-        if (typeof body.note === "string") {
-          if (body.note.trim()) next.note = body.note.trim();
-          else delete next.note;
-        }
+        else next.rating = null;
+        if (typeof body.note === "string" && body.note.trim()) next.note = body.note.trim();
+        else next.note = null;
         if (body.status) next.status = body.status;
         if (body.date) next.date = body.date;
         if (body.time) next.time = body.time;
         if (body.rated_on) next.rated_on = body.rated_on;
-        else delete next.rated_on;
+        else next.rated_on = null;
         await env.RATINGS.put("item:" + id, JSON.stringify(next));
         return new Response(JSON.stringify({ ok: true, item: next }), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
