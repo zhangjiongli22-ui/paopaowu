@@ -169,6 +169,47 @@ function drawMain(pool) {
     return;
   }
   main.appendChild(gridOf(summarised(pool)));
+  if (group === "hobby") addWish(poolAll);
+}
+
+const WISH = ["想看", "待看", "想玩", "想读"];
+
+function addWish(all) {
+  const wish = all.filter((x) => WISH.includes(x.status));
+  if (!wish.length) return;
+  const box = document.createElement("details");
+  box.className = "wish";
+  box.innerHTML = `<summary class="wish-head">待看 · ${wish.length}</summary>`;
+  const chips = el("div", "cat-row wish-cats");
+  const list = el("div", "wish-list");
+  let active = "all";
+  const render = () => {
+    const rows = wish.filter((x) => active === "all" || x.cat === active);
+    list.innerHTML = rows.length
+      ? rows.map((x) => `<a class="wish-row" href="record.html?id=${encodeURIComponent(x.id)}">
+          <span class="wish-tag">${esc((CATS[x.cat] || {}).name || x.cat)}</span>
+          <span class="wish-title">${esc(x.title)}</span>
+          <span class="wish-status">${esc(x.status || "")}</span>
+        </a>`).join("")
+      : '<p class="detail-empty">这一类还没有。</p>';
+  };
+  ["all", ...GROUPS.hobby.cats].forEach((k) => {
+    const n = k === "all" ? wish.length : wish.filter((x) => x.cat === k).length;
+    if (k !== "all" && !n) return;
+    const b = el("button", "cat-bubble", null);
+    b.innerHTML = `<span class="cat-name">${k === "all" ? "全部" : (CATS[k] || {}).name}</span><span class="cat-n">${n}</span>`;
+    b.classList.toggle("on", k === active);
+    b.addEventListener("click", () => {
+      active = k;
+      [...chips.children].forEach((x) => x.classList.toggle("on", x === b));
+      render();
+    });
+    chips.appendChild(b);
+  });
+  box.appendChild(chips);
+  box.appendChild(list);
+  render();
+  main.appendChild(box);
 }
 
 function draw() {
