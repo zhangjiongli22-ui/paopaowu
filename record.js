@@ -255,7 +255,14 @@ function bindShots() {
         body: JSON.stringify({ message: "rate: " + (it.title || id), content, sha: file.sha, branch: "main" }),
       });
       if (!put.ok) throw new Error("写入失败 " + put.status);
-      msg.textContent = "保存好了，一分钟左右刷新可见";
+      const scoreStars = document.getElementById("score-stars");
+      const scoreNum = document.getElementById("score-num");
+      if (scoreStars) scoreStars.textContent = it.rating ? stars(it.rating) : "还没评分";
+      if (scoreNum) scoreNum.textContent = it.rating ? five(it.rating) + "/5" : "";
+      [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= (it.rating || 0)));
+      const statusEl = document.querySelector(".rec-status");
+      if (statusEl) statusEl.textContent = it.status;
+      msg.textContent = "已保存，页面已经更新（线上同步约一分钟）";
     } catch (err) {
       msg.textContent = "没保存成功：" + err.message;
     }
