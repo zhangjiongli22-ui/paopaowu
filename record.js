@@ -125,7 +125,7 @@ function bindShots() {
           <span class="score-label">Kira 评分</span>
           <span class="score-stars" id="score-stars">${item.rating ? stars(item.rating) : "还没评分"}</span>
           <span class="score-num" id="score-num">${item.rating ? esc(five(item.rating)) + "/5" : ""}</span>
-          ${item.status ? `<span class="rec-status">${esc(item.status)}</span>` : ""}
+          ${item.status ? `<button type="button" class="rec-status" id="status-toggle" title="点一下切换">${esc(item.status)}</button>` : ""}
         </div>
         <div class="rate-box${hasReview ? " reviewed" : ""}">
           <div class="review-view"${hasReview ? "" : " hidden"}>
@@ -209,6 +209,41 @@ function bindShots() {
       document.getElementById("rate-save").click();
     });
   }
+  const statusBtn = document.getElementById("status-toggle");
+  if (statusBtn) {
+    statusBtn.addEventListener("click", async () => {
+      if (!ensureToken()) { msg.textContent = "打不开保存权限，稍后再试"; return; }
+      const cur = statusBtn.textContent.trim();
+      const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
+      const next = cur === fmt[0] ? fmt[1] : fmt[0];
+      statusBtn.textContent = next;
+      statusBtn.classList.toggle("wish", next === fmt[1]);
+      msg.textContent = "切换中…";
+      try {
+        const get = await fetch(API + "?ref=main&t=" + Date.now(), {
+          headers: { Authorization: "token " + token, Accept: "application/vnd.github+json" },
+        });
+        const file = await get.json();
+        const json = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, "")))));
+        const it = (json.items || []).find((x) => String(x.id) === String(id));
+        if (!it) throw new Error("找不到");
+        it.status = next;
+        if (next === fmt[1]) delete it.rated_on;
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 1))));
+        const put = await fetch(API, {
+          method: "PUT",
+          headers: { Authorization: "token " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+          body: JSON.stringify({ message: "status: " + (it.title || id), content, sha: file.sha, branch: "main" }),
+        });
+        if (!put.ok) throw new Error("写入失败 " + put.status);
+        msg.textContent = "已切换为「" + next + "」";
+      } catch (e) {
+        statusBtn.textContent = cur;
+        msg.textContent = "切换失败：" + e.message;
+      }
+    });
+  }
+
   const starsBox = document.getElementById("rate-stars");
   const note = document.getElementById("rate-note");
   const dateInput = document.getElementById("rate-date");
