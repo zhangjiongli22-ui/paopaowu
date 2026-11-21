@@ -140,29 +140,52 @@ function metaRow(k, v) {
 })();
 
 
-// 截图点开大图
+// 截图点开大图：左右切换 + 居中
 function bindShots() {
   const shots = document.querySelector(".shots");
   if (!shots) return;
+  const imgs = [...shots.querySelectorAll("img")];
+  if (!imgs.length) return;
+
   let box = document.querySelector(".lightbox.shotbox");
   if (!box) {
     box = document.createElement("div");
     box.className = "lightbox shotbox";
     box.hidden = true;
-    box.innerHTML = '<img alt=""><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+    box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
     document.body.appendChild(box);
     box.querySelector(".lb-close").addEventListener("click", () => { box.hidden = true; });
     box.addEventListener("click", (e) => { if (e.target === box) box.hidden = true; });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") box.hidden = true; });
+    document.addEventListener("keydown", (e) => {
+      if (box.hidden) return;
+      if (e.key === "Escape") box.hidden = true;
+      if (e.key === "ArrowLeft") box.querySelector(".lb-nav.prev").click();
+      if (e.key === "ArrowRight") box.querySelector(".lb-nav.next").click();
+    });
   }
   const big = box.querySelector("img");
   const dl = box.querySelector("a");
-  shots.querySelectorAll("img").forEach((img) => {
-    img.addEventListener("click", () => {
-      big.src = img.src;
-      dl.href = img.src;
-      dl.setAttribute("download", img.src.split("/").pop() || "shot.jpg");
-      box.hidden = false;
-    });
+  let idx = 0;
+
+  const show = (i) => {
+    idx = (i + imgs.length) % imgs.length;
+    const src = imgs[idx].src;
+    big.src = src;
+    dl.href = src;
+    dl.setAttribute("download", src.split("/").pop() || "shot.jpg");
+  };
+
+  box.querySelector(".lb-nav.prev").onclick = (e) => { e.stopPropagation(); show(idx - 1); };
+  box.querySelector(".lb-nav.next").onclick = (e) => { e.stopPropagation(); show(idx + 1); };
+
+  imgs.forEach((img, i) => {
+    img.addEventListener("click", () => { show(i); box.hidden = false; });
   });
+
+  let sx = 0;
+  box.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  box.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 60) show(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
 }
