@@ -138,7 +138,8 @@
     "assets/shots/endfield/s10.jpg",
     "assets/shots/endfield/s11.jpg",
     "assets/shots/endfield/s12.jpg"
-   ]
+   ],
+   "play_since": "2026-01-26"
   },
   {
    "id": "g-1003",
@@ -155,7 +156,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 380974,
    "name_cn": "绝区零",
-   "video": "assets/videos/zzz.mp4"
+   "video": "assets/videos/zzz.mp4",
+   "play_since": "2026-10-10"
   },
   {
    "id": "g-1004",
@@ -196,7 +198,8 @@
     "assets/shots/counter-strike-2/s06.jpg",
     "assets/shots/counter-strike-2/s07.jpg",
     "assets/shots/counter-strike-2/s08.jpg"
-   ]
+   ],
+   "play_since": "2026-03-20"
   },
   {
    "id": "game-8e3534d1",
@@ -218,7 +221,8 @@
    "bgm_rating": 5.5,
    "cover": "assets/covers/game-8e3534d1-bgm.jpg",
    "bgm_id": 503983,
-   "name_cn": "异环"
+   "name_cn": "异环",
+   "play_since": "2026-04-29"
   },
   {
    "id": "game-7a097846",
@@ -240,7 +244,8 @@
    "bgm_rating": 7.2,
    "cover": "assets/covers/game-7a097846-bgm.jpg",
    "bgm_id": 538842,
-   "name_cn": "蚀之境"
+   "name_cn": "蚀之境",
+   "play_since": "2026-04-08"
   },
   {
    "id": "game-7bd18d59",
@@ -254,7 +259,8 @@
     "assets/shots/no-i-m-not-a-human/s02.jpg",
     "assets/shots/no-i-m-not-a-human/s03.jpg",
     "assets/shots/no-i-m-not-a-human/s04.jpg"
-   ]
+   ],
+   "play_since": "2026-04-12"
   },
   {
    "id": "game-b2c62266",
@@ -274,7 +280,8 @@
    "bgm_rating": 7.3,
    "cover": "assets/covers/game-b2c62266-bgm.jpg",
    "bgm_id": 588364,
-   "name_cn": "极限竞速：地平线6"
+   "name_cn": "极限竞速：地平线6",
+   "play_since": "2026-05-24"
   },
   {
    "id": "game-4d0828ee",
@@ -291,7 +298,8 @@
    "bgm_rating": 6.6,
    "cover": "assets/covers/game-4d0828ee-bgm.jpg",
    "bgm_id": 85102,
-   "name_cn": "星际战甲"
+   "name_cn": "星际战甲",
+   "play_since": "2026-01-29"
   },
   {
    "id": "game-9951678e",
@@ -310,7 +318,8 @@
    "bgm_rating": 5.8,
    "cover": "assets/covers/game-9951678e-bgm.jpg",
    "bgm_id": 360097,
-   "name_cn": "崩坏：星穹铁道"
+   "name_cn": "崩坏：星穹铁道",
+   "play_since": "2023-05-04"
   },
   {
    "id": "movie-demo-video",
