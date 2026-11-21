@@ -1619,3 +1619,13 @@ body.lb-open { overflow: hidden; }
   padding: 9px 12px;
 }
 .rate-pass::placeholder { color: rgba(159,196,221,.55); }
+/* 首次设置保存密码 */
+.pass-setup { margin: 8px 0 4px; }
+.pass-setup summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: rgba(159,196,221,.7);
+  list-style: none;
+}
+.pass-setup summary::-webkit-details-marker { display: none; }
+.pass-setup-body { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
