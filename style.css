@@ -1203,3 +1203,31 @@ body.lb-open { overflow: hidden; }
 .todo-item.done .todo-title { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(126,240,208,.5); }
 .todo-note { font-size: 13px; color: var(--muted); line-height: 1.6; }
 .todo-date { font-size: 11.5px; color: rgba(159,196,221,.65); flex: none; padding-top: 2px; }
+/* 每日日志 */
+.day-block { margin-top: 26px; }
+.log-date { font-size: 14px; letter-spacing: .1em; color: var(--ink); margin: 0 0 4px; }
+.log-sum { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
+.log-list { list-style: none; margin: 0; padding: 0; }
+.log-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 2px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.log-time { width: 46px; flex: none; font-size: 12.5px; color: var(--muted); }
+.log-kind {
+  flex: none;
+  font-size: 11.5px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.log-kind.k-fitness { color: #b9ffcd; border-color: rgba(160,255,190,.35); }
+.log-kind.k-game { color: #a8c8ff; border-color: rgba(140,190,255,.35); }
+.log-kind.k-piano { color: #ffd6a0; border-color: rgba(255,210,140,.35); }
+.log-kind.k-study { color: #ffb8dd; border-color: rgba(255,180,220,.35); }
+.log-kind.k-media { color: #c9b8ff; border-color: rgba(200,180,255,.35); }
+.log-text { flex: 1; font-size: 14.5px; color: var(--ink); }
+.log-min { flex: none; font-size: 12.5px; color: var(--muted); }
