@@ -29,7 +29,7 @@
    "id": "m-2078",
    "cat": "anime",
    "title": "BanG Dream! MyGO!!!!!",
-   "note": "春日影那段反复看。",
+   "note": "",
    "status": "看过",
    "date": "2026-11-01",
    "cover": "assets/covers/m-2078-bgm-d9a4896b.jpg",
@@ -41,7 +41,11 @@
    "staff": "",
    "bgm_rating": 7.9,
    "name_cn": "BanG Dream! It's MyGO!!!!!",
-   "bgm_id": 428735
+   "bgm_id": 428735,
+   "added": "2026-11-01",
+   "time": "04:29",
+   "rated_on": "2026-11-01",
+   "updated": "2026-11-22"
   },
   {
    "id": "m-2079",
