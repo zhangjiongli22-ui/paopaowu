@@ -197,6 +197,11 @@ async function loadData() {
 
   imgs.forEach((img, i) => {
     img.classList.add("zoomable");
-    img.addEventListener("click", () => { show(i); box.hidden = false; document.body.classList.add("lb-open"); });
+    img.addEventListener("click", () => {
+      show(i);
+      box.hidden = false;
+      document.body.classList.add("lb-open");
+      if (box.requestFullscreen) box.requestFullscreen().catch(() => {});
+    });
   });
 })();
