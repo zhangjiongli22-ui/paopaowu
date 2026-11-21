@@ -58,7 +58,7 @@ function card(r, mode) {
   } else {
     box.appendChild(el("div", "poster-fallback", (r.title || "?").slice(0, 1)));
   }
-  if (r.rating) box.appendChild(el("span", "poster-rating", stars(r.rating)));
+  if (r.rating || (r.note || "").trim()) box.appendChild(el("span", "poster-badge", "已评价"));
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
@@ -70,6 +70,12 @@ function card(r, mode) {
     subText = (md + " " + (r.time || "")).trim() || "未记";
   }
   a.appendChild(el("p", "poster-sub", subText));
+  if (r.rating) {
+    const row = el("p", "poster-stars");
+    const n = Math.max(0, Math.min(5, Math.round(r.rating / 2)));
+    row.innerHTML = '<span class="stars-on">' + "★".repeat(n) + '</span><span class="stars-off">' + "☆".repeat(5 - n) + '</span><span class="stars-num">' + (Math.round(r.rating / 2 * 10) / 10) + '</span>';
+    a.appendChild(row);
+  }
   return a;
 }
 
@@ -90,6 +96,8 @@ function summarised(rows) {
     if (r.date && (!g.last || r.date > g.last)) g.last = r.date;
     if (r.status) g.status = r.status;
     if (r.rating) g.rating = r.rating;
+    if (r.note) g.note = r.note;
+    if (r.rated_on) g.rated_on = r.rated_on;
     if (!g.cover && r.cover) g.cover = r.cover;
   });
   return [...map.values()].sort((a, b) => (b.last || "").localeCompare(a.last || ""));
