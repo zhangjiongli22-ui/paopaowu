@@ -1,6 +1,6 @@
 const OWNER = "zhangjiongli22-ui";
 const REPO = "paopaowu";
-const PASS = "kira:miku1998:paopaowu";
+const PASS_HASH = "6f65bb65";
 
 async function shiftPass(input) {
   let x = 5381;
@@ -30,7 +30,7 @@ export default {
     if (url.pathname === "/api/rate" && request.method === "POST") {
       try {
         const body = await request.json();
-        if ((await shiftPass(body.pass || "")) !== PASS) {
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) {
           return new Response(JSON.stringify({ ok: false, error: "密码不对" }), {
             status: 403,
             headers: { "content-type": "application/json; charset=utf-8" },
