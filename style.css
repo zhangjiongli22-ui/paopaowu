@@ -1774,3 +1774,16 @@ body.lb-open { overflow: hidden; }
 }
 .rate-stars { gap: 2px; }
 .star-btn { font-size: 23px; padding: 0 1px; }
+
+
+/* 名字与星数贴紧 */
+.poster-title {
+  height: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 8px 0 0;
+}
+.poster-stars { margin: 1px 0 1px; }
+.poster-sub { margin: 1px 0 0; }
