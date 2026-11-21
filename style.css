@@ -614,3 +614,16 @@ body.lb-open { overflow: hidden; }
 .chip.game { border-color: rgba(140, 190, 255, .45); color: #a8c8ff; }
 .chip.book { border-color: rgba(255, 210, 140, .4); color: #ffd6a0; }
 .chip.fitness { border-color: rgba(160, 255, 190, .4); color: #b9ffcd; }
+/* 时间线 / 汇总 切换 */
+.view-row { display: flex; gap: 8px; margin: 6px 0 10px; }
+.view-btn {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+.view-btn.on { border-color: var(--accent2); color: var(--ink); background: rgba(126, 240, 208, .12); }
+.rec-card.sum .rec-note { color: var(--muted); font-size: 13px; }
