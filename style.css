@@ -1142,3 +1142,27 @@ body.lb-open { overflow: hidden; }
   z-index: 82;
 }
 .lb-dl:hover { color: rgba(234, 246, 255, .8); }
+/* 灯箱细节修正 */
+.lightbox { justify-content: center; }
+.lightbox img {
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 82vh;
+  margin: auto;
+  object-fit: contain;
+}
+.lb-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 3px 0;
+  line-height: 1;
+}
+.lb-close {
+  padding: 6px 18px;
+  font-size: 12px;
+  bottom: 12px;
+  background: rgba(10, 22, 32, .6);
+}
+.lb-dl { bottom: 12px; right: 12px; font-size: 10.5px; }
