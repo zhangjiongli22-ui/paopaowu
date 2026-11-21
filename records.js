@@ -31,7 +31,7 @@ function stars(r) {
 function card(r) {
   const a = el("a", "poster");
   a.href = "javascript:void(0)";
-  a.addEventListener("click", () => openDetail(r));
+  a.href = "record.html?id=" + encodeURIComponent(r.id);
   const box = el("div", "poster-box");
   if (r.cover) {
     const img = el("img");
