@@ -99,28 +99,49 @@ function drawMain(pool) {
 function drawSide(pool) {
   if (!side) return;
   side.innerHTML = "";
-  side.appendChild(el("p", "side-title", "时间线"));
+  const head = el("p", "side-title", "时间线");
+  side.appendChild(head);
   if (!pool.length) return;
+
   const dates = new Map();
   pool.forEach((r) => {
     const d = r.date || "未记日期";
-    dates.set(d, (dates.get(d) || 0) + 1);
+    if (!dates.has(d)) dates.set(d, []);
+    dates.get(d).push(r);
   });
+
   const list = el("div", "side-list");
   [...dates.keys()].sort((a, b) => b.localeCompare(a)).forEach((d) => {
-    const b = el("button", "side-date" + (d === dayFilter ? " on" : ""), d + " · " + dates.get(d));
+    const rows = dates.get(d);
+    const b = el("button", "side-date" + (d === dayFilter ? " on" : ""));
+    const thumb = el("span", "side-thumb");
+    const cover = rows.find((x) => x.cover);
+    if (cover) {
+      const img = el("img");
+      img.src = cover.cover;
+      img.alt = "";
+      img.loading = "lazy";
+      thumb.appendChild(img);
+    } else {
+      thumb.appendChild(el("span", "poster-fallback", (rows[0].title || "?")[0]));
+    }
+    b.appendChild(thumb);
+    const body = el("span", "side-body");
+    body.appendChild(el("span", "side-d", d));
+    body.appendChild(el("span", "side-n", rows.length + " 条"));
+    b.appendChild(body);
     b.addEventListener("click", () => {
       dayFilter = dayFilter === d ? "" : d;
       draw();
     });
     list.appendChild(b);
   });
+  side.appendChild(list);
   if (dayFilter) {
     const c = el("button", "side-clear", "显示全部");
     c.addEventListener("click", () => { dayFilter = ""; draw(); });
-    list.appendChild(c);
+    side.appendChild(c);
   }
-  side.appendChild(list);
 }
 
 function draw() {
