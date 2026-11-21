@@ -14,7 +14,7 @@
    "note": "手绘线条和情绪都好，壁纸都存了一堆。",
    "status": "看过",
    "date": "2026-11",
-   "cover": "https://i0.hdslb.com/bfs/bangumi/image/d9d6284e0919ecfda41981c1f9119f993db62935.jpg",
+   "cover": "assets/covers/m-2077.jpg",
    "cover_title": "孤独摇滚！"
   },
   {
@@ -24,7 +24,7 @@
    "note": "春日影那段反复看。",
    "status": "看过",
    "date": "2026-11",
-   "cover": "https://i0.hdslb.com/bfs/bangumi/image/3ec20c5e9f512f0fb2ea6cd663cffe6333ebeebd.png",
+   "cover": "assets/covers/m-2078.png",
    "cover_title": "迷途之子!!!!!"
   },
   {
@@ -42,7 +42,7 @@
    "note": "画风和节奏都对我胃口。",
    "status": "看过",
    "date": "2026-11",
-   "cover": "https://i1.hdslb.com/bfs/archive/c6e951ad47f564acf33f28837b950452e7dd086c.jpg",
+   "cover": "assets/covers/m-2080.jpg",
    "cover_title": "【电锯人  第一季】全12集 | 超清完整版"
   },
   {
@@ -52,7 +52,7 @@
    "note": "夜里看，越看越精神。",
    "status": "看过",
    "date": "2026-11",
-   "cover": "https://i0.hdslb.com/bfs/archive/dd0868a2d657e5aac23e343bf47306091165d713.jpg",
+   "cover": "assets/covers/m-2081.jpg",
    "cover_title": "4K中字【伊藤润二 全系列 】漩涡+精选集+狂热（未删减版） reaction"
   },
   {
@@ -62,7 +62,7 @@
    "note": "能玩到后半夜的那种。",
    "status": "在玩",
    "date": "2026-11",
-   "cover": "https://i2.hdslb.com/bfs/archive/4b1b18de4b07c41283b0a60fb1e04a7b83910f99.jpg",
+   "cover": "assets/covers/g-1001.jpg",
    "cover_title": "塞尔达传说：王国之泪v1.4.3金手指+MOD+60帧率补丁+全收集存档，懒人包一键安装！"
   },
   {
@@ -71,7 +71,9 @@
    "title": "明日方舟：终末地",
    "note": "刚开，慢慢摸。",
    "status": "在玩",
-   "date": "2026-11"
+   "date": "2026-11",
+   "cover": "assets/covers/g-1002.jpg",
+   "cover_title": "感觉来了！反派阵营挺带感的！棉花看明日方舟终末地2.0版本PV《基石》，这饼是吃到饱了，我确实更想抽反派"
   },
   {
    "id": "g-1003",
@@ -80,7 +82,7 @@
    "note": "剪辑和立绘都很顶。",
    "status": "在玩",
    "date": "2026-11",
-   "cover": "https://i1.hdslb.com/bfs/archive/f9085359ee704dce6d3c4f7579474a89f1c85930.jpg",
+   "cover": "assets/covers/g-1003.jpg",
    "cover_title": "绝区零！3.4版本前瞻内容汇总！知更鸟免费送！超多内容更新！制作组卷疯啦~"
   },
   {
@@ -90,7 +92,7 @@
    "note": "想搭点什么就一直开着。",
    "status": "常驻",
    "date": "2026-11",
-   "cover": "https://i2.hdslb.com/bfs/archive/71d5ec10b1c2c0dd40ec80363fe97f4b7dc23b61.jpg",
+   "cover": "assets/covers/g-1004.jpg",
    "cover_title": "关于OpusMC下架的说明..."
   },
   {
@@ -100,7 +102,7 @@
    "note": "手感和亮度调好才算开始。",
    "status": "常驻",
    "date": "2026-11",
-   "cover": "https://i1.hdslb.com/bfs/archive/d13928e3bae224aa20edcebc9abc75aa25376745.jpg",
+   "cover": "assets/covers/g-1005.jpg",
    "cover_title": "新加坡Major即将开打 请再次震动那颗不服输的心脏"
   }
  ]
