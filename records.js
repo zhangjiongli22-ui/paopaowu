@@ -140,43 +140,31 @@ function drawMain(pool) {
   main.innerHTML = "";
   if (group === "plan") { drawLog(pool); return; }
   if (group === "idea") {
-    const planning = pool.filter((x) => x.status !== "已达成");
-    const done = pool.filter((x) => x.status === "已达成");
-    const rows = (arr, doneFlag) => {
-      if (!arr.length) return '<p class="detail-empty">还没有。</p>';
-      return '<ul class="todo-list">' + arr
-        .slice()
-        .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
-        .map((x) => `<li class="todo-item${doneFlag ? " done" : ""}">
-          <span class="todo-mark">${doneFlag ? "✓" : "○"}</span>
-          <span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span>
-          <span class="todo-date">${esc((x.date || "").slice(5))}</span>
-        </li>`)
-        .join("") + "</ul>";
-    };
+    const planning = pool.filter((x) => x.status !== "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    const done = pool.filter((x) => x.status === "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+
+    const row = (x, isDone) => `<li class="todo-item${isDone ? " done" : ""}">
+      <span class="todo-mark">${isDone ? "✓" : "○"}</span>
+      <span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span>
+    </li>`;
+
     main.appendChild(el("h2", "sec-title", "计划中"));
-    main.insertAdjacentHTML("beforeend", rows(planning, false));
+    main.insertAdjacentHTML("beforeend", planning.length ? '<ul class="todo-list">' + planning.map((x) => row(x, false)).join("") + "</ul>" : '<p class="detail-empty">还没有计划。</p>');
+
     main.appendChild(el("h2", "sec-title", "已达成"));
-    main.insertAdjacentHTML("beforeend", rows(done, true));
-    return;
-  }
-  if (view === "timeline") {
-    const byMonth = new Map();
-    pool
-      .slice()
-      .sort((a, b) => ((b.play_since || b.date || "") + (b.time || "")).localeCompare((a.play_since || a.date || "") + (a.time || "")))
-      .forEach((r) => {
-        const d = r.play_since || r.date || "未记日期";
-        const m = /^\d{4}-\d{2}/.test(d) ? d.slice(0, 7) : "未记日期";
-        if (!byMonth.has(m)) byMonth.set(m, []);
-        byMonth.get(m).push({ r, d });
+    if (!done.length) {
+      main.insertAdjacentHTML("beforeend", '<p class="detail-empty">还没有。</p>');
+    } else {
+      const byDate = new Map();
+      done.forEach((x) => {
+        const d = x.date || "未记日期";
+        if (!byDate.has(d)) byDate.set(d, []);
+        byDate.get(d).push(x);
       });
-    for (const [m, rows] of byMonth) {
-      const label = /^\d{4}-\d{2}$/.test(m) ? m.slice(0, 4) + " 年 " + Number(m.slice(5)) + " 月" : m;
-      main.appendChild(el("h2", "sec-title date", label));
-      const g = el("div", "rec-grid");
-      rows.forEach(({ r }) => g.appendChild(card(r, "timeline")));
-      main.appendChild(g);
+      for (const [d, list] of byDate) {
+        main.appendChild(el("h3", "todo-date-head", d));
+        main.insertAdjacentHTML("beforeend", '<ul class="todo-list">' + list.map((x) => row(x, true)).join("") + "</ul>");
+      }
     }
     return;
   }
