@@ -1085,3 +1085,12 @@ body.lb-open { overflow: hidden; }
 }
 .lightbox:fullscreen img { max-height: 82vh; }
 .lightbox:fullscreen { background: #02080e; }
+/* 预览图尽量撑满 */
+.lightbox { padding: 0; }
+.lightbox img {
+  max-width: 97vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+}
