@@ -137,3 +137,29 @@ function metaRow(k, v) {
     }
   });
 })();
+
+
+// 截图点开大图
+(() => {
+  const shots = document.querySelector(".shots");
+  if (!shots) return;
+  const box = document.createElement("div");
+  box.className = "lightbox";
+  box.hidden = true;
+  box.innerHTML = '<img alt=""><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+  document.body.appendChild(box);
+  const big = box.querySelector("img");
+  const dl = box.querySelector("a");
+  const hide = () => { box.hidden = true; };
+  box.querySelector(".lb-close").addEventListener("click", hide);
+  box.addEventListener("click", (e) => { if (e.target === box) hide(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
+  shots.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("click", () => {
+      big.src = img.src;
+      dl.href = img.src;
+      dl.setAttribute("download", img.src.split("/").pop() || "shot.jpg");
+      box.hidden = false;
+    });
+  });
+})();
