@@ -62,5 +62,15 @@
 </main>
 
 <footer><p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p></footer>
+<script>
+(function () {
+  if (!localStorage.getItem("paopaowu_admin")) return;
+  document.querySelectorAll('footer a[href="login.html"]').forEach(function (a) {
+    a.textContent = "Kira";
+    a.style.color = "#ffd76a";
+    a.title = "已登录";
+  });
+})();
+</script>
 </body>
 </html>
