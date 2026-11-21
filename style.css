@@ -901,3 +901,24 @@ body.lb-open { overflow: hidden; }
 .side-date .side-n { color: var(--muted); font-size: 11px; }
 .side-date:hover { background: rgba(255,255,255,.05); }
 .side-date.on { background: rgba(88,199,255,.16); }
+/* 截图缩略：一排放五个 */
+.shots {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  overflow: visible;
+}
+.shots .shot { margin: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+.shots .shot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0;
+  cursor: zoom-in;
+  display: block;
+}
+.shots video { width: 100%; height: auto; border-radius: 8px; }
+@media (max-width: 720px) {
+  .shots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
