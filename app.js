@@ -138,38 +138,51 @@ async function loadData() {
   draw();
 })();
 
-// 图集：点击放大 + 下载
+// 图集：点击放大 + 左右切换 + 下载
 (() => {
   const grid = document.querySelector(".gallery-grid");
   if (!grid) return;
+  const imgs = [...grid.querySelectorAll("figure img")];
+  if (!imgs.length) return;
 
   const box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
-  box.innerHTML = '<img alt=""><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+  box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
   document.body.appendChild(box);
+
   const big = box.querySelector("img");
   const dl = box.querySelector("a");
-  const close = box.querySelector(".lb-close");
+  let idx = 0;
+  const show = (i) => {
+    idx = (i + imgs.length) % imgs.length;
+    const src = imgs[idx].currentSrc || imgs[idx].src;
+    big.src = src;
+    dl.href = src;
+    dl.setAttribute("download", src.split("/").pop() || "image");
+  };
 
-  const hide = () => { box.hidden = true; document.body.classList.remove("lb-open"); };
-  close.addEventListener("click", hide);
+  const hide = () => { box.hidden = true; };
+  box.querySelector(".lb-close").addEventListener("click", hide);
+  box.querySelector(".lb-nav.prev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
+  box.querySelector(".lb-nav.next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
   box.addEventListener("click", (e) => { if (e.target === box) hide(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
+  document.addEventListener("keydown", (e) => {
+    if (box.hidden) return;
+    if (e.key === "Escape") hide();
+    if (e.key === "ArrowLeft") show(idx - 1);
+    if (e.key === "ArrowRight") show(idx + 1);
+  });
 
-  for (const fig of grid.querySelectorAll("figure")) {
-    const img = fig.querySelector("img");
-    if (!img) continue;
+  let sx = 0;
+  box.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  box.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 60) show(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  imgs.forEach((img, i) => {
     img.classList.add("zoomable");
-    img.addEventListener("click", () => {
-      const src = img.currentSrc || img.src;
-      big.src = src;
-      big.alt = img.alt || "";
-      dl.href = src;
-      const name = src.split("/").pop() || "image";
-      dl.setAttribute("download", name);
-      box.hidden = false;
-      document.body.classList.add("lb-open");
-    });
-  }
+    img.addEventListener("click", () => { show(i); box.hidden = false; });
+  });
 })();
