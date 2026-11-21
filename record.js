@@ -134,6 +134,9 @@ function bindShots() {
             <input type="date" id="rate-date" value="${["想看","待看","想玩","想读"].includes(item.status) ? "" : esc(item.rated_on || item.date || "")}">
             <input type="time" id="rate-time" value="${esc(item.time || "")}">
           </div>
+          <div class="rate-pass-row">
+            <input type="password" id="rate-pass" class="rate-pass" placeholder="保存密码（设置过一次就只输这个）" autocomplete="current-password">
+          </div>
           <div class="rate-actions">
             <button type="button" id="rate-save" class="lb-btn">保存</button>
             <span id="rate-msg" class="rate-msg"></span>
@@ -166,6 +169,7 @@ function bindShots() {
   // 评分保存
   const starsBox = document.getElementById("rate-stars");
   const note = document.getElementById("rate-note");
+  const passInput = document.getElementById("rate-pass");
   const dateInput = document.getElementById("rate-date");
   const timeInput = document.getElementById("rate-time");
   const save = document.getElementById("rate-save");
@@ -234,12 +238,13 @@ function bindShots() {
   });
   save.addEventListener("click", async () => {
     if (!token) {
-      if (!localStorage.getItem(KEY)) { msg.textContent = "先点「设置保存密码」"; return; }
-      const pass = prompt("输入保存密码");
-      if (!pass) return;
+      if (!localStorage.getItem(KEY)) { msg.textContent = "先点下面的「设置保存密码」"; return; }
+      const pass = (passInput && passInput.value || "").trim();
+      if (!pass) { msg.textContent = "先输保存密码"; passInput && passInput.focus(); return; }
       token = await tokenFromPassword(pass);
       if (!token) { msg.textContent = "密码不对"; return; }
       sessionStorage.setItem("paopaowu_sess", token);
+      if (passInput) passInput.value = "";
     }
     msg.textContent = "保存中…";
     try {
