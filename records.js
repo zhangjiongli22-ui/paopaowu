@@ -202,7 +202,22 @@ function drawMain(pool) {
     drawTimeline(pool.filter((x) => !isWish(x)));
     return;
   }
-  main.appendChild(gridOf(summarised(pool)));
+  const wishRows = pool.filter(isWish);
+  const seenRows = pool.filter((x) => !isWish(x));
+  const section = (title, rows, open) => {
+    if (!rows.length) return;
+    const box = document.createElement("details");
+    box.className = "sec-fold";
+    if (open) box.open = true;
+    const sum = document.createElement("summary");
+    sum.className = "sec-fold-head";
+    sum.textContent = `${title} · ${rows.length}`;
+    box.appendChild(sum);
+    box.appendChild(gridOf(summarised(rows)));
+    main.appendChild(box);
+  };
+  section("待看", wishRows, true);
+  section("看过", seenRows, true);
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
