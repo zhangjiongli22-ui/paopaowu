@@ -1337,3 +1337,60 @@ body.lb-open { overflow: hidden; }
 }
 .duo-line.right .duo-text { border-color: rgba(88,199,255,.35); }
 .duo-btn { margin-top: 4px; }
+/* 首页双主块 */
+.home-main2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  max-width: 960px;
+  margin: 6px auto 14px;
+  padding: 0 22px;
+}
+.tile-big {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(88,199,255,.28);
+  background: linear-gradient(160deg, rgba(24,58,84,.62), rgba(12,30,46,.5));
+  color: var(--ink);
+  overflow: hidden;
+  transition: transform .18s ease, border-color .18s ease;
+}
+.tile-big::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  bottom: -50px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(88,199,255,.22), transparent 70%);
+}
+.tile-big:hover { transform: translateY(-4px); border-color: rgba(88,199,255,.6); }
+.tb-k { font-size: 21px; letter-spacing: .02em; }
+.tb-d { font-size: 13px; color: var(--muted); line-height: 1.65; max-width: 30em; }
+.tb-go { margin-top: 6px; font-size: 12.5px; color: var(--accent); }
+
+/* 次导航 */
+.home-sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 960px;
+  margin: 0 auto 34px;
+  padding: 0 22px;
+}
+.sub-link {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(16,40,60,.35);
+  transition: color .18s ease, border-color .18s ease;
+}
+.sub-link:hover { color: var(--ink); border-color: rgba(88,199,255,.45); }
