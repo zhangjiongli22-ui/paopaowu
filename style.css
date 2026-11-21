@@ -679,3 +679,46 @@ body.lb-open { overflow: hidden; }
 }
 .poster-sub { font-size: 11px; color: var(--muted); margin: 3px 0 0; }
 .chat-list li.day { margin-top: 22px; }
+/* 记录详情 */
+.detail-box {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 4vh 4vw;
+  background: rgba(3, 10, 18, .9);
+  backdrop-filter: blur(6px);
+}
+.detail-box[hidden] { display: none; }
+.detail-card {
+  position: relative;
+  width: min(760px, 94vw);
+  max-height: 88vh;
+  overflow: auto;
+  background: linear-gradient(180deg, #0d2537, #081a29);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+}
+.detail-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.06);
+  color: var(--muted);
+  cursor: pointer;
+}
+.detail-top { display: flex; gap: 20px; flex-wrap: wrap; }
+.detail-cover { width: 160px; border-radius: 12px; border: 1px solid var(--line); }
+.detail-meta { flex: 1; min-width: 200px; }
+.detail-meta h2 { margin: 8px 0 6px; font-size: 22px; }
+.detail-line { color: #ffd08a; font-size: 14px; margin: 0 0 10px; }
+.detail-note { color: #d5ecfa; font-size: 15px; line-height: 1.8; }
+.detail-why { color: var(--muted); font-size: 13px; }
+.detail-shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 18px; }
+.detail-shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); }
+.detail-empty { color: var(--muted); font-size: 13px; margin-top: 16px; }
