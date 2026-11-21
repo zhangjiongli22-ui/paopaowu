@@ -1713,3 +1713,51 @@ body.lb-open { overflow: hidden; }
 .poster-stars { margin: 4px 0 2px; font-size: 12.5px; letter-spacing: 2px; line-height: 1; }
 .poster-stars .stars-on { color: #ffd76a; }
 .poster-stars .stars-off { color: rgba(255,215,106,.22); }
+
+/* 卡片星数：铺满一行，靠上 */
+.poster-stars {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 6px 0 3px;
+  font-size: 15px;
+  line-height: 1;
+}
+.poster-stars .st { color: rgba(255,215,106,.2); }
+.poster-stars .st.on { color: #ffd76a; }
+.poster-stars .st.half {
+  background: linear-gradient(90deg, #ffd76a 50%, rgba(255,215,106,.2) 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 评价区的五星（支持半星） */
+.rate-stars { display: flex; gap: 6px; }
+.star-btn {
+  position: relative;
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(255,215,106,.2);
+}
+.star-btn.on { color: #ffd76a; }
+.star-btn.half {
+  background: linear-gradient(90deg, #ffd76a 50%, rgba(255,215,106,.2) 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.star-btn .half-hit { position: absolute; top: 0; bottom: 0; width: 50%; }
+.star-btn .half-hit.l { left: 0; }
+.star-btn .half-hit.r { right: 0; }
+
+/* 覆盖旧的绿色角标，确保黄色 */
+.poster-badge {
+  color: #ffd76a !important;
+  border-color: rgba(255,215,106,.5) !important;
+  background: rgba(4,12,20,.62) !important;
+}
