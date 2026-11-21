@@ -984,3 +984,8 @@ body.lb-open { overflow: hidden; }
   .lb-nav { width: 38px; height: 38px; font-size: 20px; }
   .lightbox img { max-height: 68vh; }
 }
+/* 多个录屏，按时间排 */
+.video-list { display: grid; gap: 18px; }
+.video-item { margin: 0; }
+.video-item figcaption { font-size: 12px; color: var(--muted); margin-bottom: 6px; letter-spacing: .06em; }
+.video-item video { width: 100%; max-height: 520px; border-radius: 12px; border: 1px solid var(--line); background: #000; }
