@@ -1094,3 +1094,12 @@ body.lb-open { overflow: hidden; }
   height: auto;
   border-radius: 6px;
 }
+/* 预览图强制撑满 */
+.lightbox img {
+  width: 97vw;
+  height: 88vh;
+  max-width: 97vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 6px;
+}
