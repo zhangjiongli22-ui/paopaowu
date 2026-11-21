@@ -132,7 +132,10 @@ function bindShots() {
             ${item.note ? `<blockquote class="review-quote">${esc(item.note)}</blockquote>` : '<p class="review-empty">只打了分，还没写评价。</p>'}
             <div class="review-foot">
               <span class="review-when">${item.rated_on ? esc(item.rated_on) + " 评价" : ""}</span>
-              <button type="button" class="review-edit" id="review-edit">修改评价</button>
+              <span class="review-acts">
+                <button type="button" class="review-edit" id="review-edit">修改评价</button>
+                <button type="button" class="review-edit" id="review-clear">删除评价</button>
+              </span>
             </div>
           </div>
           <div class="review-form"${hasReview ? " hidden" : ""}>
@@ -195,6 +198,15 @@ function bindShots() {
       const form = document.querySelector(".review-form");
       if (view) view.hidden = true;
       if (form) form.hidden = false;
+    });
+  }
+  const clearBtn = document.getElementById("review-clear");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", async () => {
+      if (!confirm("删掉这条评价？")) return;
+      value = 0;
+      note.value = "";
+      document.getElementById("rate-save").click();
     });
   }
   const starsBox = document.getElementById("rate-stars");
@@ -262,8 +274,14 @@ function bindShots() {
       const json = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g, "")))));
       const it = (json.items || []).find((x) => String(x.id) === String(id));
       if (!it) throw new Error("找不到这条记录");
-      if (value) it.rating = value;
-      it.note = note.value.trim();
+      const noteText = note.value.trim();
+      if (value) it.rating = value; else delete it.rating;
+      if (noteText) it.note = noteText; else delete it.note;
+      const cleared = !it.rating && !it.note;
+      if (cleared) {
+        delete it.rated_on;
+        it.status = it.cat === "game" ? "想玩" : "想看";
+      }
       const pad = (n) => String(n).padStart(2, "0");
       const now = new Date();
       const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
@@ -271,7 +289,7 @@ function bindShots() {
       const ymd = dateInput && dateInput.value ? dateInput.value : today;
       const hhmm = timeInput && timeInput.value ? timeInput.value : nowTime;
       const filledDate = !!(dateInput && dateInput.value);
-      const finished = value > 0 || filledDate;
+      const finished = !cleared && (value > 0 || filledDate);
       if (finished) it.status = it.cat === "game" ? "玩过" : "看过";
       if (!it.added) it.added = it.date || "";
       it.date = ymd;
@@ -302,8 +320,9 @@ function bindShots() {
         if (when) when.textContent = it.rated_on ? it.rated_on + " 评价" : "";
         view.hidden = false;
       }
-      if (form) form.hidden = true;
-      msg.textContent = "已保存（线上同步约一分钟）";
+      if (cleared) { if (view) view.hidden = true; if (form) form.hidden = false; }
+      else if (form) form.hidden = true;
+      msg.textContent = cleared ? "已删除评价（线上同步约一分钟）" : "已保存（线上同步约一分钟）";
     } catch (err) {
       msg.textContent = "没保存成功：" + err.message;
     }
