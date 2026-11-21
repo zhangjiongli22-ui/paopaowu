@@ -108,7 +108,8 @@
    "air": "2023-05-12",
    "bgm_rating": 9.1,
    "bgm_id": 284506,
-   "name_cn": "塞尔达传说 王国之泪"
+   "name_cn": "塞尔达传说 王国之泪",
+   "play_since": "2026-11"
   },
   {
    "id": "g-1002",
@@ -173,7 +174,8 @@
    "director": "Mojang Studios",
    "bgm_rating": 8.9,
    "bgm_id": 12596,
-   "name_cn": "我的世界"
+   "name_cn": "我的世界",
+   "play_since": "2026-11"
   },
   {
    "id": "g-1005",
