@@ -627,3 +627,55 @@ body.lb-open { overflow: hidden; }
 }
 .view-btn.on { border-color: var(--accent2); color: var(--ink); background: rgba(126, 240, 208, .12); }
 .rec-card.sum .rec-note { color: var(--muted); font-size: 13px; }
+/* 番剧式海报墙 */
+.grid-row { list-style: none; margin: 0; padding: 0; }
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 16px 12px;
+}
+.poster { display: block; color: var(--ink); }
+.poster-box {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, #12324a, #0a1c2c);
+}
+.poster-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.poster-fallback {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  color: var(--muted);
+}
+.poster-rating {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  font-size: 11px;
+  color: #ffd08a;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 3px #000;
+}
+.poster-status {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(4, 12, 20, .62);
+  color: #dff3ff;
+}
+.poster-title {
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 8px 0 0;
+  height: 2.9em;
+  overflow: hidden;
+}
+.poster-sub { font-size: 11px; color: var(--muted); margin: 3px 0 0; }
+.chat-list li.day { margin-top: 22px; }
