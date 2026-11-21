@@ -157,8 +157,29 @@
    "bgm_rating": 5.4,
    "bgm_id": 380974,
    "name_cn": "绝区零",
-   "video": "assets/videos/zzz.mp4",
-   "play_since": "2026-10-10"
+   "play_since": "2026-10-10",
+   "videos": [
+    {
+     "src": "assets/videos/zzz-2026-10-10-22-54-06.mp4",
+     "label": "10-10 22:54"
+    },
+    {
+     "src": "assets/videos/zzz-2026-10-11-18-35-08.mp4",
+     "label": "10-11 18:35"
+    },
+    {
+     "src": "assets/videos/zzz-2026-10-11-19-13-39.mp4",
+     "label": "10-11 19:13"
+    },
+    {
+     "src": "assets/videos/zzz-2026-10-11-19-43-08.mp4",
+     "label": "10-11 19:43"
+    },
+    {
+     "src": "assets/videos/zzz-2026-10-11-22-20-43.mp4",
+     "label": "10-11 22:20"
+    }
+   ]
   },
   {
    "id": "g-1004",
