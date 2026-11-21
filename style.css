@@ -1394,3 +1394,32 @@ body.lb-open { overflow: hidden; }
   transition: color .18s ease, border-color .18s ease;
 }
 .sub-link:hover { color: var(--ink); border-color: rgba(88,199,255,.45); }
+/* 首页：两个人 */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  max-width: 960px;
+  margin: 8px auto 26px;
+  padding: 0 22px;
+}
+.pair-side {
+  padding: 24px 24px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(14,36,54,.42);
+}
+.fish-side { border-color: rgba(88,199,255,.3); }
+.kira-side { border-color: rgba(255,214,160,.22); }
+.pair-role { font-size: 11.5px; letter-spacing: .14em; color: var(--muted); margin: 0 0 6px; }
+.pair-side h2 { font-size: 24px; margin: 0 0 8px; }
+.pair-text { font-size: 13.5px; line-height: 1.7; color: var(--muted); margin: 0 0 14px; }
+.chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 16px; }
+.chips li {
+  font-size: 12px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.pair-go { font-size: 12.5px; color: var(--accent); }
