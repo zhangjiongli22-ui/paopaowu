@@ -1423,3 +1423,34 @@ body.lb-open { overflow: hidden; }
   color: var(--muted);
 }
 .pair-go { font-size: 12.5px; color: var(--accent); }
+/* 待看折叠块 */
+.wish {
+  max-width: 1080px;
+  margin: 30px auto 10px;
+  padding: 0 22px;
+}
+.wish-head {
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: .06em;
+  color: var(--ink);
+  padding: 10px 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.wish-head::-webkit-details-marker { display: none; }
+.wish-head::after { content: " ▾"; color: var(--muted); font-size: 11px; }
+.wish[open] .wish-head::after { content: " ▴"; }
+.wish-cats { margin: 6px 0 12px; }
+.wish-list { display: flex; flex-direction: column; }
+.wish-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 2px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  color: var(--ink);
+}
+.wish-tag { font-size: 10.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; flex: none; }
+.wish-title { flex: 1; font-size: 14px; min-width: 0; }
+.wish-status { font-size: 11px; color: rgba(159,196,221,.7); flex: none; }
