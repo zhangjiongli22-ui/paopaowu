@@ -777,3 +777,32 @@ body.lb-open { overflow: hidden; }
   cursor: pointer;
 }
 .group-btn.on { border-color: var(--accent); color: var(--ink); background: rgba(88, 199, 255, .14); }
+/* Kira：主内容 + 右侧时间线 */
+.rec-layout { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 30px; align-items: start; margin-top: 18px; }
+.rec-main { min-width: 0; }
+.rec-side {
+  position: sticky;
+  top: 92px;
+  border-left: 1px solid var(--line);
+  padding-left: 18px;
+}
+.side-title { font-size: 12px; letter-spacing: .2em; color: var(--muted); margin: 0 0 10px; }
+.side-list { display: flex; flex-direction: column; gap: 4px; }
+.side-date, .side-clear {
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.side-date:hover, .side-clear:hover { color: var(--ink); background: rgba(255,255,255,.05); }
+.side-date.on { background: rgba(88, 199, 255, .16); color: var(--ink); }
+.side-clear { margin-top: 6px; color: var(--accent2); }
+.sec-title { font-size: 15px; color: var(--accent2); margin: 22px 0 12px; letter-spacing: .06em; }
+@media (max-width: 820px) {
+  .rec-layout { grid-template-columns: 1fr; gap: 18px; }
+  .rec-side { position: static; border-left: none; padding-left: 0; order: 2; }
+}
