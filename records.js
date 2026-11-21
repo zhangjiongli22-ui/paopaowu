@@ -15,14 +15,14 @@ const GROUPS = {
 };
 
 const main = document.getElementById("rec-main");
-const side = document.getElementById("rec-side");
 const groupRow = document.getElementById("group-row");
 const catRow = document.getElementById("cat-row");
+const viewRow = document.getElementById("view-row");
 
 let items = [];
 let group = "hobby";
 let cat = "all";
-let dayFilter = "";
+let view = "summary";
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -55,7 +55,7 @@ function card(r) {
   if (r.status) box.appendChild(el("span", "poster-status", r.status));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
-  a.appendChild(el("p", "poster-sub", r.time || ""));
+  if (view === "timeline") a.appendChild(el("p", "poster-sub", (r.date || "") + (r.time ? " " + r.time : "")));
   return a;
 }
 
@@ -92,44 +92,28 @@ function drawMain(pool) {
     main.appendChild(gridOf(done));
     return;
   }
-  main.appendChild(gridOf(summarised(pool)));
-}
-
-function drawSide(pool) {
-  if (!side) return;
-  side.innerHTML = "";
-  side.appendChild(el("p", "side-title", "时间线"));
-  if (!pool.length) return;
-
-  const dates = new Map();
-  pool.forEach((r) => {
-    const d = r.date || "未记日期";
-    dates.set(d, (dates.get(d) || 0) + 1);
-  });
-
-  const list = el("div", "side-list");
-  [...dates.keys()].sort((a, b) => b.localeCompare(a)).forEach((d) => {
-    const b = el("button", "side-date" + (d === dayFilter ? " on" : ""));
-    b.appendChild(el("span", "side-d", d));
-    b.appendChild(el("span", "side-n", dates.get(d)));
-    b.addEventListener("click", () => {
-      dayFilter = dayFilter === d ? "" : d;
-      draw();
-    });
-    list.appendChild(b);
-  });
-  side.appendChild(list);
-  if (dayFilter) {
-    const c = el("button", "side-clear", "显示全部");
-    c.addEventListener("click", () => { dayFilter = ""; draw(); });
-    side.appendChild(c);
+  if (view === "timeline") {
+    const byDate = new Map();
+    pool
+      .slice()
+      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
+      .forEach((r) => {
+        const d = r.date || "未记日期";
+        if (!byDate.has(d)) byDate.set(d, []);
+        byDate.get(d).push(r);
+      });
+    for (const [d, rows] of byDate) {
+      main.appendChild(el("h2", "sec-title date", d));
+      main.appendChild(gridOf(rows));
+    }
+    return;
   }
+  main.appendChild(gridOf(summarised(pool)));
 }
 
 function draw() {
   const poolAll = items.filter((x) => GROUPS[group].cats.includes(x.cat));
-  const poolCat = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
-  const pool = dayFilter ? poolCat.filter((x) => (x.date || "未记日期") === dayFilter) : poolCat;
+  const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
   catRow.innerHTML = "";
   if (group === "hobby") {
@@ -145,9 +129,7 @@ function draw() {
       catRow.appendChild(b);
     });
   }
-
   drawMain(pool);
-  drawSide(poolCat);
 }
 
 (async () => {
@@ -162,12 +144,22 @@ function draw() {
   const gp = new URLSearchParams(location.search).get("group");
   if (gp && GROUPS[gp]) group = gp;
 
+  // 小字视图切换，靠最右
+  const drawViews = () => {
+    viewRow.innerHTML = "";
+    [["summary", "汇总"], ["timeline", "时间线"]].forEach(([k, name]) => {
+      const b = el("button", "view-link" + (k === view ? " on" : ""), name);
+      b.addEventListener("click", () => { view = k; drawViews(); draw(); });
+      viewRow.appendChild(b);
+    });
+  };
+  drawViews();
+
   Object.keys(GROUPS).forEach((k) => {
     const b = el("button", "group-btn" + (k === group ? " on" : ""), GROUPS[k].name);
     b.addEventListener("click", () => {
       group = k;
       cat = "all";
-      dayFilter = "";
       [...groupRow.children].forEach((x) => x.classList.toggle("on", x === b));
       draw();
     });
