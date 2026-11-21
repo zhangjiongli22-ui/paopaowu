@@ -174,6 +174,16 @@ async function loadData() {
     if (e.key === "ArrowRight") show(idx + 1);
   });
 
+  let lastWheel = 0;
+  box.addEventListener("wheel", (e) => {
+    if (box.hidden) return;
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lastWheel < 260 || Math.abs(e.deltaY) < 6) return;
+    lastWheel = now;
+    show(idx + (e.deltaY > 0 ? 1 : -1));
+  }, { passive: false });
+
   let sx = 0;
   box.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
   box.addEventListener("touchend", (e) => {
