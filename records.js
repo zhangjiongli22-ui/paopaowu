@@ -147,7 +147,7 @@ function draw() {
   // 小字视图切换，靠最右
   const drawViews = () => {
     viewRow.innerHTML = "";
-    const b = el("button", "view-link", view === "summary" ? "时间线" : "返回汇总");
+    const b = el("button", "view-link", view === "summary" ? "时间线" : "返回");
     b.addEventListener("click", () => {
       view = view === "summary" ? "timeline" : "summary";
       drawViews();
