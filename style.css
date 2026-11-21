@@ -1787,3 +1787,5 @@ body.lb-open { overflow: hidden; }
 }
 .poster-stars { margin: 1px 0 1px; }
 .poster-sub { margin: 1px 0 0; }
+
+.review-acts { display: flex; gap: 8px; }
