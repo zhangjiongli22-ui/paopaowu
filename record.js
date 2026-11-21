@@ -70,7 +70,9 @@ function metaRow(k, v) {
         <h2 class="shots-head">截图</h2>
         ${shots ? `<div class="shots">${shots}</div>` : `<p class="detail-empty">还没有截图。</p>`}
         <h2 class="shots-head">游玩录屏</h2>
-        ${item.video ? `<div class="shots video-wrap"><video src="${esc(item.video)}" controls preload="metadata"></video></div>` : `<p class="detail-empty">还没有录屏。</p>`}
+        ${(item.videos && item.videos.length)
+          ? `<div class="video-list">${item.videos.map((v) => `<figure class="video-item"><figcaption>${esc(v.label || "")}</figcaption><video src="${esc(v.src)}" controls preload="metadata"></video></figure>`).join("")}</div>`
+          : (item.video ? `<div class="video-wrap"><video src="${esc(item.video)}" controls preload="metadata"></video></div>` : `<p class="detail-empty">还没有录屏。</p>`)}
       </section>
     </div>
   `;
