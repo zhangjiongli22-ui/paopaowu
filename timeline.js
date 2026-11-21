@@ -1,4 +1,5 @@
-const CATS = { idea: "巧思", movie: "影视", game: "游戏", book: "读书", fitness: "健身", plan: "计划" };
+const CATS = { anime: "动画", tv: "剧集", film: "电影", game: "游戏", book: "读书", log: "日志", idea: "巧思" };
+const KINDS = { fitness: "健身", game: "游戏", piano: "钢琴", study: "学习", media: "影视", work: "工作" };
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -9,6 +10,7 @@ function el(tag, cls, text) {
 
 (async () => {
   const root = document.getElementById("tl");
+  const filterRow = document.getElementById("tl-filter");
   let items = [];
   try {
     const res = await fetch("data/records.json", { cache: "no-store" });
@@ -17,49 +19,57 @@ function el(tag, cls, text) {
     root.appendChild(el("p", "loading-bar", "还没连上记录。"));
     return;
   }
-  if (!items.length) {
-    root.appendChild(el("p", "loading-bar", "还没有记录。"));
-    return;
-  }
 
-  const byDate = new Map();
-  items
-    .slice()
-    .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")))
-    .forEach((r) => {
-      const d = r.date || "未记日期";
-      if (!byDate.has(d)) byDate.set(d, []);
-      byDate.get(d).push(r);
-    });
+  // 统一成「时间线事件」
+  const events = [];
+  items.forEach((it) => {
+    if (it.cat === "log") {
+      events.push({ date: it.date, time: it.time, cat: "log", kind: it.kind, title: (KINDS[it.kind] || "") + " · " + (it.text || ""), link: null });
+    } else if (it.cat === "idea") {
+      events.push({ date: it.date, time: it.time, cat: "idea", status: it.status, title: it.title, link: null });
+    } else {
+      events.push({ date: it.play_since || it.date, time: it.time, cat: it.cat, title: it.title, link: "record.html?id=" + encodeURIComponent(it.id) });
+    }
+  });
 
-  for (const [d, rows] of byDate) {
-    root.appendChild(el("h2", "tl-date", d));
-    const wrap = el("div", "tl-rows");
-    rows.forEach((r) => {
-      const a = el("a", "tl-row");
-      a.href = "record.html?id=" + encodeURIComponent(r.id);
-      const thumb = el("div", "tl-thumb");
-      if (r.cover) {
-        const img = el("img");
-        img.src = r.cover;
-        img.loading = "lazy";
-        img.alt = "";
-        thumb.appendChild(img);
-      } else {
-        thumb.appendChild(el("span", "poster-fallback", (r.title || "?")[0]));
+  const filters = ["all", "game", "anime", "tv", "film", "log", "idea"];
+  let active = "all";
+  const draw = () => {
+    root.innerHTML = "";
+    const rows = events
+      .filter((e) => e.date)
+      .filter((e) => active === "all" || e.cat === active)
+      .sort((a, b) => ((b.date || "") + (b.time || "")).localeCompare((a.date || "") + (a.time || "")));
+
+    let lastMonth = "";
+    let line = el("div", "tl-wrap");
+    rows.forEach((e) => {
+      const month = String(e.date).slice(0, 7);
+      if (month !== lastMonth) {
+        lastMonth = month;
+        line.appendChild(el("h2", "tl-month", month.replace("-", " 年 ") + " 月"));
       }
-      a.appendChild(thumb);
-      const body = el("div", "tl-body");
-      const head = el("div", "tl-head");
-      head.appendChild(el("span", "chip " + r.cat, CATS[r.cat] || r.cat));
-      if (r.time) head.appendChild(el("span", "tl-time", r.time));
-      if (r.rating) head.appendChild(el("span", "poster-rating", "★".repeat(Math.max(0, Math.min(5, Math.round(r.rating / 2))))));
-      body.appendChild(head);
-      body.appendChild(el("p", "tl-title", r.title || "（没写标题）"));
-      if (r.note) body.appendChild(el("p", "tl-note", r.note));
-      a.appendChild(body);
-      wrap.appendChild(a);
+      const row = el(e.link ? "a" : "div", "tl-event");
+      if (e.link) row.href = e.link;
+      row.innerHTML = `<span class="tl-dot"></span>
+        <span class="tl-day">${String(e.date).slice(5)}</span>
+        <span class="tl-tag t-${e.cat}">${CATS[e.cat] || e.cat}</span>
+        <span class="tl-title">${e.title || ""}</span>
+        <span class="tl-time">${e.time || ""}</span>`;
+      line.appendChild(row);
     });
-    root.appendChild(wrap);
-  }
+    root.appendChild(line);
+    [...filterRow.children].forEach((b) => b.classList.toggle("on", b.dataset.k === active));
+  };
+
+  filters.forEach((k) => {
+    const n = k === "all" ? events.length : events.filter((e) => e.cat === k).length;
+    if (k !== "all" && !n) return;
+    const b = el("button", "cat-bubble", null);
+    b.dataset.k = k;
+    b.innerHTML = `<span class="cat-name">${k === "all" ? "全部" : CATS[k]}</span><span class="cat-n">${n}</span>`;
+    b.addEventListener("click", () => { active = k; draw(); });
+    filterRow.appendChild(b);
+  });
+  draw();
 })();
