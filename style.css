@@ -1103,3 +1103,15 @@ body.lb-open { overflow: hidden; }
   object-fit: contain;
   border-radius: 6px;
 }
+/* 预览图真正撑满 */
+.lightbox { background: #01060b; padding: 0; }
+.lightbox img {
+  display: block;
+  margin: auto;
+  width: 100vw !important;
+  height: 92vh !important;
+  max-width: 100vw !important;
+  max-height: 92vh !important;
+  object-fit: contain;
+  border-radius: 0;
+}
