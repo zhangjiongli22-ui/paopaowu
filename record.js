@@ -136,7 +136,7 @@ function bindShots() {
             </div>
           </div>
           <div class="review-form"${hasReview ? " hidden" : ""}>
-            <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" data-v="${n * 2}">★</button>`).join("")}</div>
+            <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" class="star-btn" data-n="${n}"><span class="half-hit l" data-v="${n * 2 - 1}"></span><span class="half-hit r" data-v="${n * 2}"></span><span class="star-glyph">★</span></button>`).join("")}</div>
             <textarea id="rate-note" class="rate-note" placeholder="写点评价…">${esc(item.note || "")}</textarea>
             <div class="rate-time">
               <span class="rate-time-label">${item.cat === "game" ? "游玩时间" : "观看时间"}</span>
@@ -206,11 +206,21 @@ function bindShots() {
   const API = "https://api.github.com/repos/zhangjiongli22-ui/paopaowu/contents/data/records.json";
   let value = 0;
 
+  function paintStars() {
+    [...starsBox.querySelectorAll(".star-btn")].forEach((btn) => {
+      const n = Number(btn.dataset.n);
+      btn.classList.toggle("on", value >= n * 2);
+      btn.classList.toggle("half", value === n * 2 - 1);
+    });
+  }
+
+  if (item.rating) { value = item.rating; paintStars(); }
+
   starsBox.addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-v]");
-    if (!b) return;
-    value = Number(b.dataset.v);
-    [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= value));
+    const hit = e.target.closest("[data-v]");
+    if (!hit) return;
+    value = Number(hit.dataset.v);
+    paintStars();
     msg.textContent = value / 2 + "/5";
   });
 
@@ -279,7 +289,8 @@ function bindShots() {
       const scoreNum = document.getElementById("score-num");
       if (scoreStars) scoreStars.textContent = it.rating ? stars(it.rating) : "还没评分";
       if (scoreNum) scoreNum.textContent = it.rating ? five(it.rating) + "/5" : "";
-      [...starsBox.children].forEach((x) => x.classList.toggle("on", Number(x.dataset.v) <= (it.rating || 0)));
+      value = it.rating || value;
+      paintStars();
       const statusEl = document.querySelector(".rec-status");
       if (statusEl) statusEl.textContent = it.status;
       const view = document.querySelector(".review-view");
