@@ -1662,14 +1662,14 @@ body.lb-open { overflow: hidden; }
 /* 卡片：已评价角标与星数 */
 .poster-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 10.5px;
-  padding: 2px 8px;
+  left: 6px;
+  top: 28px;
+  font-size: 10px;
+  padding: 1px 7px;
   border-radius: 999px;
-  background: rgba(126,240,208,.16);
-  color: #9ff5dc;
-  border: 1px solid rgba(126,240,208,.4);
+  background: rgba(4, 12, 20, .62);
+  color: #ffd76a;
+  border: 1px solid rgba(255, 215, 106, .45);
   backdrop-filter: blur(4px);
 }
 .poster-stars { margin: 3px 0 0; font-size: 12px; letter-spacing: 1px; }
