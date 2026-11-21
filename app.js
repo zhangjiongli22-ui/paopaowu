@@ -148,7 +148,7 @@ async function loadData() {
   const box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
-  box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button></div>';
+  box.innerHTML = '<button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><div class="lb-bar"><a class="lb-btn" download>下载原图</a><button class="lb-btn lb-close" type="button">关闭</button><div class="lb-zone left"></div><div class="lb-zone right"></div></div>';
   document.body.appendChild(box);
 
   const big = box.querySelector("img");
@@ -166,6 +166,10 @@ async function loadData() {
   box.querySelector(".lb-close").addEventListener("click", hide);
   box.querySelector(".lb-nav.prev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
   box.querySelector(".lb-nav.next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
+  const zL = box.querySelector(".lb-zone.left");
+  const zR = box.querySelector(".lb-zone.right");
+  if (zL) zL.addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
+  if (zR) zR.addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
   box.addEventListener("click", (e) => { if (e.target === box) hide(); });
   document.addEventListener("keydown", (e) => {
     if (box.hidden) return;
