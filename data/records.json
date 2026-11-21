@@ -222,7 +222,9 @@
     "assets/shots/counter-strike-2/s07.jpg",
     "assets/shots/counter-strike-2/s08.jpg"
    ],
-   "play_since": "2026-03-20"
+   "play_since": "2026-03-20",
+   "director": "",
+   "staff": ""
   },
   {
    "id": "game-8e3534d1",
@@ -232,9 +234,6 @@
    "date": "2026-11-21",
    "time": "21:00",
    "shots": [
-    "assets/shots/nte-neverness-to-everness/s01.jpg",
-    "assets/shots/nte-neverness-to-everness/s02.jpg",
-    "assets/shots/nte-neverness-to-everness/s03.jpg",
     "assets/shots/ntegame/s01.jpg",
     "assets/shots/ntegame/s02.jpg"
    ],
@@ -345,14 +344,69 @@
    "play_since": "2023-05-04"
   },
   {
-   "id": "movie-demo-video",
-   "cat": "movie",
-   "title": "视频测试：东京喰种 OP 混音",
-   "note": "试试网页里直接放视频，压到 20 秒 720p，200 多 KB。",
-   "status": "测试",
+   "id": "game-ffec45c8",
+   "cat": "game",
+   "title": "Eclipsium",
+   "status": "在玩",
    "date": "2026-11-21",
-   "time": "22:00",
-   "video": "assets/videos/demo.mp4"
+   "time": "21:00",
+   "shots": [
+    "assets/shots/eclipsium/s01.jpg",
+    "assets/shots/eclipsium/s02.jpg",
+    "assets/shots/eclipsium/s03.jpg",
+    "assets/shots/eclipsium/s04.jpg",
+    "assets/shots/eclipsium/s05.jpg"
+   ]
+  },
+  {
+   "id": "game-5535c73a",
+   "cat": "game",
+   "title": "No, I'm Not A Human",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/no-i-m-not-a-human/s01.jpg",
+    "assets/shots/no-i-m-not-a-human/s02.jpg",
+    "assets/shots/no-i-m-not-a-human/s03.jpg",
+    "assets/shots/no-i-m-not-a-human/s04.jpg"
+   ]
+  },
+  {
+   "id": "game-4f1da5c2",
+   "cat": "game",
+   "title": "Forza Horizon 6",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/forza-horizon-6/s01.jpg",
+    "assets/shots/forza-horizon-6/s02.jpg",
+    "assets/shots/forza-horizon-6/s03.jpg"
+   ]
+  },
+  {
+   "id": "game-8b2e23be",
+   "cat": "game",
+   "title": "Warframe",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/warframe/s01.jpg"
+   ]
+  },
+  {
+   "id": "game-158edd86",
+   "cat": "game",
+   "title": "星穹铁道",
+   "status": "在玩",
+   "date": "2026-11-21",
+   "time": "21:00",
+   "shots": [
+    "assets/shots/星穹铁道/s01.jpg",
+    "assets/shots/星穹铁道/s02.jpg"
+   ]
   }
  ]
 }
