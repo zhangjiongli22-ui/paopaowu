@@ -1,7 +1,9 @@
 const CATS = {
   all:     { name: "全部" },
   idea:    { name: "巧思" },
-  movie:   { name: "影视" },
+  anime:   { name: "动画" },
+  tv:      { name: "剧集" },
+  film:    { name: "电影" },
   game:    { name: "游戏" },
   book:    { name: "读书" },
   fitness: { name: "健身" },
@@ -9,7 +11,7 @@ const CATS = {
 };
 
 const GROUPS = {
-  hobby: { name: "爱好", cats: ["movie", "game", "book", "fitness"] },
+  hobby: { name: "爱好", cats: ["anime", "tv", "film", "game", "book", "fitness"] },
   idea:  { name: "巧思", cats: ["idea"] },
   plan:  { name: "每日计划", cats: ["plan"] }
 };
