@@ -1484,3 +1484,12 @@ body.lb-open { overflow: hidden; }
 .prose h2 { font-size: 15px; letter-spacing: .08em; color: var(--accent2); margin: 28px 0 8px; }
 .prose p { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
 .prose a { color: var(--accent); }
+/* Kira 头像占位 */
+.avatar.monogram {
+  display: grid;
+  place-items: center;
+  font-size: 46px;
+  color: #0b1f2a;
+  background: linear-gradient(150deg, #ffd6a0, #ffb27a);
+  border-radius: 50%;
+}
