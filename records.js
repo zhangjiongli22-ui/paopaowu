@@ -136,6 +136,35 @@ function drawLog(pool) {
   }
 }
 
+
+function dateOf(x) {
+  return String(x.play_since || x.date || "");
+}
+
+function drawTimeline(pool) {
+  const rows = pool.filter((x) => dateOf(x)).sort((a, b) => (dateOf(b) + (b.time || "")).localeCompare(dateOf(a) + (a.time || "")));
+  if (!rows.length) {
+    main.insertAdjacentHTML("beforeend", '<p class="detail-empty">还没有内容。</p>');
+    return;
+  }
+  const byMonth = new Map();
+  rows.forEach((x) => {
+    const m = dateOf(x).slice(0, 7);
+    if (!byMonth.has(m)) byMonth.set(m, new Map());
+    const days = byMonth.get(m);
+    const d = dateOf(x);
+    if (!days.has(d)) days.set(d, []);
+    days.get(d).push(x);
+  });
+  for (const [m, days] of byMonth) {
+    main.appendChild(el("h2", "sec-title date", m.slice(0, 4) + " 年 " + Number(m.slice(5)) + " 月"));
+    for (const [d, list] of days) {
+      main.appendChild(el("h3", "tl-date", d.slice(5) + " " + (list[0].time || "")));
+      main.appendChild(gridOf(list));
+    }
+  }
+}
+
 function drawMain(pool) {
   main.innerHTML = "";
   if (group === "plan") { drawLog(pool); return; }
@@ -168,8 +197,12 @@ function drawMain(pool) {
     }
     return;
   }
-  main.appendChild(gridOf(summarised(pool)));
-  if (group === "hobby") addWish(poolAll);
+  if (view === "timeline") {
+    drawTimeline(pool);
+  } else {
+    main.appendChild(gridOf(summarised(pool)));
+  }
+  if (group === "hobby" && view !== "timeline") addWish(poolAll);
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
