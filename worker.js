@@ -88,6 +88,37 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/migrate" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) {
+          return new Response(JSON.stringify({ ok: false, error: "密码不对" }), { status: 403 });
+        }
+        const all = (await env.RATINGS.get("overrides_all", "json")) || {};
+        let keys = [];
+        let cursor = undefined;
+        do {
+          const page = await env.RATINGS.list({ prefix: "item:", cursor, limit: 200 });
+          keys = keys.concat(page.keys || []);
+          cursor = page.list_complete ? undefined : page.cursor;
+        } while (cursor);
+        let merged = 0;
+        for (const k of keys) {
+          const v = await env.RATINGS.get(k.name, "json");
+          if (v && v.id && !all[String(v.id)]) {
+            all[String(v.id)] = v;
+            merged++;
+          }
+        }
+        await env.RATINGS.put("overrides_all", JSON.stringify(all));
+        return new Response(JSON.stringify({ ok: true, scanned: keys.length, merged, total: Object.keys(all).length }), {
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: String(e).slice(0, 160) }), { status: 400 });
+      }
+    }
+
     if (url.pathname === "/data/records.json") {
       try {
         const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
