@@ -603,20 +603,6 @@ function drawStats() {
   const site = mainFlow.rows;
   const siteMin = mainFlow.mins;
 
-  // 已完成计划：每条归纳成一行，带总时长
-  const planLines = ideas
-    .filter((x) => x.status === "已达成")
-    .map((x) => {
-      const name = String(x.title || "").replace(/[（(].*?[）)]/g, "").trim();
-      if (!name) return null;
-      const rows = logs.filter((l) => String(l.text || "").includes(name));
-      const mins = rows.reduce((a, l) => a + (Number(l.minutes) || 0), 0);
-      return { name, mins, count: rows.length };
-    })
-    .filter((f) => f && f.mins > 0)
-    .sort((a, b) => b.mins - a.mins)
-    .slice(0, 10);
-
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
     ["剧集", hobby.filter((x) => x.cat === "tv").length],
@@ -641,7 +627,12 @@ function drawStats() {
         ${Object.keys(KIND).map((k) => `<div class="stat-bar"><span class="k">${KIND[k]}</span><span class="bar"><i style="width:${Math.round(((byKind[k] || 0) / maxKind) * 100)}%"></i></span><span class="v">${fmt(byKind[k] || 0)}</span></div>`).join("")}
       </div>
 
-      <h3 class="stat-h stat-h-sub">最大工作流 · 细分<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
+      <h3 class="stat-h">条目分布</h3>
+      <div class="stat-chips">
+        ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
+      </div>
+
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
       <div class="flow-single">
         <span class="flow-name">${esc(mainFlow.name)}</span>
         <span class="flow-total">${fmt(siteMin)}</span>
@@ -659,16 +650,6 @@ function drawStats() {
             </li>`).join("")}
         </ol>
       </details>
-      ${planLines.length ? `
-      <h3 class="stat-h stat-h-sub">已完成计划<span class="stat-sub">按投入时间排</span></h3>
-      <ul class="flow-plan-list">
-        ${planLines.map((p) => `<li><span class="flow-plan-name">${esc(p.name)}</span><span class="flow-plan-dur">${fmt(p.mins)}</span></li>`).join("")}
-      </ul>` : ""}
-      <h3 class="stat-h">条目分布</h3>
-      <div class="stat-chips">
-        ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
-      </div>
-
     </section>`;
 }
 
