@@ -138,6 +138,24 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/overrides" && request.method === "GET") {
+      try {
+        const pass = url.searchParams.get("pass") || "";
+        if ((await shiftPass(pass)) !== PASS_HASH) {
+          return new Response(JSON.stringify({ ok: false, error: "密码不对" }), {
+            status: 403,
+            headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+          });
+        }
+        const all = (await env.RATINGS.get("overrides_all", "json")) || {};
+        return new Response(JSON.stringify({ ok: true, items: all }), {
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: String(e).slice(0, 160) }), { status: 400 });
+      }
+    }
+
     if (url.pathname === "/api/comments" && request.method === "GET") {
       let comments = [];
       try {
