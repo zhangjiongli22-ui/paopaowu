@@ -341,11 +341,12 @@ function bindShots() {
       const filledDate = !!(dateInput && dateInput.value);
       const finished = !cleared && (value > 0 || !!noteText || filledDate);
       const payload = { id, rating: value || null, note: noteText, date: ymd, time: hhmm };
+      const keepStatus = ["在玩", "在看"].includes(item.status);
       if (cleared) {
-        payload.status = item.cat === "game" ? "想玩" : "想看";
+        if (!keepStatus) payload.status = item.cat === "game" ? "想玩" : "想看";
         payload.rated_on = null;
       } else if (finished) {
-        payload.status = item.cat === "game" ? "玩过" : "看过";
+        if (!keepStatus) payload.status = item.cat === "game" ? "玩过" : "看过";
         payload.rated_on = ymd;
       }
       const saved = await apiRate(payload);
