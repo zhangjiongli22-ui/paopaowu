@@ -227,6 +227,16 @@ try {
   }
 })();
 </script>
+<script>
+(function () {
+  if (!localStorage.getItem("paopaowu_admin")) return;
+  document.querySelectorAll('footer a[href="login.html"]').forEach(function (a) {
+    a.textContent = "Kira";
+    a.style.color = "var(--gold)";
+    a.title = "已登录";
+  });
+})();
+</script>
 <script src="atmos.js?v=310"></script>
 <script src="wall.js?v=4"></script>
 </body>
