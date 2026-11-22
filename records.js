@@ -149,7 +149,7 @@ function drawLog(pool) {
   }
   const byDate = new Map();
   pool.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || ""))).forEach((r) => {
-    const d = dayOf(r.date, r.time) || "未记日期";
+    const d = r.date || "未记日期";
     if (!byDate.has(d)) byDate.set(d, []);
     byDate.get(d).push(r);
   });
@@ -285,7 +285,7 @@ function drawMain(pool) {
     } else {
       const byDate = new Map();
       done.forEach((x) => {
-        const d = dayOf(x.date, x.time) || "未记日期";
+        const d = x.date || "未记日期";
         if (!byDate.has(d)) byDate.set(d, []);
         byDate.get(d).push(x);
       });
@@ -641,7 +641,7 @@ function drawStats() {
       <ol class="flow">
         ${site.map((x) => `
           <li class="flow-row">
-            <span class="flow-when">${esc(dayOf(x.date, x.time) || "")}<i>${esc(x.time || "")}</i></span>
+            <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
             <span class="flow-what">${esc(x.text || "")}</span>
             <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
           </li>`).join("")}
