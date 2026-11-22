@@ -1832,7 +1832,7 @@ body.lb-open { overflow: hidden; }
 .rec-status.inprogress { background: #ffd76a !important; color: #0b1f2a !important; border-color: #ffd76a !important; }
 
 .side-toc {
-  position: absolute;
+  position: fixed;
   left: 24px;
   padding-top: 12px;
   border-top: 1px solid var(--line);
