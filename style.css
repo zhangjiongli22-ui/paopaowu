@@ -2477,3 +2477,12 @@ body::after {
   background: rgba(8, 20, 30, .78) !important;
 }
 .kira-hero, .kira-now { background: transparent; }
+
+
+/* 目录不要底色（覆盖前面的实心底） */
+.side-toc,
+.side-toc.side-toc {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
