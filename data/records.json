@@ -55,8 +55,7 @@
    "staff": "タツノコプロ、GAINAX",
    "bgm_rating": 8.7,
    "bgm_id": 265,
-   "name_cn": "新世纪福音战士",
-   "series": "新世纪福音战士"
+   "name_cn": "新世纪福音战士"
   },
   {
    "id": "m-2080",
@@ -104,8 +103,7 @@
    "bgm_rating": 9.1,
    "bgm_id": 284506,
    "name_cn": "塞尔达传说 王国之泪",
-   "play_since": "2026-11-01",
-   "pinned": true
+   "play_since": "2026-11-01"
   },
   {
    "id": "g-1002",
@@ -406,7 +404,8 @@
    "shots": [
     "assets/shots/星穹铁道/s01-437546a9.jpg",
     "assets/shots/星穹铁道/s02-d7f5780f.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "tv-a837004a",
@@ -467,21 +466,6 @@
    "cover": "assets/covers/tv-0290e5e3-bgm.jpg"
   },
   {
-   "id": "tv-27a4e18e",
-   "cat": "tv",
-   "title": "弥留之国的爱丽丝第三季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "00:57",
-   "desc": "　　有栖良平（山崎贤人 饰）拥有一位非常优秀的哥哥，在哥哥的衬托之下，毫无建树的他显得更加的废柴。好在良平有势川张太（森永悠希 饰）和苅部大吉（町田启太饰）两位好友，每当良平感到在家中没有容身之地的时候，张太和苅部都会陪伴在他的身边。\r\n　　一天，三人正在外面闲逛，在一道诡异的闪 光之后，熙熙攘攘的涩谷大街上忽然间变得空无一人，就在三个伙伴面面相觑之际，游戏开始了，被迫参加游戏的三人渐渐意识到，他们被拉到了一个弱肉强食的恐怖异世界之中，在这里，只有不断的参加主办者设置的，充满了死亡危险的游戏，才能够获得继续活下去的机会，而三人之间的友情，也在游戏之中经历着前所未有的考验。",
-   "eps": "8",
-   "air": "2020-12-10",
-   "bgm_rating": 6.7,
-   "bgm_id": 286617,
-   "name_cn": "弥留之国的爱丽丝",
-   "cover": "assets/covers/tv-27a4e18e-bgm.jpg"
-  },
-  {
    "id": "tv-740d6884",
    "cat": "tv",
    "title": "月光骑士",
@@ -526,8 +510,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 24442,
    "name_cn": "美国恐怖故事 第一季",
-   "cover": "assets/covers/tv-800f4bef-ahs1.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-800f4bef-ahs1.jpg"
   },
   {
    "id": "tv-e63714b6",
@@ -542,8 +525,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 51510,
    "name_cn": "美国恐怖故事 第二季",
-   "cover": "assets/covers/tv-e63714b6-ahs2.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-e63714b6-ahs2.jpg"
   },
   {
    "id": "tv-d00756f9",
@@ -558,8 +540,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 61206,
    "name_cn": "美国恐怖故事 第三季",
-   "cover": "assets/covers/tv-d00756f9-ahs3.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-d00756f9-ahs3.jpg"
   },
   {
    "id": "tv-f2ad6c2b",
@@ -2204,8 +2185,7 @@
    "bgm_rating": 7.6,
    "bgm_id": 294934,
    "name_cn": "罪恶装备 -奋战-",
-   "cover": "assets/covers/game-722608b9-bgm.jpg",
-   "pinned": true
+   "cover": "assets/covers/game-722608b9-bgm.jpg"
   },
   {
    "id": "game-f7e3f63a",
@@ -2966,8 +2946,7 @@
    "bgm_rating": 9.4,
    "bgm_id": 62229,
    "name_cn": "塞尔达传说 旷野之息",
-   "cover": "assets/covers/game-7701fa8d-bg8.jpg",
-   "pinned": true
+   "cover": "assets/covers/game-7701fa8d-bg8.jpg"
   },
   {
    "id": "game-bcbe514c",
@@ -3261,8 +3240,7 @@
    "bgm_rating": 7.2,
    "bgm_id": 266794,
    "name_cn": "石纪元",
-   "cover": "assets/covers/anime-dddbc6b0-bgm.jpg",
-   "series": "Dr.STONE 石纪元"
+   "cover": "assets/covers/anime-dddbc6b0-bgm.jpg"
   },
   {
    "id": "anime-7690b76b",
@@ -3351,14 +3329,14 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:44",
-   "desc": "故事发生在一座与世隔绝的小岛上，在那里，常年居住着守护家园不受侵害的神秘组织，人称“圣灵家族”。作为族长的女儿，菲丽西塔（能登麻美子 配音）一直都接受着严格的教育，但在内心里，菲丽西塔其实和普通少女无异，甚至还有着天然呆的一面。某一日，族长突然做出了举办“圣灵决斗”的决定。这是岛上的古老传统，在决斗中的胜利者，不仅能够成为岛上的统治者，此外，他还会成为菲丽西塔的夫婿。\n就这样，个性开朗率真的元气少年利伯塔（福山润 配音），神情严肃野心强大的诺瓦（代永翼 配音），刀子嘴豆付心的戴比特（吉野裕行 配音），这些身怀绝技的男子们接连参加了决斗，究竟谁是最后的王者呢？一切尚在混沌之中。",
+   "desc": "被神农封印在百草仙境数千年的魔王因为现代人类不健康的生活方式的增加而觉醒。负责看守百草仙境的药神李时珍为了再次封印魔王，派遣草本仔和药经石真正的主人，12岁的人类少年衍生一起前往百草仙境，收集百草精华，好重新封印魔王。魔王一面借助人类世界小朋友们的不良生活习惯吸收能量，恢复法力；一面命令自己的四个手下去阻止衍生他们收集百草精华。面对巨大的挑战，衍生和草本仔责无旁贷地接受了李时珍的提议，利用《本草纲目》和药经石收集隐藏在百草仙境中的药草精华，并在6月13日药食节到来之前封印魔王。最后在众人的努力下成功收集到了百草精华，并且击败了魔王，使得人们认识到了健康生活的重要性，从此衍生和草本仔也成为了人们生活中的健康大使。",
    "eps": "12",
    "air": "2012-07-01",
    "director": "今千秋",
    "bgm_rating": 5.6,
    "bgm_id": 260941,
-   "name_cn": "魔力家族",
-   "cover": "assets/covers/anime-daccf927-famiglia.jpg"
+   "name_cn": "草本家族",
+   "cover": "assets/covers/anime-daccf927-bg8.jpg"
   },
   {
    "id": "anime-e8cbf353",
@@ -3618,8 +3596,7 @@
    "desc": "大正时期、日本。\r\n卖炭的心地善良的少年·炭治郎，有一天被鬼杀死了家人。\r\n而唯一幸存下来的妹妹祢豆子变成了鬼。\r\n被绝望的现实打垮的炭治郎，为了让妹妹变回人类并讨伐杀害家人的鬼，决心沿着“鬼杀队”的道路前进。\r\n人与鬼交织的悲哀的兄妹的故事，现在开始！",
    "name_cn": "鬼灭之刃",
    "cover": "assets/covers/anime-fd41318d-bg8.jpg",
-   "bgm_id": 245665,
-   "series": "鬼灭之刃"
+   "bgm_id": 245665
   },
   {
    "id": "anime-b3b70844",
@@ -3760,8 +3737,7 @@
    "desc": "　　《新世纪福音战士》电影版第1部。分为“DEATH篇（死亡篇）”与“REBIRTH篇（新生篇）”两个部分。“死亡篇”以原TV版动画第1到24集的内容为基础，重新剪辑了一个总集篇。“新生篇”承接第24集内容（实际大致为Air的前2/3）：\r\n　　第十七使徒被消灭后，SEELE向NERV下达命令，要EVA 初号机负责执行“人类补完计划”。然而碇元度不认同SEELE的做法，拒绝执行。SEELE认定这是一种叛变的行为，决定把NERV彻底消灭。\r\n　　破晓时分，NERV本部突然遭到来自战略自卫队的袭击，他们对NERV的人员进行了惨无人道的大屠杀。为了保护驾驶员，葛城美里命令把精神崩溃的明日香送上二号机，并放在湖底的深处，自已就亲自去救碇真嗣 。但此时的碇真嗣已经处在精神崩溃的边缘。\r\n=============================\r\n　　死与新生包括DEATH以及REBIRTH两个部分\r\n　　电影上映的版本 包括了REBIRTH ；\r\n　　之后，在日本某电视台放时修改了少量内容；\r\n　　之后发行的录像带去除了REBIRTH，所以叫DEATH；\r\n　　然后又发了个版本，叫DEATH ",
    "name_cn": "新世纪福音战士剧场版 死与新生",
    "cover": "assets/covers/anime-7c049186-bg8.jpg",
-   "bgm_id": 6048,
-   "series": "新世纪福音战士"
+   "bgm_id": 6048
   },
   {
    "id": "anime-52ae07a7",
@@ -4006,8 +3982,7 @@
    "time": "02:45",
    "cover": "assets/covers/anime-9ce16095-w4.jpg",
    "desc": "《Fate/Zero》（命運/零話）是一部2006年12月29日由TYPE-MOON公司發行的傳奇小說（輕小說），作者為Nitro+所屬的虛淵玄，人物設計與插畫為TYPE-MOON所屬的武内崇。\n",
-   "name_cn": "Fate/Zero",
-   "series": "Fate 系列"
+   "name_cn": "Fate/Zero"
   },
   {
    "id": "anime-cb1719fd",
@@ -4018,8 +3993,7 @@
    "time": "02:45",
    "cover": "assets/covers/anime-cb1719fd-w4.jpg",
    "desc": "《Fate/stay night》是由TYPE-MOON製作的日本視覺小説，於2004年1月30日在Windows平台發行。該游戲最初是一款成人遊戲，2007年，本作在去除成人元素後被移植到PlayStation 2上，並新增語音、CG、演出效果、劇情及追加結局，此版本被稱為《Fate/stay night [Réalta Nua]》，由角川書店發售。其後此版本亦于2012年在Windows和PlayStation Vita平臺發行，2015年發售Android和iOS版本。基於《Réalta Nua》版高清重置化製作的《Fate/stay night REMASTERED》於2024年在Steam與任天堂Switch上發表。故事主要講述了一位名叫衛宮士郎的日本高中生和業餘魔術師被意外捲入了「聖杯戰爭」，一場由七名被稱為「master」（御主）的魔術師召喚出傳說中的英雄「servant」（",
-   "name_cn": "Fate/stay night",
-   "series": "Fate 系列"
+   "name_cn": "Fate/stay night"
   },
   {
    "id": "anime-79b999d2",
@@ -4267,8 +4241,7 @@
    "bgm_rating": 6.9,
    "bgm_id": 112146,
    "name_cn": "OVERLORD",
-   "cover": "assets/covers/anime-5f11c32d-bg8.jpg",
-   "series": "Overlord"
+   "cover": "assets/covers/anime-5f11c32d-bg8.jpg"
   },
   {
    "id": "anime-7dabd7ec",
@@ -4280,8 +4253,7 @@
    "cover": "assets/covers/anime-7dabd7ec-b5.jpg",
    "desc": "时为2138年。曾卷起一大风潮的虚拟现实体感型网络游戏《YGGDRASIL》即将迎来停服。\r\n玩家飞鼠在曾经以同伴和荣华自傲的根据地纳萨力克地下大坟墓，独自一人安静等待着那一刻。\r\n但，发生了结束时间已过却没有登出的异常事态。\r\nNPC们以自己的意志行动，不止如此，纳萨力克之外展开了从未见过的异世界。\r\n飞鼠为了寻找过去的同伴，\r\n以公会名安兹·乌尔·恭自称，决定在异世界扬名立万。\r\n他与宣誓绝对忠诚的部下一同，向新的地域进军。\r\n将世界收于掌中的死之支配者，于此再临！！ ",
    "name_cn": "OVERLORD 第二季",
-   "bgm_id": 211027,
-   "series": "Overlord"
+   "bgm_id": 211027
   },
   {
    "id": "anime-cb052091",
@@ -4308,8 +4280,7 @@
    "bgm_rating": 7.1,
    "bgm_id": 101820,
    "name_cn": "七大罪",
-   "cover": "assets/covers/anime-669b5614-bg8.jpg",
-   "series": "七大罪"
+   "cover": "assets/covers/anime-669b5614-bg8.jpg"
   },
   {
    "id": "anime-357c421c",
@@ -4325,8 +4296,7 @@
    "bgm_rating": 6.6,
    "bgm_id": 192978,
    "name_cn": "七大罪 戒律的复活",
-   "cover": "assets/covers/anime-357c421c-bg8.jpg",
-   "series": "七大罪"
+   "cover": "assets/covers/anime-357c421c-bg8.jpg"
   },
   {
    "id": "anime-e27b45ca",
@@ -4342,8 +4312,7 @@
    "bgm_rating": 7.9,
    "bgm_id": 203526,
    "name_cn": "来自深渊",
-   "cover": "assets/covers/anime-e27b45ca-bg8.jpg",
-   "series": "来自深渊"
+   "cover": "assets/covers/anime-e27b45ca-bg8.jpg"
   },
   {
    "id": "anime-bcbaf389",
@@ -4359,8 +4328,7 @@
    "bgm_rating": 8.3,
    "bgm_id": 298477,
    "name_cn": "来自深渊 烈日的黄金乡",
-   "cover": "assets/covers/anime-bcbaf389-bg8.jpg",
-   "series": "来自深渊"
+   "cover": "assets/covers/anime-bcbaf389-bg8.jpg"
   },
   {
    "id": "anime-7333e194",
@@ -4372,8 +4340,7 @@
    "cover": "assets/covers/anime-7333e194-bg8.jpg",
    "desc": "这个各角落都被探索殆尽的世界，只剩唯一仅存的秘境——大洞穴「阿比斯」。在这个会延伸到哪里不得而知，且深不见底的巨大纵向洞穴中，除了栖息着各种奇奇怪怪的生物之外，还藏有现今人类制作不出来的珍贵遗物。\r\n「阿比斯」处处不可思议的景象，让人们为之着迷，并前仆后继地前去冒险。于是，数度挑战这巨洞的冒险家们，后来便被称为「探窟家」。住在建造于阿比斯边缘的城镇「奥斯」的孤儿莉可，梦想着有一天要成为像母亲那样的伟大探窟家，力图解开阿比斯的谜团。\r\n有一天，莉可母亲的白笛被人发现，让她毅然决定要潜入阿比斯深处。而莉可收留的失忆机器人•雷古为了找回自己的记忆，也决心和她同行。莉可在深界四层遭受穿弹兽的毒素折磨，而救了她的人就是「生骸」娜娜奇。娜娜奇加入后，他们继续往波多尔多所在的深界五层冒险。在那里，遇到一个自称是普鲁修卡的女孩……\r\n\r\n\r\n\r\n[简介原文]\r\nつくしあきひとの同名コミックを原作とするテレビアニメ「メイドインアビス」の劇場版。隅々まで探索され尽くした世界に唯一残された秘境の大穴「アビス」。深く巨大なその縦穴には奇怪な生物たちが数多く生息し、今の人類には作ることのできない貴重な遺物の数々",
    "name_cn": "来自深渊 深沉灵魂的黎明",
-   "bgm_id": 230914,
-   "series": "来自深渊"
+   "bgm_id": 230914
   },
   {
    "id": "anime-3a23b3cb",
@@ -4405,8 +4372,7 @@
    "bgm_rating": 7.9,
    "bgm_id": 294993,
    "name_cn": "咒术回战",
-   "cover": "assets/covers/anime-2139a670-bg8.jpg",
-   "series": "咒术回战"
+   "cover": "assets/covers/anime-2139a670-bg8.jpg"
   },
   {
    "id": "anime-927b1e89",
@@ -4480,8 +4446,7 @@
    "bgm_rating": 7,
    "bgm_id": 209408,
    "name_cn": "狂赌之渊",
-   "cover": "assets/covers/anime-50ca9774-bg8.jpg",
-   "series": "狂赌之渊"
+   "cover": "assets/covers/anime-50ca9774-bg8.jpg"
   },
   {
    "id": "anime-ece35921",
@@ -4493,8 +4458,7 @@
    "cover": "assets/covers/anime-ece35921-bg8.jpg",
    "desc": "故事来到了新的地方——炭治郎的目的地是「刀匠村」。与鬼杀队的最强剑士，霞柱·时透无一郎与恋柱·甘露寺蜜璃再会，而鬼也悄然逼近。炭治郎一行人新的战斗即将开始。",
    "name_cn": "鬼灭之刃 刀匠村篇",
-   "bgm_id": 369768,
-   "series": "鬼灭之刃"
+   "bgm_id": 369768
   },
   {
    "id": "anime-ba39996f",
@@ -4510,8 +4474,7 @@
    "bgm_rating": 6.7,
    "bgm_id": 239816,
    "name_cn": "关于我转生变成史莱姆这档事",
-   "cover": "assets/covers/anime-ba39996f-bg8.jpg",
-   "series": "关于我转生变成史莱姆这档事"
+   "cover": "assets/covers/anime-ba39996f-bg8.jpg"
   },
   {
    "id": "anime-d832bfce",
@@ -4527,8 +4490,7 @@
    "bgm_rating": 6.1,
    "bgm_id": 278031,
    "name_cn": "关于我转生变成史莱姆这档事 第二季",
-   "cover": "assets/covers/anime-d832bfce-bg8.jpg",
-   "series": "关于我转生变成史莱姆这档事"
+   "cover": "assets/covers/anime-d832bfce-bg8.jpg"
   },
   {
    "id": "anime-9d72e923",
@@ -4547,6 +4509,38 @@
    "cover": "assets/covers/anime-9d72e923-bg8.jpg"
   },
   {
+   "id": "anime-d4c72ee4",
+   "cat": "anime",
+   "title": "Re:从零开始的异世界生活",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "02:45",
+   "desc": "　　从便利店回来的路上突然被召唤到异世界的少年，菜月昴。在无可依赖的异世界，无力的少年所唯一拥有的力量……那就是死后便会使时间倒转的“死亡回归”的力量。为了守护重要的人，并取回那些无可替代的时间，少年向绝望抗争，挺身面对残酷的命运。",
+   "air": "2016-04-03",
+   "eps": "25",
+   "director": "渡邊政治",
+   "bgm_rating": 7.5,
+   "bgm_id": 140001,
+   "name_cn": "Re：从零开始的异世界生活",
+   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg"
+  },
+  {
+   "id": "anime-5f08898c",
+   "cat": "anime",
+   "title": "Re:从零开始的异世界生活 第二季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "02:45",
+   "desc": "我一定会拯救你的。\r\n打倒了担任「怠惰」的魔女教大罪司教，贝特鲁吉乌斯·罗曼尼康帝后，菜月昴和爱蜜莉雅又再度相遇了。在跨越了痛苦的诀别，两人终于和解，而新的篇章却又开始了。\r\n超乎想象九死一生的危机，以及冷酷无情的现实。少年将再次起身，面对残酷的命运。",
+   "air": "2020-07-08",
+   "eps": "13",
+   "director": "渡邊政治",
+   "bgm_rating": 7.4,
+   "bgm_id": 278826,
+   "name_cn": "Re：从零开始的异世界生活 第二季",
+   "cover": "assets/covers/anime-5f08898c-bg8.jpg"
+  },
+  {
    "id": "anime-b2a902a6",
    "cat": "anime",
    "title": "一拳超人",
@@ -4560,8 +4554,7 @@
    "bgm_rating": 8,
    "bgm_id": 127563,
    "name_cn": "一拳超人",
-   "cover": "assets/covers/anime-b2a902a6-bg8.jpg",
-   "series": "一拳超人"
+   "cover": "assets/covers/anime-b2a902a6-bg8.jpg"
   },
   {
    "id": "anime-c90d4194",
@@ -4577,8 +4570,7 @@
    "bgm_rating": 6.5,
    "bgm_id": 193619,
    "name_cn": "一拳超人 第二季",
-   "cover": "assets/covers/anime-c90d4194-bg8.jpg",
-   "series": "一拳超人"
+   "cover": "assets/covers/anime-c90d4194-bg8.jpg"
   },
   {
    "id": "anime-86c56f5e",
@@ -4610,8 +4602,7 @@
    "bgm_rating": 7.2,
    "bgm_id": 332261,
    "name_cn": "JOJO的奇妙冒险 石之海",
-   "cover": "assets/covers/anime-1f7ec7ee-bg8.jpg",
-   "series": "JOJO的奇妙冒险"
+   "cover": "assets/covers/anime-1f7ec7ee-bg8.jpg"
   },
   {
    "id": "anime-2d20e2e0",
@@ -4655,8 +4646,7 @@
    "bgm_rating": 7.4,
    "bgm_id": 23686,
    "name_cn": "刀剑神域",
-   "cover": "assets/covers/anime-b4737a1d-bg8.jpg",
-   "series": "刀剑神域"
+   "cover": "assets/covers/anime-b4737a1d-bg8.jpg"
   },
   {
    "id": "anime-b0b6991c",
@@ -4668,8 +4658,7 @@
    "cover": "assets/covers/anime-b0b6991c-bg8.jpg",
    "desc": "    特别会谈后的某天，桐人接到了隶属总务省“假想课”的菊冈诚二郎委托。 那是在枪械与钢铁的VRMMO“Gun Gale Online”(简称GGO)里突然发生的“死枪”事件。\r\n    被谜样角色以漆黑之枪的所击中的玩家，在现实世界里也会随之“死亡”……因故欠了人情而无法拒绝帮忙调查的桐人，虽然对于“假想世界”对“现实世界”发生物理影响这件事感到不可置信，但还是登入了“GGO”。\r\n    桐人为了寻找关于“死枪”的线索以及对于自身角色变化感到疑惑，而在不熟悉的枪战类型游戏里徘徊。这时对他伸出援手的，是一名习惯使用名为“黑卡蒂Ⅱ”的狙击步枪之少女诗乃。 全新故事就此展开！ ",
    "name_cn": "刀剑神域 第二季",
-   "bgm_id": 92382,
-   "series": "刀剑神域"
+   "bgm_id": 92382
   },
   {
    "id": "anime-f27feeca",
@@ -5500,8 +5489,7 @@
    "bgm_rating": 8,
    "bgm_id": 772,
    "name_cn": "福音战士新剧场版：序",
-   "cover": "assets/covers/anime-04667907-bg8.jpg",
-   "series": "新世纪福音战士"
+   "cover": "assets/covers/anime-04667907-bg8.jpg"
   },
   {
    "id": "film-7c5bb7ec",
@@ -6263,8 +6251,7 @@
    "desc": "　　《新世纪福音战士》电影版第1部。分为“DEATH篇（死亡篇）”与“REBIRTH篇（新生篇）”两个部分。“死亡篇”以原TV版动画第1到24集的内容为基础，重新剪辑了一个总集篇。“新生篇”承接第24集内容（实际大致为Air的前2/3）：\r\n　　第十七使徒被消灭后，SEELE向NERV下达命令，要EVA 初号机负责执行“人类补完计划”。然而碇元度不认同SEELE的做法，拒绝执行。SEELE认定这是一种叛变的行为，决定把NERV彻底消灭。\r\n　　破晓时分，NERV本部突然遭到来自战略自卫队的袭击，他们对NERV的人员进行了惨无人道的大屠杀。为了保护驾驶员，葛城美里命令把精神崩溃的明日香送上二号机，并放在湖底的深处，自已就亲自去救碇真嗣 。但此时的碇真嗣已经处在精神崩溃的边缘。\r\n=============================\r\n　　死与新生包括DEATH以及REBIRTH两个部分\r\n　　电影上映的版本 包括了REBIRTH ；\r\n　　之后，在日本某电视台放时修改了少量内容；\r\n　　之后发行的录像带去除了REBIRTH，所以叫DEATH；\r\n　　然后又发了个版本，叫DEATH ",
    "name_cn": "新世纪福音战士剧场版 死与新生",
    "cover": "assets/covers/anime-94e3f1fb-bg6.jpg",
-   "bgm_id": 6048,
-   "series": "新世纪福音战士"
+   "bgm_id": 6048
   },
   {
    "id": "anime-567ab6ae",
@@ -6275,8 +6262,7 @@
    "time": "12:00",
    "cover": "assets/covers/anime-567ab6ae-final.jpg",
    "desc": "《福音戰士新劇場版：序》 是一部於2007年上映的日本動畫電影，為1995年電視動畫《新世紀福音戰士》（以下稱TV版）的再構築系列「福音戰士新劇場版四部曲」之首作，由TV版主創庵野秀明擔任總監督。本片的劇情以TV版第1至第6話為基礎，部分內容經過更動，情節敘述少年碇真嗣被疏遠已久的父親找來第3新東京市的NERV本部，卻馬上就要駕駛巨大人型兵器EVANGELION迎擊不明威脅使徒。\n",
-   "name_cn": "福音戰士新劇場版：序",
-   "series": "新世纪福音战士"
+   "name_cn": "福音戰士新劇場版：序"
   },
   {
    "id": "anime-ef4d3248",
@@ -6287,8 +6273,7 @@
    "time": "12:00",
    "cover": "assets/covers/anime-ef4d3248-final.jpg",
    "desc": "《福音戰士新劇場版：破》 是一部於2009年上映的日本動畫電影，為1995年電視動畫《新世紀福音戰士》（以下稱TV版）的再構築系列「福音戰士新劇場版四部曲」之第二作，由TV版主創庵野秀明擔任總監督。相較於前作《序》，本片對TV版劇情做出更多變革，情節敘述來自德國的EVANGELION駕駛員明日香來到第3新東京市，成為碇真嗣的同學也是戰鬥夥伴。真嗣一面過著青春的生活，一面抵抗強大的使徒接連來襲。\n",
-   "name_cn": "福音戰士新劇場版：破",
-   "series": "新世纪福音战士"
+   "name_cn": "福音戰士新劇場版：破"
   },
   {
    "id": "anime-604e5205",
@@ -6299,8 +6284,7 @@
    "time": "12:00",
    "cover": "assets/covers/anime-604e5205-final.jpg",
    "desc": "《福音戰士新劇場版：Q》 是一部2012年上映的日本動畫電影。是福音戰士新劇場版系列的第三部。与吉卜力工作室特摄短編电影《巨神兵现身东京 劇場版》同時上映。\n",
-   "name_cn": "福音戰士新劇場版：Q",
-   "series": "新世纪福音战士"
+   "name_cn": "福音戰士新劇場版：Q"
   },
   {
    "id": "anime-48e8b692",
@@ -6311,8 +6295,7 @@
    "time": "12:00",
    "cover": "assets/covers/anime-48e8b692-final.jpg",
    "desc": "《新·福音戰士劇場版：終》 是於2021年3月8日上映的日本動畫電影，屬於「新·日本英雄宇宙」系列的第2部電影作品。由庵野秀明执导、khara工作室制作，以《新世纪福音战士》為藍本再構築，为《福音戰士新劇場版》四部曲中的最終作。本片上映後成为本系列电影中票房成績最佳的作品，並榮獲日本電影學院獎最佳動畫片獎。\n",
-   "name_cn": "福音戰士新劇場版：終",
-   "series": "新世纪福音战士"
+   "name_cn": "福音戰士新劇場版：終"
   },
   {
    "id": "tv-6215637",
@@ -6481,8 +6464,7 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 109375,
-   "cover": "assets/covers/anime-4a7274c1-hf.jpg",
-   "series": "Fate 系列"
+   "cover": "assets/covers/anime-4a7274c1-hf.jpg"
   },
   {
    "id": "anime-cb7eadac",
@@ -6494,8 +6476,7 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 175599,
-   "cover": "assets/covers/anime-cb7eadac-hf.jpg",
-   "series": "Fate 系列"
+   "cover": "assets/covers/anime-cb7eadac-hf.jpg"
   },
   {
    "id": "anime-92331268",
@@ -6507,8 +6488,7 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 175600,
-   "cover": "assets/covers/anime-92331268-hf.jpg",
-   "series": "Fate 系列"
+   "cover": "assets/covers/anime-92331268-hf.jpg"
   },
   {
    "id": "game-80415cdf",
@@ -6601,8 +6581,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 100734,
    "name_cn": "美国恐怖故事 第四季",
-   "cover": "assets/covers/tv-9fa0fe08-ahs4.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-9fa0fe08-ahs4.jpg"
   },
   {
    "id": "tv-7d55462b",
@@ -6617,8 +6596,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 126803,
    "name_cn": "美国恐怖故事 第五季",
-   "cover": "assets/covers/tv-7d55462b-ahs5.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-7d55462b-ahs5.jpg"
   },
   {
    "id": "tv-40f8340c",
@@ -6633,8 +6611,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 155611,
    "name_cn": "美国恐怖故事 第六季",
-   "cover": "assets/covers/tv-40f8340c-ahs6.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-40f8340c-ahs6.jpg"
   },
   {
    "id": "tv-a42371aa",
@@ -6649,8 +6626,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 224965,
    "name_cn": "美国恐怖故事 第七季",
-   "cover": "assets/covers/tv-a42371aa-ahs7.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-a42371aa-ahs7.jpg"
   },
   {
    "id": "tv-ed10bb32",
@@ -6665,8 +6641,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 260574,
    "name_cn": "美国恐怖故事 第八季",
-   "cover": "assets/covers/tv-ed10bb32-ahs8.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-ed10bb32-ahs8.jpg"
   },
   {
    "id": "tv-d99b40bd",
@@ -6681,8 +6656,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 289795,
    "name_cn": "美国恐怖故事 第九季",
-   "cover": "assets/covers/tv-d99b40bd-ahs9.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-d99b40bd-ahs9.jpg"
   },
   {
    "id": "tv-63e52634",
@@ -6697,8 +6671,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 349549,
    "name_cn": "美国恐怖故事：双面",
-   "cover": "assets/covers/tv-63e52634-ahs10.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-63e52634-ahs10.jpg"
   },
   {
    "id": "tv-66ae60e5",
@@ -6713,8 +6686,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 404318,
    "name_cn": "美国恐怖故事：纽约 第十一季",
-   "cover": "assets/covers/tv-66ae60e5-ahs11.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-66ae60e5-ahs11.jpg"
   },
   {
    "id": "tv-ad192a0c",
@@ -6729,8 +6701,7 @@
    "bgm_rating": 5.4,
    "bgm_id": 450535,
    "name_cn": "American Horror Story: Delicate Season 12",
-   "cover": "assets/covers/tv-ad192a0c-ahs12.jpg",
-   "series": "美国恐怖故事"
+   "cover": "assets/covers/tv-ad192a0c-ahs12.jpg"
   },
   {
    "id": "tv-5b7dc157",
@@ -6841,6 +6812,74 @@
    "bgm_id": 338517,
    "name_cn": "洛基 第二季",
    "cover": "assets/covers/tv-49dc4f0e-bgm.jpg"
+  },
+  {
+   "id": "tv-dafd208e",
+   "cat": "tv",
+   "title": "黑袍纠察队 第一季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "00:57",
+   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "eps": "8",
+   "air": "2024-06-13",
+   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
+   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
+   "bgm_rating": 6.1,
+   "bgm_id": 386945,
+   "name_cn": "黑袍纠察队 第四季",
+   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
+  },
+  {
+   "id": "tv-10d47a0f",
+   "cat": "tv",
+   "title": "黑袍纠察队 第二季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "00:57",
+   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "eps": "8",
+   "air": "2024-06-13",
+   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
+   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
+   "bgm_rating": 6.1,
+   "bgm_id": 386945,
+   "name_cn": "黑袍纠察队 第四季",
+   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
+  },
+  {
+   "id": "tv-3f634b10",
+   "cat": "tv",
+   "title": "黑袍纠察队 第三季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "00:57",
+   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "eps": "8",
+   "air": "2024-06-13",
+   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
+   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
+   "bgm_rating": 6.1,
+   "bgm_id": 386945,
+   "name_cn": "黑袍纠察队 第四季",
+   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
+  },
+  {
+   "id": "tv-84289bd0",
+   "cat": "tv",
+   "title": "黑袍纠察队 第四季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "00:57",
+   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "eps": "8",
+   "air": "2024-06-13",
+   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
+   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
+   "bgm_rating": 6.1,
+   "bgm_id": 386945,
+   "name_cn": "黑袍纠察队 第四季",
+   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
   },
   {
    "id": "tv-0a9632aa",
@@ -7513,6 +7552,46 @@
    "desc": "詹姆斯·弗雷、大卫·芬奇等执导的系列政治剧"
   },
   {
+   "id": "tv-a56456af",
+   "cat": "tv",
+   "title": "怪奇物语 第一季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/tv-41707184-imdbv.jpg",
+   "desc": "美国Netflix出品的科幻惊悚剧系列剧集"
+  },
+  {
+   "id": "tv-450c83c6",
+   "cat": "tv",
+   "title": "怪奇物语 第二季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/tv-41707184-imdbv.jpg",
+   "desc": "美国Netflix出品的科幻惊悚剧系列剧集"
+  },
+  {
+   "id": "tv-74bba2bc",
+   "cat": "tv",
+   "title": "怪奇物语 第三季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/tv-41707184-imdbv.jpg",
+   "desc": "美国Netflix出品的科幻惊悚剧系列剧集"
+  },
+  {
+   "id": "tv-72dbf547",
+   "cat": "tv",
+   "title": "怪奇物语 第四季",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/tv-41707184-imdbv.jpg",
+   "desc": "美国Netflix出品的科幻惊悚剧系列剧集"
+  },
+  {
    "id": "tv-8cfa76dc",
    "cat": "tv",
    "title": "毒枭 第一季",
@@ -7584,8 +7663,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第一季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第一季"
   },
   {
    "id": "tv-ee38dd2d",
@@ -7596,8 +7674,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第二季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第二季"
   },
   {
    "id": "tv-1d375391",
@@ -7608,8 +7685,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第三季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第三季"
   },
   {
    "id": "tv-834b8b6b",
@@ -7620,8 +7696,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第四季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第四季"
   },
   {
    "id": "tv-38ccf260",
@@ -7632,8 +7707,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第五季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第五季"
   },
   {
    "id": "tv-9e3af502",
@@ -7644,8 +7718,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第六季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第六季"
   },
   {
    "id": "tv-d4ca1af9",
@@ -7656,8 +7729,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第七季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第七季"
   },
   {
    "id": "tv-d100d09f",
@@ -7668,8 +7740,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第八季",
-   "series": "瑞克和莫蒂"
+   "name_cn": "瑞克和莫蒂 第八季"
   },
   {
    "id": "tv-9c92941f",
@@ -7680,8 +7751,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-19475846-imdbv.jpg",
    "desc": "尼尔·盖曼创作的漫画作品",
-   "name_cn": "睡魔 第一季",
-   "series": "睡魔"
+   "name_cn": "睡魔 第一季"
   },
   {
    "id": "tv-b3da90fd",
@@ -7692,8 +7762,7 @@
    "time": "12:00",
    "cover": "assets/covers/tv-19475846-imdbv.jpg",
    "desc": "尼尔·盖曼创作的漫画作品",
-   "name_cn": "睡魔 第二季",
-   "series": "睡魔"
+   "name_cn": "睡魔 第二季"
   },
   {
    "id": "log-20261122-game",
@@ -7723,212 +7792,49 @@
    "minutes": 60
   },
   {
-   "id": "tv-15f2a5e7",
+   "id": "tv-a5aff442",
    "cat": "tv",
-   "title": "黑袍纠察队 第一季",
+   "title": "弥留之国的爱丽丝 第一季",
    "status": "看过",
    "date": "2026-11-22",
    "time": "00:57",
-   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "desc": "　　有栖良平（山崎贤人 饰）拥有一位非常优秀的哥哥，在哥哥的衬托之下，毫无建树的他显得更加的废柴。好在良平有势川张太（森永悠希 饰）和苅部大吉（町田启太饰）两位好友，每当良平感到在家中没有容身之地的时候，张太和苅部都会陪伴在他的身边。\r\n　　一天，三人正在外面闲逛，在一道诡异的闪 光之后，熙熙攘攘的涩谷大街上忽然间变得空无一人，就在三个伙伴面面相觑之际，游戏开始了，被迫参加游戏的三人渐渐意识到，他们被拉到了一个弱肉强食的恐怖异世界之中，在这里，只有不断的参加主办者设置的，充满了死亡危险的游戏，才能够获得继续活下去的机会，而三人之间的友情，也在游戏之中经历着前所未有的考验。",
    "eps": "8",
-   "air": "2024-06-13",
-   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
-   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
-   "bgm_rating": 6.1,
-   "bgm_id": 386945,
-   "name_cn": "黑袍纠察队 第一季",
-   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
+   "air": "2020-12-10",
+   "bgm_rating": 6.7,
+   "bgm_id": 286617,
+   "name_cn": "弥留之国的爱丽丝",
+   "cover": "assets/covers/tv-a5aff442-alice.jpg"
   },
   {
-   "id": "tv-deb62839",
+   "id": "tv-5b3792e2",
    "cat": "tv",
-   "title": "黑袍纠察队 第二季",
+   "title": "弥留之国的爱丽丝 第二季",
    "status": "看过",
    "date": "2026-11-22",
    "time": "00:57",
-   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "desc": "“如果成功赢得所有游戏，就能回到真实世界了吗？”\r\n为了回归现实世界，有栖（山崎贤人 饰）和宇佐木（土屋太凤 饰）设法厘清今际之国的谜团。他们来到解谜的关键之地，敌人、朋友，游戏幕后主使者都在此现身。有栖一行人这次要挑战的游戏，比起第一季有过之无不及。现在只剩下 J、Q、K 牌的游戏，他们能够收集到这些牌，回到现实世界吗？",
    "eps": "8",
-   "air": "2024-06-13",
-   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
-   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
-   "bgm_rating": 6.1,
-   "bgm_id": 386945,
-   "name_cn": "黑袍纠察队 第二季",
-   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
+   "air": "2020-12-10",
+   "bgm_rating": 6.7,
+   "bgm_id": 323683,
+   "name_cn": "弥留之国的爱丽丝 第2季",
+   "cover": "assets/covers/tv-5b3792e2-alice.jpg"
   },
   {
-   "id": "tv-32b36708",
+   "id": "tv-1348df9c",
    "cat": "tv",
-   "title": "黑袍纠察队 第三季",
+   "title": "弥留之国的爱丽丝 第三季",
    "status": "看过",
    "date": "2026-11-22",
    "time": "00:57",
-   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
+   "desc": "世界を熱狂の渦に巻き込んだ、あの“げぇむ”が、再びはじまるー\r\n\r\n前シリーズで全ての“げぇむ”をクリアして元の世界に戻ったアリス（#山﨑賢人）とウサギ（#土屋太鳳）。二人は元の世界で結婚し、幸せに暮らしていた。記憶から抹消されていた“今際の国”の世界だったが、二人は夢や幻覚でその片鱗を見続ける。そしてある日、死後世界の研究者・リュウジ(#賀来賢人)に導かれ、ウサギは突然姿を消してしまう。ウサギの失踪と時を同じくして、アリスはバンダ（#磯村勇斗）から最後のカード「JOKER」を渡される。\r\n\r\n謎に包まれた「JOKER」が導く未知なる旅が、いま幕を開けようとしているー。",
    "eps": "8",
-   "air": "2024-06-13",
-   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
-   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
-   "bgm_rating": 6.1,
-   "bgm_id": 386945,
-   "name_cn": "黑袍纠察队 第三季",
-   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
-  },
-  {
-   "id": "tv-47b999c6",
-   "cat": "tv",
-   "title": "黑袍纠察队 第四季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "00:57",
-   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
-   "eps": "8",
-   "air": "2024-06-13",
-   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
-   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
-   "bgm_rating": 6.1,
-   "bgm_id": 386945,
-   "name_cn": "黑袍纠察队 第四季",
-   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
-  },
-  {
-   "id": "tv-c6335b7c",
-   "cat": "tv",
-   "title": "黑袍纠察队 第五季",
-   "status": "想看",
-   "date": "2026-11-22",
-   "time": "00:57",
-   "desc": "　　在第四季中，世界正处于崩溃的边缘。Victoria Neuman比以往任何时候都更接近美国总统的位置，并受到正在巩固权力的祖国人的有力压制。Butcher只剩下几个月的生命，他失去了Becca的儿子，也失去了他作为黑袍纠察队队长的工作。队员们都受够了他的谎言。众人面临的风险胜过以往，他们必须找到一种合作的方式，在为时已晚之前拯救世界。",
-   "eps": "8",
-   "air": "2024-06-13",
-   "director": "Phil Sgriccia、Karen Gaviola、Fred Toye、Shana Stein、Catriona McKenzie、Eric Kripke",
-   "staff": "Kripke Enterprises、Point Grey Pictures、ORIGINAL FILM、Kickstart Entertainment KFL",
-   "bgm_rating": 6.1,
-   "bgm_id": 386945,
-   "name_cn": "黑袍纠察队 第五季",
-   "cover": "assets/covers/tv-0f8fa351-bgm.jpg"
-  },
-  {
-   "id": "tv-f2f5c566",
-   "cat": "tv",
-   "title": "怪奇物语 第一季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "12:00",
-   "cover": "assets/covers/tv-41707184-imdbv.jpg",
-   "desc": "美国Netflix出品的科幻惊悚剧系列剧集",
-   "name_cn": "怪奇物语 第一季"
-  },
-  {
-   "id": "tv-eeac5124",
-   "cat": "tv",
-   "title": "怪奇物语 第二季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "12:00",
-   "cover": "assets/covers/tv-41707184-imdbv.jpg",
-   "desc": "美国Netflix出品的科幻惊悚剧系列剧集",
-   "name_cn": "怪奇物语 第二季"
-  },
-  {
-   "id": "tv-c4205bc8",
-   "cat": "tv",
-   "title": "怪奇物语 第三季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "12:00",
-   "cover": "assets/covers/tv-41707184-imdbv.jpg",
-   "desc": "美国Netflix出品的科幻惊悚剧系列剧集",
-   "name_cn": "怪奇物语 第三季"
-  },
-  {
-   "id": "tv-a1993b20",
-   "cat": "tv",
-   "title": "怪奇物语 第四季",
-   "status": "想看",
-   "date": "2026-11-22",
-   "time": "12:00",
-   "cover": "assets/covers/tv-41707184-imdbv.jpg",
-   "desc": "美国Netflix出品的科幻惊悚剧系列剧集",
-   "name_cn": "怪奇物语 第四季"
-  },
-  {
-   "id": "tv-c01c120e",
-   "cat": "tv",
-   "title": "怪奇物语 第五季",
-   "status": "想看",
-   "date": "2026-11-22",
-   "time": "12:00",
-   "cover": "assets/covers/tv-41707184-imdbv.jpg",
-   "desc": "美国Netflix出品的科幻惊悚剧系列剧集",
-   "name_cn": "怪奇物语 第五季"
-  },
-  {
-   "id": "anime-627bc133",
-   "cat": "anime",
-   "title": "Re:从零开始的异世界生活 第一季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "02:45",
-   "desc": "　　从便利店回来的路上突然被召唤到异世界的少年，菜月昴。在无可依赖的异世界，无力的少年所唯一拥有的力量……那就是死后便会使时间倒转的“死亡回归”的力量。为了守护重要的人，并取回那些无可替代的时间，少年向绝望抗争，挺身面对残酷的命运。",
-   "air": "2016-04-03",
-   "eps": "25",
-   "director": "渡邊政治",
-   "bgm_rating": 7.5,
-   "bgm_id": 140001,
-   "name_cn": "Re:从零开始的异世界生活 第一季",
-   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg",
-   "series": "Re:从零开始的异世界生活"
-  },
-  {
-   "id": "anime-edef46f3",
-   "cat": "anime",
-   "title": "Re:从零开始的异世界生活 第二季",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "02:45",
-   "desc": "　　从便利店回来的路上突然被召唤到异世界的少年，菜月昴。在无可依赖的异世界，无力的少年所唯一拥有的力量……那就是死后便会使时间倒转的“死亡回归”的力量。为了守护重要的人，并取回那些无可替代的时间，少年向绝望抗争，挺身面对残酷的命运。",
-   "air": "2016-04-03",
-   "eps": "25",
-   "director": "渡邊政治",
-   "bgm_rating": 7.5,
-   "bgm_id": 140001,
-   "name_cn": "Re:从零开始的异世界生活 第二季",
-   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg",
-   "series": "Re:从零开始的异世界生活"
-  },
-  {
-   "id": "anime-a2bb8f57",
-   "cat": "anime",
-   "title": "Re:从零开始的异世界生活 第三季",
-   "status": "想看",
-   "date": "2026-11-22",
-   "time": "02:45",
-   "desc": "　　从便利店回来的路上突然被召唤到异世界的少年，菜月昴。在无可依赖的异世界，无力的少年所唯一拥有的力量……那就是死后便会使时间倒转的“死亡回归”的力量。为了守护重要的人，并取回那些无可替代的时间，少年向绝望抗争，挺身面对残酷的命运。",
-   "air": "2016-04-03",
-   "eps": "25",
-   "director": "渡邊政治",
-   "bgm_rating": 7.5,
-   "bgm_id": 140001,
-   "name_cn": "Re:从零开始的异世界生活 第三季",
-   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg",
-   "series": "Re:从零开始的异世界生活"
-  },
-  {
-   "id": "anime-92acf518",
-   "cat": "anime",
-   "title": "Re:从零开始的异世界生活 第四季",
-   "status": "想看",
-   "date": "2026-11-22",
-   "time": "02:45",
-   "desc": "　　从便利店回来的路上突然被召唤到异世界的少年，菜月昴。在无可依赖的异世界，无力的少年所唯一拥有的力量……那就是死后便会使时间倒转的“死亡回归”的力量。为了守护重要的人，并取回那些无可替代的时间，少年向绝望抗争，挺身面对残酷的命运。",
-   "air": "2016-04-03",
-   "eps": "25",
-   "director": "渡邊政治",
-   "bgm_rating": 7.5,
-   "bgm_id": 140001,
-   "name_cn": "Re:从零开始的异世界生活 第四季",
-   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg",
-   "series": "Re:从零开始的异世界生活"
+   "air": "2020-12-10",
+   "bgm_rating": 6.7,
+   "bgm_id": 369188,
+   "name_cn": "弥留之国的爱丽丝 第3季",
+   "cover": "assets/covers/tv-1348df9c-alice.jpg"
   }
  ]
 }
