@@ -139,7 +139,7 @@
       const max = Math.max(...kinds.map((k) => kindSum[k] || 0), 1);
       const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
       const weekMin = logs.filter((x) => String(x.date || "") >= weekAgo).reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      const todayMin = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+      const todayMin = 0;
       timeHost.innerHTML =
         `<div class="k2-time-sum">累计 ${fmtMin(totalMin)} · 最近七天 ${fmtMin(weekMin)} · 今天 ${fmtMin(todayMin)}</div>` +
         kinds.map((k) => `
@@ -175,6 +175,13 @@
         ? `今天主要${mainName}，花了 ${fmtMin(Number(main.minutes) || 0)}。`
         : `今天在${parts.join("、")}上，一共 ${fmtMin(total)}。`);
       set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
+    }
+    {
+      const sumEl = document.querySelector(".k2-time-sum");
+      const todayMin = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+      const weekAgo2 = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
+      const weekMin = logs.filter((x) => String(x.date || "") >= weekAgo2).reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+      if (sumEl) sumEl.textContent = `累计 ${fmtMin(totalMin)} · 最近七天 ${fmtMin(weekMin)} · 今天 ${fmtMin(todayMin)}`;
     }
 
     const byCat = {};
