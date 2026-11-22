@@ -118,15 +118,25 @@
     stat("fav", fav.length);
     stat("hours", fmtMin(totalMin));
 
-    set("kira-play-list", items.filter((x) => x.status === "在玩").slice(0, 4).map((x) => x.title).join("、"));
-    set("kira-watch-list", items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title).join("、"));
+    const playing = items.filter((x) => x.status === "在玩").slice(0, 4).map((x) => x.title);
+    const watching = items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title);
+    set("kira-play-list", playing.join("、"));
+    set("kira-watch-list", watching.join("、"));
+    if (playing.length || watching.length) {
+      const bits = [];
+      if (playing.length) bits.push(`最近在玩${playing.slice(0, 2).join("和")}`);
+      if (watching.length) bits.push(`在看${watching[0]}`);
+      set("kira-now-text", bits.join("，") + "。白天改这个网站，晚上就泡在这些里面。");
+    }
 
     const day = new Date(Date.now() - 4 * 3600 * 1000).toISOString().slice(0, 10);
     const todayLogs = logs.filter((x) => x.date === day);
     if (todayLogs.length) {
-      set("kira-today", todayLogs.map((x) => `${x.text}（${fmtMin(Number(x.minutes) || 0)}）`).join(" · "));
+      const label = { work: "工作", game: "打游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
       const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      set("kira-today-note", `共 ${fmtMin(total)}。凌晨四点前的活动算前一天。`);
+      const parts = todayLogs.map((x) => `${label[x.kind] || "忙别的"} ${fmtMin(Number(x.minutes) || 0)}`);
+      set("kira-today", `今天 ${parts.join("、")}。`);
+      set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
     }
 
     const byCat = {};
