@@ -422,14 +422,12 @@ function buildToc() {
   const targets = rows.map((box) => ({ box, link: links[rows.indexOf(box)] })).filter((x) => x.link);
   let spyLockUntil = 0;
   const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
-  let spyTick = false;
+  // 滚动停止后才重新判定，滚动过程中保持当前高亮不动
+  let spyTimer = null;
   const onScroll = () => {
-    if (spyTick) return;
-    spyTick = true;
-    requestAnimationFrame(() => {
-      spyTick = false;
-      runSpy();
-    });
+    if (Date.now() < spyLockUntil) return;
+    clearTimeout(spyTimer);
+    spyTimer = setTimeout(runSpy, 160);
   };
   const runSpy = () => {
     if (Date.now() < spyLockUntil) return;
