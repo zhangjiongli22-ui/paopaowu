@@ -119,11 +119,39 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/data" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) {
+          return new Response(JSON.stringify({ ok: false, error: "密码不对" }), { status: 403 });
+        }
+        const data = body.data;
+        if (!data || !Array.isArray(data.items)) throw new Error("data 不合法");
+        const blob = JSON.stringify(data);
+        await env.RATINGS.put("records_blob", blob);
+        await env.RATINGS.put("records_blob_at", String(Date.now()));
+        return new Response(JSON.stringify({ ok: true, items: data.items.length, bytes: blob.length }), {
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: String(e).slice(0, 160) }), { status: 400 });
+      }
+    }
+
     if (url.pathname === "/data/records.json") {
       try {
-        const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
-        if (!res.ok) throw new Error("upstream " + res.status);
-        const json = await res.json();
+        let json = null;
+        let src = "github";
+        try {
+          const blob = await env.RATINGS.get("records_blob", "json");
+          if (blob && Array.isArray(blob.items)) { json = blob; src = "kv"; }
+        } catch (e) {}
+        if (!json) {
+          const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
+          if (!res.ok) throw new Error("upstream " + res.status);
+          json = await res.json();
+        }
+        json.__source = src;
         const merged = await mergeOverrides(json, env);
         return new Response(JSON.stringify(merged), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
