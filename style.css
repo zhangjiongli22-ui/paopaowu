@@ -4134,3 +4134,9 @@ main#main { }
 .flow-more .flow { margin-top: 4px; }
 .flow-more .flow-row { border-bottom: 0 !important; padding: 6px 0 !important; }
 .stat-h { border: 0 !important; }
+
+/* 多工作流列表：干净留白排布 */
+.flow-list { display: grid; gap: clamp(10px, 1.4vh, 18px); }
+.flow-item { padding: 0; }
+.flow-item + .flow-item { border-top: 1px solid var(--line-hair); padding-top: clamp(10px, 1.4vh, 16px); }
+.flow-single { padding: 0; }
