@@ -143,6 +143,7 @@ function drawLog(pool) {
     rows.forEach((r) => { totals[r.kind] = (totals[r.kind] || 0) + (Number(r.minutes) || 0); });
     const sum = Object.values(totals).reduce((a, b) => a + b, 0);
     const head = el("div", "day-block");
+    head.id = "log-" + d;
     head.innerHTML = `<h2 class="log-date">${esc(d)}</h2>
       <p class="log-sum">${Object.keys(KINDS).filter((k) => totals[k]).map((k) => `${KINDS[k]} ${fmtMin(totals[k])}`).join(" · ")}${sum ? ` · 共 ${fmtMin(sum)}` : ""}</p>`;
     main.appendChild(head);
@@ -156,6 +157,42 @@ function drawLog(pool) {
       list.appendChild(li);
     });
     main.appendChild(list);
+  }
+  buildLogToc([...byDate.keys()]);
+}
+
+function buildLogToc(dates) {
+  const old = document.querySelector(".side-toc");
+  if (old) old.remove();
+  if (!dates.length) return;
+  const nav = document.createElement("nav");
+  nav.className = "side-toc";
+  const head = document.createElement("span");
+  head.className = "side-toc-title";
+  head.textContent = "日期";
+  nav.appendChild(head);
+  dates.forEach((d) => {
+    const a = document.createElement("a");
+    a.href = "#log-" + d;
+    a.textContent = String(d).slice(5) || d;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.getElementById("log-" + d);
+      if (!target) return;
+      const navTop = nav.getBoundingClientRect().top;
+      const box = target.getBoundingClientRect();
+      window.scrollBy({ top: box.top - navTop, behavior: "smooth" });
+    });
+    nav.appendChild(a);
+  });
+  document.body.appendChild(nav);
+  const first = document.getElementById("log-" + dates[0]);
+  if (first) {
+    const rect = first.getBoundingClientRect();
+    nav.style.top = Math.max(88, rect.top) + "px";
+    const pageBox = (main.parentElement || main).getBoundingClientRect();
+    const w = nav.getBoundingClientRect().width || 96;
+    nav.style.left = Math.max(12, pageBox.left - w - 18) + "px";
   }
 }
 
