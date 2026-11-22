@@ -398,14 +398,20 @@ function buildToc() {
       const navTop = nav.getBoundingClientRect().top;
       const headBottom = (head || box).getBoundingClientRect().bottom;
       const idx = rows.indexOf(box);
-      // 直接定位，不做平滑滚动，避免中途被判定成别的区块而“跳一下”
-      const root = document.documentElement;
-      root.style.scrollBehavior = "auto";
-      window.scrollBy({ top: headBottom - navTop, behavior: "auto" });
-      requestAnimationFrame(() => {
+      // 平滑滚动，但滚动期间冻结高亮，结束后再锁定到目标区块
+      spyLockUntil = Date.now() + 2000;
+      setActive(idx);
+      window.scrollBy({ top: headBottom - navTop, behavior: "smooth" });
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
         setActive(idx);
-        root.style.scrollBehavior = "";
-      });
+        spyLockUntil = Date.now() + 250;
+        window.removeEventListener("scrollend", finish);
+      };
+      window.addEventListener("scrollend", finish);
+      setTimeout(finish, 1300);
     });
     nav.appendChild(a);
   });
