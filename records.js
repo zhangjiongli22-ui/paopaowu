@@ -332,10 +332,10 @@ function buildToc() {
   if (anchor) {
     const headEl = anchor.querySelector(".sec-fold-head");
     const headRect = (headEl || anchor).getBoundingClientRect();
-    nav.style.top = Math.max(88, headRect.bottom + 2) + "px";
+    nav.style.top = Math.max(88, headRect.bottom) + "px";
     const box = (main.parentElement || main).getBoundingClientRect();
-    const w = nav.getBoundingClientRect().width || 96;
-    nav.style.left = Math.max(12, box.left - w + 26) + "px";
+    const w = nav.getBoundingClientRect().width || 110;
+    nav.style.left = Math.max(12, box.left - w - 18) + "px";
   }
 }
 
