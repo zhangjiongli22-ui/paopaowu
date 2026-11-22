@@ -632,24 +632,27 @@ function drawStats() {
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
       </div>
 
-      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
-      <div class="flow-single">
-        <span class="flow-name">${esc(mainFlow.name)}</span>
-        <span class="flow-total">${fmt(siteMin)}</span>
-        <span class="flow-last">最近 ${esc((site[site.length - 1] || {}).date || "—")}</span>
-        <span class="flow-count">含 ${site.length} 条记录</span>
-      </div>
-      <details class="flow-more">
-        <summary>展开 ${site.length} 条明细</summary>
-        <ol class="flow">
-          ${site.map((x) => `
-            <li class="flow-row">
-              <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
-              <span class="flow-what">${esc(x.text || "")}</span>
-              <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
-            </li>`).join("")}
-        </ol>
-      </details>
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">按投入时间排</span></h3>
+      ${flows.map((f) => `
+      <div class="flow-group">
+        <div class="flow-single">
+          <span class="flow-name">${esc(f.name)}</span>
+          <span class="flow-total">${fmt(f.mins)}</span>
+          <span class="flow-last">最近 ${esc((f.rows[f.rows.length - 1] || {}).date || "—")}</span>
+          <span class="flow-count">含 ${f.rows.length} 条记录</span>
+        </div>
+        <details class="flow-more">
+          <summary>展开 ${f.rows.length} 条明细</summary>
+          <ol class="flow">
+            ${f.rows.map((x) => `
+              <li class="flow-row">
+                <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
+                <span class="flow-what">${esc(x.text || "")}</span>
+                <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
+              </li>`).join("")}
+          </ol>
+        </details>
+      </div>`).join("")}
     </section>`;
 }
 
