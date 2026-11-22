@@ -7919,27 +7919,36 @@
   {
    "id": "log-20261122-game",
    "cat": "log",
-   "date": "2026-11-22",
+   "date": "2026-11-21",
    "time": "01:54",
    "kind": "game",
-   "text": "整理站点数据与封面、修复收藏与评分同步、优化移动端与视觉",
-   "minutes": 284
+   "text": "游玩《异环》30 分钟",
+   "minutes": 30
+  },
+  {
+   "id": "log-20261122-work",
+   "cat": "log",
+   "date": "2026-11-21",
+   "time": "09:30",
+   "kind": "work",
+   "text": "完成泡泡屋改版、封面补充与迁移至 Cloudflare",
+   "minutes": 330
+  },
+  {
+   "id": "log-20261122-fitness",
+   "cat": "log",
+   "date": "2026-11-21",
+   "time": "19:00",
+   "kind": "fitness",
+   "text": "有氧跑步 20 分钟，无氧训练 40 分钟",
+   "minutes": 60
   },
   {
    "id": "log-20261122-work",
    "cat": "log",
    "date": "2026-11-22",
-   "time": "09:30",
+   "time": "10:34",
    "kind": "work",
-   "text": "整理站点数据与封面、修复收藏与评分同步、优化移动端与视觉",
-   "minutes": 284
-  },
-  {
-   "id": "log-20261122-fitness",
-   "cat": "log",
-   "date": "2026-11-22",
-   "time": "19:00",
-   "kind": "fitness",
    "text": "整理站点数据与封面、修复收藏与评分同步、优化移动端与视觉",
    "minutes": 284
   }
