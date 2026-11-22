@@ -342,7 +342,12 @@ function drawMain(pool) {
     const root = document.documentElement;
     root.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
-    setTimeout(() => { root.style.scrollBehavior = ""; }, 60);
+    window.dispatchEvent(new Event("scroll"));
+    setTimeout(() => {
+      root.style.scrollBehavior = "";
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event("scroll"));
+    }, 120);
   }
   window.__firstDrawDone = true;
   ensureTopBtn();
