@@ -380,6 +380,8 @@ function buildToc() {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       if (box.tagName === "DETAILS") box.open = true;
+      spyLockUntil = Date.now() + 900;
+      setActive(rows.indexOf(box));
       const head = box.querySelector(".sec-fold-head");
       const navTop = nav.getBoundingClientRect().top;
       const headBottom = (head || box).getBoundingClientRect().bottom;
@@ -392,13 +394,16 @@ function buildToc() {
   // 滚动到哪个区块，目录对应项常驻高亮
   const links = [...nav.querySelectorAll("a")];
   const targets = rows.map((box) => ({ box, link: links[rows.indexOf(box)] })).filter((x) => x.link);
+  let spyLockUntil = 0;
   const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
   const onScroll = () => {
-    const y = window.scrollY + 140;
+    if (Date.now() < spyLockUntil) return;
+    const probe = 160; // 视口上方这条线落在哪个区块里
     let current = 0;
     targets.forEach(({ box }, i) => {
-      const top = box.getBoundingClientRect().top + window.scrollY;
-      if (top <= y) current = i;
+      const rect = box.getBoundingClientRect();
+      // 区块头部已经滚过探针线，且区块底部还没越过它，才算当前区块
+      if (rect.top <= probe) current = i;
     });
     setActive(current);
   };
