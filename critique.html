@@ -137,7 +137,7 @@ try {
 
   function getPass() {
     var p = "";
-    try { p = localStorage.getItem("comment_pass") || ""; } catch (e) {}
+    try { p = localStorage.getItem("paopaowu_pass") || localStorage.getItem("comment_pass") || ""; } catch (e) {}
     if (!p) {
       p = window.prompt("输入通行密码（只存本机）") || "";
       if (p) { try { localStorage.setItem("comment_pass", p); } catch (e) {} }
