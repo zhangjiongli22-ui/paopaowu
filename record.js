@@ -90,7 +90,9 @@ function bindShots() {
   let item = null;
   try {
     const res = await fetch("data/records.json", { cache: "no-store" });
-    item = ((await res.json()).items || []).find((x) => String(x.id) === String(id));
+    const all = (await res.json()).items || [];
+    item = all.find((x) => String(x.id) === String(id));
+    window.__allItems = all;
   } catch (e) {}
   if (!item) {
     root.innerHTML = '<p class="loading-bar">没找到这条记录，<a href="records.html">回去吧</a>。</p>';
@@ -159,6 +161,21 @@ function bindShots() {
   `;
 
   bindShots();
+
+  // 同系列其他季
+  (function () {
+    const all = window.__allItems || [];
+    const toBase = (t) => String(t || "").replace(/\s*(第[一二三四五六七八九十0-9]+季|Season\s*\d+|第\d+季)$/i, "").trim();
+    const baseName = toBase(item.title);
+    const others = all.filter((x) => x.id !== item.id && toBase(x.title) === baseName && baseName && x.title !== baseName);
+    if (!others.length || baseName === item.title) return;
+    const box = document.createElement("section");
+    box.className = "series-box";
+    box.innerHTML = '<h2 class="shots-head">同系列</h2><div class="series-list">' +
+      others.map((x) => `<a class="series-link" href="record.html?id=${encodeURIComponent(x.id)}">${x.title}<span>${x.status || ""}</span></a>`).join("") + "</div>";
+    const host = document.getElementById("detail");
+    if (host) host.appendChild(box);
+  })();
 
   const isAdmin = !!localStorage.getItem("paopaowu_admin");
   const rateBox = document.querySelector(".rate-box");
