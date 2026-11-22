@@ -1946,3 +1946,98 @@ body.lb-open { overflow: hidden; }
   letter-spacing: .01em;
 }
 .rec-top { margin-top: 8px; }
+
+
+/* Kira 个人页：档案 / 数据 / 品味 / 手上的事 */
+.kira-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 22px;
+  margin-top: 12px;
+}
+.kira-fact {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 13.5px;
+  border-bottom: 1px dashed rgba(255, 255, 255, .08);
+  padding-bottom: 7px;
+}
+.kira-fact-k {
+  color: var(--muted);
+  min-width: 40px;
+  letter-spacing: .08em;
+  font-size: 11.5px;
+}
+.kira-fact-v { color: var(--ink); }
+
+.kira-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 22px 0 6px;
+}
+.kira-stat {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: rgba(10, 30, 44, .5);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.kira-stat-n {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.kira-stat-l {
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: .12em;
+}
+
+.kira-picks { margin-top: 16px; }
+.kira-picks-label {
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.kira-pick-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.kira-pick {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+.kira-pick:hover { border-color: rgba(88, 199, 255, .45); }
+.kira-pick-s { color: var(--accent2, #7ef0d0); font-size: 11.5px; }
+
+.kira-idea-group {
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  color: var(--muted);
+  margin: 14px 0 6px;
+}
+.kira-idea-ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.kira-idea-ul li {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 13.5px;
+}
+.kira-idea-ul.done li { color: var(--muted); }
+.kira-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  flex: 0 0 6px;
+}
+.kira-dot.ok { background: var(--accent2, #7ef0d0); border-color: transparent; }
+.kira-idea-note { color: var(--muted); font-size: 12px; margin-left: 4px; }
