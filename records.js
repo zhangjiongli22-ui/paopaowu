@@ -232,6 +232,8 @@ function drawMain(pool) {
   {
     const fav = document.createElement("details");
     fav.className = "fav-fold";
+    fav.dataset.toc = "我的最爱";
+    fav.id = "sec-fav";
     fav.open = true;
     const sum = document.createElement("summary");
     sum.className = "sec-fold-head";
@@ -247,6 +249,8 @@ function drawMain(pool) {
   if (inprogRows.length) {
     const ip = document.createElement("details");
     ip.className = "fav-fold";
+    ip.dataset.toc = "在玩 / 在看";
+    ip.id = "sec-inprog";
     ip.open = true;
     const ipSum = document.createElement("summary");
     ipSum.className = "sec-fold-head";
@@ -260,10 +264,11 @@ function drawMain(pool) {
     return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
   });
   const seenRows = pool.filter((x) => !isWish(x) && !INP.includes(x.status));
-  const section = (title, rows, open) => {
+  const section = (title, rows, open, tocName) => {
     if (!rows.length) return;
     const box = document.createElement("details");
     box.className = "sec-fold";
+    if (tocName) { box.dataset.toc = tocName; box.id = "sec-" + tocName; }
     if (open) box.open = true;
     const sum = document.createElement("summary");
     sum.className = "sec-fold-head";
@@ -281,8 +286,30 @@ function drawMain(pool) {
     all: ["心愿单", "已完成"],
   };
   const [wLabel, sLabel] = LABEL[group === "hobby" && cat !== "all" ? cat : "all"] || ["心愿单", "已完成"];
-  section(wLabel, wishRows, true);
-  section(sLabel, seenRows, true);
+  section(wLabel, wishRows, true, "wish");
+  section(sLabel, seenRows, true, "seen");
+  buildToc();
+}
+
+function buildToc() {
+  const old = document.querySelector(".side-toc");
+  if (old) old.remove();
+  const rows = [...main.querySelectorAll("[data-toc]")];
+  if (!rows.length) return;
+  const nav = document.createElement("nav");
+  nav.className = "side-toc";
+  rows.forEach((box) => {
+    const a = document.createElement("a");
+    a.href = "#" + box.id;
+    a.textContent = box.dataset.toc === "wish" ? "想看 / 想玩" : box.dataset.toc === "seen" ? "看过 / 玩过" : box.dataset.toc;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (box.tagName === "DETAILS") box.open = true;
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    nav.appendChild(a);
+  });
+  document.body.appendChild(nav);
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
