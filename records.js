@@ -650,7 +650,12 @@ function drawStats() {
 }
 
 function draw() {
-  if (group === "stats") { drawStats(); return; }
+  if (group === "stats") {
+    const t = document.querySelector(".side-toc");
+    if (t) t.remove();
+    drawStats();
+    return;
+  }
   const poolAll = items.filter((x) => GROUPS[group].cats.includes(x.cat));
   const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
