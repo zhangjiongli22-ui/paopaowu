@@ -115,6 +115,7 @@ function bindShots() {
   } catch (e) {}
 
   root.innerHTML = `
+    ${item.cover ? `<div class="rd-hero" style="--cover:url('${esc(item.cover)}')" aria-hidden="true"></div>` : ""}
     <a class="back-link" href="${backHref}">← Kira的精神宇宙</a>
     <div class="subject-grid">
       <aside class="subject-side">
@@ -143,15 +144,15 @@ function bindShots() {
           <button type="button" class="rec-status" id="fav-toggle" hidden>${item.pinned ? "★ 已收藏" : "☆ 收藏"}</button>
         </div>
         <div class="rate-box${hasReview ? " reviewed" : ""}">
-          <div class="review-view"${hasReview ? "" : " hidden"}>
-            ${item.note ? `<blockquote class="review-quote">${esc(item.note)}</blockquote>` : '<p class="review-empty">只打了分，还没写评价。</p>'}
-            <div class="review-foot">
+          <div class="review-view">
+            ${item.note ? `<blockquote class="review-quote">${esc(item.note)}</blockquote>` : `<p class="review-empty">${hasReview ? "只打了分，还没写评价。" : "还没有评分与评价。"}</p>`}
+            ${hasReview ? `<div class="review-foot">
               <span class="review-when">${item.rated_on ? esc(item.rated_on) + " 评价" : ""}</span>
               <span class="review-acts">
                 <button type="button" class="review-edit" id="review-edit">${item.note ? "修改评价" : "修改评分"}</button>
                 <button type="button" class="review-edit" id="review-clear">${item.note ? "删除评价" : "删除评分"}</button>
               </span>
-            </div>
+            </div>` : ""}
           </div>
           <div class="review-form"${hasReview ? " hidden" : ""}>
             <div class="rate-stars" id="rate-stars">${[1,2,3,4,5].map((n) => `<button type="button" class="star-btn" data-n="${n}"><span class="half-hit l" data-v="${n * 2 - 1}"></span><span class="half-hit r" data-v="${n * 2}"></span><span class="star-glyph">★</span></button>`).join("")}</div>
