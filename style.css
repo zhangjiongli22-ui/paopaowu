@@ -1889,3 +1889,31 @@ body.lb-open { overflow: hidden; }
     overflow-x: auto;
   }
 }
+
+
+#to-top {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  z-index: 40;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(8, 26, 38, .78);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .2s, transform .2s, border-color .2s;
+}
+#to-top.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+#to-top:hover {
+  border-color: rgba(88, 199, 255, .5);
+}
