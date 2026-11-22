@@ -2663,3 +2663,16 @@ h1, h1 *, .kira-name, .page-head h1, .hero h1 {
 
 /* 图片陆续加载时不要让浏览器自己“锚定”滚动位置，避免长列表回弹 */
 html { overflow-anchor: none; }
+
+
+/* 时间线的月份标题：去掉误加的渐变底，文字垂直居中 */
+.sec-title.date {
+  background: none !important;
+  padding: 8px 0 8px 0 !important;
+  margin: 24px 0 10px !important;
+  text-align: left;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--line);
+}
+/* 未解决条目的样式 */
+.todo-list.unresolved .todo-mark { color: #ff8a8a; }
