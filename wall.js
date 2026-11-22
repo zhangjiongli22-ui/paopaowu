@@ -7,7 +7,8 @@
     document.documentElement.style.setProperty("--page-bg", 'url("' + pick + '")');
     try { localStorage.setItem("page_bg", pick); } catch (e) {}
     const probe = new Image();
-    probe.src = list[(day + 1) % list.length];
+    probe.onerror = () => document.documentElement.style.setProperty("--page-bg", 'url("assets/wall.jpg")');
+    probe.src = pick;
   }
 
   function run() {
