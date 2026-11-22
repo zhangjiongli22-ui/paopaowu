@@ -98,8 +98,14 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
   const p = document.getElementById("login-pass").value;
   const msg = document.getElementById("login-msg");
   if (h(`${u}:${p}:paopaowu`) === HASH) {
-    localStorage.setItem("paopaowu_admin", String(Date.now()));
-    try { localStorage.setItem("paopaowu_pass", `${u}:${p}:paopaowu`); } catch (err) {}
+    const stamp = String(Date.now());
+    const token = `${u}:${p}:paopaowu`;
+    try {
+      localStorage.setItem("paopaowu_admin", stamp);
+      localStorage.setItem("paopaowu_pass", token);
+    } catch (err) {}
+    document.cookie = "paopaowu_admin=" + stamp + "; path=/; max-age=31536000; SameSite=Lax";
+    document.cookie = "paopaowu_pass=" + encodeURIComponent(token) + "; path=/; max-age=31536000; SameSite=Lax";
     msg.textContent = "登录成功，回去改评分吧";
     setTimeout(() => (location.href = "records.html"), 600);
   } else {
