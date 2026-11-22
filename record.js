@@ -179,8 +179,11 @@ function bindShots() {
     const all = window.__allItems || [];
     const toBase = (t) => String(t || "").replace(/\s*(第[一二三四五六七八九十0-9]+季|Season\s*\d+|第\d+季)$/i, "").trim();
     const baseName = toBase(item.title);
-    const others = all.filter((x) => x.id !== item.id && toBase(x.title) === baseName && baseName && x.title !== baseName);
-    if (!others.length || baseName === item.title) return;
+    const others = all.filter((x) =>
+      x.id !== item.id &&
+      ((item.series && x.series === item.series) || (toBase(x.title) === baseName && baseName && x.title !== baseName))
+    );
+    if (!others.length) return;
     const box = document.createElement("section");
     box.className = "series-box";
     box.innerHTML = '<h2 class="shots-head">同系列</h2><div class="series-list">' +
