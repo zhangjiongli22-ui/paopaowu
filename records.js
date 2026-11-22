@@ -180,30 +180,14 @@ function buildLogToc(dates) {
       if (box.tagName === "DETAILS") box.open = true;
       const idx = rows.indexOf(box);
       clearTimeout(spyTimer);
-      spyLockUntil = Date.now() + 2500;
+      spyLockUntil = Date.now() + 3000;
       setActive(idx);
-
-      // 打断正在进行的滚动，避免两次平滑滚动互相拉扯
-      const root = document.documentElement;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, window.scrollY);
 
       const headEl = box.querySelector(".sec-fold-head");
       const navTop = nav.getBoundingClientRect().top;
       const headBottom = (headEl || box).getBoundingClientRect().bottom;
       const targetY = Math.max(0, Math.round(headBottom + window.scrollY - navTop));
-      root.style.scrollBehavior = "";
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        setActive(idx);
-        spyLockUntil = Date.now() + 300;
-      };
-      window.addEventListener("scrollend", finish, { once: true });
-      setTimeout(finish, 1400);
+      animateTo(targetY, idx);
     });
     nav.appendChild(a);
   });
@@ -488,6 +472,33 @@ function buildToc() {
     }, 150);
   }, { passive: true });
   onScroll();
+
+
+  let scrollAnimToken = 0;
+  function animateTo(targetY, idx) {
+    const token = ++scrollAnimToken;
+    const root = document.documentElement;
+    const startY = window.scrollY;
+    const dist = targetY - startY;
+    const duration = Math.min(700, Math.max(220, Math.abs(dist) * 0.5));
+    const t0 = performance.now();
+    root.style.scrollBehavior = "auto";
+    const step = (now) => {
+      if (token !== scrollAnimToken) return; // 被新的点击打断
+      const p = Math.min(1, (now - t0) / duration);
+      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      window.scrollTo(0, Math.round(startY + dist * eased));
+      if (p < 1) {
+        requestAnimationFrame(step);
+      } else {
+        window.scrollTo(0, targetY);
+        setActive(idx);
+        spyLockUntil = Date.now() + 250;
+        root.style.scrollBehavior = "";
+      }
+    };
+    requestAnimationFrame(step);
+  }
 
   const anchor = document.getElementById("sec-fav") || rows[0];
   if (anchor) {
