@@ -277,7 +277,6 @@ try {
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
 
   try {
-  try {
     var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
     var items = data.items || [];
     var playing = items.filter(function (x) { return x.status === "在玩"; }).slice(0, 6);
