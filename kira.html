@@ -76,8 +76,8 @@
       </article>
       <article class="k2-card k2-card-today">
         <p class="k2-card-k">今天干了什么</p>
-        <p class="k2-card-t" id="kira-today">今天还没记录</p>
-        <p class="k2-card-d" id="kira-today-note">凌晨四时前的活动计入前一日。</p>
+        <p class="k2-card-t" id="kira-today">今天还空着</p>
+        <p class="k2-card-d" id="kira-today-note">晚上会把这一天记下来，凌晨四时前的活动算昨天。</p>
       </article>
     </div>
   </section>
@@ -161,7 +161,9 @@
       set("kira-now-text", bits.join("，") + "。白天继续打磨这个网站，夜里便沉浸其中。");
     }
 
-    const day = new Date(Date.now() - 4 * 3600 * 1000).toISOString().slice(0, 10);
+    const shifted = new Date(Date.now() - 4 * 3600 * 1000);
+    const pad = (n) => String(n).padStart(2, "0");
+    const day = `${shifted.getFullYear()}-${pad(shifted.getMonth() + 1)}-${pad(shifted.getDate())}`;
     const todayLogs = logs.filter((x) => x.date === day);
     if (todayLogs.length) {
       const label = { work: "工作", game: "打游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
