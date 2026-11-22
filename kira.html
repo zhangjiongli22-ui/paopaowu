@@ -29,7 +29,7 @@
     <div class="k2-hero-main">
       <p class="k2-kicker">THE OWNER OF THIS HOUSE</p>
       <h1 class="k2-name">Kira</h1>
-      <p class="k2-sub">闪光的Kira。白天折腾电脑，晚上打游戏看番。</p>
+      <p class="k2-sub">闪光的Kira。白天与电脑和工具打交道，晚上则交给游戏与影像。</p>
       <div class="k2-chips">
         <span>游戏</span><span>动画</span><span>电影</span><span>健身</span><span>钢琴</span>
       </div>
@@ -48,10 +48,10 @@
     <dl class="k2-facts">
       <div><dt>称呼</dt><dd>Kira，也叫闪光的Kira</dd></div>
       <div><dt>身份</dt><dd>这间泡泡屋的主人</dd></div>
-      <div><dt>白天</dt><dd>折腾电脑、写工具、剪视频</dd></div>
-      <div><dt>晚上</dt><dd>打游戏、看番、看电影</dd></div>
-      <div><dt>长期</dt><dd>健身、练琴、每天做点记录</dd></div>
-      <div><dt>偏爱</dt><dd>有氛围、能沉进去的作品</dd></div>
+      <div><dt>白天</dt><dd>处理电脑相关事务、编写工具、剪辑视频</dd></div>
+      <div><dt>晚上</dt><dd>游玩游戏、观看动画与电影</dd></div>
+      <div><dt>长期</dt><dd>健身、练琴，并保持每日记录</dd></div>
+      <div><dt>偏爱</dt><dd>氛围感强、能够沉浸其中的作品</dd></div>
     </dl>
   </section>
 
@@ -62,22 +62,22 @@
       <article class="k2-card">
         <p class="k2-card-k">在玩</p>
         <p class="k2-card-t" id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</p>
-        <p class="k2-card-d">画面漂亮、节奏舒服，偏爱能长期玩下去的长线游戏。</p>
+        <p class="k2-card-d">偏好画面精致、节奏舒适、可以长期投入的游戏。</p>
       </article>
       <article class="k2-card">
         <p class="k2-card-k">在看</p>
         <p class="k2-card-t" id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</p>
-        <p class="k2-card-d">动画和电影都看，恐怖片、怪谈尤其多。</p>
+        <p class="k2-card-d">动画与电影均有涉猎，尤其偏爱恐怖片与怪谈题材。</p>
       </article>
       <article class="k2-card">
         <p class="k2-card-k">工作与折腾</p>
         <p class="k2-card-t">AI、自动化、剪视频、搭这个网站</p>
-        <p class="k2-card-d">给自己搭工具，也做点视频；这个泡泡屋就是一点点改出来的。</p>
+        <p class="k2-card-d">为自己搭建工具，也制作一些视频；这座泡泡屋便是逐步搭建起来的。</p>
       </article>
       <article class="k2-card k2-card-today">
         <p class="k2-card-k">今天干了什么</p>
         <p class="k2-card-t" id="kira-today">今天还没记录</p>
-        <p class="k2-card-d" id="kira-today-note">凌晨四点前的活动算前一天。</p>
+        <p class="k2-card-d" id="kira-today-note">凌晨四时前的活动计入前一日。</p>
       </article>
     </div>
   </section>
@@ -85,7 +85,7 @@
   <!-- 品味 -->
   <section class="k2-section">
     <header class="k2-head"><span class="k2-head-no">03</span><h2>我的品味</h2><span class="k2-head-line"></span></header>
-    <p class="k2-taste" id="kira-taste-line">正在从收藏里归纳…</p>
+    <p class="k2-taste" id="kira-taste-line">正在根据收藏归纳…</p>
     <div class="k2-chips" id="kira-taste-chips">
       <span>恐怖片</span><span>日本动画</span><span>剧情电影</span><span>长线游戏</span><span>钢琴 / 音乐</span>
     </div>
@@ -148,7 +148,7 @@
       const bits = [];
       if (playing.length) bits.push(`最近在玩${playing.slice(0, 2).join("和")}`);
       if (watching.length) bits.push(`在看${watching[0]}`);
-      set("kira-now-text", bits.join("，") + "。白天改这个网站，晚上就泡在这些里面。");
+      set("kira-now-text", bits.join("，") + "。白天继续打磨这个网站，夜里便沉浸其中。");
     }
 
     const day = new Date(Date.now() - 4 * 3600 * 1000).toISOString().slice(0, 10);
@@ -165,7 +165,7 @@
     items.forEach((x) => { if (x.cat) byCat[x.cat] = (byCat[x.cat] || 0) + 1; });
     set("kira-taste-line",
       `动画 ${byCat.anime || 0} 部、剧集 ${byCat.tv || 0} 部、电影 ${byCat.film || 0} 部、游戏 ${byCat.game || 0} 款，` +
-      `其中 ${finished.length} 部已经看完或玩完。口味偏氛围向：恐怖、怪谈、剧情片，加上能沉进去的长线和日本动画。`);
+      `其中 ${finished.length} 部已经看完或玩完。口味偏向氛围感：恐怖、怪谈与剧情片，兼有可长期投入的游戏与日本动画。`);
 
     const rated = finished.filter((x) => Number(x.rating) > 0).sort((a, b) => Number(b.rating) - Number(a.rating)).slice(0, 6);
     if (rated.length) {
