@@ -33,7 +33,6 @@ body {
     radial-gradient(900px 700px at 105% -5%, #0d4a63 0%, transparent 55%),
     radial-gradient(1000px 900px at 50% 115%, #0a3752 0%, transparent 60%),
     linear-gradient(180deg, #04121f 0%, #061a2b 42%, #030c16 100%);
-  background-attachment: fixed;
   line-height: 1.85;
   letter-spacing: .01em;
   -webkit-font-smoothing: antialiased;
@@ -2252,7 +2251,6 @@ body {
     radial-gradient(900px 560px at 8% 12%, rgba(126, 240, 208, .10), transparent 60%),
     radial-gradient(800px 700px at 50% 110%, rgba(120, 90, 255, .12), transparent 65%),
     #06121b;
-  background-attachment: fixed;
 }
 .deco {
   position: fixed;
@@ -2676,3 +2674,16 @@ html { overflow-anchor: none; }
 }
 /* 未解决条目的样式 */
 .todo-list.unresolved .todo-mark { color: #ff8a8a; }
+
+
+/* 滚动性能：跳过屏外卡片渲染、稳住背景层 */
+.rec-grid .poster {
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
+}
+body::before {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+body::after { transform: translateZ(0); }
