@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大肥鱼的每日锐评 · 泡泡屋</title>
+<meta name="description" content="每天两段锐评：大肥鱼评当天所有活动、也评新加的计划；DSH 再评一次。">
+<meta name="theme-color" content="#05070c">
+<link rel="icon" href="assets/avatar.png">
+<link rel="stylesheet" href="style.css?v=320">
+<script>
+try {
+  document.documentElement.classList.add("js");
+  var m = localStorage.getItem("scene_mode");
+  if (m !== "ink") document.documentElement.classList.add("scene-wall");
+  var b = localStorage.getItem("page_bg");
+  if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
+} catch (e) { document.documentElement.classList.add("js"); }
+</script>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <div class="scene-base"></div>
+  <div class="scene-photo"></div>
+  <div class="scene-glow"></div>
+  <div class="scene-caustics"></div>
+  <div class="scene-grade"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="vig" aria-hidden="true"></div>
+
+<div class="frame" aria-hidden="true">
+  <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
+  <span class="frame-tag r">Bubble House ver.3.0 — 2026</span>
+</div>
+
+<button class="scene-toggle" id="scene-toggle" type="button" aria-pressed="true">
+  <i aria-hidden="true"></i><span>场景 · 壁纸</span>
+</button>
+
+<nav class="nav">
+  <a class="brand" href="index.html" aria-label="泡泡屋 首页">
+    <svg viewBox="0 0 34 24" fill="none" stroke-width="1" aria-hidden="true">
+      <path d="M4.6 14.4c0-4.6 5.6-8.2 12.4-8.2 6.8 0 12.4 3.5 12.4 7.9 0 4.4-5.6 7.9-12.4 7.9-6.8 0-12.4-3.5-12.4-7.6Z"/>
+      <path d="M4.9 13.6 1.4 10.9M4.9 13.6 1.4 16.3"/>
+      <path d="M17.2 6.4c0-2.3.7-3.7 1.9-4.8"/>
+      <circle cx="24.6" cy="12.8" r="1.1"/>
+    </svg>
+    <span class="brand-cn">泡泡屋</span>
+    <span class="brand-jp">BUKUBUKU</span>
+  </a>
+  <div class="links">
+    <a href="about.html"><i>01</i>大肥鱼</a>
+    <a href="kira.html"><i>02</i>Kira</a>
+    <a href="records.html"><i>03</i>精神宇宙</a>
+    <a href="chat.html"><i>04</i>日常</a>
+    <a href="gallery.html"><i>05</i>图集</a>
+    <a class="active" href="critique.html"><i>06</i>锐评</a>
+  </div>
+</nav>
+
+<main id="main"><div class="crit-page-wrap">
+  <header class="ch-head reveal" style="max-width:none">
+    <p class="ch-no">SCN.<b>06</b></p>
+    <div>
+      <h2 class="ch-title">大肥鱼的每日锐评<span class="ch-sub">Daily Critique / 一日两评</span></h2>
+      <p class="ch-lead">每天两段：她评当天所有活动、也评新加进来的计划；我（DSH）再评一次。两种说法分开写，不互相迁就。</p>
+    </div>
+  </header>
+
+  <div class="crit-wrap" id="crit-list">
+    <p class="loading">正在翻记录……</p>
+  </div>
+</div></main>
+
+<footer>
+  <p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p>
+</footer>
+
+<script>
+(async function () {
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  var host = document.getElementById("crit-list");
+  try {
+    var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
+    var all = (data.items || []).filter(function (x) { return x.cat === "critique"; });
+    if (!all.length) { host.innerHTML = '<p class="loading">还没有锐评。</p>'; return; }
+    var byDay = {};
+    all.forEach(function (x) { var d = x.date || "未记"; (byDay[d] = byDay[d] || []).push(x); });
+    var days = Object.keys(byDay).sort().reverse();
+    host.innerHTML = days.map(function (d) {
+      var rows = byDay[d];
+      return '<section class="crit-day"><p class="crit-date">' + esc(d) + "</p>" +
+        rows.map(function (x) {
+          var fish = x.who === "大肥鱼";
+          return '<article class="crit-card ' + (fish ? "fish" : "dsh") + '">' +
+            '<p class="crit-who">' + esc(x.who || "") + "</p>" +
+            '<p class="crit-text">' + esc(x.text || "") + "</p></article>";
+        }).join("") + "</section>";
+    }).join("");
+  } catch (e) {
+    host.innerHTML = '<p class="loading">没加载出来。</p>';
+  }
+})();
+</script>
+<script src="atmos.js?v=310"></script>
+<script src="wall.js?v=4"></script>
+</body>
+</html>
