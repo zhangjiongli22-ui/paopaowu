@@ -9,7 +9,10 @@
     const day = Math.floor(Date.now() / 86400000);
     const pick = list[(day + offset) % list.length];
     const next = list[(day + offset + 1) % list.length];
-    document.documentElement.style.setProperty("--page-bg", `url("${pick}")`);
+    const probe = new Image();
+    probe.onload = () => document.documentElement.style.setProperty("--page-bg", `url("${pick}")`);
+    probe.onerror = () => {}; // 加载失败就保留 CSS 里的兜底背景
+    probe.src = pick;
     // 预加载明天的图，切日不闪
     const img = new Image();
     img.src = next;
