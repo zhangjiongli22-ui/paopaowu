@@ -3834,3 +3834,37 @@ main#main { }
 .cmt-text { margin: 0; font-family: var(--serif); font-size: clamp(15px, 1vw, 20px); line-height: 1.95; color: var(--paper); }
 .cmt-day { display: grid; gap: 0; }
 .cmt-date { margin: 26px 0 6px; font: clamp(12px, .7vw, 16px) var(--mono); letter-spacing: .26em; color: var(--gold); }
+
+/* 小红书式评论排版 */
+.cmt { display: flex; gap: clamp(10px, .9vw, 14px); padding: clamp(16px, 1.4vw, 22px) 0; border-bottom: 1px solid var(--line-hair); }
+.cmt-reply { margin-left: clamp(26px, 3.4vw, 56px); border-bottom: 0; padding-top: 4px; }
+.cmt-av {
+  flex: 0 0 auto;
+  width: clamp(36px, 2.6vw, 46px);
+  height: clamp(36px, 2.6vw, 46px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: clamp(15px, .95vw, 20px);
+  background: rgba(232, 167, 189, .14);
+  color: #f6dde5;
+  border: 1px solid rgba(232, 167, 189, .4);
+}
+.cmt-av.dsh { background: rgba(127, 211, 232, .12); color: #d9f3fa; border-color: rgba(127, 211, 232, .38); }
+.cmt-body { display: grid; gap: 8px; min-width: 0; }
+.cmt-name { margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: clamp(13px, .8vw, 17px); color: var(--paper-2); }
+.cmt-badge {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(232, 167, 189, .18);
+  color: rgba(246, 221, 229, .95);
+  font-size: clamp(10px, .56vw, 12.5px);
+  letter-spacing: .08em;
+}
+.cmt-to { font-size: clamp(11px, .6vw, 14px); color: var(--dim-2); }
+.cmt-text { margin: 0; font-family: var(--serif); font-size: clamp(15px, 1vw, 20px); line-height: 1.95; color: var(--paper); }
+.cmt-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
+.cmt-meta { font: clamp(10px, .56vw, 13px) var(--mono); letter-spacing: .1em; color: var(--dim-2); }
+.cmt-like { color: rgba(255, 255, 255, .55); }
+.cmt-like svg { width: clamp(15px, .95vw, 19px); height: auto; display: block; }
