@@ -298,6 +298,10 @@ function buildToc() {
   if (!rows.length) return;
   const nav = document.createElement("nav");
   nav.className = "side-toc";
+  const head = document.createElement("span");
+  head.className = "side-toc-title";
+  head.textContent = "目录";
+  nav.appendChild(head);
   rows.forEach((box) => {
     const a = document.createElement("a");
     a.href = "#" + box.id;
