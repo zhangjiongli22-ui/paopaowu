@@ -289,6 +289,20 @@ function drawMain(pool) {
   section(wLabel, wishRows, true, "wish");
   section(sLabel, seenRows, true, "seen");
   buildToc();
+  ensureTopBtn();
+}
+
+function ensureTopBtn() {
+  if (document.getElementById("to-top")) return;
+  const btn = document.createElement("button");
+  btn.id = "to-top";
+  btn.type = "button";
+  btn.textContent = "回到顶部";
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  document.body.appendChild(btn);
+  const onScroll = () => btn.classList.toggle("show", window.scrollY > 360);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 }
 
 function buildToc() {
