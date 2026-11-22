@@ -103,7 +103,18 @@ function bindShots() {
   const hasReview = !!(item.rating || (item.note || "").trim());
   const shots = (item.shots || []).map((u) => `<figure class="shot"><img src="${esc(u)}" alt="" loading="lazy"></figure>`).join("");
 
+  let backHref = "records.html";
+  try {
+    const st = JSON.parse(sessionStorage.getItem("listState") || "{}");
+    const q = new URLSearchParams();
+    if (st.group) q.set("group", st.group);
+    if (st.cat && st.cat !== "all") q.set("cat", st.cat);
+    if (st.y) q.set("y", st.y);
+    if ([...q].length) backHref = "records.html?" + q.toString();
+  } catch (e) {}
+
   root.innerHTML = `
+    <a class="back-link" href="${backHref}">← Kira的大世界</a>
     <div class="subject-grid">
       <aside class="subject-side">
         <div class="subject-cover">
