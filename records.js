@@ -237,7 +237,10 @@ function drawMain(pool) {
     fav.appendChild(gridOf(summarised(pinnedRows)));
     main.appendChild(fav);
   }
-  const wishRows = pool.filter(isWish);
+  const wishRows = pool.filter(isWish).sort((a, b) => {
+    const rank = (x) => (["在玩", "在看"].includes(x.status) ? 0 : 1);
+    return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
+  });
   const seenRows = pool.filter((x) => !isWish(x));
   const section = (title, rows, open) => {
     if (!rows.length) return;
