@@ -2335,3 +2335,31 @@ main, .nav, footer { position: relative; z-index: 1; }
   font-size: 12.5px;
 }
 .view-link:hover { color: var(--accent) !important; }
+
+
+/* ===== 清晰壁纸背景（不模糊、不毛玻璃） ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("assets/shots/%E6%98%9F%E7%A9%B9%E9%93%81%E9%81%93/s01.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.75) saturate(1.05);
+  opacity: 1;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(4, 12, 20, .35) 0%, rgba(4, 12, 20, .72) 55%, rgba(4, 12, 20, .92) 100%);
+  pointer-events: none;
+}
+.kira-card, .k2-card, .kira-stat, .side-toc, #to-top, .nav {
+  background: rgba(8, 20, 30, .86) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
