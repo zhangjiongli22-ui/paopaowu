@@ -6,7 +6,7 @@
 <title>Kira · 大肥鱼和Kira的泡泡屋</title>
 <meta name="description" content="Kira：这间泡泡屋的主人，玩什么、看什么、在折腾什么。">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=33">
+<link rel="stylesheet" href="style.css?v=70">
 </head>
 <body>
 <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -40,20 +40,20 @@
 <main class="kira-main">
   <section class="kira-now">
     <p class="kira-now-label">现在</p>
-    <p class="kira-now-text">在异环里逛街，在补旧番，顺手改这个网站。</p>
+    <p class="kira-now-text">在异环和动森之间来回，补《葬送的芙莉莲》第二季，顺手改这个网站。</p>
   </section>
 
   <section class="kira-grid">
     <article class="kira-card">
       <p class="kira-card-k">在玩</p>
-      <p class="kira-card-t">异环、明日方舟：终末地、CS2、绝区零</p>
+      <p class="kira-card-t" id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</p>
       <p class="kira-card-d">喜欢画面漂亮、节奏舒服的，偏爱能长期玩下去的。</p>
     </article>
 
     <article class="kira-card">
       <p class="kira-card-k">在看</p>
-      <p class="kira-card-t">动画和电影都看，恐怖片尤其多</p>
-      <p class="kira-card-d">从 EVA、钢炼、石头门这些老片，到孤独摇滚、MyGO 这些新的。</p>
+      <p class="kira-card-t" id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</p>
+      <p class="kira-card-d" id="kira-count">从 EVA、钢炼这些老片，到芙莉莲这些新的。</p>
     </article>
 
     <article class="kira-card">
@@ -80,6 +80,24 @@
     </a>
   </section>
 </main>
+<script>
+(async () => {
+  try {
+    const res = await fetch("data/records.json", { cache: "no-store" });
+    const items = (await res.json()).items || [];
+    const pick = (st, n) => items.filter((x) => x.status === st && x.cat !== "log" && x.cat !== "idea").slice(0, n).map((x) => x.title);
+    const play = pick("在玩", 4);
+    const watch = pick("在看", 4);
+    const set = (id, text) => { const el = document.getElementById(id); if (el && text) el.textContent = text; };
+    set("kira-play-list", play.join("、"));
+    set("kira-watch-list", watch.join("、"));
+    const watched = items.filter((x) => ["看过", "玩过"].includes(x.status)).length;
+    const wish = items.filter((x) => ["想看", "想玩"].includes(x.status)).length;
+    const e2 = document.getElementById("kira-count");
+    if (e2) e2.textContent = `已看/玩过 ${watched} · 待看/待玩 ${wish}`;
+  } catch (err) {}
+})();
+</script>
 
 <footer>
   <p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p>
