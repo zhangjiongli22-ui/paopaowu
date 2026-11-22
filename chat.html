@@ -4,32 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>日常 · 大肥鱼的泡泡屋</title>
+<meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=101">
-<script>try{var b=localStorage.getItem("page_bg");if(b)document.documentElement.style.setProperty("--page-bg",'url("'+b+'")');}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=200">
+<script>
+try {
+  document.documentElement.classList.add("js");
+  var m = localStorage.getItem("scene_mode");
+  if (m !== "ink") document.documentElement.classList.add("scene-wall");
+  var b = localStorage.getItem("page_bg");
+  if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
+} catch (e) { document.documentElement.classList.add("js"); }
+</script>
 </head>
 <body>
-<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<div class="scene" aria-hidden="true">
+  <div class="scene-base"></div>
+  <div class="scene-photo"></div>
+  <div class="scene-glow"></div>
+  <div class="scene-caustics"></div>
+  <div class="scene-grade"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="vig" aria-hidden="true"></div>
+<div class="dust" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<div class="frame" aria-hidden="true">
+  <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
+  <span class="frame-tag r">Bubble House ver.2.0 — 2026</span>
+</div>
+
+<span class="spine vtext" aria-hidden="true">にちじょうの きろく。</span>
+
+<button class="scene-toggle" id="scene-toggle" type="button" aria-pressed="true">
+  <i aria-hidden="true"></i><span>场景 · 壁纸</span>
+</button>
 
 <nav class="nav">
-  <a class="brand" href="index.html">Home</a>
+  <a class="brand" href="index.html" aria-label="泡泡屋 首页">
+    <svg viewBox="0 0 34 24" fill="none" stroke-width="1" aria-hidden="true">
+      <path d="M4.6 14.4c0-4.6 5.6-8.2 12.4-8.2 6.8 0 12.4 3.5 12.4 7.9 0 4.4-5.6 7.9-12.4 7.9-6.8 0-12.4-3.5-12.4-7.6Z"/>
+      <path d="M4.9 13.6 1.4 10.9M4.9 13.6 1.4 16.3"/>
+      <path d="M17.2 6.4c0-2.3.7-3.7 1.9-4.8"/>
+      <circle cx="24.6" cy="12.8" r="1.1"/>
+    </svg>
+    <span class="brand-cn">泡泡屋</span>
+    <span class="brand-jp">BUKUBUKU</span>
+  </a>
   <div class="links">
-    <a href="about.html">大肥鱼</a>
-    <a href="kira.html">Kira</a>
-    <a href="records.html">Kira的精神宇宙</a>
-    <a class="active" href="chat.html">日常</a>
-    <a href="gallery.html">图集</a>
+    <a href="about.html"><i>01</i>大肥鱼</a>
+    <a href="kira.html"><i>02</i>Kira</a>
+    <a href="records.html"><i>03</i>精神宇宙</a>
+    <a class="active" href="chat.html"><i>04</i>日常</a>
+    <a href="gallery.html"><i>05</i>图集</a>
   </div>
 </nav>
 
-<main class="page">
+<main class="page" id="main">
   <header class="page-head">
-    <p class="kicker">EVERYDAY</p>
+    <p class="kicker">EVERYDAY — 回想ログ</p>
     <h1>我俩的日常</h1>
     <p class="lead">点一个泡泡，看那一类的对话。都是真的聊过的，她不敢编了。</p>
   </header>
 
-  <div id="cat-row" class="cat-row"></div>
+  <div id="cat-row" class="cat-row" role="group" aria-label="按类别筛选"></div>
   <p id="cat-hint" class="cat-hint"></p>
 
   <ul id="chat-list" class="chat-list">
@@ -37,14 +78,18 @@
   </ul>
 </main>
 
-<footer><p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p></footer>
-<script src="app.js?v=15"></script>
+<footer>
+  <p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p>
+</footer>
+
+<script src="app.js?v=200"></script>
+<script src="atmos.js?v=200"></script>
 <script>
 (function () {
   if (!localStorage.getItem("paopaowu_admin")) return;
   document.querySelectorAll('footer a[href="login.html"]').forEach(function (a) {
     a.textContent = "Kira";
-    a.style.color = "#ffd76a";
+    a.style.color = "var(--gold)";
     a.title = "已登录";
   });
 })();
