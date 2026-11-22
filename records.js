@@ -599,6 +599,17 @@ function drawStats() {
       .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
     return { name: f.name, rows, mins: rows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) };
   }).sort((a, b) => b.mins - a.mins);
+
+  // 兜底：没归进任何分类的 work 记录单独成一个「其他工作」大分类
+  const matchedRows = new Set();
+  flowStats.forEach((f) => f.rows.forEach((r) => matchedRows.add(r)));
+  const restRows = logs
+    .filter((x) => x.kind === "work" && !matchedRows.has(x))
+    .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
+  const flows = flowStats
+    .filter((f) => f.mins > 0)
+    .concat(restRows.length ? [{ name: "其他工作", rows: restRows, mins: restRows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) }] : [])
+    .sort((a, b) => b.mins - a.mins);
   const mainFlow = flowStats[0];
   const site = mainFlow.rows;
   const siteMin = mainFlow.mins;
