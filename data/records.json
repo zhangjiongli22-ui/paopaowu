@@ -3173,7 +3173,11 @@
    "title": "迷之彼女",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "02:44"
+   "time": "02:44",
+   "cover": "assets/covers/anime-67330476-mystery.jpg",
+   "name_cn": "谜样女友X",
+   "desc": "椿明和卜部美琴这两个刚开始交往的高中生，对椿来说，卜部是个充满谜团的女孩，而这谜团也正待他去揭开……\r\n",
+   "bgm_id": 29323
   },
   {
    "id": "anime-4feb4822",
