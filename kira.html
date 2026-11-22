@@ -95,7 +95,7 @@ try {
       <li><span class="k">在玩</span><span class="v"><span id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</span>。画面要精致，节奏要舒服，最好能长期待着。</span></li>
       <li><span class="k">在看</span><span class="v"><span id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</span>。动画和电影都看，恐怖片与怪谈格外对味。</span></li>
       <li><span class="k">在折腾</span><span class="v">AI、自动化、剪视频，还有这个网站。工具自己造，片子自己剪；这间泡泡屋就是这么一点点搭起来的。</span></li>
-      <li><span class="k">今天</span><span class="v"><span id="kira-today">今天还空着</span></span></li>
+      <li><span class="k">今天</span><span class="v"><span id="kira-today">今天还空着</span><br><span id="kira-today-note" style="color:var(--dim);font-size:.92em">晚上会把这一天记下来，凌晨四时前的活动算昨天。</span></span></li>
     </ul>
   </section>
 
@@ -215,16 +215,13 @@ try {
     if (todayLogs.length) {
       const label = { work: "工作", game: "打游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
       const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      // 按类别合并，一句话说完
-      const sums = {};
-      todayLogs.forEach((x) => { sums[x.kind] = (sums[x.kind] || 0) + (Number(x.minutes) || 0); });
-      const parts = Object.keys(sums)
-        .sort((a, b) => sums[b] - sums[a])
-        .map((k) => `${label[k] || "忙别的"} ${fmtMin(sums[k])}`);
-      const top = Object.keys(sums).sort((a, b) => sums[b] - sums[a])[0];
-      set("kira-today", Object.keys(sums).length === 1
-        ? `今天主要${label[top] || "忙别的"}，花了 ${fmtMin(sums[top])}。`
+      const parts = todayLogs.map((x) => `${label[x.kind] || "忙别的"} ${fmtMin(Number(x.minutes) || 0)}`);
+      const main = todayLogs.slice().sort((a, b) => (Number(b.minutes) || 0) - (Number(a.minutes) || 0))[0];
+      const mainName = label[main.kind] || "别的事";
+      set("kira-today", todayLogs.length === 1
+        ? `今天主要${mainName}，花了 ${fmtMin(Number(main.minutes) || 0)}。`
         : `今天在${parts.join("、")}上，一共 ${fmtMin(total)}。`);
+      set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
     }
 
     const byCat = {};
