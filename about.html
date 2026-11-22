@@ -117,10 +117,17 @@ try {
     </ul>
   </section>
 
-  <section class="pf-sec" id="live">
-    <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
+  
+
+  <section class="pf-sec" id="data">
+    <div class="pf-head"><h2>数据</h2><span class="en">Data</span></div>
     <ul class="pf-rows">
-      <li><span class="k">最近</span><span class="v" id="live-turns">正在翻聊天记录……</span></li>
+      <li><span class="k">工作累计</span><span class="v" id="d-work">—</span></li>
+      <li><span class="k">游戏累计</span><span class="v" id="d-game">—</span></li>
+      <li><span class="k">看过 / 玩过</span><span class="v" id="d-finished">—</span></li>
+      <li><span class="k">最高评分</span><span class="v" id="d-top">—</span></li>
+      <li><span class="k">时间</span><span class="v" id="d-time">—</span></li>
+      <li><span class="k">手上计划</span><span class="v" id="d-ideas">—</span></li>
     </ul>
   </section>
 
@@ -152,24 +159,23 @@ try {
 <script>
 (async function () {
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-  var host = document.getElementById("live-turns");
-  if (!host) return;
+  var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+  function fmt(m) { m = Number(m) || 0; return m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : m + "m"; }
   try {
-    var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
-    var blocks = chat.blocks || [];
-    var last = blocks[blocks.length - 1];
-    if (!last || !(last.turns || []).length) {
-      host.textContent = "还没留下什么。";
-      return;
-    }
-    var rows = last.turns.slice(-6).map(function (t) {
-      var who = t.role === "user" ? "主人" : "大肥鱼";
-      return "· " + who + "：" + (t.text || "").replace(/\n/g, " ");
-    });
-    host.innerHTML = rows.join("<br>");
-  } catch (e) {
-    host.textContent = "没翻到聊天记录。";
-  }
+    var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
+    var items = data.items || [];
+    var logs = items.filter(function (x) { return x.cat === "log"; });
+    var sum = function (k) { return logs.filter(function (x) { return x.kind === k; }).reduce(function (a, x) { return a + (Number(x.minutes) || 0); }, 0); };
+    set("d-work", fmt(sum("work")));
+    set("d-game", fmt(sum("game")));
+    var fin = items.filter(function (x) { return ["看过", "玩过"].includes(x.status); });
+    set("d-finished", fin.length + " 部");
+    var top = items.filter(function (x) { return Number(x.rating) > 0; }).sort(function (a, b) { return Number(b.rating) - Number(a.rating); })[0];
+    set("d-top", top ? ((top.title || top.name || "") + " · " + (Number(top.rating) / 2).toFixed(1) + " / 5") : "—");
+    set("d-time", fmt(logs.reduce(function (a, x) { return a + (Number(x.minutes) || 0); }, 0)));
+    var ideas = items.filter(function (x) { return x.cat === "idea" && x.status === "计划中"; }).map(function (x) { return x.title; });
+    set("d-ideas", ideas.length ? ideas.slice(0, 4).join("、") : "手上没在排的。");
+  } catch (e) {}
 })();</script>
 <script src="wall.js?v=4"></script>
 </body>
