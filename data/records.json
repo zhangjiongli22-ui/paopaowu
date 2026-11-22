@@ -682,7 +682,9 @@
    "title": "危笑",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/film-f0a407e9-imdb.jpg",
+   "name_cn": "Smile"
   },
   {
    "id": "film-bd00f0a6",
@@ -690,7 +692,9 @@
    "title": "危笑2",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/film-bd00f0a6-imdb.jpg",
+   "name_cn": "Smile 2"
   },
   {
    "id": "film-a062302b",
@@ -704,7 +708,8 @@
    "air": "2020-06-28",
    "bgm_rating": 7.4,
    "bgm_id": 322841,
-   "name_cn": "双重预约"
+   "name_cn": "Double Booking",
+   "cover": "assets/covers/film-a062302b-imdb.jpg"
   },
   {
    "id": "film-963afa73",
@@ -728,7 +733,9 @@
    "title": "咖啡桌",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/film-c1df3c7c-imdb.jpg",
+   "name_cn": "The Coffee Table"
   },
   {
    "id": "film-076bd00e",
@@ -878,7 +885,9 @@
    "title": "暴裂无声",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/film-807fd8d9-imdb.jpg",
+   "name_cn": "Wrath of Silence"
   },
   {
    "id": "film-0bf48116",
@@ -960,7 +969,9 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "00:58",
-   "staff": "GCORES PUBLISHING"
+   "staff": "GCORES PUBLISHING",
+   "cover": "assets/covers/film-942f9737-imdb.jpg",
+   "name_cn": "Vivarium"
   },
   {
    "id": "film-8bb93a55",
@@ -1015,7 +1026,8 @@
    "date": "2026-11-22",
    "time": "00:58",
    "desc": "《贫民窟的百万富翁》 是一部於2008年上映的英國劇情片，由丹尼·鮑伊執導，賽門·鮑佛伊編劇，與洛芙琳·坦丹在印度共同執導，電影是根據印度英語文學作家與外交家維卡斯·史瓦盧普 於2005年的作品《Q&A》所改編。",
-   "name_cn": "貧民百萬富翁"
+   "name_cn": "Slumdog Millionaire",
+   "cover": "assets/covers/film-293be1c4-imdb.jpg"
   },
   {
    "id": "film-dd4c87e0",
@@ -1023,7 +1035,9 @@
    "title": "遗传厄运",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:58"
+   "time": "00:58",
+   "cover": "assets/covers/film-dd4c87e0-imdb.jpg",
+   "name_cn": "Hereditary"
   },
   {
    "id": "film-5ecb8f81",
@@ -1045,7 +1059,9 @@
    "title": "霸王别姬",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:58"
+   "time": "00:58",
+   "cover": "assets/covers/film-3d03312f-imdb.jpg",
+   "name_cn": "Farewell My Concubine"
   },
   {
    "id": "film-67cdc816",
@@ -1214,7 +1230,9 @@
    "title": "天空之城",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:40"
+   "time": "02:40",
+   "cover": "assets/covers/film-f723a035-imdb.jpg",
+   "name_cn": "Castle in the Sky"
   },
   {
    "id": "film-17073435",
@@ -1233,7 +1251,9 @@
    "title": "肖申克的救赎",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:40"
+   "time": "02:40",
+   "cover": "assets/covers/film-e49d3a7a-imdb.jpg",
+   "name_cn": "The Shawshank Redemption"
   },
   {
    "id": "film-ff69e63b",
@@ -1429,7 +1449,9 @@
    "title": "恐怖废墟",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:41"
+   "time": "02:41",
+   "cover": "assets/covers/film-9ae24bf4-imdb.jpg",
+   "name_cn": "The Ruins"
   },
   {
    "id": "film-84a8e3a6",
@@ -1437,7 +1459,9 @@
    "title": "高草丛中",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:41"
+   "time": "02:41",
+   "cover": "assets/covers/film-84a8e3a6-imdb.jpg",
+   "name_cn": "In the Tall Grass"
   },
   {
    "id": "film-200fbf04",
@@ -1491,7 +1515,9 @@
    "title": "1922",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:41"
+   "time": "02:41",
+   "cover": "assets/covers/film-485e8b34-imdb.jpg",
+   "name_cn": "1922"
   },
   {
    "id": "film-e3bd5e8f",
@@ -1550,7 +1576,9 @@
    "title": "海云台",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:41"
+   "time": "02:41",
+   "cover": "assets/covers/film-c8389548-imdb.jpg",
+   "name_cn": "Tidal Wave"
   },
   {
    "id": "film-a1653780",
@@ -1636,7 +1664,9 @@
    "title": "海上钢琴师",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:41"
+   "time": "02:41",
+   "cover": "assets/covers/film-77d985c3-imdb.jpg",
+   "name_cn": "The Legend of 1900"
   },
   {
    "id": "film-5c973230",
@@ -1796,13 +1826,12 @@
   {
    "id": "film-eaa72c4d",
    "cat": "film",
-   "title": "利刃出鞘12",
+   "title": "利刃出鞘",
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:42",
-   "cover": "assets/covers/film-eaa72c4d-cov.jpg",
-   "desc": "《利刃出鞘》 是一部2019年美國懸疑片，由雷恩·強生編劇和執導，並與拉姆·伯格曼共同製片。主演包括丹尼爾·克雷格、克里斯·埃文斯、安娜·德哈瑪斯、潔美·李·寇蒂斯、麥可·夏儂、唐·強生、東妮·克莉蒂、凱斯·史坦費爾德、凱薩琳·蘭福德、傑登·馬泰爾及克里斯多夫·柏麥。劇情講述一名著名小說家自殺身亡後，被受雇調查的偵探懷疑他殺，同時小說家子女們的內鬥更讓案情錯綜複雜。",
-   "name_cn": "鋒迴路轉"
+   "cover": "assets/covers/film-eaa72c4d-imdb.jpg",
+   "name_cn": "Knives Out"
   },
   {
    "id": "film-2d40359a",
@@ -1810,7 +1839,10 @@
    "title": "华尔街之狼",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:42"
+   "time": "02:42",
+   "cover": "assets/covers/film-2d40359a-imdb.jpg",
+   "desc": "《华尔街之狼》 是马丁·斯科塞斯执导的2013年美国传记黑色喜剧片，剧本由泰倫斯·溫特根据乔丹·贝尔福特同名回忆录改编。莱昂纳多·迪卡普里奥领衔饰演20世纪90年代在华尔街大肆参与证券欺诈和洗錢的纽约股票经纪人佐頓·貝福，其他主要演员包括喬納·希爾、瑪歌·羅比、凱爾·錢德勒。\n",
+   "name_cn": "The Wolf of Wall Street"
   },
   {
    "id": "film-d50f4e4b",
@@ -1818,7 +1850,9 @@
    "title": "迷雾",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:42"
+   "time": "02:42",
+   "cover": "assets/covers/film-d50f4e4b-imdb.jpg",
+   "name_cn": "The Mist"
   },
   {
    "id": "film-60f1d603",
@@ -1842,7 +1876,9 @@
    "title": "海贼王red",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:42"
+   "time": "02:42",
+   "cover": "assets/covers/film-abf60c5d-imdb.jpg",
+   "name_cn": "One Piece Film: Red"
   },
   {
    "id": "film-b3ac79e1",
@@ -1885,7 +1921,9 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:42",
-   "staff": "「君の膵臓をたべたい」製作委員会（東宝、博報堂DYミュージック&ピクチャーズ、双葉社、ジェイアール東日本企画、博報堂、KDDI、日本出版販売、トライストーン・エ"
+   "staff": "「君の膵臓をたべたい」製作委員会（東宝、博報堂DYミュージック&ピクチャーズ、双葉社、ジェイアール東日本企画、博報堂、KDDI、日本出版販売、トライストーン・エ",
+   "cover": "assets/covers/film-8f8db57d-imdb.jpg",
+   "name_cn": "I Want to Eat Your Pancreas"
   },
   {
    "id": "film-9b22a09d",
@@ -1904,7 +1942,9 @@
    "title": "狩猎",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:42"
+   "time": "02:42",
+   "cover": "assets/covers/film-5184febb-imdb.jpg",
+   "name_cn": "The Hunt"
   },
   {
    "id": "film-db30259c",
@@ -2010,8 +2050,8 @@
    "director": "劇団ひとり",
    "bgm_rating": 7.5,
    "bgm_id": 370239,
-   "name_cn": "浅草小子",
-   "cover": "assets/covers/film-d6e18151-cov2.jpg"
+   "name_cn": "Asakusa Kid",
+   "cover": "assets/covers/film-d6e18151-imdb.jpg"
   },
   {
    "id": "game-884bec3d",
@@ -3496,8 +3536,8 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:44",
-   "cover": "assets/covers/anime-dd07e8a9-cov.jpg",
-   "desc": "《DEAD OR SCHOOL》是由日本電子遊戲開發商Studio Nanafushi開發和發行的一款動作角色扮演遊戲，本作的搶先體驗版於2018年7月12日在Steam發佈，正式版于2019年6月4日起發行。除Steam外，本作还先後登陸家用遊戲機任天堂Switch和PlayStation 4。遊戲講述在架空的未來世界，人類被不明的病毒感染變成尸鬼，倖存的人類被驅趕到地底生活。一位名為久子的少女在祖母的鼓勵下，為了奪回地表並重建學校，在地底世界展開了冒險，集合夥伴和戰力反攻地表。",
+   "cover": "assets/covers/anime-dd07e8a9-user.jpg",
+   "desc": "《學園默示錄》 是一部由佐藤大辅擔任原作、佐藤庄司（佐藤ショウジ）作畫的日本漫畫作品，於2006年9月開始連載。在2009年1月單行本第5冊發行後休刊，2010年4月再次出刊。同月9日宣布動畫化，2010年7月5日電視動畫开始播放。於2011年4月號發行後宣布再次休刊。東日本大地震後，佐藤大輔因身體問題無限期休刊。2017年3月22日，佐藤大輔因缺血性心脏病逝世，宣告絕筆。\n",
    "name_cn": "DEAD OR SCHOOL"
   },
   {
@@ -4500,10 +4540,7 @@
    "title": "Fate命运之夜天之杯",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "02:45",
-   "cover": "assets/covers/anime-65961035-cov.jpg",
-   "desc": "宮野真守（日語：宮野 真守／みやの まもる，羅馬化：Miyano Mamoru，1983年6月8日—）為日本男性聲優、歌手、演員，經紀公司為研音、唱片公司為波麗佳音，前唱片公司為國王唱片。埼玉縣埼玉市出身，血型為B型，身高182cm，體重63kg。\n其聲優代表作有《死亡筆記本》（夜神月）、《櫻蘭高校男公關部》（須王環）、《機動戰士鋼彈00》（剎那·F·塞耶）、《命運石之門》（岡部倫太郎）、《歌之王子殿下》（一之瀨時矢）、《Free!》（松岡凜）、《K》（伏见猿比古）、《東京喰種》（月山習）、《文豪Stray Dogs》（太宰治）、（佐賀偶像是傳奇）（巽幸太郎）、《銀河英雄傳說 Die Neue These 邂逅》（萊因哈特·馮·羅嚴克拉姆）及多部動畫作品。",
-   "name_cn": "宮野真守"
+   "time": "02:45"
   },
   {
    "id": "anime-d4c72ee4",
@@ -4677,8 +4714,8 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:46",
-   "cover": "assets/covers/anime-f27feeca-cov.jpg",
-   "desc": "蕭敬騰（Jam Hsiao Ching-teng，1987年3月30日—），臺灣男歌手、詞曲作家及演員，畢業於親民技術學院附設專科進修學校化妝品應用與管理科、萬能科技大學二技進修部觀光與休閒事業管理系。原為餐廳駐唱歌手，2007年因在第一屆《超級星光大道》的踢館單元而獲關注。",
+   "cover": "assets/covers/anime-f27feeca-user.jpg",
+   "desc": "平凡的中学二年级少年影山茂夫，因其微弱的存在感与名字茂夫的谐音被周遭人称为龙套（モブ），但不起眼的他其实是强大的天生超能力者。历经每一次的成长，龙套开始认为自己的超能力是危险的存在，为了不让超能力失控",
    "name_cn": "蕭敬騰"
   },
   {
@@ -5527,14 +5564,6 @@
    "bgm_id": 596605
   },
   {
-   "id": "film-74c8d357",
-   "cat": "film",
-   "title": "eva终",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "03:04"
-  },
-  {
    "id": "film-fc08a0a2",
    "cat": "film",
    "title": "惊变28年",
@@ -5580,7 +5609,9 @@
    "title": "三体",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:04"
+   "time": "03:04",
+   "cover": "assets/covers/film-712720e7-user.jpg",
+   "desc": "《三体》是中国大陆作家刘慈欣于2006年5月至12月在《科幻世界》杂志上连载的一部长篇科幻小说，并于2008年由重庆出版社出版单行本。本书是“三体系列” 的第一部作品，续作《三体II：黑暗森林》和《三体III：死神永生》分别于2008年5月和2010年11月出版。小说于2006年获得中国科幻银河奖，并自出版后成为中国大陆最畅销的科幻长篇小说之一。\n"
   },
   {
    "id": "film-1ed2d031",
@@ -5611,8 +5642,8 @@
    "status": "想看",
    "date": "2026-11-22",
    "time": "03:04",
-   "cover": "assets/covers/film-0794b421-cov.jpg",
-   "desc": "鍾漢良（英語：Wallace Chung；1974年11月30日—），香港男演員和歌手，曾為無綫電視旗下藝人，2000年代起工作重心轉向大陸，以拍攝大陸電視劇為主。\n1995年以一首《OREA》在樂壇一炮而紅，有「小太陽」之稱，已發行《OREA》，《鍾情二次方》和《視覺動物》等十二張個人專輯，1996至1997年連續獲封台灣十大偶像，2010至2011年蟬聯中歌榜最佳舞台演繹男歌手大獎，2011至2012年舉辦三場「S-party」個人演唱會。\n2012年憑藉《一觸即發》獲得第26屆中國電視金鷹獎：「觀眾喜愛男演員」提名，成為金鷹歷史上第一個入圍該獎項的港澳台演員，並獲得2012年金鷹電視藝術節「觀眾最喜愛的港澳台演員獎」。2014年，憑藉《天涯明月刀》再次入圍該獎項。2015年，代表作《十月圍城》入圍第30屆中國電視飛天獎，成為近年來唯一以主演作品入圍飛天獎的港台演員。2015年，韓國購入收視超過100億點擊率電視劇《何以笙簫默》，作為男主的鍾漢良成功俘虜不同階層觀眾，並在首爾國際電視節上獲得亞洲明星大賞。2015年11月25日宣佈首次擔任導演執導光線傳媒大型青春電影項目《沙漏》，1",
+   "cover": "assets/covers/film-0794b421-user.jpg",
+   "desc": "《地球停转之日》 是一部於2008年上映的美國科幻電影，重拍自1951年的同名科幻電影。該片為大衛·史卡帕擔任編劇，劇本根據1940年哈利·貝茨所寫的經典科幻短篇小說《Farewell to the Master》及1951年愛德蒙·H·诺斯的劇本改編而成。\n",
    "name_cn": "鍾漢良"
   },
   {
@@ -5665,7 +5696,9 @@
    "title": "维斯珀",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:04"
+   "time": "03:04",
+   "cover": "assets/covers/film-18813719-imdb.jpg",
+   "name_cn": "Vesper"
   },
   {
    "id": "anime-47e225bd",
@@ -5902,7 +5935,9 @@
    "title": "灵异咒",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:05"
+   "time": "03:05",
+   "cover": "assets/covers/film-8eb82faa-imdb.jpg",
+   "name_cn": "Noroi"
   },
   {
    "id": "film-3bff2cc1",
@@ -6077,7 +6112,9 @@
    "title": "这是你的死亡",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:05"
+   "time": "03:05",
+   "cover": "assets/covers/film-09545efe-imdb.jpg",
+   "name_cn": "The Show"
   },
   {
    "id": "film-28895e0b",
