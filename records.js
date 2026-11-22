@@ -577,9 +577,14 @@ function drawStats() {
   const byKind = {};
   logs.forEach((x) => { byKind[x.kind] = (byKind[x.kind] || 0) + (Number(x.minutes) || 0); });
   const totalMin = logs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-  const siteMin = logs.filter((x) => /网站|站点|页面|封面|部署|推送|改版|上线/.test(x.text || ""))
-    .reduce((a, x) => a + (Number(x.minutes) || 0), 0);
   const fmt = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : (m || 0) + "m");
+  const maxKind = Math.max(1, ...Object.values(byKind));
+
+  const site = logs
+    .filter((x) => /网站|站点|页面|封面|部署|推送|改版|上线|统计页/.test(x.text || ""))
+    .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
+  const siteMin = site.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
     ["剧集", hobby.filter((x) => x.cat === "tv").length],
@@ -589,7 +594,6 @@ function drawStats() {
     ["计划", ideas.length],
     ["日志", logs.length]
   ];
-  const maxKind = Math.max(1, ...Object.values(byKind));
 
   main.innerHTML = `
     <section class="stat-wrap">
@@ -600,9 +604,6 @@ function drawStats() {
         <div class="stat-big"><b>${fmt(totalMin)}</b><span>累计记录时长</span></div>
       </div>
 
-      <h3 class="stat-h">网站建设</h3>
-      <div class="stat-line"><b>${fmt(siteMin)}</b> —— 按日志里与站点相关的记录累计（含今日收尾 ${fmt(210)}）。只统计记下来的部分，没记的不算。</div>
-
       <h3 class="stat-h">时间都花在</h3>
       <div class="stat-bars">
         ${Object.keys(KIND).map((k) => `<div class="stat-bar"><span class="k">${KIND[k]}</span><span class="bar"><i style="width:${Math.round(((byKind[k] || 0) / maxKind) * 100)}%"></i></span><span class="v">${fmt(byKind[k] || 0)}</span></div>`).join("")}
@@ -612,6 +613,16 @@ function drawStats() {
       <div class="stat-chips">
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
       </div>
+
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">共 ${fmt(siteMin)} · 按时间顺序</span></h3>
+      <ol class="flow">
+        ${site.map((x) => `
+          <li class="flow-row">
+            <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
+            <span class="flow-what">${esc(x.text || "")}</span>
+            <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
+          </li>`).join("")}
+      </ol>
     </section>`;
 }
 
