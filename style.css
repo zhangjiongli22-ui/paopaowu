@@ -4120,3 +4120,13 @@ main#main { }
 .stat-h-sub { padding-left: 18px; border-left: 1px solid rgba(201, 168, 107, .35); font-size: clamp(14px, .95vw, 19px); }
 .flow-single { margin-left: 18px; }
 .flow-more { margin-left: 18px; }
+
+
+/* 已完成计划：一行一条，名称 + 投入时长 */
+.flow-plan-list { list-style: none; margin: 8px 0 18px; padding: 0; }
+.flow-plan-list li {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; padding: 9px 2px; border-bottom: 1px solid var(--line);
+}
+.flow-plan-name { color: var(--ink); font-size: 15px; }
+.flow-plan-dur { color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
