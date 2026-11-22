@@ -502,13 +502,24 @@ function draw() {
     });
     viewRow.appendChild(b);
   };
-  drawViews();
+  const syncViewRow = () => {
+    if (group !== "hobby") {
+      view = "summary";
+      viewRow.style.display = "none";
+      viewRow.innerHTML = "";
+    } else {
+      viewRow.style.display = "";
+      drawViews();
+    }
+  };
+  syncViewRow();
 
   Object.keys(GROUPS).forEach((k) => {
     const b = el("button", "group-btn" + (k === group ? " on" : ""), GROUPS[k].name);
     b.addEventListener("click", () => {
       group = k;
       cat = "all";
+      syncViewRow();
       const u = new URL(location.href);
       u.searchParams.set("group", k);
       history.replaceState(null, "", u);
