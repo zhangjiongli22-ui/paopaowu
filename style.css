@@ -3945,3 +3945,7 @@ main#main { }
 
 .cmt-foot{justify-content:flex-start!important;}
 .cmt-like{margin-left:2px;}
+
+/* 去掉回复旁边那些多余的横杠与竖线 */
+.cmt-reply::before { content: none !important; display: none !important; }
+.cmt-reply { border-left: 0 !important; padding-left: 0 !important; }
