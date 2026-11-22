@@ -592,10 +592,21 @@ function drawStats() {
   const fmt = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : (m || 0) + "m");
   const maxKind = Math.max(1, ...Object.values(byKind));
 
-  const site = logs
-    .filter((x) => /网站|站点|页面|封面|部署|推送|改版|上线|统计页/.test(x.text || ""))
-    .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
-  const siteMin = site.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+  // 先按主题归拢，只展示耗时最大的那一类工作流
+  const FLOWS = [
+    { name: "网站建设", re: /网站|站点|页面|封面|部署|推送|改版|上线|统计|锐评|档案|首页/ },
+    { name: "视频剪辑", re: /剪辑|片子|视频|素材管理/ },
+    { name: "练习与训练", re: /练琴|钢琴|健身|跑步|训练/ }
+  ];
+  const flowStats = FLOWS.map((f) => {
+    const rows = logs
+      .filter((x) => f.re.test(x.text || ""))
+      .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
+    return { name: f.name, rows, mins: rows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) };
+  }).sort((a, b) => b.mins - a.mins);
+  const mainFlow = flowStats[0];
+  const site = mainFlow.rows;
+  const siteMin = mainFlow.mins;
 
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
@@ -626,7 +637,7 @@ function drawStats() {
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
       </div>
 
-      <h3 class="stat-h">工作流时间统计<span class="stat-sub">共 ${fmt(siteMin)} · 按时间顺序</span></h3>
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)} · 共 ${fmt(siteMin)} · 按时间顺序</span></h3>
       <ol class="flow">
         ${site.map((x) => `
           <li class="flow-row">
