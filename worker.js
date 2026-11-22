@@ -1,6 +1,15 @@
 const OWNER = "zhangjiongli22-ui";
 const REPO = "paopaowu";
 const PASS_HASH = "6f65bb65";
+
+function shiftPass(input) {
+  let x = 5381;
+  for (let i = 0; i < input.length; i++) {
+    x = ((x << 5) + x) ^ input.charCodeAt(i);
+    x >>>= 0;
+  }
+  return x.toString(16);
+}
 async function mergeOverrides(json, env) {
   try {
     const list = await env.RATINGS.list({ prefix: "item:" });
