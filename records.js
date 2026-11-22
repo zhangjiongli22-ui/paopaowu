@@ -177,11 +177,33 @@ function buildLogToc(dates) {
     a.textContent = String(d).slice(5) || d;
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      const target = document.getElementById("log-" + d);
-      if (!target) return;
+      if (box.tagName === "DETAILS") box.open = true;
+      const idx = rows.indexOf(box);
+      clearTimeout(spyTimer);
+      spyLockUntil = Date.now() + 2500;
+      setActive(idx);
+
+      // 打断正在进行的滚动，避免两次平滑滚动互相拉扯
+      const root = document.documentElement;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, window.scrollY);
+
+      const headEl = box.querySelector(".sec-fold-head");
       const navTop = nav.getBoundingClientRect().top;
-      const box = target.getBoundingClientRect();
-      window.scrollBy({ top: box.top - navTop, behavior: "smooth" });
+      const headBottom = (headEl || box).getBoundingClientRect().bottom;
+      const targetY = Math.max(0, Math.round(headBottom + window.scrollY - navTop));
+      root.style.scrollBehavior = "";
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        setActive(idx);
+        spyLockUntil = Date.now() + 300;
+      };
+      window.addEventListener("scrollend", finish, { once: true });
+      setTimeout(finish, 1400);
     });
     nav.appendChild(a);
   });
