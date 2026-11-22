@@ -3804,3 +3804,8 @@ main#main { }
 .cmt-to { font: clamp(10px, .56vw, 13px) var(--mono); letter-spacing: .16em; color: var(--dim-2); }
 .cmt-time { margin-left: auto; font: clamp(10px, .56vw, 13px) var(--mono); letter-spacing: .14em; color: var(--dim-2); }
 .cmt-text { margin: 0; font-family: var(--serif); font-size: clamp(15px, 1vw, 20px); line-height: 2.05; color: var(--paper-2); }
+
+/* 日期目录：可点、点了高亮，跳转有留白 */
+.side-toc a { cursor: pointer; }
+.side-toc a.on { color: var(--gold); }
+.day-block { scroll-margin-top: 32px; }
