@@ -564,10 +564,27 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   });
 
   const params = new URLSearchParams(location.search);
+  const cameWithY = params.has("y");
   const gp = params.get("group") || location.hash.replace("#", "");
   if (gp && GROUPS[gp]) group = gp;
   const cp = params.get("cat");
   if (cp) cat = cp;
+  if (!cameWithY) {
+    // 普通刷新：浏览器可能恢复旧滚动位置，这里强制回顶
+    const forceTop = () => {
+      const root = document.documentElement;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, 0);
+      setTimeout(() => {
+        root.style.scrollBehavior = "";
+        window.scrollTo(0, 0);
+        window.dispatchEvent(new Event("scroll"));
+      }, 100);
+    };
+    window.addEventListener("load", forceTop);
+    setTimeout(forceTop, 400);
+  }
+
   const restoreY = params.get("y");
   if (restoreY) {
     window.__pendingY = Number(restoreY) || 0;
