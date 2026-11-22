@@ -243,11 +243,23 @@ function drawMain(pool) {
     else fav.insertAdjacentHTML("beforeend", '<p class="detail-empty">还没有收藏，点开条目后按「☆ 收藏」加进来。</p>');
     main.appendChild(fav);
   }
+  const inprogRows = pool.filter((x) => INP.includes(x.status));
+  if (inprogRows.length) {
+    const ip = document.createElement("details");
+    ip.className = "fav-fold";
+    ip.open = true;
+    const ipSum = document.createElement("summary");
+    ipSum.className = "sec-fold-head";
+    ipSum.textContent = "在玩 / 在看 · " + inprogRows.length;
+    ip.appendChild(ipSum);
+    ip.appendChild(gridOf(summarised(inprogRows)));
+    main.appendChild(ip);
+  }
   const wishRows = pool.filter(isWish).sort((a, b) => {
     const rank = (x) => (["在玩", "在看"].includes(x.status) ? 0 : 1);
     return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
   });
-  const seenRows = pool.filter((x) => !isWish(x));
+  const seenRows = pool.filter((x) => !isWish(x) && !INP.includes(x.status));
   const section = (title, rows, open) => {
     if (!rows.length) return;
     const box = document.createElement("details");
@@ -273,7 +285,8 @@ function drawMain(pool) {
   section(sLabel, seenRows, true);
 }
 
-const WISH = ["想看", "待看", "想玩", "想读", "在看", "在玩"];
+const WISH = ["想看", "待看", "想玩", "想读"];
+const INP = ["在看", "在玩"];
 
 function addWish(wish) {
   if (!wish || !wish.length) return;
