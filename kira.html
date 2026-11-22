@@ -221,7 +221,6 @@ try {
       set("kira-today", todayLogs.length === 1
         ? `今天主要${mainName}，花了 ${fmtMin(Number(main.minutes) || 0)}。`
         : `今天在${parts.join("、")}上，一共 ${fmtMin(total)}。`);
-      set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
     }
 
     const byCat = {};
