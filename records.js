@@ -27,6 +27,7 @@ let items = [];
 let group = "hobby";
 let cat = "all";
 let view = "summary";
+let issueView = false;
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -238,6 +239,17 @@ function drawMain(pool) {
   if (staleToc) staleToc.remove();
   if (group === "plan") { drawLog(pool); return; }
   if (group === "idea") {
+    if (issueView) {
+      const rows = pool.filter((x) => x.cat === "issue" || x.status === "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+      main.appendChild(el("h2", "sec-title", "未解决"));
+      if (!rows.length) {
+        main.insertAdjacentHTML("beforeend", '<p class="detail-empty">没有未解决的问题。</p>');
+      } else {
+        main.insertAdjacentHTML("beforeend", '<ul class="todo-list unresolved">' + rows.map((x) => `<li class="todo-item"><span class="todo-mark">○</span><span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span></li>`).join("") + "</ul>");
+      }
+      return;
+    }
+    pool = pool.filter((x) => x.cat === "idea");
     const unresolved = pool.filter((x) => x.status === "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const planning = pool.filter((x) => x.status !== "已达成" && x.status !== "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const done = pool.filter((x) => x.status === "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
@@ -558,7 +570,7 @@ function draw() {
   const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
   catRow.innerHTML = "";
-  if (group === "hobby" || (GROUPS[group] && GROUPS[group].cats.length > 1)) {
+  if (group === "hobby") {
     const counts = {};
     poolAll.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
     ["all", ...GROUPS[group].cats].forEach((k) => {
@@ -668,13 +680,24 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     viewRow.appendChild(b);
   };
   const syncViewRow = () => {
-    if (group !== "hobby") {
+    if (group === "hobby") {
       view = "summary";
-      viewRow.style.display = "none";
-      viewRow.innerHTML = "";
-    } else {
       viewRow.style.display = "";
       drawViews();
+      return;
+    }
+    viewRow.innerHTML = "";
+    if (group === "idea") {
+      viewRow.style.display = "";
+      const b = el("button", "view-link", issueView ? "返回计划" : "未解决");
+      b.addEventListener("click", () => {
+        issueView = !issueView;
+        syncViewRow();
+        draw();
+      });
+      viewRow.appendChild(b);
+    } else {
+      viewRow.style.display = "none";
     }
   };
   syncViewRow();
@@ -684,6 +707,7 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     b.addEventListener("click", () => {
       group = k;
       cat = "all";
+      issueView = false;
       syncViewRow();
       const u = new URL(location.href);
       u.searchParams.set("group", k);
