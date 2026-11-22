@@ -527,6 +527,14 @@ function draw() {
         u.searchParams.delete("y");
         history.replaceState(null, "", u);
         draw();
+        const root = document.documentElement;
+        root.style.scrollBehavior = "auto";
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+          root.style.scrollBehavior = "";
+          window.scrollTo(0, 0);
+          window.dispatchEvent(new Event("scroll"));
+        }, 60);
       });
       catRow.appendChild(b);
     });
