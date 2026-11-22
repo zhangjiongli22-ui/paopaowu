@@ -4121,12 +4121,8 @@ main#main { }
 .flow-single { margin-left: 18px; }
 .flow-more { margin-left: 18px; }
 
-
-/* 已完成计划：一行一条，名称 + 投入时长 */
-.flow-plan-list { list-style: none; margin: 8px 0 18px; padding: 0; }
-.flow-plan-list li {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 16px; padding: 9px 2px; border-bottom: 1px solid var(--line);
-}
-.flow-plan-name { color: var(--ink); font-size: 15px; }
-.flow-plan-dur { color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* 工作流块回到常规位置；只把「展开」贴近汇总行 */
+.stat-h-sub { padding-left: 0; border-left: 0; font-size: clamp(17px, 1.3vw, 24px); }
+.flow-single { margin-left: 0; }
+.flow-more { margin-left: 0; margin-top: 2px; }
+.flow-more > summary { padding: 2px 0; }
