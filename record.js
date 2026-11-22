@@ -249,17 +249,16 @@ function bindShots() {
       e.stopPropagation();
       const next = favBtn.textContent.indexOf("已收藏") === -1;
       favBtn.textContent = next ? "★ 已收藏" : "☆ 收藏";
-      favBtn.disabled = true;
-      try {
-        const saved = await apiRate({ id, pinned: next });
-        it = { ...item, ...saved };
-        favBtn.textContent = saved.pinned ? "★ 已收藏" : "☆ 收藏";
-        msg.textContent = saved.pinned ? "已加入我的最爱" : "已取消收藏";
-      } catch (err) {
-        msg.textContent = "收藏失败：" + err.message;
-      } finally {
-        favBtn.disabled = false;
-      }
+      msg.textContent = next ? "已加入我的最爱" : "已取消收藏";
+      apiRate({ id, pinned: next })
+        .then((saved) => {
+          it = { ...item, ...saved };
+          favBtn.textContent = saved.pinned ? "★ 已收藏" : "☆ 收藏";
+        })
+        .catch((err) => {
+          favBtn.textContent = next ? "☆ 收藏" : "★ 已收藏";
+          msg.textContent = "没保存成功：" + err.message;
+        });
     });
   }
   const statusBtn = document.getElementById("status-toggle");
