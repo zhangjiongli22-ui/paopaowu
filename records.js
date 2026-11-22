@@ -476,36 +476,23 @@ function buildToc() {
 
   let scrollAnimToken = 0;
   function animateTo(targetY, idx) {
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouch) {
-      // 手机上惯性滚动容易和动画抢位置，直接定位最稳
-      window.scrollTo(0, targetY);
-      setActive(idx);
-      spyLockUntil = Date.now() + 300;
-      return;
-    }
     const token = ++scrollAnimToken;
     const root = document.documentElement;
-    const startY = window.scrollY;
-    const dist = targetY - startY;
-    const duration = Math.min(700, Math.max(220, Math.abs(dist) * 0.5));
-    const t0 = performance.now();
+    // 先打断浏览器的旧滚动，再发起一次原生平滑滚动
     root.style.scrollBehavior = "auto";
-    const step = (now) => {
-      if (token !== scrollAnimToken) return; // 被新的点击打断
-      const p = Math.min(1, (now - t0) / duration);
-      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      window.scrollTo(0, Math.round(startY + dist * eased));
-      if (p < 1) {
-        requestAnimationFrame(step);
-      } else {
-        window.scrollTo(0, targetY);
-        setActive(idx);
-        spyLockUntil = Date.now() + 250;
-        root.style.scrollBehavior = "";
-      }
+    window.scrollTo(0, window.scrollY);
+    root.style.scrollBehavior = "";
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+
+    let done = false;
+    const finish = () => {
+      if (done || token !== scrollAnimToken) return;
+      done = true;
+      setActive(idx);
+      spyLockUntil = Date.now() + 300;
     };
-    requestAnimationFrame(step);
+    window.addEventListener("scrollend", finish, { once: true });
+    setTimeout(finish, 1200);
   }
 
   const anchor = document.getElementById("sec-fav") || rows[0];
