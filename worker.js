@@ -10,36 +10,28 @@ function shiftPass(input) {
   }
   return x.toString(16);
 }
+async function loadOverrides(env) {
+  try {
+    return (await env.RATINGS.get("overrides_all", "json")) || {};
+  } catch (e) {
+    return {};
+  }
+}
+
 async function mergeOverrides(json, env) {
   try {
-    let keys = [];
-    let cursor = undefined;
-    do {
-      const page = await env.RATINGS.list({ prefix: "item:", cursor, limit: 1000 });
-      keys = keys.concat(page.keys || []);
-      cursor = page.list_complete ? undefined : page.cursor;
-    } while (cursor);
-    json.__ovCount = keys.length;
-    if (!keys.length) return json;
-    const byId = new Map();
-    for (const k of keys) {
-      try {
-        const v = await env.RATINGS.get(k.name, "json");
-        if (v && v.id) byId.set(String(v.id), v);
-      } catch (e) {}
-    }
+    const ov = await loadOverrides(env);
+    const ids = Object.keys(ov);
+    json.__ovCount = ids.length;
+    if (!ids.length) return json;
     json.items = (json.items || []).map((it) => {
-      try {
-        const ov = byId.get(String(it.id));
-        if (!ov) return it;
-        const merged = Object.assign({}, it, ov);
-        Object.keys(ov).forEach((k) => {
-          if (ov[k] === null || ov[k] === undefined) delete merged[k];
-        });
-        return merged;
-      } catch (e) {
-        return it;
-      }
+      const o = ov[String(it.id)];
+      if (!o) return it;
+      const merged = Object.assign({}, it, o);
+      Object.keys(o).forEach((k) => {
+        if (o[k] === null || o[k] === undefined) delete merged[k];
+      });
+      return merged;
     });
   } catch (e) {
     json.__ovErr = String(e).slice(0, 120);
@@ -53,11 +45,11 @@ export default {
 
     if (url.pathname === "/api/debug") {
       const id = url.searchParams.get("id") || "";
-      const kv = await env.RATINGS.get("item:" + id, "json");
-      const keys = await env.RATINGS.list({ prefix: "item:" });
+      const all = (await env.RATINGS.get("overrides_all", "json")) || {};
+      const kv = all[id] || null;
       const data = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheTtl: 0 } }).then((r) => r.json()).catch(() => ({}));
       const it = (data.items || []).find((x) => String(x.id) === id) || null;
-      return new Response(JSON.stringify({ id, kv, keyCount: keys.keys.length, item: it }), {
+      return new Response(JSON.stringify({ id, kv, keyCount: Object.keys(all).length, item: it }), {
         headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
       });
     }
@@ -73,7 +65,8 @@ export default {
         }
         const id = String(body.id || "");
         if (!id) throw new Error("missing id");
-        const existing = (await env.RATINGS.get("item:" + id, "json")) || { id };
+        const all = (await env.RATINGS.get("overrides_all", "json")) || {};
+        const existing = all[id] || { id };
         const next = { ...existing, id };
         if ("rating" in body) next.rating = typeof body.rating === "number" ? body.rating : null;
         if ("note" in body) next.note = typeof body.note === "string" && body.note.trim() ? body.note.trim() : null;
@@ -82,7 +75,8 @@ export default {
         if (body.time) next.time = body.time;
         if ("rated_on" in body) next.rated_on = body.rated_on || null;
         if (body.pinned !== undefined && body.pinned !== null) next.pinned = !!body.pinned;
-        await env.RATINGS.put("item:" + id, JSON.stringify(next));
+        all[id] = next;
+        await env.RATINGS.put("overrides_all", JSON.stringify(all));
         return new Response(JSON.stringify({ ok: true, item: next }), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
         });
