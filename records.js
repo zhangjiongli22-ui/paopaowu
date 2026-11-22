@@ -318,6 +318,10 @@ function buildToc() {
   if (anchor) {
     const rect = anchor.getBoundingClientRect();
     nav.style.top = (rect.top + window.scrollY) + "px";
+    const box = (main.parentElement || main).getBoundingClientRect();
+    const w = nav.getBoundingClientRect().width || 70;
+    const left = Math.max(12, box.left - w - 20 + window.scrollX);
+    nav.style.left = left + "px";
   }
 }
 
