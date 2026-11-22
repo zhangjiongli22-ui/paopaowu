@@ -603,20 +603,19 @@ function drawStats() {
   const site = mainFlow.rows;
   const siteMin = mainFlow.mins;
 
-  // 已完成计划各自成一个工作流，带细分（格式同「网站建设」）
-  const planFlows = ideas
+  // 已完成计划：每条归纳成一行，带总时长
+  const planLines = ideas
     .filter((x) => x.status === "已达成")
     .map((x) => {
       const name = String(x.title || "").replace(/[（(].*?[）)]/g, "").trim();
       if (!name) return null;
-      const rows = logs
-        .filter((l) => String(l.text || "").includes("完成计划：" + name))
-        .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
-      return { name, rows, mins: rows.reduce((a, l) => a + (Number(l.minutes) || 0), 0) };
+      const rows = logs.filter((l) => String(l.text || "").includes(name));
+      const mins = rows.reduce((a, l) => a + (Number(l.minutes) || 0), 0);
+      return { name, mins, count: rows.length };
     })
     .filter((f) => f && f.mins > 0)
     .sort((a, b) => b.mins - a.mins)
-    .slice(0, 8);
+    .slice(0, 10);
 
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
@@ -660,25 +659,11 @@ function drawStats() {
             </li>`).join("")}
         </ol>
       </details>
-      ${planFlows.map((pf) => `
-      <h3 class="stat-h stat-h-sub">已完成计划 · 细分<span class="stat-sub">${esc(pf.name)}</span></h3>
-      <div class="flow-single">
-        <span class="flow-name">${esc(pf.name)}</span>
-        <span class="flow-total">${fmt(pf.mins)}</span>
-        <span class="flow-last">最近 ${esc((pf.rows[pf.rows.length - 1] || {}).date || "—")}</span>
-        <span class="flow-count">含 ${pf.rows.length} 条记录</span>
-      </div>
-      <details class="flow-more">
-        <summary>展开 ${pf.rows.length} 条明细</summary>
-        <ol class="flow">
-          ${pf.rows.map((x) => `
-            <li class="flow-row">
-              <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
-              <span class="flow-what">${esc(x.text || "")}</span>
-              <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
-            </li>`).join("")}
-        </ol>
-      </details>`).join("")}
+      ${planLines.length ? `
+      <h3 class="stat-h stat-h-sub">已完成计划<span class="stat-sub">按投入时间排</span></h3>
+      <ul class="flow-plan-list">
+        ${planLines.map((p) => `<li><span class="flow-plan-name">${esc(p.name)}</span><span class="flow-plan-dur">${fmt(p.mins)}</span></li>`).join("")}
+      </ul>` : ""}
       <h3 class="stat-h">条目分布</h3>
       <div class="stat-chips">
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
