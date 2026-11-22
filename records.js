@@ -325,7 +325,10 @@ function buildToc() {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       if (box.tagName === "DETAILS") box.open = true;
-      box.scrollIntoView({ behavior: "smooth", block: "start" });
+      const head = box.querySelector(".sec-fold-head");
+      const navTop = nav.getBoundingClientRect().top;
+      const headBottom = (head || box).getBoundingClientRect().bottom;
+      window.scrollBy({ top: headBottom - navTop, behavior: "smooth" });
     });
     nav.appendChild(a);
   });
