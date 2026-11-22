@@ -1832,30 +1832,24 @@ body.lb-open { overflow: hidden; }
 .rec-status.inprogress { background: #ffd76a !important; color: #0b1f2a !important; border-color: #ffd76a !important; }
 
 .side-toc {
-  position: fixed;
-  left: 22px;
-  top: 130px;
+  position: absolute;
+  left: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   z-index: 30;
-  padding: 14px 12px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(8, 26, 38, 0.72);
-  backdrop-filter: blur(10px);
 }
 .side-toc a {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--muted);
-  padding: 7px 12px;
-  border-radius: 10px;
+  background: none;
+  border: 0;
+  padding: 0;
   white-space: nowrap;
-  transition: color .18s, background .18s;
+  letter-spacing: .02em;
 }
 .side-toc a:hover {
-  color: var(--ink);
-  background: rgba(88, 199, 255, 0.12);
+  color: var(--accent);
 }
 @media (max-width: 1180px) {
   .side-toc {
@@ -1863,10 +1857,10 @@ body.lb-open { overflow: hidden; }
     top: 8px;
     left: auto;
     flex-direction: row;
-    overflow-x: auto;
-    padding: 8px 10px;
+    gap: 16px;
     margin: 10px auto 6px;
     width: fit-content;
     max-width: 92vw;
+    overflow-x: auto;
   }
 }
