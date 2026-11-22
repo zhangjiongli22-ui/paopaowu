@@ -3734,3 +3734,19 @@ main > section:not([class]) > h2 {
 .stat-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .stat-chip { display: inline-flex; align-items: baseline; gap: 8px; padding: 8px 14px; border: 1px solid var(--line-soft); font-size: clamp(13px, .8vw, 16px); color: var(--paper-2); }
 .stat-chip b { font-family: var(--serif); color: var(--gold); font-size: 1.1em; }
+
+/* 工作流时间统计 */
+.stat-sub { margin-left: 12px; font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .16em; color: var(--dim); }
+.flow { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 0; }
+.flow-row {
+  display: grid;
+  grid-template-columns: clamp(120px, 10vw, 170px) minmax(0, 1fr) 80px;
+  gap: 0 clamp(16px, 2vw, 32px);
+  align-items: baseline;
+  padding: clamp(10px, 1.2vh, 15px) 0;
+  border-bottom: 1px solid var(--line-hair);
+}
+.flow-when { font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .12em; color: var(--gold-soft); }
+.flow-when i { font-style: normal; color: var(--dim-2); margin-left: 8px; }
+.flow-what { color: var(--paper-2); font-size: clamp(14px, .92vw, 19px); line-height: 1.8; }
+.flow-dur { text-align: right; font: clamp(12px, .66vw, 15px) var(--mono); color: var(--gold); }
