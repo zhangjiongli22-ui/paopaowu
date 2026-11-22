@@ -229,7 +229,7 @@ function drawMain(pool) {
     const rank = (x) => (["在玩", "在看"].includes(x.status) ? 0 : 1);
     return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
   });
-  if (pinnedRows.length) {
+  {
     const fav = document.createElement("details");
     fav.className = "fav-fold";
     fav.open = true;
@@ -237,7 +237,8 @@ function drawMain(pool) {
     sum.className = "sec-fold-head";
     sum.textContent = "我的最爱 · " + pinnedRows.length;
     fav.appendChild(sum);
-    fav.appendChild(gridOf(summarised(pinnedRows)));
+    if (pinnedRows.length) fav.appendChild(gridOf(summarised(pinnedRows)));
+    else fav.insertAdjacentHTML("beforeend", '<p class="detail-empty">还没有收藏，点开条目后按「☆ 收藏」加进来。</p>');
     main.appendChild(fav);
   }
   const wishRows = pool.filter(isWish).sort((a, b) => {
