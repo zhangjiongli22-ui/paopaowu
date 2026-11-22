@@ -5730,9 +5730,9 @@
    "air": "2017-03-05",
    "bgm_rating": 7.5,
    "bgm_id": 210824,
-   "name_cn": "宿敌：贝蒂和琼",
+   "name_cn": "宿敌",
    "cover": "assets/covers/film-65ce654a-cov2.jpg",
-   "desc": "　　《宿敌 Feud》是Ryan Murphy继《美国恐怖故事 American Horror Story》及《美国罪案故事 American Crime Story》后为FX制作的第三部剧。《宿敌》亦是部诗选式剧集，首季直接获得8集预订，会讲述名人之间仇恨故事。副标题《Bette and Joan》的首季会在美国时间3月5日首播。 \r\n　　Jessica Lange及Susan Sarandon已率先被选中，剧集首季讲述两名电影明星Joan Crawford（Jessica Lange饰）及Bette Davis（Susan Sarandon饰）之间的仇恨，其中包括他们为了重振演员事业，而共拍高票房兼获得五项奥斯卡提名的62年电影《兰闺惊变 What Ever Happened to Baby Jane?》。但对于早有不和的他们，合拍电影对二人都犹如恐怖片一般。"
+   "desc": "Adam（杰克·吉伦哈尔 Jake Gyllenhaal 饰）是一所大学的历史系副教授，和女朋友生活在一起，每天上班下班，过着平静的生活。直到一天，他在一部电影里发现了一个长得和他一模一样的演员。他利用互联网找到了该演员的资料，并联系上了他。\n和Adam长得一模一样的演员叫Anthony，有一个怀孕的妻子，他一开始只把Adam当成一个疯狂的影迷，直到上网搜索了Adam的资料，终于下决心和Adam见面。\n两人约定在一个旅馆见面，Adam见到一个长得和自己一模一样的Anthony，心生恐惧，告知对方此后不要再见便匆匆离开。然而几天后，Anthony却出现在Adam家中，并提出了一个奇怪的要求......"
   },
   {
    "id": "film-18813719",
@@ -6246,8 +6246,8 @@
    "status": "想看",
    "date": "2026-11-22",
    "time": "03:05",
-   "cover": "assets/covers/film-4fddf549-cov.jpg",
-   "desc": "耳虫，非自愿的音乐意象，是指某段音乐在脑中不断重复的现象，科学家发现很多音乐都能够形成这种效果。",
+   "cover": "assets/covers/film-4fddf549-db3.jpg",
+   "desc": "正妍是一名二十六岁、立志成为小说家的人，正试图写出自己的第一部长篇，却迟迟没有进展。她写的是一个外星人来到地球寻找绝对真爱的故事——而她之所以彻底卡住，是因为她责怪自己不懂什么是爱。与此同时，她的老同学、画家娜贞却在为个人画展做准备时毫无此类困扰。",
    "name_cn": "耳虫"
   },
   {
@@ -6257,12 +6257,12 @@
    "status": "想看",
    "date": "2026-11-22",
    "time": "03:05",
-   "desc": "In Tyranny, the grand war between good and evil is over – and the forces of evil, led by Kyros the Overlord, have won. The Overlord’s merciless armies dominate the face of the world, and its denizens must find their new roles within the war-torn realm... even as discord begins to rumble among the ranks of Kyros’ most powerful Archons.",
+   "desc": "故事描述主角蕾贝卡接任英国某一教区的牧师，与家人搬到新的村庄裡生活，村庄裡每年都会举办「丰收祭」，然而今年轮到蕾贝卡的女儿葛芮丝担任丰收天使，没想到祭典上女儿却失踪了，在寻人的过程中蕾贝卡发现这个村庄黑暗的秘密。",
    "air": "2016-11-10",
    "bgm_rating": 7,
    "bgm_id": 174767,
-   "name_cn": "暴政",
-   "cover": "assets/covers/game-25de2966-bgm.jpg"
+   "name_cn": "无序之主",
+   "cover": "assets/covers/game-25de2966-db3.jpg"
   },
   {
    "id": "film-b8f98cf2",
