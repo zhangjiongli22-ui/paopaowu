@@ -4098,3 +4098,20 @@ main#main { }
 .flow-name { font-family: var(--serif); font-size: clamp(16px, 1.05vw, 22px); letter-spacing: .08em; color: var(--paper); }
 .flow-total { font-family: var(--serif); font-size: clamp(22px, 2.2vw, 38px); line-height: 1; color: var(--gold); }
 .flow-last, .flow-count { font: clamp(10px, .58vw, 13px) var(--mono); letter-spacing: .14em; color: var(--dim); }
+
+/* 工作流明细：可收起 */
+.flow-more { margin-top: 10px; }
+.flow-more > summary {
+  width: fit-content;
+  cursor: pointer;
+  padding: 6px 0;
+  font: clamp(10px, .58vw, 13px) var(--mono);
+  letter-spacing: .18em;
+  color: var(--dim);
+  list-style: none;
+}
+.flow-more > summary::-webkit-details-marker { display: none; }
+.flow-more > summary::before { content: "＋ "; color: var(--gold-soft); }
+.flow-more[open] > summary::before { content: "－ "; }
+.flow-more > summary:hover { color: var(--gold); }
+.flow-more .flow { margin-top: 6px; }
