@@ -2565,3 +2565,87 @@ h1, h1 *, .kira-name, .page-head h1, .hero h1 {
   color: #eaf6ff !important;
   -webkit-text-fill-color: #eaf6ff !important;
 }
+
+
+/* ===== 手机端精修 ===== */
+@media (max-width: 720px) {
+  body { font-size: 14.5px; -webkit-text-size-adjust: 100%; }
+
+  .nav {
+    top: calc(8px + env(safe-area-inset-top));
+    width: calc(100% - 20px);
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 16px;
+  }
+  .nav .brand { font-size: 13px; letter-spacing: .12em; }
+  .nav .links { gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav .links a { font-size: 12px; }
+
+  .page, .kira-main { padding-left: 14px; padding-right: 14px; }
+  h1 { font-size: clamp(30px, 9vw, 44px); letter-spacing: .02em; }
+  .page-head h1, .rec-head h1 { font-size: 26px; }
+  .lead, .kicker { font-size: 12px; }
+
+  .rec-head { margin-top: -14px; }
+  .rec-top { margin-top: 4px; gap: 6px; }
+  .group-btn { padding: 8px 14px; font-size: 13px; }
+  .cat-bubble { padding: 6px 11px; font-size: 11px; gap: 5px; }
+  .cat-n { font-size: 9.5px; }
+  .cat-row { gap: 7px; margin: 8px 0 10px; }
+
+  .rec-grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 9px; }
+  .poster-title { font-size: 12.5px !important; }
+  .poster-status { font-size: 10px; padding: 2px 7px; }
+
+  /* 目录在手机上变成顶部横向小条 */
+  .side-toc {
+    position: sticky;
+    top: calc(58px + env(safe-area-inset-top));
+    left: auto !important;
+    flex-direction: row;
+    gap: 14px;
+    margin: 8px 0 2px;
+    padding: 6px 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 15;
+    background: rgba(6, 16, 24, .72) !important;
+    border-radius: 10px;
+  }
+  .side-toc-title { display: none; }
+  .side-toc a { font-size: 12px; gap: 6px; }
+  .side-toc a::before { flex: 0 0 10px; width: 10px; }
+
+  /* 详情页 */
+  .subject-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  .subject-cover { max-width: 210px; margin: 0 auto; }
+  .subject-title { font-size: 24px !important; }
+  .rate-box, .review-view, .review-form { padding: 14px !important; }
+  .rate-note { width: 100%; min-height: 90px; }
+  .review-foot { flex-wrap: wrap; gap: 10px; }
+  .star-btn { padding: 4px; }
+
+  /* Kira 页 */
+  .k2-name { font-size: 40px; }
+  .k2-hero { gap: 16px; padding-bottom: 18px; }
+  .k2-hero-side { gap: 16px; flex-wrap: wrap; }
+  .k2-facts > div { padding: 9px 0; }
+  .k2-section { margin-top: 30px; }
+  .k2-head h2 { font-size: 17px; }
+  .k2-card { padding: 15px 16px; }
+  .k2-time-row { grid-template-columns: 44px 1fr 52px; gap: 10px; }
+
+  /* 触摸设备不要粘住 hover 效果 */
+  .poster:hover, .kira-card:hover, .k2-card:hover { transform: none; filter: none; }
+
+  #to-top {
+    right: 12px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    padding: 8px 13px;
+    font-size: 11.5px;
+  }
+
+  .log-row { grid-template-columns: 44px auto 1fr auto !important; gap: 6px; font-size: 12.5px; }
+  .day-block { margin-top: 14px; }
+}
