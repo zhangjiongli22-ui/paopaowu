@@ -2303,3 +2303,34 @@ main, .nav, footer { position: relative; z-index: 1; }
   margin-left: -10px;
 }
 .brand { background: linear-gradient(90deg, #8fd6ff, #7ef0d0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+
+/* ===== 背景大图（参考 leleo 个人主页） ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -6vmax;
+  z-index: -2;
+  background-image: url("assets/covers/g-1003-bg8.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  filter: blur(28px) saturate(1.15) brightness(.52);
+  opacity: .55;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 520px at 78% 0%, rgba(88, 199, 255, .18), transparent 60%),
+    linear-gradient(180deg, rgba(4, 12, 20, .55), rgba(4, 12, 20, .86) 60%, rgba(4, 12, 20, .96));
+  pointer-events: none;
+}
+/* 主页大标题的呼吸光 */
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 0 0 26px rgba(88, 199, 255, .28), 0 0 60px rgba(126, 240, 208, .16); }
+  50% { text-shadow: 0 0 40px rgba(88, 199, 255, .5), 0 0 90px rgba(126, 240, 208, .28); }
+}
+.home-main2 h1, .hero h1, .k2-name { animation: titleGlow 6s ease-in-out infinite; }
