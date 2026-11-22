@@ -1,6 +1,7 @@
 const CATS = {
   all:     { name: "全部" },
-  idea:    { name: "巧思" },
+  idea:    { name: "计划" },
+  issue:   { name: "未解决" },
   anime:   { name: "动画" },
   tv:      { name: "剧集" },
   film:    { name: "电影" },
@@ -563,7 +564,7 @@ function draw() {
     ["all", ...GROUPS[group].cats].forEach((k) => {
       const n = k === "all" ? poolAll.length : counts[k] || 0;
       const b = el("button", "cat-bubble", null);
-      b.innerHTML = `<span class="cat-name">${CATS[k].name}</span><span class="cat-n">${n}</span>`;
+      b.innerHTML = `<span class="cat-name">${(CATS[k] && CATS[k].name) || k}</span><span class="cat-n">${n}</span>`;
       b.classList.toggle("on", k === cat);
       b.addEventListener("click", () => {
         cat = k;
