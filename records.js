@@ -216,6 +216,11 @@ function drawMain(pool) {
     drawTimeline(pool.filter((x) => !isWish(x)));
     return;
   }
+  const pinnedRows = pool.filter((x) => x.pinned);
+  if (pinnedRows.length) {
+    main.appendChild(el("h2", "sec-title", "常玩的"));
+    main.appendChild(gridOf(summarised(pinnedRows)));
+  }
   const wishRows = pool.filter(isWish);
   const seenRows = pool.filter((x) => !isWish(x));
   const section = (title, rows, open) => {
