@@ -380,12 +380,18 @@ function buildToc() {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       if (box.tagName === "DETAILS") box.open = true;
-      spyLockUntil = Date.now() + 900;
+      spyLockUntil = Date.now() + 1200;
       setActive(rows.indexOf(box));
       const head = box.querySelector(".sec-fold-head");
       const navTop = nav.getBoundingClientRect().top;
       const headBottom = (head || box).getBoundingClientRect().bottom;
+      const idx = rows.indexOf(box);
       window.scrollBy({ top: headBottom - navTop, behavior: "smooth" });
+      // 滚动动画结束后再钉一次，避免被中途的 scroll 事件改回去
+      setTimeout(() => {
+        spyLockUntil = Date.now() + 300;
+        setActive(idx);
+      }, 800);
     });
     nav.appendChild(a);
   });
