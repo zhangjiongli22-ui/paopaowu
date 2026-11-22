@@ -7901,7 +7901,8 @@
    "status": "想看",
    "date": "2026-11-22",
    "time": "15:00",
-   "bgm_id": 515594
+   "bgm_id": 515594,
+   "cover": "assets/covers/anime-66efd332-tmp.jpg"
   },
   {
    "id": "anime-985b7983",
@@ -7912,7 +7913,8 @@
    "status": "想看",
    "date": "2026-11-22",
    "time": "15:00",
-   "bgm_id": 425998
+   "bgm_id": 425998,
+   "cover": "assets/covers/anime-985b7983-tmp.jpg"
   }
  ]
 }
