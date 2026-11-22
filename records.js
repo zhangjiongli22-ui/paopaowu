@@ -589,30 +589,17 @@ function drawStats() {
 
   // 先按主题归拢，只展示耗时最大的那一类工作流
   const FLOWS = [
-    { name: "网站建设", re: /网站|站点|页面|封面|部署|推送|改版|上线|统计|锐评|点评|互动|档案|首页/ },
+    { name: "网站建设", re: /网站|站点|页面|封面|部署|推送|改版|上线|统计|锐评|档案|首页/ },
     { name: "视频剪辑", re: /剪辑|片子|视频|素材管理/ },
     { name: "练习与训练", re: /练琴|钢琴|健身|跑步|训练/ }
   ];
   const flowStats = FLOWS.map((f) => {
     const rows = logs
-      .filter((x) => x.kind === "work" && f.re.test(x.text || ""))
+      .filter((x) => f.re.test(x.text || ""))
       .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
     return { name: f.name, rows, mins: rows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) };
   }).sort((a, b) => b.mins - a.mins);
-
-  // 兜底：没归进任何分类的 work 记录单独成一个「其他工作」大分类
-  const matchedRows = new Set();
-  flowStats.forEach((f) => f.rows.forEach((r) => matchedRows.add(r)));
-  const restRows = logs
-    .filter((x) => x.kind === "work" && !matchedRows.has(x))
-    .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
-  const flows = flowStats
-    .filter((f) => f.mins > 0)
-    .concat(restRows.length ? [{ name: "其他工作", rows: restRows, mins: restRows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) }] : [])
-    .sort((a, b) => b.mins - a.mins);
-  const mainFlow = flowStats[0];
-  const site = mainFlow.rows;
-  const siteMin = mainFlow.mins;
+  const shownFlows = flowStats.filter((f) => f.mins > 0).sort((a, b) => b.mins - a.mins);
 
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
@@ -643,27 +630,29 @@ function drawStats() {
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
       </div>
 
-      <h3 class="stat-h">工作流时间统计<span class="stat-sub">按投入时间排</span></h3>
-      ${flows.map((f) => `
-      <div class="flow-group">
-        <div class="flow-single">
-          <span class="flow-name">${esc(f.name)}</span>
-          <span class="flow-total">${fmt(f.mins)}</span>
-          <span class="flow-last">最近 ${esc((f.rows[f.rows.length - 1] || {}).date || "—")}</span>
-          <span class="flow-count">含 ${f.rows.length} 条记录</span>
-        </div>
-        <details class="flow-more">
-          <summary>展开 ${f.rows.length} 条明细</summary>
-          <ol class="flow">
-            ${f.rows.map((x) => `
-              <li class="flow-row">
-                <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
-                <span class="flow-what">${esc(x.text || "")}</span>
-                <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
-              </li>`).join("")}
-          </ol>
-        </details>
-      </div>`).join("")}
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${shownFlows.length} 类</span></h3>
+      <div class="flow-list">
+        ${shownFlows.map((f) => `
+          <div class="flow-item">
+            <div class="flow-single">
+              <span class="flow-name">${esc(f.name)}</span>
+              <span class="flow-total">${fmt(f.mins)}</span>
+              <span class="flow-last">最近 ${esc((f.rows[f.rows.length - 1] || {}).date || "—")}</span>
+              <span class="flow-count">含 ${f.rows.length} 条</span>
+            </div>
+            <details class="flow-more">
+              <summary>展开 ${f.rows.length} 条明细</summary>
+              <ol class="flow">
+                ${f.rows.map((x) => `
+                  <li class="flow-row">
+                    <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
+                    <span class="flow-what">${esc(x.text || "")}</span>
+                    <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
+                  </li>`).join("")}
+              </ol>
+            </details>
+          </div>`).join("")}
+      </div>
     </section>`;
 }
 
