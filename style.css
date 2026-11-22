@@ -2201,3 +2201,27 @@ body.lb-open { overflow: hidden; }
   .k2-facts { grid-template-columns: 1fr; }
   .k2-two { grid-template-columns: 1fr; }
 }
+
+.k2-time { display: grid; gap: 12px; max-width: 720px; }
+.k2-time-row {
+  display: grid;
+  grid-template-columns: 52px 1fr 64px;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+}
+.k2-time-k { color: var(--muted); font-size: 12px; letter-spacing: .1em; }
+.k2-time-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+  overflow: hidden;
+  display: block;
+}
+.k2-time-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(88,199,255,.85), rgba(126,240,208,.85));
+}
+.k2-time-v { text-align: right; color: var(--muted); font-size: 12.5px; }
