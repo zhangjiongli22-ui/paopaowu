@@ -139,6 +139,7 @@ function bindShots() {
           <span class="score-stars" id="score-stars">${item.rating ? stars(item.rating) : "还没评分"}</span>
           <span class="score-num" id="score-num">${item.rating ? esc(five(item.rating)) + "/5" : ""}</span>
           ${item.status ? `<button type="button" class="rec-status" id="status-toggle" title="点一下切换">${esc(item.status)}</button>` : ""}
+          <button type="button" class="rec-status" id="fav-toggle" hidden>${item.pinned ? "★ 已收藏" : "☆ 收藏"}</button>
         </div>
         <div class="rate-box${hasReview ? " reviewed" : ""}">
           <div class="review-view"${hasReview ? "" : " hidden"}>
@@ -235,6 +236,26 @@ function bindShots() {
       value = 0;
       note.value = "";
       document.getElementById("rate-save").click();
+    });
+  }
+  const favBtn = document.getElementById("fav-toggle");
+  if (favBtn) {
+    favBtn.hidden = !isAdmin;
+    favBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const next = favBtn.textContent.indexOf("已收藏") === -1;
+      favBtn.disabled = true;
+      try {
+        const saved = await apiRate({ id, pinned: next });
+        it = { ...item, ...saved };
+        favBtn.textContent = saved.pinned ? "★ 已收藏" : "☆ 收藏";
+        msg.textContent = saved.pinned ? "已加入我的最爱" : "已取消收藏";
+      } catch (err) {
+        msg.textContent = "收藏失败：" + err.message;
+      } finally {
+        favBtn.disabled = false;
+      }
     });
   }
   const statusBtn = document.getElementById("status-toggle");
