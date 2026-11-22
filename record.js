@@ -147,8 +147,8 @@ function bindShots() {
             <div class="review-foot">
               <span class="review-when">${item.rated_on ? esc(item.rated_on) + " 评价" : ""}</span>
               <span class="review-acts">
-                <button type="button" class="review-edit" id="review-edit">修改评价</button>
-                <button type="button" class="review-edit" id="review-clear">删除评价</button>
+                <button type="button" class="review-edit" id="review-edit">${item.note ? "修改评价" : "修改评分"}</button>
+                <button type="button" class="review-edit" id="review-clear">${item.note ? "删除评价" : "删除评分"}</button>
               </span>
             </div>
           </div>
@@ -365,6 +365,10 @@ function bindShots() {
         const when = view.querySelector(".review-when");
         if (when) when.textContent = saved.rated_on ? saved.rated_on + " 评价" : "";
       }
+      const editBtn = document.getElementById("review-edit");
+      const clearBtn = document.getElementById("review-clear");
+      if (editBtn) editBtn.textContent = saved.note ? "修改评价" : "修改评分";
+      if (clearBtn) clearBtn.textContent = saved.note ? "删除评价" : "删除评分";
       if (cleared) {
         if (view) view.hidden = true;
         if (form) form.hidden = false;
