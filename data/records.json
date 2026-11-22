@@ -147,7 +147,8 @@
     "assets/shots/endfield/s24-b39f9f02.jpg",
     "assets/shots/endfield/s25-42b7af60.jpg",
     "assets/shots/endfield/s26-0b310d5f.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "g-1003",
@@ -163,7 +164,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 380974,
    "name_cn": "绝区零",
-   "play_since": "2026-10-10"
+   "play_since": "2026-10-10",
+   "pinned": true
   },
   {
    "id": "g-1004",
@@ -364,8 +366,7 @@
     "assets/shots/forza-horizon-6/s01-3d3f12ca.jpg",
     "assets/shots/forza-horizon-6/s02-1a6a9714.jpg",
     "assets/shots/forza-horizon-6/s03-3a49f607.jpg"
-   ],
-   "pinned": true
+   ]
   },
   {
    "id": "game-4d0828ee",
@@ -383,8 +384,7 @@
    "play_since": "2026-01-29",
    "shots": [
     "assets/shots/warframe/s01-e3d98cf3.jpg"
-   ],
-   "pinned": true
+   ]
   },
   {
    "id": "game-9951678e",
@@ -6313,14 +6313,6 @@
    "name_cn": "福音戰士新劇場版：終"
   },
   {
-   "id": "idea-2026-11-22-0-1795291202",
-   "cat": "idea",
-   "title": "看浅草小子",
-   "status": "计划中",
-   "date": "2026-11-22",
-   "time": "23:00"
-  },
-  {
    "id": "tv-6215637",
    "cat": "tv",
    "title": "爱，死亡和机器人",
@@ -7786,6 +7778,33 @@
    "cover": "assets/covers/tv-19475846-imdbv.jpg",
    "desc": "尼尔·盖曼创作的漫画作品",
    "name_cn": "睡魔 第二季"
+  },
+  {
+   "id": "log-20261122-game",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "01:54",
+   "kind": "game",
+   "text": "异环",
+   "minutes": 30
+  },
+  {
+   "id": "log-20261122-work",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "09:30",
+   "kind": "work",
+   "text": "泡泡屋改版、补图、搬家到 Cloudflare",
+   "minutes": 330
+  },
+  {
+   "id": "log-20261122-fitness",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "19:00",
+   "kind": "fitness",
+   "text": "跑步 20 分钟 + 无氧 40 分钟",
+   "minutes": 60
   }
  ]
 }
