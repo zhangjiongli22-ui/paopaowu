@@ -55,7 +55,8 @@
    "staff": "タツノコプロ、GAINAX",
    "bgm_rating": 8.7,
    "bgm_id": 265,
-   "name_cn": "新世纪福音战士"
+   "name_cn": "新世纪福音战士",
+   "series": "新世纪福音战士"
   },
   {
    "id": "m-2080",
@@ -525,7 +526,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 24442,
    "name_cn": "美国恐怖故事 第一季",
-   "cover": "assets/covers/tv-800f4bef-ahs1.jpg"
+   "cover": "assets/covers/tv-800f4bef-ahs1.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-e63714b6",
@@ -540,7 +542,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 51510,
    "name_cn": "美国恐怖故事 第二季",
-   "cover": "assets/covers/tv-e63714b6-ahs2.jpg"
+   "cover": "assets/covers/tv-e63714b6-ahs2.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-d00756f9",
@@ -555,7 +558,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 61206,
    "name_cn": "美国恐怖故事 第三季",
-   "cover": "assets/covers/tv-d00756f9-ahs3.jpg"
+   "cover": "assets/covers/tv-d00756f9-ahs3.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-f2ad6c2b",
@@ -3257,7 +3261,8 @@
    "bgm_rating": 7.2,
    "bgm_id": 266794,
    "name_cn": "石纪元",
-   "cover": "assets/covers/anime-dddbc6b0-bgm.jpg"
+   "cover": "assets/covers/anime-dddbc6b0-bgm.jpg",
+   "series": "Dr.STONE 石纪元"
   },
   {
    "id": "anime-7690b76b",
@@ -3613,7 +3618,8 @@
    "desc": "大正时期、日本。\r\n卖炭的心地善良的少年·炭治郎，有一天被鬼杀死了家人。\r\n而唯一幸存下来的妹妹祢豆子变成了鬼。\r\n被绝望的现实打垮的炭治郎，为了让妹妹变回人类并讨伐杀害家人的鬼，决心沿着“鬼杀队”的道路前进。\r\n人与鬼交织的悲哀的兄妹的故事，现在开始！",
    "name_cn": "鬼灭之刃",
    "cover": "assets/covers/anime-fd41318d-bg8.jpg",
-   "bgm_id": 245665
+   "bgm_id": 245665,
+   "series": "鬼灭之刃"
   },
   {
    "id": "anime-b3b70844",
@@ -3754,7 +3760,8 @@
    "desc": "　　《新世纪福音战士》电影版第1部。分为“DEATH篇（死亡篇）”与“REBIRTH篇（新生篇）”两个部分。“死亡篇”以原TV版动画第1到24集的内容为基础，重新剪辑了一个总集篇。“新生篇”承接第24集内容（实际大致为Air的前2/3）：\r\n　　第十七使徒被消灭后，SEELE向NERV下达命令，要EVA 初号机负责执行“人类补完计划”。然而碇元度不认同SEELE的做法，拒绝执行。SEELE认定这是一种叛变的行为，决定把NERV彻底消灭。\r\n　　破晓时分，NERV本部突然遭到来自战略自卫队的袭击，他们对NERV的人员进行了惨无人道的大屠杀。为了保护驾驶员，葛城美里命令把精神崩溃的明日香送上二号机，并放在湖底的深处，自已就亲自去救碇真嗣 。但此时的碇真嗣已经处在精神崩溃的边缘。\r\n=============================\r\n　　死与新生包括DEATH以及REBIRTH两个部分\r\n　　电影上映的版本 包括了REBIRTH ；\r\n　　之后，在日本某电视台放时修改了少量内容；\r\n　　之后发行的录像带去除了REBIRTH，所以叫DEATH；\r\n　　然后又发了个版本，叫DEATH ",
    "name_cn": "新世纪福音战士剧场版 死与新生",
    "cover": "assets/covers/anime-7c049186-bg8.jpg",
-   "bgm_id": 6048
+   "bgm_id": 6048,
+   "series": "新世纪福音战士"
   },
   {
    "id": "anime-52ae07a7",
@@ -3999,7 +4006,8 @@
    "time": "02:45",
    "cover": "assets/covers/anime-9ce16095-w4.jpg",
    "desc": "《Fate/Zero》（命運/零話）是一部2006年12月29日由TYPE-MOON公司發行的傳奇小說（輕小說），作者為Nitro+所屬的虛淵玄，人物設計與插畫為TYPE-MOON所屬的武内崇。\n",
-   "name_cn": "Fate/Zero"
+   "name_cn": "Fate/Zero",
+   "series": "Fate 系列"
   },
   {
    "id": "anime-cb1719fd",
@@ -4010,7 +4018,8 @@
    "time": "02:45",
    "cover": "assets/covers/anime-cb1719fd-w4.jpg",
    "desc": "《Fate/stay night》是由TYPE-MOON製作的日本視覺小説，於2004年1月30日在Windows平台發行。該游戲最初是一款成人遊戲，2007年，本作在去除成人元素後被移植到PlayStation 2上，並新增語音、CG、演出效果、劇情及追加結局，此版本被稱為《Fate/stay night [Réalta Nua]》，由角川書店發售。其後此版本亦于2012年在Windows和PlayStation Vita平臺發行，2015年發售Android和iOS版本。基於《Réalta Nua》版高清重置化製作的《Fate/stay night REMASTERED》於2024年在Steam與任天堂Switch上發表。故事主要講述了一位名叫衛宮士郎的日本高中生和業餘魔術師被意外捲入了「聖杯戰爭」，一場由七名被稱為「master」（御主）的魔術師召喚出傳說中的英雄「servant」（",
-   "name_cn": "Fate/stay night"
+   "name_cn": "Fate/stay night",
+   "series": "Fate 系列"
   },
   {
    "id": "anime-79b999d2",
@@ -4258,7 +4267,8 @@
    "bgm_rating": 6.9,
    "bgm_id": 112146,
    "name_cn": "OVERLORD",
-   "cover": "assets/covers/anime-5f11c32d-bg8.jpg"
+   "cover": "assets/covers/anime-5f11c32d-bg8.jpg",
+   "series": "Overlord"
   },
   {
    "id": "anime-7dabd7ec",
@@ -4270,7 +4280,8 @@
    "cover": "assets/covers/anime-7dabd7ec-b5.jpg",
    "desc": "时为2138年。曾卷起一大风潮的虚拟现实体感型网络游戏《YGGDRASIL》即将迎来停服。\r\n玩家飞鼠在曾经以同伴和荣华自傲的根据地纳萨力克地下大坟墓，独自一人安静等待着那一刻。\r\n但，发生了结束时间已过却没有登出的异常事态。\r\nNPC们以自己的意志行动，不止如此，纳萨力克之外展开了从未见过的异世界。\r\n飞鼠为了寻找过去的同伴，\r\n以公会名安兹·乌尔·恭自称，决定在异世界扬名立万。\r\n他与宣誓绝对忠诚的部下一同，向新的地域进军。\r\n将世界收于掌中的死之支配者，于此再临！！ ",
    "name_cn": "OVERLORD 第二季",
-   "bgm_id": 211027
+   "bgm_id": 211027,
+   "series": "Overlord"
   },
   {
    "id": "anime-cb052091",
@@ -4297,7 +4308,8 @@
    "bgm_rating": 7.1,
    "bgm_id": 101820,
    "name_cn": "七大罪",
-   "cover": "assets/covers/anime-669b5614-bg8.jpg"
+   "cover": "assets/covers/anime-669b5614-bg8.jpg",
+   "series": "七大罪"
   },
   {
    "id": "anime-357c421c",
@@ -4313,7 +4325,8 @@
    "bgm_rating": 6.6,
    "bgm_id": 192978,
    "name_cn": "七大罪 戒律的复活",
-   "cover": "assets/covers/anime-357c421c-bg8.jpg"
+   "cover": "assets/covers/anime-357c421c-bg8.jpg",
+   "series": "七大罪"
   },
   {
    "id": "anime-e27b45ca",
@@ -4329,7 +4342,8 @@
    "bgm_rating": 7.9,
    "bgm_id": 203526,
    "name_cn": "来自深渊",
-   "cover": "assets/covers/anime-e27b45ca-bg8.jpg"
+   "cover": "assets/covers/anime-e27b45ca-bg8.jpg",
+   "series": "来自深渊"
   },
   {
    "id": "anime-bcbaf389",
@@ -4345,7 +4359,8 @@
    "bgm_rating": 8.3,
    "bgm_id": 298477,
    "name_cn": "来自深渊 烈日的黄金乡",
-   "cover": "assets/covers/anime-bcbaf389-bg8.jpg"
+   "cover": "assets/covers/anime-bcbaf389-bg8.jpg",
+   "series": "来自深渊"
   },
   {
    "id": "anime-7333e194",
@@ -4357,7 +4372,8 @@
    "cover": "assets/covers/anime-7333e194-bg8.jpg",
    "desc": "这个各角落都被探索殆尽的世界，只剩唯一仅存的秘境——大洞穴「阿比斯」。在这个会延伸到哪里不得而知，且深不见底的巨大纵向洞穴中，除了栖息着各种奇奇怪怪的生物之外，还藏有现今人类制作不出来的珍贵遗物。\r\n「阿比斯」处处不可思议的景象，让人们为之着迷，并前仆后继地前去冒险。于是，数度挑战这巨洞的冒险家们，后来便被称为「探窟家」。住在建造于阿比斯边缘的城镇「奥斯」的孤儿莉可，梦想着有一天要成为像母亲那样的伟大探窟家，力图解开阿比斯的谜团。\r\n有一天，莉可母亲的白笛被人发现，让她毅然决定要潜入阿比斯深处。而莉可收留的失忆机器人•雷古为了找回自己的记忆，也决心和她同行。莉可在深界四层遭受穿弹兽的毒素折磨，而救了她的人就是「生骸」娜娜奇。娜娜奇加入后，他们继续往波多尔多所在的深界五层冒险。在那里，遇到一个自称是普鲁修卡的女孩……\r\n\r\n\r\n\r\n[简介原文]\r\nつくしあきひとの同名コミックを原作とするテレビアニメ「メイドインアビス」の劇場版。隅々まで探索され尽くした世界に唯一残された秘境の大穴「アビス」。深く巨大なその縦穴には奇怪な生物たちが数多く生息し、今の人類には作ることのできない貴重な遺物の数々",
    "name_cn": "来自深渊 深沉灵魂的黎明",
-   "bgm_id": 230914
+   "bgm_id": 230914,
+   "series": "来自深渊"
   },
   {
    "id": "anime-3a23b3cb",
@@ -4389,7 +4405,8 @@
    "bgm_rating": 7.9,
    "bgm_id": 294993,
    "name_cn": "咒术回战",
-   "cover": "assets/covers/anime-2139a670-bg8.jpg"
+   "cover": "assets/covers/anime-2139a670-bg8.jpg",
+   "series": "咒术回战"
   },
   {
    "id": "anime-927b1e89",
@@ -4463,7 +4480,8 @@
    "bgm_rating": 7,
    "bgm_id": 209408,
    "name_cn": "狂赌之渊",
-   "cover": "assets/covers/anime-50ca9774-bg8.jpg"
+   "cover": "assets/covers/anime-50ca9774-bg8.jpg",
+   "series": "狂赌之渊"
   },
   {
    "id": "anime-ece35921",
@@ -4475,7 +4493,8 @@
    "cover": "assets/covers/anime-ece35921-bg8.jpg",
    "desc": "故事来到了新的地方——炭治郎的目的地是「刀匠村」。与鬼杀队的最强剑士，霞柱·时透无一郎与恋柱·甘露寺蜜璃再会，而鬼也悄然逼近。炭治郎一行人新的战斗即将开始。",
    "name_cn": "鬼灭之刃 刀匠村篇",
-   "bgm_id": 369768
+   "bgm_id": 369768,
+   "series": "鬼灭之刃"
   },
   {
    "id": "anime-ba39996f",
@@ -4491,7 +4510,8 @@
    "bgm_rating": 6.7,
    "bgm_id": 239816,
    "name_cn": "关于我转生变成史莱姆这档事",
-   "cover": "assets/covers/anime-ba39996f-bg8.jpg"
+   "cover": "assets/covers/anime-ba39996f-bg8.jpg",
+   "series": "关于我转生变成史莱姆这档事"
   },
   {
    "id": "anime-d832bfce",
@@ -4507,7 +4527,8 @@
    "bgm_rating": 6.1,
    "bgm_id": 278031,
    "name_cn": "关于我转生变成史莱姆这档事 第二季",
-   "cover": "assets/covers/anime-d832bfce-bg8.jpg"
+   "cover": "assets/covers/anime-d832bfce-bg8.jpg",
+   "series": "关于我转生变成史莱姆这档事"
   },
   {
    "id": "anime-9d72e923",
@@ -4539,7 +4560,8 @@
    "bgm_rating": 7.5,
    "bgm_id": 140001,
    "name_cn": "Re：从零开始的异世界生活",
-   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg"
+   "cover": "assets/covers/anime-d4c72ee4-bg8.jpg",
+   "series": "Re:从零开始的异世界生活"
   },
   {
    "id": "anime-5f08898c",
@@ -4555,7 +4577,8 @@
    "bgm_rating": 7.4,
    "bgm_id": 278826,
    "name_cn": "Re：从零开始的异世界生活 第二季",
-   "cover": "assets/covers/anime-5f08898c-bg8.jpg"
+   "cover": "assets/covers/anime-5f08898c-bg8.jpg",
+   "series": "Re:从零开始的异世界生活"
   },
   {
    "id": "anime-b2a902a6",
@@ -4571,7 +4594,8 @@
    "bgm_rating": 8,
    "bgm_id": 127563,
    "name_cn": "一拳超人",
-   "cover": "assets/covers/anime-b2a902a6-bg8.jpg"
+   "cover": "assets/covers/anime-b2a902a6-bg8.jpg",
+   "series": "一拳超人"
   },
   {
    "id": "anime-c90d4194",
@@ -4587,7 +4611,8 @@
    "bgm_rating": 6.5,
    "bgm_id": 193619,
    "name_cn": "一拳超人 第二季",
-   "cover": "assets/covers/anime-c90d4194-bg8.jpg"
+   "cover": "assets/covers/anime-c90d4194-bg8.jpg",
+   "series": "一拳超人"
   },
   {
    "id": "anime-86c56f5e",
@@ -4619,7 +4644,8 @@
    "bgm_rating": 7.2,
    "bgm_id": 332261,
    "name_cn": "JOJO的奇妙冒险 石之海",
-   "cover": "assets/covers/anime-1f7ec7ee-bg8.jpg"
+   "cover": "assets/covers/anime-1f7ec7ee-bg8.jpg",
+   "series": "JOJO的奇妙冒险"
   },
   {
    "id": "anime-2d20e2e0",
@@ -4663,7 +4689,8 @@
    "bgm_rating": 7.4,
    "bgm_id": 23686,
    "name_cn": "刀剑神域",
-   "cover": "assets/covers/anime-b4737a1d-bg8.jpg"
+   "cover": "assets/covers/anime-b4737a1d-bg8.jpg",
+   "series": "刀剑神域"
   },
   {
    "id": "anime-b0b6991c",
@@ -4675,7 +4702,8 @@
    "cover": "assets/covers/anime-b0b6991c-bg8.jpg",
    "desc": "    特别会谈后的某天，桐人接到了隶属总务省“假想课”的菊冈诚二郎委托。 那是在枪械与钢铁的VRMMO“Gun Gale Online”(简称GGO)里突然发生的“死枪”事件。\r\n    被谜样角色以漆黑之枪的所击中的玩家，在现实世界里也会随之“死亡”……因故欠了人情而无法拒绝帮忙调查的桐人，虽然对于“假想世界”对“现实世界”发生物理影响这件事感到不可置信，但还是登入了“GGO”。\r\n    桐人为了寻找关于“死枪”的线索以及对于自身角色变化感到疑惑，而在不熟悉的枪战类型游戏里徘徊。这时对他伸出援手的，是一名习惯使用名为“黑卡蒂Ⅱ”的狙击步枪之少女诗乃。 全新故事就此展开！ ",
    "name_cn": "刀剑神域 第二季",
-   "bgm_id": 92382
+   "bgm_id": 92382,
+   "series": "刀剑神域"
   },
   {
    "id": "anime-f27feeca",
@@ -5506,7 +5534,8 @@
    "bgm_rating": 8,
    "bgm_id": 772,
    "name_cn": "福音战士新剧场版：序",
-   "cover": "assets/covers/anime-04667907-bg8.jpg"
+   "cover": "assets/covers/anime-04667907-bg8.jpg",
+   "series": "新世纪福音战士"
   },
   {
    "id": "film-7c5bb7ec",
@@ -6268,7 +6297,8 @@
    "desc": "　　《新世纪福音战士》电影版第1部。分为“DEATH篇（死亡篇）”与“REBIRTH篇（新生篇）”两个部分。“死亡篇”以原TV版动画第1到24集的内容为基础，重新剪辑了一个总集篇。“新生篇”承接第24集内容（实际大致为Air的前2/3）：\r\n　　第十七使徒被消灭后，SEELE向NERV下达命令，要EVA 初号机负责执行“人类补完计划”。然而碇元度不认同SEELE的做法，拒绝执行。SEELE认定这是一种叛变的行为，决定把NERV彻底消灭。\r\n　　破晓时分，NERV本部突然遭到来自战略自卫队的袭击，他们对NERV的人员进行了惨无人道的大屠杀。为了保护驾驶员，葛城美里命令把精神崩溃的明日香送上二号机，并放在湖底的深处，自已就亲自去救碇真嗣 。但此时的碇真嗣已经处在精神崩溃的边缘。\r\n=============================\r\n　　死与新生包括DEATH以及REBIRTH两个部分\r\n　　电影上映的版本 包括了REBIRTH ；\r\n　　之后，在日本某电视台放时修改了少量内容；\r\n　　之后发行的录像带去除了REBIRTH，所以叫DEATH；\r\n　　然后又发了个版本，叫DEATH ",
    "name_cn": "新世纪福音战士剧场版 死与新生",
    "cover": "assets/covers/anime-94e3f1fb-bg6.jpg",
-   "bgm_id": 6048
+   "bgm_id": 6048,
+   "series": "新世纪福音战士"
   },
   {
    "id": "anime-567ab6ae",
@@ -6279,7 +6309,8 @@
    "time": "12:00",
    "cover": "assets/covers/anime-567ab6ae-final.jpg",
    "desc": "《福音戰士新劇場版：序》 是一部於2007年上映的日本動畫電影，為1995年電視動畫《新世紀福音戰士》（以下稱TV版）的再構築系列「福音戰士新劇場版四部曲」之首作，由TV版主創庵野秀明擔任總監督。本片的劇情以TV版第1至第6話為基礎，部分內容經過更動，情節敘述少年碇真嗣被疏遠已久的父親找來第3新東京市的NERV本部，卻馬上就要駕駛巨大人型兵器EVANGELION迎擊不明威脅使徒。\n",
-   "name_cn": "福音戰士新劇場版：序"
+   "name_cn": "福音戰士新劇場版：序",
+   "series": "新世纪福音战士"
   },
   {
    "id": "anime-ef4d3248",
@@ -6290,7 +6321,8 @@
    "time": "12:00",
    "cover": "assets/covers/anime-ef4d3248-final.jpg",
    "desc": "《福音戰士新劇場版：破》 是一部於2009年上映的日本動畫電影，為1995年電視動畫《新世紀福音戰士》（以下稱TV版）的再構築系列「福音戰士新劇場版四部曲」之第二作，由TV版主創庵野秀明擔任總監督。相較於前作《序》，本片對TV版劇情做出更多變革，情節敘述來自德國的EVANGELION駕駛員明日香來到第3新東京市，成為碇真嗣的同學也是戰鬥夥伴。真嗣一面過著青春的生活，一面抵抗強大的使徒接連來襲。\n",
-   "name_cn": "福音戰士新劇場版：破"
+   "name_cn": "福音戰士新劇場版：破",
+   "series": "新世纪福音战士"
   },
   {
    "id": "anime-604e5205",
@@ -6301,7 +6333,8 @@
    "time": "12:00",
    "cover": "assets/covers/anime-604e5205-final.jpg",
    "desc": "《福音戰士新劇場版：Q》 是一部2012年上映的日本動畫電影。是福音戰士新劇場版系列的第三部。与吉卜力工作室特摄短編电影《巨神兵现身东京 劇場版》同時上映。\n",
-   "name_cn": "福音戰士新劇場版：Q"
+   "name_cn": "福音戰士新劇場版：Q",
+   "series": "新世纪福音战士"
   },
   {
    "id": "anime-48e8b692",
@@ -6312,7 +6345,8 @@
    "time": "12:00",
    "cover": "assets/covers/anime-48e8b692-final.jpg",
    "desc": "《新·福音戰士劇場版：終》 是於2021年3月8日上映的日本動畫電影，屬於「新·日本英雄宇宙」系列的第2部電影作品。由庵野秀明执导、khara工作室制作，以《新世纪福音战士》為藍本再構築，为《福音戰士新劇場版》四部曲中的最終作。本片上映後成为本系列电影中票房成績最佳的作品，並榮獲日本電影學院獎最佳動畫片獎。\n",
-   "name_cn": "福音戰士新劇場版：終"
+   "name_cn": "福音戰士新劇場版：終",
+   "series": "新世纪福音战士"
   },
   {
    "id": "tv-6215637",
@@ -6481,7 +6515,8 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 109375,
-   "cover": "assets/covers/anime-4a7274c1-hf.jpg"
+   "cover": "assets/covers/anime-4a7274c1-hf.jpg",
+   "series": "Fate 系列"
   },
   {
    "id": "anime-cb7eadac",
@@ -6493,7 +6528,8 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 175599,
-   "cover": "assets/covers/anime-cb7eadac-hf.jpg"
+   "cover": "assets/covers/anime-cb7eadac-hf.jpg",
+   "series": "Fate 系列"
   },
   {
    "id": "anime-92331268",
@@ -6505,7 +6541,8 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 175600,
-   "cover": "assets/covers/anime-92331268-hf.jpg"
+   "cover": "assets/covers/anime-92331268-hf.jpg",
+   "series": "Fate 系列"
   },
   {
    "id": "game-80415cdf",
@@ -6598,7 +6635,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 100734,
    "name_cn": "美国恐怖故事 第四季",
-   "cover": "assets/covers/tv-9fa0fe08-ahs4.jpg"
+   "cover": "assets/covers/tv-9fa0fe08-ahs4.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-7d55462b",
@@ -6613,7 +6651,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 126803,
    "name_cn": "美国恐怖故事 第五季",
-   "cover": "assets/covers/tv-7d55462b-ahs5.jpg"
+   "cover": "assets/covers/tv-7d55462b-ahs5.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-40f8340c",
@@ -6628,7 +6667,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 155611,
    "name_cn": "美国恐怖故事 第六季",
-   "cover": "assets/covers/tv-40f8340c-ahs6.jpg"
+   "cover": "assets/covers/tv-40f8340c-ahs6.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-a42371aa",
@@ -6643,7 +6683,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 224965,
    "name_cn": "美国恐怖故事 第七季",
-   "cover": "assets/covers/tv-a42371aa-ahs7.jpg"
+   "cover": "assets/covers/tv-a42371aa-ahs7.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-ed10bb32",
@@ -6658,7 +6699,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 260574,
    "name_cn": "美国恐怖故事 第八季",
-   "cover": "assets/covers/tv-ed10bb32-ahs8.jpg"
+   "cover": "assets/covers/tv-ed10bb32-ahs8.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-d99b40bd",
@@ -6673,7 +6715,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 289795,
    "name_cn": "美国恐怖故事 第九季",
-   "cover": "assets/covers/tv-d99b40bd-ahs9.jpg"
+   "cover": "assets/covers/tv-d99b40bd-ahs9.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-63e52634",
@@ -6688,7 +6731,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 349549,
    "name_cn": "美国恐怖故事：双面",
-   "cover": "assets/covers/tv-63e52634-ahs10.jpg"
+   "cover": "assets/covers/tv-63e52634-ahs10.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-66ae60e5",
@@ -6703,7 +6747,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 404318,
    "name_cn": "美国恐怖故事：纽约 第十一季",
-   "cover": "assets/covers/tv-66ae60e5-ahs11.jpg"
+   "cover": "assets/covers/tv-66ae60e5-ahs11.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-ad192a0c",
@@ -6718,7 +6763,8 @@
    "bgm_rating": 5.4,
    "bgm_id": 450535,
    "name_cn": "American Horror Story: Delicate Season 12",
-   "cover": "assets/covers/tv-ad192a0c-ahs12.jpg"
+   "cover": "assets/covers/tv-ad192a0c-ahs12.jpg",
+   "series": "美国恐怖故事"
   },
   {
    "id": "tv-5b7dc157",
@@ -7680,7 +7726,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第一季"
+   "name_cn": "瑞克和莫蒂 第一季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-ee38dd2d",
@@ -7691,7 +7738,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第二季"
+   "name_cn": "瑞克和莫蒂 第二季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-1d375391",
@@ -7702,7 +7750,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第三季"
+   "name_cn": "瑞克和莫蒂 第三季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-834b8b6b",
@@ -7713,7 +7762,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第四季"
+   "name_cn": "瑞克和莫蒂 第四季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-38ccf260",
@@ -7724,7 +7774,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第五季"
+   "name_cn": "瑞克和莫蒂 第五季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-9e3af502",
@@ -7735,7 +7786,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第六季"
+   "name_cn": "瑞克和莫蒂 第六季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-d4ca1af9",
@@ -7746,7 +7798,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第七季"
+   "name_cn": "瑞克和莫蒂 第七季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-d100d09f",
@@ -7757,7 +7810,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-79992578-imdbv.jpg",
    "desc": "天才兼疯子科学家Rick在失踪多年后突然回到女儿Beth的身边，并且在她的车库里搞了一个科学实验室。Rick有一把“传送门枪”，可以穿越到宇宙的各个次元。外孙Morty莫名其妙就成了他的助手，经常被拖进他的自制太空船内，跟他一同开展各种疯狂刺激的宇宙冒险。女儿女婿对他的 疯狂行为感到不满，却又对这个天才科学家无可奈何。\n本动画是由美剧《废柴联盟》的创作人Dan Harmon和Justin Roiland开发的动画连续剧。每集一个独立小故事，精妙无比的剧情安排，天马行空的想象力，突破天际的脑洞，是本剧最大的特点。",
-   "name_cn": "瑞克和莫蒂 第八季"
+   "name_cn": "瑞克和莫蒂 第八季",
+   "series": "瑞克和莫蒂"
   },
   {
    "id": "tv-9c92941f",
@@ -7768,7 +7822,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-19475846-imdbv.jpg",
    "desc": "尼尔·盖曼创作的漫画作品",
-   "name_cn": "睡魔 第一季"
+   "name_cn": "睡魔 第一季",
+   "series": "睡魔"
   },
   {
    "id": "tv-b3da90fd",
@@ -7779,7 +7834,8 @@
    "time": "12:00",
    "cover": "assets/covers/tv-19475846-imdbv.jpg",
    "desc": "尼尔·盖曼创作的漫画作品",
-   "name_cn": "睡魔 第二季"
+   "name_cn": "睡魔 第二季",
+   "series": "睡魔"
   },
   {
    "id": "log-20261122-game",
