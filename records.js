@@ -225,7 +225,10 @@ function drawMain(pool) {
     drawTimeline(pool.filter((x) => !isWish(x)));
     return;
   }
-  const pinnedRows = pool.filter((x) => x.pinned);
+  const pinnedRows = pool.filter((x) => x.pinned).sort((a, b) => {
+    const rank = (x) => (["在玩", "在看"].includes(x.status) ? 0 : 1);
+    return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
+  });
   if (pinnedRows.length) {
     const fav = document.createElement("details");
     fav.className = "fav-fold";
