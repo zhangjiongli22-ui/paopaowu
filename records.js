@@ -720,7 +720,8 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   const gp = params.get("group") || location.hash.replace("#", "");
   if (gp && GROUPS[gp]) group = gp;
   const cp = params.get("cat");
-  if (cp) cat = cp;
+  if (cp && GROUPS[group].cats.includes(cp)) cat = cp;
+  else cat = "all";
   if (!cameWithY) {
     // 普通刷新：浏览器可能恢复旧滚动位置，这里强制回顶
     const forceTop = () => {
@@ -796,6 +797,8 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       syncViewRow();
       const u = new URL(location.href);
       u.searchParams.set("group", k);
+      u.searchParams.delete("cat");
+      u.searchParams.delete("y");
       history.replaceState(null, "", u);
       [...groupRow.children].forEach((x) => x.classList.toggle("on", x === b));
       draw();
