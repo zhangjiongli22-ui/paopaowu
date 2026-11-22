@@ -7412,8 +7412,7 @@
    "desc": "英国电视4台出品的科幻悬疑单元诗选剧",
    "pinned": true,
    "rating": 10,
-   "note": "神作，科技畅想的巅峰作品",
-   "rated_on": "2026-11-22"
+   "note": "神作，科技畅想的巅峰作品"
   },
   {
    "id": "tv-650a8c3a",
@@ -7903,7 +7902,8 @@
    "date": "2026-11-22",
    "time": "12:00",
    "bgm_id": 260608,
-   "cover": "assets/covers/game-9913fa98-动森.jpg"
+   "cover": "assets/covers/game-9913fa98-动森.jpg",
+   "pinned": false
   },
   {
    "id": "anime-1ef7f1b0",
@@ -8079,6 +8079,5 @@
    "status": "计划中"
   }
  ],
- "__source": "kv",
- "__ovCount": 18
+ "__ovCount": 20
 }
