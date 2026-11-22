@@ -604,20 +604,6 @@
    "cover": "assets/covers/film-7c49edcf-bgm.jpg"
   },
   {
-   "id": "film-f56415a5",
-   "cat": "film",
-   "title": "爆裂鼓手",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "00:57",
-   "desc": "An online multiplayer vehicular combat game inspired by games like Twisted Metal. Drive a toy car around in a bedroom and pepper your friends with bullets.\r\n\r\nSUPER WHIPLASH is an online multiplayer vehicular combat game inspired by games like Twisted Metal.\r\nDrive a toy car around in a bedroom and pepper your friends with bullets.\r\nPlay with Friends\r\nPlay with up to 10 players online in a single free-for-all match. First player to reach 15 frags wins the match.\r\nBedroom Arena\r\nEver wondered wha",
-   "air": "2020-11-11",
-   "staff": "kevinmakesstuff",
-   "bgm_id": 694774,
-   "name_cn": "SUPER WHIPLASH",
-   "cover": "assets/covers/film-f56415a5-bgm.jpg"
-  },
-  {
    "id": "film-69524f06",
    "cat": "film",
    "title": "X战警",
@@ -1239,7 +1225,7 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:40",
-   "cover": "assets/covers/film-17073435-final.jpg",
+   "cover": "assets/covers/film-17073435-whiplash.jpg",
    "desc": "《進擊的鼓手》 是一部於2014年上映的美國劇情片，由達米恩·查澤雷自編自導，麥爾斯·泰勒、J·K·西蒙斯與保羅·萊瑟等人主演。該片的主角是一名胸懷壯志的鼓手安德鲁·奈曼，劇情描寫他接受泰倫斯·佛烈契 的嚴厲教導。\n",
    "name_cn": "爆裂鼓手"
   },
