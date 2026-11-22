@@ -208,47 +208,11 @@ try {
     set("kira-play-list", playing.join("、"));
     set("kira-watch-list", watching.join("、"));
 
-    const shifted = new Date(Date.now() - 4 * 3600 * 1000);
-    const pad = (n) => String(n).padStart(2, "0");
-    const day = `${shifted.getFullYear()}-${pad(shifted.getMonth() + 1)}-${pad(shifted.getDate())}`;
-    const todayLogs = logs.filter((x) => x.date === day);
-    if (todayLogs.length) {
-      const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      const byKind = {};
-      todayLogs.forEach((x) => { byKind[x.kind] = (byKind[x.kind] || 0) + (Number(x.minutes) || 0); });
-
-      // 工作：从最长的几条里挑要点
-      const workLogs = todayLogs.filter((x) => x.kind === "work")
-        .sort((a, b) => (Number(b.minutes) || 0) - (Number(a.minutes) || 0));
-      const words = [];
-      workLogs.forEach((x) => {
-        String(x.text || "").split(/[；;。、，,\n]/).forEach((p) => {
-          const t = p.trim().replace(/^(今天|主要|又|再)/, "");
-          if (t.length >= 4 && t.length <= 16 && words.indexOf(t) < 0 && words.length < 2) words.push(t);
-        });
-      });
-
-      const parts = [];
-      if (words.length) parts.push(`做了${words.join("、")}`);
-
-      // 游戏：抓书名号里的名字
-      const gameLogs = todayLogs.filter((x) => x.kind === "game");
-      if (gameLogs.length) {
-        const names = [];
-        gameLogs.forEach((x) => {
-          const m = String(x.text || "").match(/《([^》]+)》/g);
-          if (m) m.forEach((n) => { const t = n.replace(/[《》]/g, ""); if (names.indexOf(t) < 0) names.push(t); });
-        });
-        const gm = byKind.game || 0;
-        parts.push(names.length ? `玩了${names.map((n) => "《" + n + "》").join("")}共 ${fmtMin(gm)}` : `打游戏 ${fmtMin(gm)}`);
-      }
-
-      // 运动 / 练琴
-      if (byKind.fitness) parts.push(`运动 ${fmtMin(byKind.fitness)}`);
-      if (byKind.piano) parts.push(`练琴 ${fmtMin(byKind.piano)}`);
-
-      set("kira-today", `今天 ${fmtMin(total)}${parts.length ? "，" + parts.join("；") : ""}。`);
-    }
+    // 「今天」用 3:30 生成好的精简总结
+    try {
+      const prof = await (await fetch("data/profile.json", { cache: "no-store" })).json();
+      if (prof.kira && prof.kira.text) set("kira-today", prof.kira.text);
+    } catch (e) {}
 
     const byCat = {};
     items.forEach((x) => { if (x.cat) byCat[x.cat] = (byCat[x.cat] || 0) + 1; });
