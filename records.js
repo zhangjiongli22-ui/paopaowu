@@ -632,15 +632,13 @@ function drawStats() {
         ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
       </div>
 
-      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)} · 共 ${fmt(siteMin)} · 按时间顺序</span></h3>
-      <ol class="flow">
-        ${site.map((x) => `
-          <li class="flow-row">
-            <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
-            <span class="flow-what">${esc(x.text || "")}</span>
-            <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
-          </li>`).join("")}
-      </ol>
+      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
+      <div class="flow-single">
+        <span class="flow-name">${esc(mainFlow.name)}</span>
+        <span class="flow-total">${fmt(siteMin)}</span>
+        <span class="flow-last">最近 ${esc((site[site.length - 1] || {}).date || "—")}</span>
+        <span class="flow-count">含 ${site.length} 条记录</span>
+      </div>
     </section>`;
 }
 
