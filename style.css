@@ -768,12 +768,13 @@ body.lb-open { overflow: hidden; }
 /* Kira 二级分组 */
 .group-row { display: flex; gap: 10px; margin: 10px 0 4px; flex-wrap: wrap; }
 .group-btn {
-  padding: 6px 14px;
+  padding: 10px 24px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14.5px;
+  letter-spacing: .02em;
   cursor: pointer;
 }
 .group-btn.on { border-color: var(--accent); color: var(--ink); background: rgba(88, 199, 255, .14); }
