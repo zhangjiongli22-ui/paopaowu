@@ -2227,3 +2227,18 @@ body.lb-open { overflow: hidden; }
 .k2-time-v { text-align: right; color: var(--muted); font-size: 12.5px; }
 
 .k2-time-sum { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; letter-spacing: .04em; }
+
+.k2-prose { max-width: 760px; margin: 14px 0 18px; }
+.k2-prose p {
+  font-size: 14.5px;
+  line-height: 2;
+  color: rgba(228, 240, 248, .92);
+  margin: 0 0 12px;
+  text-indent: 0;
+}
+.k2-prose em {
+  font-style: normal;
+  color: #eaf6ff;
+  border-bottom: 1px solid rgba(88, 199, 255, .35);
+  padding-bottom: 1px;
+}
