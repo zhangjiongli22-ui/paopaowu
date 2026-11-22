@@ -404,14 +404,19 @@ function buildToc() {
   const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
   const onScroll = () => {
     if (Date.now() < spyLockUntil) return;
-    // 探针线跟目录顶部对齐，和点击后滚动到的位置一致
-    const probe = nav.getBoundingClientRect().top + 6;
-    let current = 0;
+    const navTop = nav.getBoundingClientRect().top;
+    if (!navTop) return;
+    const probe = navTop + 6;
+    let current = -1;
     targets.forEach(({ box }, i) => {
       const rect = box.getBoundingClientRect();
-      // 区块头部已经滚过探针线，且区块底部还没越过它，才算当前区块
-      if (rect.top <= probe) current = i;
+      // 探针线落在哪个区块的范围内，就是当前区块
+      if (rect.top <= probe && rect.bottom > probe) current = i;
     });
+    if (current < 0) {
+      // 页面在顶部、探针线还在第一块之前：默认第一块
+      current = 0;
+    }
     setActive(current);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
