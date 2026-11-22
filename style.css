@@ -2407,7 +2407,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-image: var(--page-bg, none);
+  background-image: var(--page-bg, url("assets/wall.jpg"));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
