@@ -19,6 +19,7 @@ async function mergeOverrides(json, env) {
       keys = keys.concat(page.keys || []);
       cursor = page.list_complete ? undefined : page.cursor;
     } while (cursor);
+    json.__ovCount = keys.length;
     if (!keys.length) return json;
     const byId = new Map();
     for (const k of keys) {
@@ -28,16 +29,21 @@ async function mergeOverrides(json, env) {
       } catch (e) {}
     }
     json.items = (json.items || []).map((it) => {
-      const ov = byId.get(String(it.id));
-      if (!ov) return it;
-      const merged = { ...it, ...ov };
-      Object.keys(ov).forEach((k) => {
-        if (ov[k] === null || ov[k] === undefined) delete merged[k];
-      });
-      return merged;
+      try {
+        const ov = byId.get(String(it.id));
+        if (!ov) return it;
+        const merged = Object.assign({}, it, ov);
+        Object.keys(ov).forEach((k) => {
+          if (ov[k] === null || ov[k] === undefined) delete merged[k];
+        });
+        return merged;
+      } catch (e) {
+        return it;
+      }
     });
-    json.__ovCount = keys.length;
-  } catch (e) {}
+  } catch (e) {
+    json.__ovErr = String(e).slice(0, 120);
+  }
   return json;
 }
 
