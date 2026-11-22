@@ -155,14 +155,11 @@ try {
   if (!host) return;
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
   try {
-    var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
-    var blocks = chat.blocks || [];
-    var last = null;
-    for (var i = blocks.length - 1; i >= 0 && !last; i--) {
-      var her = (blocks[i].turns || []).filter(function (t) { return t.role !== "user" && (t.text || "").trim(); });
-      if (her.length) last = her[her.length - 1].text.trim();
-    }
-    host.innerHTML = last ? "\u300c" + esc(last) + "\u300d" : "\u8fd8\u6ca1\u8bf4\u8fc7\u4ec0\u4e48\u3002";
+    var prof = await (await fetch("data/profile.json", { cache: "no-store" })).json();
+    var lines = (prof.feiyu && prof.feiyu.lines) || [];
+    host.innerHTML = lines.length
+      ? lines.map(function (t) { return "\u300c" + esc(t) + "\u300d"; }).join("<br>")
+      : "\u8fd8\u6ca1\u8bf4\u8fc7\u4ec0\u4e48\u3002";
   } catch (e) {
     host.textContent = "\u6682\u65f6\u6ca1\u6709\u3002";
   }
