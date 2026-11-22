@@ -79,6 +79,7 @@ try {
           <option value="Kira">Kira</option>
         </select>
       </label>
+      <span class="cmt-form-to" id="cmt-to" hidden>回复 <b id="cmt-to-name"></b><button type="button" id="cmt-to-clear" title="取消">×</button></span>
       <span class="cmt-form-hint" id="cmt-hint">支持换行；按「发送」公开到当前日期</span>
     </div>
     <textarea id="cmt-text" rows="3" maxlength="1200" placeholder="写点什么……"></textarea>
@@ -121,6 +122,7 @@ try {
         '<p class="cmt-text">' + esc(x.text || "").replace(/\n/g, "<br>") + "</p>" +
         '<div class="cmt-foot">' +
           '<span class="cmt-meta">' + esc(x.time || "") + " · " + esc(String(x.date || "").slice(5)) + "</span>" +
+          '<button type="button" class="cmt-reply-btn" data-who="' + esc(x.who || "") + '">\u56de\u590d</button>' +
           '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
         "</div>" +
       "</div></article>";
@@ -143,6 +145,31 @@ try {
     return p;
   }
 
+  var replyTarget = "";
+  var toChip = document.getElementById("cmt-to");
+  var toName = document.getElementById("cmt-to-name");
+  var toClear = document.getElementById("cmt-to-clear");
+
+  function setReplyTarget(who) {
+    replyTarget = who || "";
+    if (!toChip) return;
+    if (replyTarget) {
+      toChip.hidden = false;
+      if (toName) toName.textContent = replyTarget;
+    } else {
+      toChip.hidden = true;
+    }
+  }
+  if (toClear) toClear.addEventListener("click", function () { setReplyTarget(""); });
+
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest(".cmt-reply-btn");
+    if (!b) return;
+    setReplyTarget(b.getAttribute("data-who") || "");
+    if (form) form.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(function () { if (textEl) textEl.focus(); }, 300);
+  });
+
   if (form) {
     form.addEventListener("submit", async function (ev) {
       ev.preventDefault();
@@ -156,7 +183,7 @@ try {
         var res = await fetch("/api/comment", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ pass: pass, who: whoSel.value, text: text }),
+          body: JSON.stringify({ pass: pass, who: whoSel.value, text: text, reply_to: replyTarget }),
         });
         var out = await res.json();
         if (!out.ok) throw new Error(out.error || "失败");
