@@ -7873,42 +7873,6 @@
    "cover": "assets/covers/anime-1ef7f1b0-frieren2.jpg"
   },
   {
-   "id": "log-20261122-game",
-   "cat": "log",
-   "date": "2026-11-21",
-   "time": "01:54",
-   "kind": "game",
-   "text": "游玩《异环》30 分钟",
-   "minutes": 30
-  },
-  {
-   "id": "log-20261122-work",
-   "cat": "log",
-   "date": "2026-11-21",
-   "time": "09:30",
-   "kind": "work",
-   "text": "完成泡泡屋改版、封面补充与迁移至 Cloudflare",
-   "minutes": 330
-  },
-  {
-   "id": "log-20261122-fitness",
-   "cat": "log",
-   "date": "2026-11-21",
-   "time": "19:00",
-   "kind": "fitness",
-   "text": "有氧跑步 20 分钟，无氧训练 40 分钟",
-   "minutes": 60
-  },
-  {
-   "id": "log-20261122-1",
-   "cat": "log",
-   "date": "2026-11-22",
-   "time": "10:34",
-   "kind": "work",
-   "text": "整理站点数据、补充封面与简介、搭建目录与收藏功能、更新个人主页",
-   "minutes": 178
-  },
-  {
    "id": "idea-20261122-serpent",
    "cat": "idea",
    "date": "2026-11-22",
