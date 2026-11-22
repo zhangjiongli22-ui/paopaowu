@@ -115,7 +115,7 @@ function bindShots() {
   } catch (e) {}
 
   root.innerHTML = `
-    <a class="back-link" href="${backHref}">← Kira的大世界</a>
+    <a class="back-link" href="${backHref}">← Kira的精神宇宙</a>
     <div class="subject-grid">
       <aside class="subject-side">
         <div class="subject-cover">
