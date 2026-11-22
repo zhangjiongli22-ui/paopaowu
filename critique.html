@@ -107,7 +107,7 @@ try {
           '<p class="cmt-name">' + esc(x.who || "") +
             (isReply && replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + "</span>" : "") +
             '<span class="cmt-time">' + esc(x.time || "") + "</span></p>" +
-          '<p class="cmt-text">' + esc(x.text || "") + "</p>" +
+          '<p class="cmt-text">' + esc(x.text || "").replace(/\n/g, "<br>") + "</p>" +
         "</div></article>";
     }
     host.innerHTML = days.map(function (d) {
