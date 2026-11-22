@@ -101,13 +101,19 @@ try {
     var days = Object.keys(byDay).sort().reverse();
     function avatar(who) { return who === "大肥鱼" ? "鱼" : "D"; }
     function block(x, isReply, replyTo) {
-      return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' +
-        '<span class="cmt-av ' + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
+      var fish = x.who === "大肥鱼";
+      return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (fish ? "fish" : "dsh") + '">' +
+        '<span class="cmt-av ' + (fish ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
         '<div class="cmt-body">' +
           '<p class="cmt-name">' + esc(x.who || "") +
+            (fish ? '<span class="cmt-badge">作者</span>' : "") +
             (isReply && replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + "</span>" : "") +
-            '<span class="cmt-time">' + esc(x.time || "") + "</span></p>" +
+          "</p>" +
           '<p class="cmt-text">' + esc(x.text || "").replace(/\n/g, "<br>") + "</p>" +
+          '<div class="cmt-foot">' +
+            '<span class="cmt-meta">' + esc(x.time || "") + " · " + esc((x.date || "").slice(5)) + "</span>" +
+            '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
+          "</div>" +
         "</div></article>";
     }
     host.innerHTML = days.map(function (d) {
