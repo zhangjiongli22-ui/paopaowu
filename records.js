@@ -587,18 +587,27 @@ function drawStats() {
   const fmt = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : (m || 0) + "m");
   const maxKind = Math.max(1, ...Object.values(byKind));
 
-  // 先按主题归拢，只展示耗时最大的那一类工作流
+  // 工作流只统计「工作」这一类记录，健身/练琴等不算
+  const workLogs = logs.filter((x) => (x.kind || "") === "work");
   const FLOWS = [
     { name: "网站建设", re: /网站|站点|页面|封面|部署|推送|改版|上线|统计|锐评|档案|首页/ },
-    { name: "视频剪辑", re: /剪辑|片子|视频|素材管理/ },
-    { name: "练习与训练", re: /练琴|钢琴|健身|跑步|训练/ }
+    { name: "视频剪辑", re: /剪辑|片子|视频|素材管理/ }
   ];
   const flowStats = FLOWS.map((f) => {
-    const rows = logs
+    const rows = workLogs
       .filter((x) => f.re.test(x.text || ""))
       .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
     return { name: f.name, rows, mins: rows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) };
   }).sort((a, b) => b.mins - a.mins);
+  const matched = new Set(flowStats.flatMap((f) => f.rows.map((x) => x.id)));
+  const rest = workLogs.filter((x) => !matched.has(x.id));
+  if (rest.length) {
+    flowStats.push({
+      name: "其他工作",
+      rows: rest.slice().sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || ""))),
+      mins: rest.reduce((a, x) => a + (Number(x.minutes) || 0), 0),
+    });
+  }
   const shownFlows = flowStats.filter((f) => f.mins > 0).sort((a, b) => b.mins - a.mins);
 
   const catRowData = [
