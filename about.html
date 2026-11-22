@@ -120,8 +120,7 @@ try {
   <section class="pf-sec" id="live">
     <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
     <ul class="pf-rows">
-      <li><span class="k">她说</span><span class="v" id="her-latest-line">正在听……</span></li>
-      <li><span class="k">今天</span><span class="v" id="owner-today">正在看主人今天在做什么……</span></li>
+      <li><span class="k">最近</span><span class="v" id="live-turns">正在翻聊天记录……</span></li>
     </ul>
   </section>
 
@@ -153,44 +152,25 @@ try {
 <script>
 (async function () {
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  var host = document.getElementById("live-turns");
+  if (!host) return;
   try {
     var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
     var blocks = chat.blocks || [];
-    var last = null;
-    for (var i = blocks.length - 1; i >= 0 && !last; i--) {
-      var her = (blocks[i].turns || []).filter(function (t) { return t.role !== "user" && (t.text || "").trim(); });
-      if (her.length) last = her[her.length - 1].text.trim();
+    var last = blocks[blocks.length - 1];
+    if (!last || !(last.turns || []).length) {
+      host.textContent = "还没留下什么。";
+      return;
     }
-    var el = document.getElementById("her-latest-line");
-    if (el) el.innerHTML = last ? "\u300c" + esc(last) + "\u300d" : "\u8fd8\u6ca1\u8bf4\u8fc7\u4ec0\u4e48\u3002";
-  } catch (e) {}
-
-  try {
-    var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
-    var logs = (data.items || []).filter(function (x) { return x.cat === "log" && x.date; });
-    logs.sort(function (a, b) { return (a.date + (a.time || "")) < (b.date + (b.time || "")) ? 1 : -1; });
-    var el2 = document.getElementById("owner-today");
-    if (el2 && logs.length) {
-      var newest = logs[0];
-      var sameDay = logs.filter(function (x) { return x.date === newest.date; });
-      var label = { work: "工作", game: "打游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
-      var sums = {};
-      sameDay.forEach(function (x) { sums[x.kind] = (sums[x.kind] || 0) + (Number(x.minutes) || 0); });
-      var order = ["work", "game", "fitness", "piano", "study", "media"];
-      var fmtMin = function (m) { return m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : m + "m"; };
-      var parts = order.filter(function (k) { return sums[k]; }).map(function (k) {
-        return (label[k] || "别的") + " " + fmtMin(sums[k]);
-      });
-      var rows = sameDay.slice().sort(function (a, b) { return ((a.time || "") < (b.time || "")) ? -1 : 1; });
-      var detail = rows.map(function (x) { return "· " + (x.time ? x.time + " " : "") + (x.text || ""); }).join("<br>");
-      el2.innerHTML = esc(newest.date) + "，" + esc(parts.join("、")) + "。" +
-        (detail ? '<br><span style="color:var(--dim);font-size:.92em">' + detail + "</span>" : "");
-    } else if (el2) {
-      el2.textContent = "\u4eca\u5929\u8fd8\u6ca1\u8bb0\u5f55\u3002";
-    }
-  } catch (e) {}
-})();
-</script>
+    var rows = last.turns.slice(-6).map(function (t) {
+      var who = t.role === "user" ? "主人" : "大肥鱼";
+      return "· " + who + "：" + (t.text || "").replace(/\n/g, " ");
+    });
+    host.innerHTML = rows.join("<br>");
+  } catch (e) {
+    host.textContent = "没翻到聊天记录。";
+  }
+})();</script>
 <script src="wall.js?v=4"></script>
 </body>
 </html>
