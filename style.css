@@ -3715,3 +3715,22 @@ main > section:not([class]) > h2 {
 .taste-item p b::after { content: none; float: none; }
 .taste-item .q { display: block; color: var(--paper-2); line-height: 1.9; }
 .taste-item p + p { margin-top: 14px; }
+
+/* 统计标签页 */
+.stat-wrap { display: grid; gap: clamp(20px, 3vh, 36px); padding: 8px 0 40px; }
+.stat-hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: clamp(16px, 2vw, 32px); }
+.stat-big { display: grid; gap: 6px; padding: 18px 0; border-top: 1px solid var(--line-hair); }
+.stat-big b { font-family: var(--serif); font-size: clamp(30px, 3.2vw, 54px); line-height: 1; color: var(--paper); }
+.stat-big span { font: clamp(11px, .62vw, 15px) var(--mono); letter-spacing: .2em; color: var(--dim); }
+.stat-h { margin: clamp(10px, 2vh, 20px) 0 0; font-family: var(--serif); font-size: clamp(17px, 1.3vw, 24px); letter-spacing: .14em; color: var(--paper); }
+.stat-line { color: var(--paper-2); font-size: clamp(14px, .95vw, 19px); line-height: 1.9; }
+.stat-line b { color: var(--gold); font-family: var(--serif); font-size: 1.25em; margin-right: 6px; }
+.stat-bars { display: grid; gap: 10px; max-width: min(900px, 100%); }
+.stat-bar { display: grid; grid-template-columns: 64px 1fr 74px; align-items: center; gap: 12px; }
+.stat-bar .k { font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .18em; color: var(--gold-soft); }
+.stat-bar .bar { height: 6px; background: rgba(255, 255, 255, .08); display: block; }
+.stat-bar .bar i { display: block; height: 100%; background: linear-gradient(90deg, rgba(201, 168, 107, .95), rgba(127, 211, 232, .7)); }
+.stat-bar .v { text-align: right; font: clamp(11px, .62vw, 14px) var(--mono); color: var(--dim); }
+.stat-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.stat-chip { display: inline-flex; align-items: baseline; gap: 8px; padding: 8px 14px; border: 1px solid var(--line-soft); font-size: clamp(13px, .8vw, 16px); color: var(--paper-2); }
+.stat-chip b { font-family: var(--serif); color: var(--gold); font-size: 1.1em; }
