@@ -137,38 +137,11 @@ try {
 
   function getPass() {
     var p = "";
-    try { p = localStorage.getItem("paopaowu_pass") || localStorage.getItem("comment_pass") || ""; } catch (e) {}
-    if (!p) {
-      p = window.prompt("输入通行密码（只存本机）") || "";
-      if (p) { try { localStorage.setItem("comment_pass", p); } catch (e) {} }
-    }
+    try {
+      p = localStorage.getItem("paopaowu_pass") || localStorage.getItem("comment_pass") || "";
+    } catch (e) {}
     return p;
   }
-
-  var replyTarget = "";
-  var toChip = document.getElementById("cmt-to");
-  var toName = document.getElementById("cmt-to-name");
-  var toClear = document.getElementById("cmt-to-clear");
-
-  function setReplyTarget(who) {
-    replyTarget = who || "";
-    if (!toChip) return;
-    if (replyTarget) {
-      toChip.hidden = false;
-      if (toName) toName.textContent = replyTarget;
-    } else {
-      toChip.hidden = true;
-    }
-  }
-  if (toClear) toClear.addEventListener("click", function () { setReplyTarget(""); });
-
-  document.addEventListener("click", function (ev) {
-    var b = ev.target.closest && ev.target.closest(".cmt-reply-btn");
-    if (!b) return;
-    setReplyTarget(b.getAttribute("data-who") || "");
-    if (form) form.scrollIntoView({ behavior: "smooth", block: "center" });
-    setTimeout(function () { if (textEl) textEl.focus(); }, 300);
-  });
 
   if (form) {
     form.addEventListener("submit", async function (ev) {
@@ -176,7 +149,10 @@ try {
       var text = (textEl.value || "").trim();
       if (!text) return;
       var pass = getPass();
-      if (!pass) return;
+      if (!pass) {
+        hint.innerHTML = '还没登录。去 <a href="login.html" style="color:var(--gold)">登录页</a> 登一次，之后就不用再输。';
+        return;
+      }
       sendBtn.disabled = true;
       hint.textContent = "发送中……";
       try {
@@ -186,7 +162,15 @@ try {
           body: JSON.stringify({ pass: pass, who: whoSel.value, text: text, reply_to: replyTarget }),
         });
         var out = await res.json();
-        if (!out.ok) throw new Error(out.error || "失败");
+        if (!out.ok) {
+          if (res.status === 403) {
+            try { localStorage.removeItem("paopaowu_pass"); localStorage.removeItem("comment_pass"); } catch (e) {}
+            hint.innerHTML = '密码失效了。去 <a href="login.html" style="color:var(--gold)">登录页</a> 重新登一次。';
+            sendBtn.disabled = false;
+            return;
+          }
+          throw new Error(out.error || "失败");
+        }
         textEl.value = "";
         hint.textContent = "已发送，正在刷新……";
         setTimeout(function () { location.reload(); }, 600);
