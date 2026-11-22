@@ -43,6 +43,14 @@
     <p class="kira-now-text">在异环和动森之间来回，补《葬送的芙莉莲》第二季，顺手改这个网站。</p>
   </section>
 
+
+  <section class="kira-now kira-taste">
+    <p class="kira-now-label">我的品味</p>
+    <p class="kira-now-text" id="kira-taste-line">正在从收藏里归纳…</p>
+    <div class="kira-chips" id="kira-taste-chips">
+      <span>恐怖片</span><span>日本动画</span><span>剧情电影</span><span>长线游戏</span><span>钢琴 / 音乐</span>
+    </div>
+  </section>
   <section class="kira-grid">
     <article class="kira-card">
       <p class="kira-card-k">在玩</p>
@@ -63,9 +71,9 @@
     </article>
 
     <article class="kira-card">
-      <p class="kira-card-k">每天</p>
-      <p class="kira-card-t">记一笔：练了什么、玩了多久、看了什么</p>
-      <p class="kira-card-d">方便回头看自己把时间花在哪儿了。</p>
+      <p class="kira-card-k">今天干了什么</p>
+      <p class="kira-card-t" id="kira-today">今天还没记录</p>
+      <p class="kira-card-d" id="kira-today-note">每日统计会根据记录自动更新。</p>
     </article>
   </section>
 
@@ -90,6 +98,24 @@
     const watch = pick("在看", 4);
     const set = (id, text) => { const el = document.getElementById(id); if (el && text) el.textContent = text; };
     set("kira-play-list", play.join("、"));
+    const day = new Date(Date.now() - 4 * 3600 * 1000).toISOString().slice(0, 10);
+    const logs = items.filter((x) => x.cat === "log" && x.date === day);
+    const fmt = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : m + "m");
+    const todayEl = document.getElementById("kira-today");
+    if (todayEl && logs.length) {
+      todayEl.textContent = logs.map((x) => `${x.text}（${fmt(Number(x.minutes) || 0)}）`).join(" · ");
+      const total = logs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+      const note = document.getElementById("kira-today-note");
+      if (note) note.textContent = `共 ${fmt(total)}。四点前的活动算前一天。`;
+    }
+    const count = (c, sts) => items.filter((x) => x.cat === c && (!sts || sts.includes(x.status))).length;
+    const taste = [
+      `动画 ${count("anime")} 条，恐怖和怪谈类电影 ${count("film")} 条`,
+      `游戏 ${count("game")} 条，长线玩的多`,
+      `看完/玩完 ${items.filter((x) => ["看过", "玩过"].includes(x.status)).length} 条`,
+    ];
+    const tl = document.getElementById("kira-taste-line");
+    if (tl) tl.textContent = taste.join("；") + "。偏爱有氛围、能沉进去的作品。";
     set("kira-watch-list", watch.join("、"));
     const watched = items.filter((x) => ["看过", "玩过"].includes(x.status)).length;
     const wish = items.filter((x) => ["想看", "想玩"].includes(x.status)).length;
