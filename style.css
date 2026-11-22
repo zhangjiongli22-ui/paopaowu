@@ -1848,7 +1848,11 @@ body.lb-open { overflow: hidden; }
   opacity: .7;
   margin-bottom: 2px;
 }
+.side-toc { min-width: 96px; }
 .side-toc a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 13px;
   color: var(--muted);
   background: none;
@@ -1857,8 +1861,19 @@ body.lb-open { overflow: hidden; }
   white-space: nowrap;
   letter-spacing: .02em;
 }
+.side-toc a::before,
+.side-toc a::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
 .side-toc a:hover {
   color: var(--accent);
+}
+.side-toc a:hover::before,
+.side-toc a:hover::after {
+  background: rgba(88, 199, 255, .45);
 }
 @media (max-width: 1180px) {
   .side-toc {
