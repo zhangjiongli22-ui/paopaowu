@@ -192,17 +192,12 @@ function buildLogToc(dates) {
     a.textContent = String(d).slice(5) || d;
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      if (box.tagName === "DETAILS") box.open = true;
-      const idx = rows.indexOf(box);
-      clearTimeout(spyTimer);
-      spyLockUntil = Date.now() + 3000;
-      setActive(idx);
-
-      const headEl = box.querySelector(".sec-fold-head");
-      const navTop = nav.getBoundingClientRect().top;
-      const headBottom = (headEl || box).getBoundingClientRect().bottom;
-      const targetY = Math.max(0, Math.round(headBottom + window.scrollY - navTop));
-      animateTo(targetY, idx);
+      const target = document.getElementById("log-" + d);
+      if (!target) return;
+      const y = target.getBoundingClientRect().top + window.scrollY - 28;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      a.classList.add("on");
+      setTimeout(() => a.classList.remove("on"), 1400);
     });
     nav.appendChild(a);
   });
