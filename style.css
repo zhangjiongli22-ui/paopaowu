@@ -2659,3 +2659,7 @@ h1, h1 *, .kira-name, .page-head h1, .hero h1 {
 .side-toc a.on::before {
   background: #58c7ff !important;
 }
+
+
+/* 图片陆续加载时不要让浏览器自己“锚定”滚动位置，避免长列表回弹 */
+html { overflow-anchor: none; }
