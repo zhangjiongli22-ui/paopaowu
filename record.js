@@ -248,6 +248,7 @@ function bindShots() {
       e.preventDefault();
       e.stopPropagation();
       const next = favBtn.textContent.indexOf("已收藏") === -1;
+      favBtn.textContent = next ? "★ 已收藏" : "☆ 收藏";
       favBtn.disabled = true;
       try {
         const saved = await apiRate({ id, pinned: next });
@@ -269,6 +270,7 @@ function bindShots() {
       const cur = statusBtn.textContent.trim();
       const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
       const next = cur === fmt[0] ? fmt[1] : fmt[0];
+      statusBtn.textContent = next;
       statusBtn.disabled = true;
       msg.textContent = "切换中…";
       try {
