@@ -7915,6 +7915,33 @@
    "time": "15:00",
    "bgm_id": 425998,
    "cover": "assets/covers/anime-985b7983-tmp.jpg"
+  },
+  {
+   "id": "log-20261122-game",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "01:54",
+   "kind": "game",
+   "text": "异环",
+   "minutes": 30
+  },
+  {
+   "id": "log-20261122-work",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "09:30",
+   "kind": "work",
+   "text": "泡泡屋改版、补图、搬家到 Cloudflare",
+   "minutes": 330
+  },
+  {
+   "id": "log-20261122-fitness",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "19:00",
+   "kind": "fitness",
+   "text": "跑步 20 分钟 + 无氧 40 分钟",
+   "minutes": 60
   }
  ]
 }
