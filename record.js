@@ -109,7 +109,8 @@ function bindShots() {
     const q = new URLSearchParams();
     if (st.group) q.set("group", st.group);
     if (st.cat && st.cat !== "all") q.set("cat", st.cat);
-    if (st.y) q.set("y", st.y);
+    const savedY = st.y || sessionStorage.getItem("listScroll");
+    if (savedY) q.set("y", savedY);
     if ([...q].length) backHref = "records.html?" + q.toString();
   } catch (e) {}
 
