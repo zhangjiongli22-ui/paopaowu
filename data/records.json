@@ -6969,7 +6969,8 @@
    "date": "2026-11-22",
    "time": "12:00",
    "cover": "assets/covers/tv-47938121-imdbv.jpg",
-   "desc": "美国电视剧"
+   "desc": "美国电视剧",
+   "pinned": true
   },
   {
    "id": "tv-baafecbc",
