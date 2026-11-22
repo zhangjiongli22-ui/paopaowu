@@ -5,115 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kira · 大肥鱼和Kira的泡泡屋</title>
 <meta name="description" content="Kira：这间泡泡屋的主人，玩什么、看什么、在折腾什么。">
+<meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=101">
-<script>try{var b=localStorage.getItem("page_bg");if(b)document.documentElement.style.setProperty("--page-bg",'url("'+b+'")');}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=310">
+<script>
+try {
+  document.documentElement.classList.add("js");
+  var m = localStorage.getItem("scene_mode");
+  if (m !== "ink") document.documentElement.classList.add("scene-wall");
+  var b = localStorage.getItem("page_bg");
+  if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
+} catch (e) { document.documentElement.classList.add("js"); }
+</script>
 </head>
-<body class="kira-page">
-<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<div class="scene" aria-hidden="true">
+  <div class="scene-base"></div>
+  <div class="scene-photo"></div>
+  <div class="scene-glow"></div>
+  <div class="scene-caustics"></div>
+  <div class="scene-grade"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="vig" aria-hidden="true"></div>
+<div class="dust" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<div class="frame" aria-hidden="true">
+  <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
+  <span class="frame-tag r">Bubble House ver.3.0 — 2026</span>
+</div>
+
+<button class="scene-toggle" id="scene-toggle" type="button" aria-pressed="true">
+  <i aria-hidden="true"></i><span>场景 · 壁纸</span>
+</button>
 
 <nav class="nav">
-  <a class="brand" href="index.html">Home</a>
+  <a class="brand" href="index.html" aria-label="泡泡屋 首页">
+    <svg viewBox="0 0 34 24" fill="none" stroke-width="1" aria-hidden="true">
+      <path d="M4.6 14.4c0-4.6 5.6-8.2 12.4-8.2 6.8 0 12.4 3.5 12.4 7.9 0 4.4-5.6 7.9-12.4 7.9-6.8 0-12.4-3.5-12.4-7.6Z"/>
+      <path d="M4.9 13.6 1.4 10.9M4.9 13.6 1.4 16.3"/>
+      <path d="M17.2 6.4c0-2.3.7-3.7 1.9-4.8"/>
+      <circle cx="24.6" cy="12.8" r="1.1"/>
+    </svg>
+    <span class="brand-cn">泡泡屋</span>
+    <span class="brand-jp">BUKUBUKU</span>
+  </a>
   <div class="links">
-    <a href="about.html">大肥鱼</a>
-    <a class="active" href="kira.html">Kira</a>
-    <a href="records.html">Kira的精神宇宙</a>
-    <a href="chat.html">日常</a>
-    <a href="gallery.html">图集</a>
+    <a href="about.html"><i>01</i>大肥鱼</a>
+    <a class="active" href="kira.html"><i>02</i>Kira</a>
+    <a href="records.html"><i>03</i>精神宇宙</a>
+    <a href="chat.html"><i>04</i>日常</a>
+    <a href="gallery.html"><i>05</i>图集</a>
   </div>
 </nav>
 
-<main class="k2">
+<main class="pf" id="main">
 
-  <!-- Hero -->
-  <section class="k2-hero">
-    <div class="k2-hero-main">
-      <p class="k2-kicker">THE OWNER OF THIS HOUSE</p>
-      <h1 class="k2-name">Kira</h1>
-      <p class="k2-sub">闪光的Kira。白天与电脑和工具打交道，晚上则交给游戏与影像。</p>
-      <div class="k2-chips">
-        <span>游戏</span><span>动画</span><span>电影</span><span>健身</span><span>钢琴</span>
+  <section class="pf-hero">
+    <div>
+      <p class="pf-kicker">Character 02 — 这屋子的主人</p>
+      <h1 class="pf-name">Kira</h1>
+      <p class="pf-yomi">きら / 闪光的Kira</p>
+      <p class="pf-role">白天跟电脑和工具打交道，晚上把时间还给游戏和影像。</p>
+      <p class="pf-quote kira" data-who="Kira">「会，直到你把我电费花光。」</p>
+    </div>
+    <div class="pf-art">
+      <div class="pf-slot" role="img" aria-label="Kira 的立绘位，待补">
+        <span class="k" aria-hidden="true">K</span>
+        <span class="tag">立绘位 · 待补 / PORTRAIT</span>
       </div>
     </div>
-    <div class="k2-hero-side" id="k2-hero-side">
-      <div class="k2-hero-stat"><b data-stat="finished">—</b><span>看完 / 玩完</span></div>
-      <div class="k2-hero-stat"><b data-stat="fav">—</b><span>最爱</span></div>
-      <div class="k2-hero-stat"><b data-stat="work">—</b><span>工作累计</span></div>
-      <div class="k2-hero-stat"><b data-stat="game">—</b><span>游戏累计</span></div>
-    </div>
   </section>
 
-  <!-- 个人档案 -->
-  <section class="k2-section">
-    <header class="k2-head"><span class="k2-head-no">01</span><h2>个人档案</h2><span class="k2-head-line"></span></header>
-    <dl class="k2-facts">
-      <div><dt>称呼</dt><dd>Kira，也叫闪光的Kira</dd></div>
-      <div><dt>身份</dt><dd>这间泡泡屋的主人</dd></div>
-      <div><dt>白天</dt><dd>普通上班族，白天在工位上熬时间</dd></div>
-      <div><dt>晚上</dt><dd>下班之后把时间还给自己：游戏、动画、电影</dd></div>
-      <div><dt>长期</dt><dd>健身、练琴，还有这个一直在改的网站</dd></div>
-      <div><dt>偏爱</dt><dd>氛围感强、能够沉浸其中的作品</dd></div>
-    </dl>
+  <div class="pf-stats">
+    <div class="pf-stat"><b data-stat="finished">—</b><span>看完 / 玩完</span></div>
+    <div class="pf-stat"><b data-stat="fav">—</b><span>最爱</span></div>
+    <div class="pf-stat"><b data-stat="work">—</b><span>工作累计</span></div>
+    <div class="pf-stat"><b data-stat="game">—</b><span>游戏累计</span></div>
+    <div class="pf-stat txt"><b>闪光的Kira</b><span>B 站</span></div>
+  </div>
+
+  <section class="pf-sec">
+    <div class="pf-head"><h2>现在</h2><span class="en">Now</span></div>
+    <ul class="pf-rows">
+      <li><span class="k">在玩</span><span class="v"><span id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</span>。画面要精致，节奏要舒服，最好能长期待着。</span></li>
+      <li><span class="k">在看</span><span class="v"><span id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</span>。动画和电影都看，恐怖片与怪谈格外对味。</span></li>
+      <li><span class="k">在折腾</span><span class="v">AI、自动化、剪视频，还有这个网站。工具自己造，片子自己剪；这间泡泡屋就是这么一点点搭起来的。</span></li>
+      <li><span class="k">今天</span><span class="v"><span id="kira-today">今天还空着</span><br><span id="kira-today-note" style="color:var(--dim);font-size:.92em">晚上会把这一天记下来，凌晨四时前的活动算昨天。</span></span></li>
+    </ul>
   </section>
 
-  <!-- 现在 -->
-  <section class="k2-section">
-    <header class="k2-head"><span class="k2-head-no">02</span><h2>现在</h2><span class="k2-head-line"></span></header>
-    <div class="k2-two">
-      <article class="k2-card">
-        <p class="k2-card-k">在玩</p>
-        <p class="k2-card-t" id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</p>
-        <p class="k2-card-d">偏好画面精致、节奏舒适、可以长期投入的游戏。</p>
-      </article>
-      <article class="k2-card">
-        <p class="k2-card-k">在看</p>
-        <p class="k2-card-t" id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</p>
-        <p class="k2-card-d">动画与电影均有涉猎，尤其偏爱恐怖片与怪谈题材。</p>
-      </article>
-      <article class="k2-card">
-        <p class="k2-card-k">工作与折腾</p>
-        <p class="k2-card-t">AI、自动化、剪视频、搭这个网站</p>
-        <p class="k2-card-d">为自己搭建工具，也制作一些视频；这座泡泡屋便是逐步搭建起来的。</p>
-      </article>
-      <article class="k2-card k2-card-today">
-        <p class="k2-card-k">今天干了什么</p>
-        <p class="k2-card-t" id="kira-today">今天还空着</p>
-        <p class="k2-card-d" id="kira-today-note">晚上会把这一天记下来，凌晨四时前的活动算昨天。</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- 品味 -->
-  <section class="k2-section">
-    <header class="k2-head"><span class="k2-head-no">03</span><h2>我的品味</h2><span class="k2-head-line"></span></header>
+  <section class="pf-sec" id="taste">
+    <div class="pf-head"><h2>品味</h2><span class="en">Taste</span></div>
     <p class="k2-taste" id="kira-taste-line">正在根据收藏归纳…</p>
-    <div class="k2-prose">
-      <p>我喜欢的作品大多不太「爽」。<em>EVA</em> 里那种说不出口的自我怀疑，<em>钢之炼金术师</em>把代价明明白白摆出来的狠，还有<em>葬送的芙莉莲</em>把几百年压进一段旅途里的轻。它们都不急着给答案，看完却会在心里压很久，过一阵又会突然想起某个镜头。</p>
-      <p>电影的口味更直接一些：恐怖、怪谈、犯罪、灾难，越是把人往墙角逼的越要看。不是为了刺激，是想看看人在没退路的时候会变成什么样。看完也不见得舒服，但会记住。</p>
-      <p>游戏反而慢下来。<em>异环</em>、<em>终末地</em>、<em>塞尔达</em>这类能长期待着的世界，下班回来慢慢逛，不追进度，也不赶活动。有时候什么都不做，就在地图上走来走去，听风声和音乐。</p>
-      <p>钢琴是另一条线。手在练，耳朵也在挑，弹得不好但听得认真。白天上班，晚上用这几样东西把自己从工位上捞回来；健身和记录算是给日子留个把手，免得一年过完什么都不记得。</p>
+    <div class="pf-story taste">
+      <div class="taste-col">
+        <div class="taste-item">
+          <p class="tk">怎么挑</p>
+          <p>只有一个条件：看完之后还会不会想起它。所以周末晚上多半往不舒服的地方走——恐怖、怪谈、犯罪、灾难，越把人往墙角逼的越想看；不是为了刺激，是想看一个人没退路时会怎么选。</p>
+        </div>
+        <div class="taste-item">
+          <p class="tk">耳机里的</p>
+          <p>日本流行听得最多，YOASOBI 是常年开着的那一个。练琴时反复磨的是《群青》，弹不熟也还是想弹。</p>
+        </div>
+        <div class="taste-item">
+          <p class="tk">剩下的时间</p>
+          <p>钢琴和健身是给自己留的把手：手在练，耳朵也在挑，弹得一般但听得认真。日子总得有个记号，不然一年过完什么都想不起来。</p>
+        </div>
+      </div>
+      <div class="taste-col">
+        <div class="taste-item">
+          <p class="tk">最爱的作品</p>
+          <p><b>白色巨塔</b><span class="q">对于正义的思考，结尾也是依旧泪目</span></p>
+          <p><b>黑镜 第一季</b><span class="q">神作，科技畅想的巅峰作品</span></p>
+          <p><b>塞尔达 旷野之息</b><span class="q">没有任务清单催你，风一吹就想多走两步。</span></p>
+          <p><b>叛逆的鲁鲁修</b><span class="q">入坑作，真正的神作，结局看一次哭一次</span></p>
+          <p><b>灼眼的夏娜／零之使魔</b><span class="q">入坑二作，感触最深的情感纠葛</span></p>
+        </div>
+      </div>
     </div>
     <div class="k2-chips" id="kira-taste-chips">
       <span>恐怖片</span><span>日本动画</span><span>剧情电影</span><span>长线游戏</span><span>钢琴 / 音乐</span>
     </div>
     <div class="k2-picks" id="kira-picks"></div>
+    <button type="button" class="blk-edit corner-edit" data-edit-block="taste">编辑</button>
   </section>
 
-  <!-- 时间分配 -->
-  <section class="k2-section">
-    <header class="k2-head"><span class="k2-head-no">04</span><h2>时间分配</h2><span class="k2-head-line"></span></header>
+  <section class="pf-sec">
+    <div class="pf-head"><h2>时间</h2><span class="en">Time</span></div>
     <div class="k2-time" id="kira-time-list"></div>
   </section>
 
-  <!-- 手上的事 -->
-  <section class="k2-section">
-    <header class="k2-head"><span class="k2-head-no">05</span><h2>手上的事</h2><span class="k2-head-line"></span></header>
+  <section class="pf-sec">
+    <div class="pf-head"><h2>手上</h2><span class="en">Doing</span></div>
     <div class="k2-two k2-two-ideas" id="kira-idea-list"></div>
+  </section>
+
+  <section class="pf-sec" id="profile">
+    <div class="pf-head"><h2>档案</h2><span class="en">Profile</span><span class="n">06</span></div>
+    <dl class="pf-spec">
+      <div><dt>称呼</dt><dd>Kira，亦称「闪光的Kira」。</dd></div>
+      <div><dt>身份</dt><dd>泡泡屋的主人。</dd></div>
+      <div><dt>职业</dt><dd>从事基金业绩核查（GIPS Verifier），至今四年余。</dd></div>
+      <div><dt>学习</dt><dd>钢琴，目标为英皇（ABRSM）十级；当前曲目为 Czerny 作品 849、Hanon 及《群青》。</dd></div>
+      <div><dt>游戏</dt><dd>塞尔达传说：旷野之息、英雄联盟（关注 T1 与 Faker）、类魂系列、像素叙事类游戏；PS5 与 Switch 交替使用。</dd></div>
+      <div><dt>常听</dt><dd>日本流行音乐，以 YOASOBI 为多。</dd></div>
+      <div><dt>饲养</dt><dd>一只金丝熊，未满三个月，正在治疗滴虫。</dd></div>
+    </dl>
+      <button type="button" class="blk-edit corner-edit" data-edit-block="profile">编辑</button>
   </section>
 
 </main>
 
-<footer><p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p></footer>
+<footer>
+  <p>© 2026 Kira &amp; 大肥鱼 · <a href="legal.html">声明</a> · <a href="login.html">登录</a></p>
+</footer>
+
 <script>
 (async () => {
   try {
@@ -156,12 +206,6 @@
     const watching = items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title);
     set("kira-play-list", playing.join("、"));
     set("kira-watch-list", watching.join("、"));
-    if (playing.length || watching.length) {
-      const bits = [];
-      if (playing.length) bits.push(`最近在玩${playing.slice(0, 2).join("和")}`);
-      if (watching.length) bits.push(`在看${watching[0]}`);
-      set("kira-now-text", bits.join("，") + "。白天继续打磨这个网站，夜里便沉浸其中。");
-    }
 
     const shifted = new Date(Date.now() - 4 * 3600 * 1000);
     const pad = (n) => String(n).padStart(2, "0");
@@ -177,13 +221,6 @@
         ? `今天主要${mainName}，花了 ${fmtMin(Number(main.minutes) || 0)}。`
         : `今天在${parts.join("、")}上，一共 ${fmtMin(total)}。`);
       set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
-    }
-    {
-      const sumEl = document.querySelector(".k2-time-sum");
-      const todayMin = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      const weekAgo2 = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10);
-      const weekMin = logs.filter((x) => String(x.date || "") >= weekAgo2).reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      if (sumEl) sumEl.textContent = `累计 ${fmtMin(totalMin)} · 最近七天 ${fmtMin(weekMin)} · 今天 ${fmtMin(todayMin)}`;
     }
 
     const byCat = {};
@@ -213,6 +250,57 @@
     }
   } catch (err) {}
 })();
+</script>
+<script src="atmos.js?v=310"></script>
+<script>
+(function () {
+  if (!localStorage.getItem("paopaowu_admin")) return;
+  document.querySelectorAll('footer a[href="login.html"]').forEach(function (a) {
+    a.textContent = "Kira";
+    a.style.color = "var(--gold)";
+    a.title = "已登录";
+  });
+})();
+</script>
+
+<script>
+/* Kira page: each block edits only itself; buttons are static in the HTML. */
+(function () {
+  var isLocal = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
+  var isAdmin = false;
+  try { isAdmin = !!localStorage.getItem("paopaowu_admin"); } catch (e) {}
+  if (!isAdmin && !isLocal) return;
+
+  var SEL = "p, dd, dt, .v, .k, .tk";
+  var page = location.pathname.split("/").pop() || "index";
+
+  [].slice.call(document.querySelectorAll("[data-edit-block]")).forEach(function (btn) {
+    var host = document.getElementById(btn.getAttribute("data-edit-block"));
+    if (!host) return;
+    var key = "edits_" + btn.getAttribute("data-edit-block") + "_" + page;
+    var on = false;
+
+    function items() { return [].slice.call(host.querySelectorAll(SEL)); }
+
+    try {
+      var saved = JSON.parse(localStorage.getItem(key) || "{}");
+      items().forEach(function (el, i) { if (saved[i] != null) el.innerHTML = saved[i]; });
+    } catch (e) {}
+
+    btn.addEventListener("click", function () {
+      on = !on;
+      btn.textContent = on ? "\u5b8c\u6210" : "\u7f16\u8f91";
+      btn.classList.toggle("on", on);
+      items().forEach(function (el) { el.contentEditable = on ? "true" : "false"; });
+      if (!on) {
+        var out = {};
+        items().forEach(function (el, i) { out[i] = el.innerHTML; });
+        try { localStorage.setItem(key, JSON.stringify(out)); } catch (e) {}
+      }
+    });
+  });
+})();
+
 </script>
 <script src="wall.js?v=4"></script>
 </body>
