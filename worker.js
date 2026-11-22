@@ -138,6 +138,65 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/comment" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) {
+          return new Response(JSON.stringify({ ok: false, error: "密码不对" }), {
+            status: 403,
+            headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+          });
+        }
+        const who = String(body.who || "").trim().slice(0, 12);
+        const text = String(body.text || "").trim().slice(0, 1200);
+        if (!who || !text) throw new Error("缺内容");
+
+        let data = null;
+        try {
+          const blob = await env.RATINGS.get("records_blob", "json");
+          if (blob && Array.isArray(blob.items)) data = blob;
+        } catch (e) {}
+        if (!data) {
+          const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
+          if (!res.ok) throw new Error("upstream " + res.status);
+          data = await res.json();
+        }
+        if (!Array.isArray(data.items)) data.items = [];
+
+        const now = new Date();
+        const sh = new Date(now.getTime() + 8 * 3600 * 1000); // 北京时间
+        const pad = (n) => String(n).padStart(2, "0");
+        let y = sh.getUTCFullYear(), m = sh.getUTCMonth(), d = sh.getUTCDate();
+        const hh = sh.getUTCHours();
+        if (hh < 4) {
+          const prev = new Date(Date.UTC(y, m, d - 1));
+          y = prev.getUTCFullYear(); m = prev.getUTCMonth(); d = prev.getUTCDate();
+        }
+        const item = {
+          id: "cr-" + y + pad(m + 1) + pad(d) + "-" + Math.random().toString(36).slice(2, 6),
+          cat: "critique",
+          date: `${y}-${pad(m + 1)}-${pad(d)}`,
+          time: `${pad(hh)}:${pad(sh.getUTCMinutes())}`,
+          who: who,
+          text: text,
+        };
+        if (body.reply_to) item.reply_to = String(body.reply_to).slice(0, 12);
+        data.items.push(item);
+
+        const blob = JSON.stringify(data);
+        await env.RATINGS.put("records_blob", blob);
+        await env.RATINGS.put("records_blob_at", String(Date.now()));
+        return new Response(JSON.stringify({ ok: true, item }), {
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: String(e).slice(0, 160) }), {
+          status: 400,
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      }
+    }
+
     if (url.pathname === "/data/records.json") {
       try {
         let json = null;
