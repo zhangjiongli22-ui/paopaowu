@@ -44,7 +44,7 @@ export default {
       const id = url.searchParams.get("id") || "";
       const kv = await env.RATINGS.get("item:" + id, "json");
       const keys = await env.RATINGS.list({ prefix: "item:" });
-      const data = await fetch(DATA_URL + "?t=" + Date.now(), { cf: { cacheTtl: 0 } }).then((r) => r.json()).catch(() => ({}));
+      const data = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheTtl: 0 } }).then((r) => r.json()).catch(() => ({}));
       const it = (data.items || []).find((x) => String(x.id) === id) || null;
       return new Response(JSON.stringify({ id, kv, keyCount: keys.keys.length, item: it }), {
         headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
