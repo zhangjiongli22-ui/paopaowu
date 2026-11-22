@@ -97,7 +97,7 @@ try {
     var all = (data.items || []).filter(function (x) { return x.cat === "critique"; });
     if (!all.length) { host.innerHTML = '<p class="loading">还没有锐评。</p>'; return; }
     var byDay = {};
-    all.forEach(function (x) { var d = dayOf(x.date, x.time) || "未记"; (byDay[d] = byDay[d] || []).push(x); });
+    all.forEach(function (x) { var d = x.date || "未记"; (byDay[d] = byDay[d] || []).push(x); });
     var days = Object.keys(byDay).sort().reverse();
     host.innerHTML = days.map(function (d) {
       var rows = byDay[d].slice().sort(function (a, b) { return String(a.time || "").localeCompare(String(b.time || "")); });
