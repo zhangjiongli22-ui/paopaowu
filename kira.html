@@ -37,7 +37,8 @@
     <div class="k2-hero-side" id="k2-hero-side">
       <div class="k2-hero-stat"><b data-stat="finished">—</b><span>看完 / 玩完</span></div>
       <div class="k2-hero-stat"><b data-stat="fav">—</b><span>最爱</span></div>
-      <div class="k2-hero-stat"><b data-stat="hours">—</b><span>记录时长</span></div>
+      <div class="k2-hero-stat"><b data-stat="work">—</b><span>工作累计</span></div>
+      <div class="k2-hero-stat"><b data-stat="game">—</b><span>游戏累计</span></div>
     </div>
   </section>
 
@@ -91,6 +92,12 @@
     <div class="k2-picks" id="kira-picks"></div>
   </section>
 
+  <!-- 时间分配 -->
+  <section class="k2-section">
+    <header class="k2-head"><span class="k2-head-no">05</span><h2>时间分配</h2><span class="k2-head-line"></span></header>
+    <div class="k2-time" id="kira-time-list"></div>
+  </section>
+
   <!-- 手上的事 -->
   <section class="k2-section">
     <header class="k2-head"><span class="k2-head-no">04</span><h2>手上的事</h2><span class="k2-head-line"></span></header>
@@ -116,7 +123,22 @@
     stat("finished", finished.length);
     stat("wish", wish.length);
     stat("fav", fav.length);
-    stat("hours", fmtMin(totalMin));
+    const kindSum = {};
+    logs.forEach((x) => { kindSum[x.kind] = (kindSum[x.kind] || 0) + (Number(x.minutes) || 0); });
+    stat("work", fmtMin(kindSum.work || 0));
+    stat("game", fmtMin(kindSum.game || 0));
+    const KIND_NAME = { work: "工作", game: "游戏", fitness: "健身", piano: "钢琴", study: "学习", media: "看片" };
+    const timeHost = document.getElementById("kira-time-list");
+    if (timeHost) {
+      const kinds = Object.keys(kindSum).sort((a, b) => kindSum[b] - kindSum[a]);
+      const max = Math.max(...kinds.map((k) => kindSum[k]), 1);
+      timeHost.innerHTML = kinds.map((k) => `
+        <div class="k2-time-row">
+          <span class="k2-time-k">${KIND_NAME[k] || k}</span>
+          <span class="k2-time-bar"><i style="width:${Math.round((kindSum[k] / max) * 100)}%"></i></span>
+          <span class="k2-time-v">${fmtMin(kindSum[k])}</span>
+        </div>`).join("");
+    }
 
     const playing = items.filter((x) => x.status === "在玩").slice(0, 4).map((x) => x.title);
     const watching = items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title);
