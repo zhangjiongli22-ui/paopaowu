@@ -627,12 +627,7 @@ function drawStats() {
         ${Object.keys(KIND).map((k) => `<div class="stat-bar"><span class="k">${KIND[k]}</span><span class="bar"><i style="width:${Math.round(((byKind[k] || 0) / maxKind) * 100)}%"></i></span><span class="v">${fmt(byKind[k] || 0)}</span></div>`).join("")}
       </div>
 
-      <h3 class="stat-h">条目分布</h3>
-      <div class="stat-chips">
-        ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
-      </div>
-
-      <h3 class="stat-h">工作流时间统计<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
+      <h3 class="stat-h stat-h-sub">最大工作流 · 细分<span class="stat-sub">${esc(mainFlow.name)}</span></h3>
       <div class="flow-single">
         <span class="flow-name">${esc(mainFlow.name)}</span>
         <span class="flow-total">${fmt(siteMin)}</span>
@@ -650,6 +645,11 @@ function drawStats() {
             </li>`).join("")}
         </ol>
       </details>
+      <h3 class="stat-h">条目分布</h3>
+      <div class="stat-chips">
+        ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
+      </div>
+
     </section>`;
 }
 
