@@ -2200,7 +2200,8 @@
    "bgm_rating": 7.6,
    "bgm_id": 294934,
    "name_cn": "罪恶装备 -奋战-",
-   "cover": "assets/covers/game-722608b9-bgm.jpg"
+   "cover": "assets/covers/game-722608b9-bgm.jpg",
+   "pinned": true
   },
   {
    "id": "game-f7e3f63a",
