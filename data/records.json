@@ -166,7 +166,12 @@
    "bgm_id": 380974,
    "name_cn": "绝区零",
    "play_since": "2026-10-10",
-   "pinned": true
+   "pinned": true,
+   "shots": [
+    "assets/shots/绝区零/zzz-01.jpg",
+    "assets/shots/绝区零/zzz-02.jpg",
+    "assets/shots/绝区零/zzz-03.jpg"
+   ]
   },
   {
    "id": "g-1004",
