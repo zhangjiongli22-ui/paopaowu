@@ -1917,3 +1917,14 @@ body.lb-open { overflow: hidden; }
 #to-top:hover {
   border-color: rgba(88, 199, 255, .5);
 }
+
+
+.rec-head {
+  margin-top: -10px;
+  margin-bottom: 6px;
+}
+.rec-head h1 {
+  font-size: 26px;
+  letter-spacing: .01em;
+}
+.rec-top { margin-top: 8px; }
