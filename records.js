@@ -476,6 +476,14 @@ function buildToc() {
 
   let scrollAnimToken = 0;
   function animateTo(targetY, idx) {
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) {
+      // 手机上惯性滚动容易和动画抢位置，直接定位最稳
+      window.scrollTo(0, targetY);
+      setActive(idx);
+      spyLockUntil = Date.now() + 300;
+      return;
+    }
     const token = ++scrollAnimToken;
     const root = document.documentElement;
     const startY = window.scrollY;
