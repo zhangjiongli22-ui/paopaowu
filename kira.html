@@ -6,7 +6,7 @@
 <title>Kira · 大肥鱼和Kira的泡泡屋</title>
 <meta name="description" content="Kira：这间泡泡屋的主人，玩什么、看什么、在折腾什么。">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=72">
+<link rel="stylesheet" href="style.css?v=73">
 </head>
 <body class="kira-page">
 <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -169,7 +169,11 @@
       const label = { work: "工作", game: "打游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
       const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
       const parts = todayLogs.map((x) => `${label[x.kind] || "忙别的"} ${fmtMin(Number(x.minutes) || 0)}`);
-      set("kira-today", `今天 ${parts.join("、")}。`);
+      const main = todayLogs.slice().sort((a, b) => (Number(b.minutes) || 0) - (Number(a.minutes) || 0))[0];
+      const mainName = label[main.kind] || "别的事";
+      set("kira-today", todayLogs.length === 1
+        ? `今天主要${mainName}，花了 ${fmtMin(Number(main.minutes) || 0)}。`
+        : `今天在${parts.join("、")}上，一共 ${fmtMin(total)}。`);
       set("kira-today-note", todayLogs.map((x) => x.text).join("；") + "。");
     }
 
