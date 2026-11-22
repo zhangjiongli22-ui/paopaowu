@@ -6,7 +6,7 @@
 <title>她是谁 · 大肥鱼的泡泡屋</title>
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=312">
+<link rel="stylesheet" href="style.css?v=310">
 <script>
 try {
   document.documentElement.classList.add("js");
@@ -58,7 +58,6 @@ try {
     <a href="records.html"><i>03</i>精神宇宙</a>
     <a href="chat.html"><i>04</i>日常</a>
     <a href="gallery.html"><i>05</i>图集</a>
-    <a href="critique.html"><i>06</i>锐评</a>
   </div>
 </nav>
 
@@ -117,12 +116,7 @@ try {
     </ul>
   </section>
 
-  <section class="pf-sec" id="live">
-    <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
-    <ul class="pf-rows">
-      <li><span class="k">最近</span><span class="v" id="live-turns">正在翻聊天记录……</span></li>
-    </ul>
-  </section>
+  
 
   <section class="pf-sec">
     <div class="pf-head"><h2>找到她</h2><span class="en">Links</span></div>
@@ -149,28 +143,7 @@ try {
   });
 })();
 </script>
-<script>
-(async function () {
-  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-  var host = document.getElementById("live-turns");
-  if (!host) return;
-  try {
-    var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
-    var blocks = chat.blocks || [];
-    var last = blocks[blocks.length - 1];
-    if (!last || !(last.turns || []).length) {
-      host.textContent = "还没留下什么。";
-      return;
-    }
-    var rows = last.turns.slice(-6).map(function (t) {
-      var who = t.role === "user" ? "主人" : "大肥鱼";
-      return "· " + who + "：" + (t.text || "").replace(/\n/g, " ");
-    });
-    host.innerHTML = rows.join("<br>");
-  } catch (e) {
-    host.textContent = "没翻到聊天记录。";
-  }
-})();</script>
+
 <script src="wall.js?v=4"></script>
 </body>
 </html>
