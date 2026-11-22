@@ -414,7 +414,7 @@ footer {
   background: radial-gradient(circle at 32% 30%, rgba(210, 245, 255, .95), rgba(88, 199, 255, .16) 60%, transparent 72%);
   box-shadow: 0 0 12px rgba(88, 199, 255, .25);
   animation: rise linear infinite;
-  opacity: .55;
+  opacity: .9;
 }
 .bubbles span:nth-child(1) { left: 8%;  animation-duration: 15s; }
 .bubbles span:nth-child(2) { left: 24%; animation-duration: 19s; animation-delay: 2s; width: 8px; height: 8px; }
@@ -2311,10 +2311,10 @@ body::before {
   position: fixed;
   inset: -6vmax;
   z-index: -2;
-  background-image: url("assets/covers/g-1003-bg8.jpg");
+  background-image: url("assets/shots/%E6%98%9F%E7%A9%B9%E9%93%81%E9%81%93/s01.jpg");
   background-size: cover;
   background-position: center 30%;
-  filter: blur(28px) saturate(1.15) brightness(.52);
+  filter: blur(10px) saturate(1.2) brightness(.46);
   opacity: .55;
   pointer-events: none;
 }
@@ -2334,3 +2334,17 @@ body::after {
   50% { text-shadow: 0 0 40px rgba(88, 199, 255, .5), 0 0 90px rgba(126, 240, 208, .28); }
 }
 .home-main2 h1, .hero h1, .k2-name { animation: titleGlow 6s ease-in-out infinite; }
+
+
+/* ===== 透明主题 v2：更透、更亮 ===== */
+.kira-card, .k2-card, .kira-stat, .rec-top, .side-toc, #to-top {
+  background: rgba(8, 22, 34, .42) !important;
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+}
+.poster .poster-meta, .poster-status, .poster-badge { backdrop-filter: blur(6px); }
+.nav {
+  background: rgba(6, 18, 28, .5);
+  backdrop-filter: blur(14px);
+}
+.fav-fold, .sec-fold { border-color: rgba(255,255,255,.07); }
