@@ -15,7 +15,8 @@ const CATS = {
 const GROUPS = {
   hobby: { name: "精神食粮", cats: ["anime", "tv", "film", "game", "book"] },
   idea:  { name: "计划列表", cats: ["idea", "issue"] },
-  plan:  { name: "每日统计", cats: ["log"] }
+  plan:  { name: "每日内容", cats: ["log"] },
+  stats: { name: "统计", cats: [] }
 };
 
 const main = document.getElementById("rec-main");
@@ -565,7 +566,57 @@ function addWish(wish) {
   main.appendChild(box);
 }
 
+function drawStats() {
+  const all = items;
+  const hobby = all.filter((x) => ["anime", "tv", "film", "game", "book"].includes(x.cat));
+  const logs = all.filter((x) => x.cat === "log");
+  const ideas = all.filter((x) => x.cat === "idea" || x.cat === "issue");
+  const rated = hobby.filter((x) => Number(x.rating) > 0);
+  const avg = rated.length ? (rated.reduce((a, x) => a + Number(x.rating), 0) / rated.length / 2).toFixed(2) : "—";
+  const KIND = { work: "工作", game: "游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
+  const byKind = {};
+  logs.forEach((x) => { byKind[x.kind] = (byKind[x.kind] || 0) + (Number(x.minutes) || 0); });
+  const totalMin = logs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+  const siteMin = logs.filter((x) => /网站|站点|页面|封面|部署|推送|改版|上线/.test(x.text || ""))
+    .reduce((a, x) => a + (Number(x.minutes) || 0), 0);
+  const fmt = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : (m || 0) + "m");
+  const catRowData = [
+    ["动画", hobby.filter((x) => x.cat === "anime").length],
+    ["剧集", hobby.filter((x) => x.cat === "tv").length],
+    ["电影", hobby.filter((x) => x.cat === "film").length],
+    ["游戏", hobby.filter((x) => x.cat === "game").length],
+    ["读书", hobby.filter((x) => x.cat === "book").length],
+    ["计划", ideas.length],
+    ["日志", logs.length]
+  ];
+  const maxKind = Math.max(1, ...Object.values(byKind));
+
+  main.innerHTML = `
+    <section class="stat-wrap">
+      <div class="stat-hero">
+        <div class="stat-big"><b>${all.length}</b><span>全部条目</span></div>
+        <div class="stat-big"><b>${rated.length}</b><span>已评分</span></div>
+        <div class="stat-big"><b>${avg}</b><span>平均分 / 5</span></div>
+        <div class="stat-big"><b>${fmt(totalMin)}</b><span>累计记录时长</span></div>
+      </div>
+
+      <h3 class="stat-h">网站建设</h3>
+      <div class="stat-line"><b>${fmt(siteMin)}</b> —— 按日志里与站点相关的记录累计（含今日收尾 ${fmt(210)}）。只统计记下来的部分，没记的不算。</div>
+
+      <h3 class="stat-h">时间都花在</h3>
+      <div class="stat-bars">
+        ${Object.keys(KIND).map((k) => `<div class="stat-bar"><span class="k">${KIND[k]}</span><span class="bar"><i style="width:${Math.round(((byKind[k] || 0) / maxKind) * 100)}%"></i></span><span class="v">${fmt(byKind[k] || 0)}</span></div>`).join("")}
+      </div>
+
+      <h3 class="stat-h">条目分布</h3>
+      <div class="stat-chips">
+        ${catRowData.map(([k, v]) => `<span class="stat-chip"><b>${v}</b>${k}</span>`).join("")}
+      </div>
+    </section>`;
+}
+
 function draw() {
+  if (group === "stats") { drawStats(); return; }
   const poolAll = items.filter((x) => GROUPS[group].cats.includes(x.cat));
   const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
