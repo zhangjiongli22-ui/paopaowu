@@ -296,7 +296,8 @@
     "assets/shots/nte-all/n070-8d92175f.jpg",
     "assets/shots/nte-all/n071-b1c57880.jpg",
     "assets/shots/nte-all/n072-f602e51e.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "game-7a097846",
@@ -363,7 +364,8 @@
     "assets/shots/forza-horizon-6/s01-3d3f12ca.jpg",
     "assets/shots/forza-horizon-6/s02-1a6a9714.jpg",
     "assets/shots/forza-horizon-6/s03-3a49f607.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "game-4d0828ee",
@@ -381,7 +383,8 @@
    "play_since": "2026-01-29",
    "shots": [
     "assets/shots/warframe/s01-e3d98cf3.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "game-9951678e",
@@ -401,7 +404,8 @@
    "shots": [
     "assets/shots/星穹铁道/s01-437546a9.jpg",
     "assets/shots/星穹铁道/s02-d7f5780f.jpg"
-   ]
+   ],
+   "pinned": true
   },
   {
    "id": "tv-a837004a",
