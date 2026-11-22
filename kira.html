@@ -6,9 +6,9 @@
 <title>Kira · 大肥鱼和Kira的泡泡屋</title>
 <meta name="description" content="Kira：这间泡泡屋的主人，玩什么、看什么、在折腾什么。">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=71">
+<link rel="stylesheet" href="style.css?v=72">
 </head>
-<body>
+<body class="kira-page">
 <div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <nav class="nav">
@@ -22,89 +22,79 @@
   </div>
 </nav>
 
-<header class="kira-hero">
-  <div class="kira-hero-inner">
-    <p class="kira-kicker">THE OWNER OF THIS HOUSE</p>
-    <h1 class="kira-name">Kira</h1>
-    <p class="kira-sub">闪光的Kira · 白天折腾电脑，晚上打游戏看番</p>
-    <div class="kira-chips">
-      <span>游戏</span>
-      <span>动画</span>
-      <span>电影</span>
-      <span>健身</span>
-      <span>钢琴</span>
-    </div>
-  </div>
-</header>
+<main class="k2">
 
-<main class="kira-main">
+  <!-- Hero -->
+  <section class="k2-hero">
+    <div class="k2-hero-main">
+      <p class="k2-kicker">THE OWNER OF THIS HOUSE</p>
+      <h1 class="k2-name">Kira</h1>
+      <p class="k2-sub">闪光的Kira。白天折腾电脑，晚上打游戏看番。</p>
+      <div class="k2-chips">
+        <span>游戏</span><span>动画</span><span>电影</span><span>健身</span><span>钢琴</span>
+      </div>
+    </div>
+    <div class="k2-hero-side" id="k2-hero-side">
+      <div class="k2-hero-stat"><b data-stat="finished">—</b><span>看完 / 玩完</span></div>
+      <div class="k2-hero-stat"><b data-stat="fav">—</b><span>最爱</span></div>
+      <div class="k2-hero-stat"><b data-stat="hours">—</b><span>记录时长</span></div>
+    </div>
+  </section>
 
   <!-- 个人档案 -->
-  <section class="kira-now kira-profile">
-    <p class="kira-now-label">个人档案</p>
-    <div class="kira-facts">
-      <div class="kira-fact"><span class="kira-fact-k">称呼</span><span class="kira-fact-v">Kira / 闪光的Kira</span></div>
-      <div class="kira-fact"><span class="kira-fact-k">身份</span><span class="kira-fact-v">这间泡泡屋的主人</span></div>
-      <div class="kira-fact"><span class="kira-fact-k">白天</span><span class="kira-fact-v">折腾电脑、写工具、剪视频</span></div>
-      <div class="kira-fact"><span class="kira-fact-k">晚上</span><span class="kira-fact-v">打游戏、看番、看电影</span></div>
-      <div class="kira-fact"><span class="kira-fact-k">长期</span><span class="kira-fact-v">健身、练琴、记录每天干了什么</span></div>
-      <div class="kira-fact"><span class="kira-fact-k">偏爱</span><span class="kira-fact-v">有氛围、能沉进去的作品</span></div>
+  <section class="k2-section">
+    <header class="k2-head"><span class="k2-head-no">01</span><h2>个人档案</h2><span class="k2-head-line"></span></header>
+    <dl class="k2-facts">
+      <div><dt>称呼</dt><dd>Kira，也叫闪光的Kira</dd></div>
+      <div><dt>身份</dt><dd>这间泡泡屋的主人</dd></div>
+      <div><dt>白天</dt><dd>折腾电脑、写工具、剪视频</dd></div>
+      <div><dt>晚上</dt><dd>打游戏、看番、看电影</dd></div>
+      <div><dt>长期</dt><dd>健身、练琴、每天做点记录</dd></div>
+      <div><dt>偏爱</dt><dd>有氛围、能沉进去的作品</dd></div>
+    </dl>
+  </section>
+
+  <!-- 现在 -->
+  <section class="k2-section">
+    <header class="k2-head"><span class="k2-head-no">02</span><h2>现在</h2><span class="k2-head-line"></span></header>
+    <div class="k2-two">
+      <article class="k2-card">
+        <p class="k2-card-k">在玩</p>
+        <p class="k2-card-t" id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</p>
+        <p class="k2-card-d">画面漂亮、节奏舒服，偏爱能长期玩下去的长线游戏。</p>
+      </article>
+      <article class="k2-card">
+        <p class="k2-card-k">在看</p>
+        <p class="k2-card-t" id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</p>
+        <p class="k2-card-d">动画和电影都看，恐怖片、怪谈尤其多。</p>
+      </article>
+      <article class="k2-card">
+        <p class="k2-card-k">工作与折腾</p>
+        <p class="k2-card-t">AI、自动化、剪视频、搭这个网站</p>
+        <p class="k2-card-d">给自己搭工具，也做点视频；这个泡泡屋就是一点点改出来的。</p>
+      </article>
+      <article class="k2-card k2-card-today">
+        <p class="k2-card-k">今天干了什么</p>
+        <p class="k2-card-t" id="kira-today">今天还没记录</p>
+        <p class="k2-card-d" id="kira-today-note">凌晨四点前的活动算前一天。</p>
+      </article>
     </div>
   </section>
 
-  <!-- 数据面板 -->
-  <section class="kira-stats" id="kira-stats">
-    <div class="kira-stat"><span class="kira-stat-n" data-stat="finished">—</span><span class="kira-stat-l">已看过 / 玩过</span></div>
-    <div class="kira-stat"><span class="kira-stat-n" data-stat="wish">—</span><span class="kira-stat-l">待看 / 待玩</span></div>
-    <div class="kira-stat"><span class="kira-stat-n" data-stat="fav">—</span><span class="kira-stat-l">我的最爱</span></div>
-    <div class="kira-stat"><span class="kira-stat-n" data-stat="hours">—</span><span class="kira-stat-l">记录时长</span></div>
-  </section>
-
-  <section class="kira-now">
-    <p class="kira-now-label">现在</p>
-    <p class="kira-now-text" id="kira-now-text">在异环和动森之间来回，补《葬送的芙莉莲》第二季，顺手改这个网站。</p>
-  </section>
-
-  <section class="kira-grid">
-    <article class="kira-card">
-      <p class="kira-card-k">在玩</p>
-      <p class="kira-card-t" id="kira-play-list">异环、明日方舟：终末地、绝区零、动物森友会</p>
-      <p class="kira-card-d">画面漂亮、节奏舒服，偏爱能长期玩下去的长线游戏。</p>
-    </article>
-
-    <article class="kira-card">
-      <p class="kira-card-k">在看</p>
-      <p class="kira-card-t" id="kira-watch-list">葬送的芙莉莲第二季、睡魔、半泽直树</p>
-      <p class="kira-card-d" id="kira-watch-note">动画和电影都看，恐怖片、怪谈尤其多。</p>
-    </article>
-
-    <article class="kira-card">
-      <p class="kira-card-k">工作与折腾</p>
-      <p class="kira-card-t">AI、自动化、剪视频、搭这个网站</p>
-      <p class="kira-card-d" id="kira-work-note">给自己搭工具，也做点视频；这个泡泡屋就是一点点改出来的。</p>
-    </article>
-
-    <article class="kira-card">
-      <p class="kira-card-k">今天干了什么</p>
-      <p class="kira-card-t" id="kira-today">今天还没记录</p>
-      <p class="kira-card-d" id="kira-today-note">每日统计会根据记录自动更新，凌晨四点前算前一天。</p>
-    </article>
-  </section>
-
-  <!-- 我的品味 -->
-  <section class="kira-now kira-taste">
-    <p class="kira-now-label">我的品味</p>
-    <p class="kira-now-text" id="kira-taste-line">正在从收藏里归纳…</p>
-    <div class="kira-chips" id="kira-taste-chips">
+  <!-- 品味 -->
+  <section class="k2-section">
+    <header class="k2-head"><span class="k2-head-no">03</span><h2>我的品味</h2><span class="k2-head-line"></span></header>
+    <p class="k2-taste" id="kira-taste-line">正在从收藏里归纳…</p>
+    <div class="k2-chips" id="kira-taste-chips">
       <span>恐怖片</span><span>日本动画</span><span>剧情电影</span><span>长线游戏</span><span>钢琴 / 音乐</span>
     </div>
-    <div class="kira-picks" id="kira-picks"></div>
+    <div class="k2-picks" id="kira-picks"></div>
   </section>
 
   <!-- 手上的事 -->
-  <section class="kira-now kira-ideas">
-    <p class="kira-now-label">手上的事</p>
-    <div class="kira-idea-list" id="kira-idea-list"></div>
+  <section class="k2-section">
+    <header class="k2-head"><span class="k2-head-no">04</span><h2>手上的事</h2><span class="k2-head-line"></span></header>
+    <div class="k2-two k2-two-ideas" id="kira-idea-list"></div>
   </section>
 
 </main>
@@ -122,55 +112,47 @@
     const totalMin = logs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
     const set = (id, text) => { const el = document.getElementById(id); if (el && text) el.textContent = text; };
     const fmtMin = (m) => (m >= 60 ? Math.floor(m / 60) + "h" + (m % 60 ? (m % 60) + "m" : "") : m + "m");
-
     const stat = (k, v) => { const el = document.querySelector(`[data-stat="${k}"]`); if (el) el.textContent = v; };
     stat("finished", finished.length);
     stat("wish", wish.length);
     stat("fav", fav.length);
     stat("hours", fmtMin(totalMin));
 
-    const play = items.filter((x) => x.status === "在玩").slice(0, 4).map((x) => x.title);
-    const watch = items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title);
-    set("kira-play-list", play.join("、"));
-    set("kira-watch-list", watch.join("、"));
+    set("kira-play-list", items.filter((x) => x.status === "在玩").slice(0, 4).map((x) => x.title).join("、"));
+    set("kira-watch-list", items.filter((x) => x.status === "在看").slice(0, 4).map((x) => x.title).join("、"));
 
-    // 今天
-    const now = new Date(Date.now() - 4 * 3600 * 1000);
-    const day = now.toISOString().slice(0, 10);
+    const day = new Date(Date.now() - 4 * 3600 * 1000).toISOString().slice(0, 10);
     const todayLogs = logs.filter((x) => x.date === day);
     if (todayLogs.length) {
       set("kira-today", todayLogs.map((x) => `${x.text}（${fmtMin(Number(x.minutes) || 0)}）`).join(" · "));
       const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      set("kira-today-note", `共 ${fmtMin(total)}，凌晨四点前的活动算前一天。`);
+      set("kira-today-note", `共 ${fmtMin(total)}。凌晨四点前的活动算前一天。`);
     }
 
-    // 品味归纳
     const byCat = {};
     items.forEach((x) => { if (x.cat) byCat[x.cat] = (byCat[x.cat] || 0) + 1; });
-    const rated = finished.filter((x) => Number(x.rating) > 0).sort((a, b) => Number(b.rating) - Number(a.rating)).slice(0, 6);
-    const filmN = byCat.film || 0, animeN = byCat.anime || 0, tvN = byCat.tv || 0, gameN = byCat.game || 0;
     set("kira-taste-line",
-      `动画 ${animeN} 部、剧集 ${tvN} 部、电影 ${filmN} 部、游戏 ${gameN} 款，其中 ${finished.length} 部已经看完或玩完。` +
-      `口味偏氛围向：恐怖、怪谈、剧情片，加上能沉进去的长线游戏和日本动画。`);
+      `动画 ${byCat.anime || 0} 部、剧集 ${byCat.tv || 0} 部、电影 ${byCat.film || 0} 部、游戏 ${byCat.game || 0} 款，` +
+      `其中 ${finished.length} 部已经看完或玩完。口味偏氛围向：恐怖、怪谈、剧情片，加上能沉进去的长线和日本动画。`);
 
+    const rated = finished.filter((x) => Number(x.rating) > 0).sort((a, b) => Number(b.rating) - Number(a.rating)).slice(0, 6);
     if (rated.length) {
       const picks = document.getElementById("kira-picks");
       if (picks) {
-        picks.innerHTML = '<p class="kira-picks-label">评分最高的几部</p><div class="kira-pick-row">' +
-          rated.map((x) => `<a class="kira-pick" href="record.html?id=${encodeURIComponent(x.id)}"><span class="kira-pick-t">${x.title}</span><span class="kira-pick-s">${(Number(x.rating) / 2).toFixed(1)}</span></a>`).join("") +
+        picks.innerHTML = '<p class="k2-picks-label">评分最高</p><div class="k2-pick-row">' +
+          rated.map((x) => `<a class="k2-pick" href="record.html?id=${encodeURIComponent(x.id)}">${x.title}<span>${(Number(x.rating) / 2).toFixed(1)}</span></a>`).join("") +
           "</div>";
       }
     }
 
-    // 手上的事（巧思）
     const ideas = items.filter((x) => x.cat === "idea");
     const doing = ideas.filter((x) => x.status !== "已达成");
     const done = ideas.filter((x) => x.status === "已达成");
-    const list = document.getElementById("kira-idea-list");
-    if (list) {
-      list.innerHTML =
-        (doing.length ? `<p class="kira-idea-group">计划中</p><ul class="kira-idea-ul">` + doing.map((x) => `<li><span class="kira-dot"></span>${x.title}${x.note ? `<span class="kira-idea-note">${x.note}</span>` : ""}</li>`).join("") + "</ul>" : "") +
-        (done.length ? `<p class="kira-idea-group">已经做到</p><ul class="kira-idea-ul done">` + done.map((x) => `<li><span class="kira-dot ok"></span>${x.title}</li>`).join("") + "</ul>" : "");
+    const host = document.getElementById("kira-idea-list");
+    if (host) {
+      const block = (title, list, cls) => `<article class="k2-card"><p class="k2-card-k">${title}</p><ul class="k2-idea ${cls}">` +
+        list.map((x) => `<li><span class="k2-dot"></span>${x.title}${x.note ? `<em>${x.note}</em>` : ""}</li>`).join("") + "</ul></article>";
+      host.innerHTML = block("计划中", doing, "") + block("已经做到", done, "done");
     }
   } catch (err) {}
 })();
