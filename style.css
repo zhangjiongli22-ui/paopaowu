@@ -2225,3 +2225,5 @@ body.lb-open { overflow: hidden; }
   background: linear-gradient(90deg, rgba(88,199,255,.85), rgba(126,240,208,.85));
 }
 .k2-time-v { text-align: right; color: var(--muted); font-size: 12.5px; }
+
+.k2-time-sum { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; letter-spacing: .04em; }
