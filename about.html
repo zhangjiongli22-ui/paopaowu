@@ -120,7 +120,7 @@ try {
   <section class="pf-sec" id="live">
     <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
     <ul class="pf-rows">
-      <li><span class="k">最近</span><span class="v" id="live-turns">正在翻聊天记录……</span></li>
+      <li><span class="k">她说</span><span class="v" id="her-latest-line">正在听……</span></li>
     </ul>
   </section>
 
@@ -151,24 +151,20 @@ try {
 </script>
 <script>
 (async function () {
-  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-  var host = document.getElementById("live-turns");
+  var host = document.getElementById("her-latest-line");
   if (!host) return;
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
   try {
     var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
     var blocks = chat.blocks || [];
-    var last = blocks[blocks.length - 1];
-    if (!last || !(last.turns || []).length) {
-      host.textContent = "还没留下什么。";
-      return;
+    var last = null;
+    for (var i = blocks.length - 1; i >= 0 && !last; i--) {
+      var her = (blocks[i].turns || []).filter(function (t) { return t.role !== "user" && (t.text || "").trim(); });
+      if (her.length) last = her[her.length - 1].text.trim();
     }
-    var rows = last.turns.slice(-6).map(function (t) {
-      var who = t.role === "user" ? "你" : "她";
-      return "· " + who + "：" + (t.text || "").replace(/\n/g, " ");
-    });
-    host.innerHTML = rows.join("<br>");
+    host.innerHTML = last ? "\u300c" + esc(last) + "\u300d" : "\u8fd8\u6ca1\u8bf4\u8fc7\u4ec0\u4e48\u3002";
   } catch (e) {
-    host.textContent = "没翻到聊天记录。";
+    host.textContent = "\u6682\u65f6\u6ca1\u6709\u3002";
   }
 })();</script>
 <script src="wall.js?v=4"></script>
