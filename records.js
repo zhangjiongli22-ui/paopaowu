@@ -313,7 +313,15 @@ function draw() {
       const b = el("button", "cat-bubble", null);
       b.innerHTML = `<span class="cat-name">${CATS[k].name}</span><span class="cat-n">${n}</span>`;
       b.classList.toggle("on", k === cat);
-      b.addEventListener("click", () => { cat = k; draw(); });
+      b.addEventListener("click", () => {
+        cat = k;
+        const u = new URL(location.href);
+        u.searchParams.set("group", group);
+        if (k && k !== "all") u.searchParams.set("cat", k); else u.searchParams.delete("cat");
+        u.searchParams.delete("y");
+        history.replaceState(null, "", u);
+        draw();
+      });
       catRow.appendChild(b);
     });
   }
