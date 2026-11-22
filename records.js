@@ -14,8 +14,7 @@ const CATS = {
 
 const GROUPS = {
   hobby: { name: "精神食粮", cats: ["anime", "tv", "film", "game", "book"] },
-  idea:  { name: "计划列表", cats: ["idea"] },
-  issue: { name: "未解决", cats: ["issue"] },
+  idea:  { name: "计划列表", cats: ["idea", "issue"] },
   plan:  { name: "每日统计", cats: ["log"] }
 };
 
@@ -238,23 +237,6 @@ function drawMain(pool) {
   const staleToc = document.querySelector(".side-toc");
   if (staleToc) staleToc.remove();
   if (group === "plan") { drawLog(pool); return; }
-  if (group === "issue") {
-    const rows = pool.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-    if (!rows.length) {
-      main.innerHTML = '<p class="detail-empty">没有未解决的问题。</p>';
-      return;
-    }
-    const ul = document.createElement("ul");
-    ul.className = "todo-list unresolved";
-    rows.forEach((x) => {
-      const li = document.createElement("li");
-      li.className = "todo-item";
-      li.innerHTML = `<span class="todo-mark">○</span><span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span>`;
-      ul.appendChild(li);
-    });
-    main.appendChild(ul);
-    return;
-  }
   if (group === "idea") {
     const unresolved = pool.filter((x) => x.status === "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const planning = pool.filter((x) => x.status !== "已达成" && x.status !== "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
@@ -576,7 +558,7 @@ function draw() {
   const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
   catRow.innerHTML = "";
-  if (group === "hobby") {
+  if (group === "hobby" || (GROUPS[group] && GROUPS[group].cats.length > 1)) {
     const counts = {};
     poolAll.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
     ["all", ...GROUPS[group].cats].forEach((k) => {
