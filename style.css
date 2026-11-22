@@ -4126,3 +4126,7 @@ main#main { }
 .flow-single { margin-left: 0; }
 .flow-more { margin-left: 0; margin-top: 2px; }
 .flow-more > summary { padding: 2px 0; }
+
+
+/* 工作流多分类：每组一个总览 + 明细 */
+.flow-group { margin: 6px 0 20px; }
