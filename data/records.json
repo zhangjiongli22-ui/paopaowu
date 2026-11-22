@@ -409,7 +409,9 @@
    "title": "向饭沼一家谢罪",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/tv-a837004a-db.jpg",
+   "name_cn": "TXQ FICTION 向饭沼一家谢罪"
   },
   {
    "id": "tv-d0ff055a",
@@ -792,7 +794,9 @@
    "title": "布达佩斯大饭店",
    "status": "看过",
    "date": "2026-11-22",
-   "time": "00:57"
+   "time": "00:57",
+   "cover": "assets/covers/film-6f932ad7-db.jpg",
+   "name_cn": "布达佩斯大饭店"
   },
   {
    "id": "film-0981a09c",
@@ -3488,7 +3492,9 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:44",
-   "staff": "中央活動写真協会"
+   "staff": "中央活動写真協会",
+   "cover": "assets/covers/anime-a2ebd9c0-db.jpg",
+   "name_cn": "贫乏神来了！"
   },
   {
    "id": "anime-baf01b18",
@@ -4661,8 +4667,9 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "02:46",
-   "desc": "《Code Geass 反叛的魯路修》 是日本日昇製作的Code Geass動畫系列第一作，共播出2季。故事描述架空歷史中被神聖不列顛帝國侵略而亡國的日本──被改名為「11區」，當中立志粉碎帝國的黑色王子魯路修，與堅持公理的白色騎士朱雀所掀起的巨大變化。",
-   "name_cn": "Code Geass 反叛的魯路修"
+   "desc": "制作消息最早于《Code Geass 反叛的鲁路修 奇迹的诞生日》的DVD中公布，当时有一段包含基本剧情提要和影像概念的预告片。此动画作品原定于2010年内推出，但在公布机体设定后宣布押后，于2011年曾在杂志推出数张包含人设的版权绘。直至2012年1月12日，官方召开记者招待会公布Code Geass系列作品的最新情报，其中包括本作最新的声优、主题曲和发布形式的情报。\r\n\r\n2017年，超级大国“不列颠尼亚帝国”（Britannia）朝著称霸世界的目标，征服了世界近3分之1的版图。此时，7年前被改称“11区”的日本出现了动乱，牵动了世界对抗不列颠尼亚帝国的斗心。\r\n\r\n帝国早前与统领部分欧洲和非洲势力的E.U.达成停战协议。由于动乱出现，和平关系都随之破裂，不过在强硬的军事侵略下，E.U.并没有在战事中得到优势。一群“11区”的少年少女决定加入这场地狱战线，驾驶Knightmare参与这个目标及原因未明、战胜率只有5%的大战……",
+   "name_cn": "Code Geass 亡国的阿基德 第一章「翼龙降临」",
+   "cover": "assets/covers/anime-47391c20-codegeass.jpg"
   },
   {
    "id": "anime-c508d994",
@@ -5913,7 +5920,9 @@
    "title": "镜子面具",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:05"
+   "time": "03:05",
+   "cover": "assets/covers/film-d9b1169f-imdb2.jpg",
+   "name_cn": "Mirrormask"
   },
   {
    "id": "film-8916514c",
@@ -5983,11 +5992,13 @@
   },
   {
    "id": "film-5860981f",
-   "cat": "film",
+   "cat": "tv",
    "title": "永无止境剧",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:05"
+   "time": "03:05",
+   "cover": "assets/covers/film-5860981f-imdb2.jpg",
+   "name_cn": "Limitless"
   },
   {
    "id": "anime-4bb3612b",
@@ -6221,7 +6232,9 @@
    "title": "回应我",
    "status": "想看",
    "date": "2026-11-22",
-   "time": "03:05"
+   "time": "03:05",
+   "cover": "assets/covers/film-b8f98cf2-imdb2.jpg",
+   "name_cn": "Talk to Me"
   },
   {
    "id": "film-da4cf4b5",
