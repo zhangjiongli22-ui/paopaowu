@@ -2457,3 +2457,23 @@ body::after {
 @media (max-width: 1100px) { .gallery-grid { column-count: 3; } }
 @media (max-width: 820px) { .gallery-grid { column-count: 2; column-gap: 12px; } .gallery-grid figure { margin-bottom: 12px; } }
 @media (max-width: 520px) { .gallery-grid { column-count: 2; } }
+
+
+/* ===== 全面去掉毛玻璃 ===== */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.nav,
+.kira-card,
+.k2-card,
+.kira-stat,
+.k2-stat,
+.side-toc,
+#to-top,
+.poster-status,
+.poster-badge,
+.poster-meta {
+  background: rgba(8, 20, 30, .9) !important;
+}
+.kira-hero, .kira-now { background: transparent; }
