@@ -12,9 +12,15 @@ function shiftPass(input) {
 }
 async function mergeOverrides(json, env) {
   try {
-    const list = await env.RATINGS.list({ prefix: "item:" });
-    if (!list.keys.length) return json;
-    const values = await Promise.all(list.keys.map((k) => env.RATINGS.get(k.name, "json")));
+    let keys = [];
+    let cursor = undefined;
+    do {
+      const page = await env.RATINGS.list({ prefix: "item:", cursor, limit: 1000 });
+      keys = keys.concat(page.keys);
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    if (!keys.length) return json;
+    const values = await Promise.all(keys.map((k) => env.RATINGS.get(k.name, "json")));
     const byId = new Map();
     values.filter(Boolean).forEach((v) => byId.set(String(v.id), v));
     json.items = (json.items || []).map((it) => {
