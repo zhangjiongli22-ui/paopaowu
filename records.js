@@ -422,7 +422,16 @@ function buildToc() {
   const targets = rows.map((box) => ({ box, link: links[rows.indexOf(box)] })).filter((x) => x.link);
   let spyLockUntil = 0;
   const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
+  let spyTick = false;
   const onScroll = () => {
+    if (spyTick) return;
+    spyTick = true;
+    requestAnimationFrame(() => {
+      spyTick = false;
+      runSpy();
+    });
+  };
+  const runSpy = () => {
     if (Date.now() < spyLockUntil) return;
     const navTop = nav.getBoundingClientRect().top;
     if (!navTop) return;
