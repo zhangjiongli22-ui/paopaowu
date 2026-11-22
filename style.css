@@ -1852,6 +1852,8 @@ body.lb-open { overflow: hidden; }
 .side-toc a {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  text-align: left;
   gap: 8px;
   font-size: 13px;
   color: var(--muted);
@@ -1861,19 +1863,21 @@ body.lb-open { overflow: hidden; }
   white-space: nowrap;
   letter-spacing: .02em;
 }
-.side-toc a::before,
-.side-toc a::after {
+.side-toc a::before {
   content: "";
-  flex: 0 0 18px;
-  width: 18px;
+  flex: 0 0 20px;
+  width: 20px;
   height: 1px;
   background: var(--line);
+}
+.side-toc a::after {
+  content: none;
+  display: none;
 }
 .side-toc a:hover {
   color: var(--accent);
 }
-.side-toc a:hover::before,
-.side-toc a:hover::after {
+.side-toc a:hover::before {
   background: rgba(88, 199, 255, .45);
 }
 @media (max-width: 1180px) {
