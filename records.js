@@ -351,6 +351,14 @@ function ensureTopBtn() {
   document.body.appendChild(btn);
   const onScroll = () => btn.classList.toggle("show", window.scrollY > 360);
   window.addEventListener("scroll", onScroll, { passive: true });
+  // 记录滚动位置，详情页返回时直接定位
+  let saveTimer = null;
+  window.addEventListener("scroll", () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { sessionStorage.setItem("listScroll", String(window.scrollY)); } catch (e) {}
+    }, 150);
+  }, { passive: true });
   onScroll();
 }
 
@@ -395,6 +403,14 @@ function buildToc() {
     setActive(current);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
+  // 记录滚动位置，详情页返回时直接定位
+  let saveTimer = null;
+  window.addEventListener("scroll", () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { sessionStorage.setItem("listScroll", String(window.scrollY)); } catch (e) {}
+    }, 150);
+  }, { passive: true });
   onScroll();
 
   const anchor = document.getElementById("sec-fav") || rows[0];
