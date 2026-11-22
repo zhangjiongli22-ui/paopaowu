@@ -47,6 +47,11 @@ function stars(r) {
 function card(r, mode) {
   const a = el("a", "poster");
   a.href = "record.html?id=" + encodeURIComponent(r.id);
+  a.addEventListener("click", () => {
+    try {
+      sessionStorage.setItem("listState", JSON.stringify({ group, cat, y: window.scrollY }));
+    } catch (e) {}
+  });
   const box = el("div", "poster-box");
   if (r.cover) {
     const img = el("img");
@@ -335,8 +340,13 @@ function draw() {
     } catch (err) {}
   });
 
-  const gp = new URLSearchParams(location.search).get("group") || location.hash.replace("#", "");
+  const params = new URLSearchParams(location.search);
+  const gp = params.get("group") || location.hash.replace("#", "");
   if (gp && GROUPS[gp]) group = gp;
+  const cp = params.get("cat");
+  if (cp) cat = cp;
+  const restoreY = params.get("y");
+  if (restoreY) setTimeout(() => window.scrollTo(0, Number(restoreY) || 0), 120);
 
   // 小字视图切换，靠最右
   const drawViews = () => {
