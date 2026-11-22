@@ -310,6 +310,11 @@ function buildToc() {
     nav.appendChild(a);
   });
   document.body.appendChild(nav);
+  const anchor = document.getElementById("sec-fav") || rows[0];
+  if (anchor) {
+    const rect = anchor.getBoundingClientRect();
+    nav.style.top = (rect.top + window.scrollY) + "px";
+  }
 }
 
 const WISH = ["想看", "待看", "想玩", "想读"];
