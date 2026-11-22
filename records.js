@@ -243,7 +243,7 @@ function drawMain(pool) {
   section(sLabel, seenRows, true);
 }
 
-const WISH = ["想看", "待看", "想玩", "想读"];
+const WISH = ["想看", "待看", "想玩", "想读", "在看", "在玩"];
 
 function addWish(wish) {
   if (!wish || !wish.length) return;
