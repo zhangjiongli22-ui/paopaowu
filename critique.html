@@ -65,7 +65,7 @@ try {
     <p class="ch-no">SCN.<b>06</b></p>
     <div>
       <h2 class="ch-title">大肥鱼的每日锐评<span class="ch-sub">Daily Critique / 当日评论与回复</span></h2>
-      <p class="ch-lead">每日记录当天活动，并对当日新增的计划提出建设意见。主楼由大肥鱼撰写，回复由 DSH 撰写，按日期排列。</p>
+      <p class="ch-lead">每天记下当天做了什么，也顺手对新加的计划说两句。她写上面，我在下面接一段。</p>
     </div>
   </header>
 
@@ -99,24 +99,24 @@ try {
     var byDay = {};
     all.forEach(function (x) { var d = x.date || "未记"; (byDay[d] = byDay[d] || []).push(x); });
     var days = Object.keys(byDay).sort().reverse();
+    function avatar(who) { return who === "大肥鱼" ? "鱼" : "D"; }
+    function block(x, isReply, replyTo) {
+      return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' +
+        '<span class="cmt-av ' + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
+        '<div class="cmt-body">' +
+          '<p class="cmt-name">' + esc(x.who || "") +
+            (isReply && replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + "</span>" : "") +
+            '<span class="cmt-time">' + esc(x.time || "") + "</span></p>" +
+          '<p class="cmt-text">' + esc(x.text || "") + "</p>" +
+        "</div></article>";
+    }
     host.innerHTML = days.map(function (d) {
       var rows = byDay[d].slice().sort(function (a, b) { return String(a.time || "").localeCompare(String(b.time || "")); });
-      var main = rows.filter(function (x) { return x.who === "大肥鱼"; })[0] || rows[0];
-      var replies = rows.filter(function (x) { return x !== main; });
-      return '<section class="cmt-day">' +
-        '<p class="cmt-date">' + esc(d) + "</p>" +
-        '<article class="cmt cmt-main ' + (main.who === "大肥鱼" ? "fish" : "dsh") + '">' +
-          '<header class="cmt-head"><span class="cmt-who">' + esc(main.who || "") + '</span>' +
-          '<span class="cmt-time">' + esc(main.time || "") + "</span></header>" +
-          '<p class="cmt-text">' + esc(main.text || "") + "</p>" +
-        "</article>" +
-        replies.map(function (x) {
-          return '<article class="cmt cmt-reply ' + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' +
-            '<header class="cmt-head"><span class="cmt-who">' + esc(x.who || "") + '</span>' +
-            '<span class="cmt-to">回复 ' + esc(x.reply_to || main.who || "") + '</span>' +
-            '<span class="cmt-time">' + esc(x.time || "") + "</span></header>" +
-            '<p class="cmt-text">' + esc(x.text || "") + "</p></article>";
-        }).join("") +
+      var first = rows[0];
+      var rest = rows.slice(1);
+      return '<section class="cmt-day"><p class="cmt-date">' + esc(d) + "</p>" +
+        block(first, false, "") +
+        rest.map(function (x) { return block(x, true, x.reply_to || first.who); }).join("") +
         "</section>";
     }).join("");
   } catch (e) {
