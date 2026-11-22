@@ -337,7 +337,14 @@ function drawMain(pool) {
     window.scrollTo(0, y);
     requestAnimationFrame(() => window.scrollTo(0, y));
     setTimeout(() => { root.style.scrollBehavior = ""; }, 60);
+  } else if (!window.__firstDrawDone) {
+    // 刷新进入时回到页面顶部（分级/分类由 URL 保持）
+    const root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    setTimeout(() => { root.style.scrollBehavior = ""; }, 60);
   }
+  window.__firstDrawDone = true;
   ensureTopBtn();
 }
 
@@ -515,6 +522,8 @@ function draw() {
   }
   drawMain(pool);
 }
+
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 (async () => {
   try {
