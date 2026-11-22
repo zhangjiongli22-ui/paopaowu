@@ -371,6 +371,23 @@ function buildToc() {
     nav.appendChild(a);
   });
   document.body.appendChild(nav);
+
+  // 滚动到哪个区块，目录对应项常驻高亮
+  const links = [...nav.querySelectorAll("a")];
+  const targets = rows.map((box) => ({ box, link: links[rows.indexOf(box)] })).filter((x) => x.link);
+  const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
+  const onScroll = () => {
+    const y = window.scrollY + 140;
+    let current = 0;
+    targets.forEach(({ box }, i) => {
+      const top = box.getBoundingClientRect().top + window.scrollY;
+      if (top <= y) current = i;
+    });
+    setActive(current);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
   const anchor = document.getElementById("sec-fav") || rows[0];
   if (anchor) {
     const headEl = anchor.querySelector(".sec-fold-head");
@@ -485,7 +502,14 @@ function draw() {
   if (cp) cat = cp;
   const restoreY = params.get("y");
   if (restoreY) {
-    setTimeout(() => window.scrollTo(0, Number(restoreY) || 0), 120);
+    const y = Number(restoreY) || 0;
+    const root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, y);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, y);
+      root.style.scrollBehavior = "";
+    });
     const u = new URL(location.href);
     u.searchParams.delete("y");
     history.replaceState(null, "", u);
