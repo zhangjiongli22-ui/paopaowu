@@ -2227,7 +2227,7 @@ body.lb-open { overflow: hidden; }
 
 .k2-time-sum { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; letter-spacing: .04em; }
 
-.k2-prose { max-width: 760px; margin: 14px 0 18px; }
+.k2-prose { max-width: none; margin: 18px 0 22px; }
 .k2-prose p {
   font-size: 14.5px;
   line-height: 2;
@@ -2715,3 +2715,13 @@ body::after { transform: translateZ(0); }
   font-variant-numeric: tabular-nums;
 }
 .k2-head-line { display: none; }
+
+
+/* 品味正文：行宽与分隔线对齐、两端对齐 */
+.k2-prose p {
+  text-align: justify;
+  text-justify: inter-ideograph;
+  text-align-last: left;
+  margin: 0 0 16px;
+  max-width: none;
+}
