@@ -316,11 +316,12 @@ function buildToc() {
   document.body.appendChild(nav);
   const anchor = document.getElementById("sec-fav") || rows[0];
   if (anchor) {
-    const rect = anchor.getBoundingClientRect();
-    nav.style.top = Math.max(88, rect.top) + "px";
+    const headEl = anchor.querySelector(".sec-fold-head");
+    const headRect = (headEl || anchor).getBoundingClientRect();
+    nav.style.top = Math.max(88, headRect.bottom + 2) + "px";
     const box = (main.parentElement || main).getBoundingClientRect();
-    const w = nav.getBoundingClientRect().width || 70;
-    nav.style.left = Math.max(12, box.left - w - 20) + "px";
+    const w = nav.getBoundingClientRect().width || 96;
+    nav.style.left = Math.max(12, box.left - w + 26) + "px";
   }
 }
 
