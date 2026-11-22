@@ -69,6 +69,7 @@ try {
     </div>
   </header>
 
+  <nav class="crit-toc" id="crit-toc" hidden><span class="crit-toc-title">日期</span></nav>
   <div class="crit-wrap" id="crit-list">
     <p class="loading">正在翻记录……</p>
   </div>
@@ -80,51 +81,74 @@ try {
 
 <script>
 (async function () {
-  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-  function dayOf(dateStr, timeStr) {
-    if (!dateStr) return "";
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateStr).trim());
-    if (!m) return String(dateStr);
-    var hh = parseInt(String(timeStr || "12:00").slice(0, 2), 10);
-    var d = new Date(+m[1], +m[2] - 1, +m[3]);
-    if (!isNaN(hh) && hh < 4) d.setDate(d.getDate() - 1);
-    var pad = function (n) { return String(n).padStart(2, "0"); };
-    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  function esc(t) {
+    return String(t == null ? "" : t).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
   }
   var host = document.getElementById("crit-list");
+  var toc = document.getElementById("crit-toc");
+
+  function avatar(who) { return who === "大肥鱼" ? "鱼" : "D"; }
+
+  function block(x, isReply, replyTo) {
+    var fish = x.who === "大肥鱼";
+    return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (fish ? "fish" : "dsh") + '">' +
+      '<span class="cmt-av ' + (fish ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
+      '<div class="cmt-body">' +
+        '<p class="cmt-name">' + esc(x.who || "") +
+          (fish ? '<span class="cmt-badge">作者</span>' : "") +
+          (isReply && replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + "</span>" : "") +
+        "</p>" +
+        '<p class="cmt-text">' + esc(x.text || "").replace(/\n/g, "<br>") + "</p>" +
+        '<div class="cmt-foot">' +
+          '<span class="cmt-meta">' + esc(x.time || "") + " · " + esc(String(x.date || "").slice(5)) + "</span>" +
+          '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
+        "</div>" +
+      "</div></article>";
+  }
+
   try {
     var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
     var all = (data.items || []).filter(function (x) { return x.cat === "critique"; });
-    if (!all.length) { host.innerHTML = '<p class="loading">还没有锐评。</p>'; return; }
+
+    if (!all.length) {
+      if (toc) toc.hidden = true;
+      host.innerHTML = '<p class="loading">今天还没有。等她写了再来看。</p>';
+      return;
+    }
+
     var byDay = {};
     all.forEach(function (x) { var d = x.date || "未记"; (byDay[d] = byDay[d] || []).push(x); });
     var days = Object.keys(byDay).sort().reverse();
-    function avatar(who) { return who === "大肥鱼" ? "鱼" : "D"; }
-    function block(x, isReply, replyTo) {
-      var fish = x.who === "大肥鱼";
-      return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (fish ? "fish" : "dsh") + '">' +
-        '<span class="cmt-av ' + (fish ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
-        '<div class="cmt-body">' +
-          '<p class="cmt-name">' + esc(x.who || "") +
-            (fish ? '<span class="cmt-badge">作者</span>' : "") +
-            (isReply && replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + "</span>" : "") +
-          "</p>" +
-          '<p class="cmt-text">' + esc(x.text || "").replace(/\n/g, "<br>") + "</p>" +
-          '<div class="cmt-foot">' +
-            '<span class="cmt-meta">' + esc(x.time || "") + " · " + esc((x.date || "").slice(5)) + "</span>" +
-            '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
-          "</div>" +
-        "</div></article>";
-    }
+
     host.innerHTML = days.map(function (d) {
       var rows = byDay[d].slice().sort(function (a, b) { return String(a.time || "").localeCompare(String(b.time || "")); });
       var first = rows[0];
-      var rest = rows.slice(1);
-      return '<section class="cmt-day"><p class="cmt-date">' + esc(d) + "</p>" +
+      return '<section class="cmt-day" id="cday-' + esc(d) + '">' +
+        '<p class="cmt-date">' + esc(d) + "</p>" +
         block(first, false, "") +
-        rest.map(function (x) { return block(x, true, x.reply_to || first.who); }).join("") +
+        rows.slice(1).map(function (x) { return block(x, true, x.reply_to || first.who); }).join("") +
         "</section>";
     }).join("");
+
+    if (toc) {
+      toc.hidden = false;
+      days.forEach(function (d) {
+        var a = document.createElement("a");
+        a.href = "#cday-" + d;
+        a.textContent = String(d).slice(5);
+        a.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          var t = document.getElementById("cday-" + d);
+          if (!t) return;
+          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 28, behavior: "smooth" });
+          a.classList.add("on");
+          setTimeout(function () { a.classList.remove("on"); }, 1400);
+        });
+        toc.appendChild(a);
+      });
+    }
   } catch (e) {
     host.innerHTML = '<p class="loading">没加载出来。</p>';
   }
