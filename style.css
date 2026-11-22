@@ -4060,3 +4060,27 @@ main#main { }
 }
 .cmt-send:hover { background: var(--gold); color: #0b1016; }
 .cmt-send:disabled { opacity: .5; cursor: default; }
+
+/* 回复按钮与回复提示 */
+.cmt-reply-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font: clamp(10px, .56vw, 13px) var(--mono);
+  letter-spacing: .16em;
+  cursor: pointer;
+}
+.cmt-reply-btn:hover { color: var(--gold); }
+.cmt-form-to {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border: 1px solid rgba(201, 168, 107, .4);
+  font: clamp(10px, .56vw, 13px) var(--mono);
+  letter-spacing: .12em;
+  color: var(--gold-soft);
+}
+.cmt-form-to b { font-weight: 400; color: var(--gold); }
+.cmt-form-to button { border: 0; background: none; color: var(--dim); cursor: pointer; font-size: 14px; line-height: 1; }
