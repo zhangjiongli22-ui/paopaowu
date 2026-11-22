@@ -2411,7 +2411,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(.85) saturate(1.02);
+  filter: brightness(1.02) saturate(1.08);
   opacity: 1;
   pointer-events: none;
 }
@@ -2420,7 +2420,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(4, 12, 20, .45) 0%, rgba(4, 12, 20, .68) 50%, rgba(4, 12, 20, .9) 100%);
+  background: linear-gradient(180deg, rgba(4, 12, 20, .10) 0%, rgba(4, 12, 20, .30) 55%, rgba(4, 12, 20, .62) 100%);
   pointer-events: none;
 }
 
@@ -2474,6 +2474,6 @@ body::after {
 .poster-status,
 .poster-badge,
 .poster-meta {
-  background: rgba(8, 20, 30, .9) !important;
+  background: rgba(8, 20, 30, .78) !important;
 }
 .kira-hero, .kira-now { background: transparent; }
