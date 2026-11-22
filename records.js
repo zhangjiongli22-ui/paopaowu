@@ -329,6 +329,15 @@ function drawMain(pool) {
   section(wLabel, wishRows, true, wLabel, "wish");
   section(sLabel, seenRows, true, sLabel, "seen");
   buildToc();
+  if (typeof window.__pendingY === "number") {
+    const y = window.__pendingY;
+    window.__pendingY = undefined;
+    const root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, y);
+    requestAnimationFrame(() => window.scrollTo(0, y));
+    setTimeout(() => { root.style.scrollBehavior = ""; }, 60);
+  }
   ensureTopBtn();
 }
 
@@ -502,6 +511,7 @@ function draw() {
   if (cp) cat = cp;
   const restoreY = params.get("y");
   if (restoreY) {
+    window.__pendingY = Number(restoreY) || 0;
     const y = Number(restoreY) || 0;
     const root = document.documentElement;
     root.style.scrollBehavior = "auto";
