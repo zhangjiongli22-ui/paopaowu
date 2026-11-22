@@ -249,7 +249,9 @@ function drawMain(pool) {
   if (inprogRows.length) {
     const ip = document.createElement("details");
     ip.className = "fav-fold";
-    ip.dataset.toc = "在玩 / 在看";
+    const ipLabel = cat === "game" ? "在玩" : (cat === "anime" || cat === "tv" || cat === "film") ? "在看" : "进行中";
+    ipSum.textContent = ipLabel + " · " + inprogRows.length;
+    ip.dataset.toc = ipLabel;
     ip.id = "sec-inprog";
     ip.open = true;
     const ipSum = document.createElement("summary");
@@ -319,7 +321,7 @@ function buildToc() {
   rows.forEach((box) => {
     const a = document.createElement("a");
     a.href = "#" + box.id;
-    a.textContent = box.dataset.toc === "wish" ? "想看 / 想玩" : box.dataset.toc === "seen" ? "看过 / 玩过" : box.dataset.toc;
+    a.textContent = box.dataset.toc;
     a.addEventListener("click", (e) => {
       e.preventDefault();
       if (box.tagName === "DETAILS") box.open = true;
