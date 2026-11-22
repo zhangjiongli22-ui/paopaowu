@@ -2363,3 +2363,39 @@ body::after {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+
+/* ===== 目录去底色 ===== */
+.side-toc {
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+/* ===== 人物壁纸 ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("assets/covers/g-1003-bg8.jpg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 108%;
+  filter: brightness(.92) saturate(1.05);
+  opacity: 1;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(4, 12, 20, .96) 0%, rgba(4, 12, 20, .8) 42%, rgba(4, 12, 20, .35) 100%);
+  pointer-events: none;
+}
+@media (max-width: 780px) {
+  body::before { background-position: center top; background-size: cover; opacity: .55; }
+  body::after { background: linear-gradient(180deg, rgba(4,12,20,.75), rgba(4,12,20,.95)); }
+}
