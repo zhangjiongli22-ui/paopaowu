@@ -16,13 +16,17 @@ async function mergeOverrides(json, env) {
     let cursor = undefined;
     do {
       const page = await env.RATINGS.list({ prefix: "item:", cursor, limit: 1000 });
-      keys = keys.concat(page.keys);
+      keys = keys.concat(page.keys || []);
       cursor = page.list_complete ? undefined : page.cursor;
     } while (cursor);
     if (!keys.length) return json;
-    const values = await Promise.all(keys.map((k) => env.RATINGS.get(k.name, "json")));
     const byId = new Map();
-    values.filter(Boolean).forEach((v) => byId.set(String(v.id), v));
+    for (const k of keys) {
+      try {
+        const v = await env.RATINGS.get(k.name, "json");
+        if (v && v.id) byId.set(String(v.id), v);
+      } catch (e) {}
+    }
     json.items = (json.items || []).map((it) => {
       const ov = byId.get(String(it.id));
       if (!ov) return it;
@@ -32,6 +36,7 @@ async function mergeOverrides(json, env) {
       });
       return merged;
     });
+    json.__ovCount = keys.length;
   } catch (e) {}
   return json;
 }
