@@ -414,8 +414,12 @@ function buildToc() {
       if (rect.top <= probe && rect.bottom > probe) current = i;
     });
     if (current < 0) {
-      // 页面在顶部、探针线还在第一块之前：默认第一块
-      current = 0;
+      // 探针线落在区块间的空隙：取最后一个已经越过探针线的区块；都没有就回到第一块
+      let last = 0;
+      targets.forEach(({ box }, i) => {
+        if (box.getBoundingClientRect().top <= probe) last = i;
+      });
+      current = last;
     }
     setActive(current);
   };
