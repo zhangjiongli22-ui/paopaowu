@@ -7907,6 +7907,14 @@
    "kind": "work",
    "text": "整理站点数据、补充封面与简介、搭建目录与收藏功能、更新个人主页",
    "minutes": 178
+  },
+  {
+   "id": "idea-20261122-serpent",
+   "cat": "idea",
+   "date": "2026-11-22",
+   "status": "计划中",
+   "title": "自建素材资产管理系统（参考 Serpent）",
+   "note": "参考 B 站 BV1ya8s6pECP 与开源项目 Serpent：支持多类型素材、标签打分、AI 分析、WebDAV 同步与 MCP 自动化，用于整理站内图片与截图。"
   }
  ]
 }
