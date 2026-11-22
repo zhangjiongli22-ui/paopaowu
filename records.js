@@ -13,7 +13,7 @@ const CATS = {
 
 const GROUPS = {
   hobby: { name: "精神食粮", cats: ["anime", "tv", "film", "game", "book"] },
-  idea:  { name: "有一些小巧思", cats: ["idea"] },
+  idea:  { name: "计划列表", cats: ["idea", "issue"] },
   plan:  { name: "每日统计", cats: ["log"] }
 };
 
@@ -237,7 +237,8 @@ function drawMain(pool) {
   if (staleToc) staleToc.remove();
   if (group === "plan") { drawLog(pool); return; }
   if (group === "idea") {
-    const planning = pool.filter((x) => x.status !== "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    const unresolved = pool.filter((x) => x.status === "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    const planning = pool.filter((x) => x.status !== "已达成" && x.status !== "未解决").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const done = pool.filter((x) => x.status === "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 
     const row = (x, isDone) => `<li class="todo-item${isDone ? " done" : ""}">
@@ -245,6 +246,10 @@ function drawMain(pool) {
       <span class="todo-body"><span class="todo-title">${esc(x.title)}</span>${x.note ? `<span class="todo-note">${esc(x.note)}</span>` : ""}</span>
     </li>`;
 
+    if (unresolved.length) {
+      main.appendChild(el("h2", "sec-title", "未解决"));
+      main.insertAdjacentHTML("beforeend", '<ul class="todo-list unresolved">' + unresolved.map((x) => row(x, false)).join("") + "</ul>");
+    }
     main.appendChild(el("h2", "sec-title", "计划中"));
     main.insertAdjacentHTML("beforeend", planning.length ? '<ul class="todo-list">' + planning.map((x) => row(x, false)).join("") + "</ul>" : '<p class="detail-empty">还没有计划。</p>');
 
@@ -552,10 +557,10 @@ function draw() {
   const pool = cat === "all" ? poolAll : poolAll.filter((x) => x.cat === cat);
 
   catRow.innerHTML = "";
-  if (group === "hobby") {
+  if (GROUPS[group] && GROUPS[group].cats.length > 1 || group === "hobby") {
     const counts = {};
     poolAll.forEach((x) => (counts[x.cat] = (counts[x.cat] || 0) + 1));
-    ["all", ...GROUPS.hobby.cats].forEach((k) => {
+    ["all", ...GROUPS[group].cats].forEach((k) => {
       const n = k === "all" ? poolAll.length : counts[k] || 0;
       const b = el("button", "cat-bubble", null);
       b.innerHTML = `<span class="cat-name">${CATS[k].name}</span><span class="cat-n">${n}</span>`;
