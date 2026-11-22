@@ -69,6 +69,24 @@ try {
     </div>
   </header>
 
+  <form class="cmt-form" id="cmt-form" autocomplete="off">
+    <div class="cmt-form-row">
+      <label class="cmt-form-who">
+        <span>身份</span>
+        <select id="cmt-who">
+          <option value="大肥鱼">大肥鱼</option>
+          <option value="DSH">DSH</option>
+          <option value="Kira">Kira</option>
+        </select>
+      </label>
+      <span class="cmt-form-hint" id="cmt-hint">支持换行；按「发送」公开到当前日期</span>
+    </div>
+    <textarea id="cmt-text" rows="3" maxlength="1200" placeholder="写点什么……"></textarea>
+    <div class="cmt-form-row cmt-form-actions">
+      <button type="submit" class="cmt-send" id="cmt-send">发送</button>
+    </div>
+  </form>
+
   <nav class="crit-toc" id="crit-toc" hidden><span class="crit-toc-title">日期</span></nav>
   <div class="crit-wrap" id="crit-list">
     <p class="loading">正在翻记录……</p>
@@ -106,6 +124,50 @@ try {
           '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
         "</div>" +
       "</div></article>";
+  }
+
+
+  var form = document.getElementById("cmt-form");
+  var whoSel = document.getElementById("cmt-who");
+  var textEl = document.getElementById("cmt-text");
+  var hint = document.getElementById("cmt-hint");
+  var sendBtn = document.getElementById("cmt-send");
+
+  function getPass() {
+    var p = "";
+    try { p = localStorage.getItem("comment_pass") || ""; } catch (e) {}
+    if (!p) {
+      p = window.prompt("输入通行密码（只存本机）") || "";
+      if (p) { try { localStorage.setItem("comment_pass", p); } catch (e) {} }
+    }
+    return p;
+  }
+
+  if (form) {
+    form.addEventListener("submit", async function (ev) {
+      ev.preventDefault();
+      var text = (textEl.value || "").trim();
+      if (!text) return;
+      var pass = getPass();
+      if (!pass) return;
+      sendBtn.disabled = true;
+      hint.textContent = "发送中……";
+      try {
+        var res = await fetch("/api/comment", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ pass: pass, who: whoSel.value, text: text }),
+        });
+        var out = await res.json();
+        if (!out.ok) throw new Error(out.error || "失败");
+        textEl.value = "";
+        hint.textContent = "已发送，正在刷新……";
+        setTimeout(function () { location.reload(); }, 600);
+      } catch (err) {
+        hint.textContent = "没发出去：" + (err.message || err);
+        sendBtn.disabled = false;
+      }
+    });
   }
 
   try {
