@@ -411,7 +411,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/tv-a837004a-db.jpg",
-   "name_cn": "TXQ FICTION 向饭沼一家谢罪"
+   "name_cn": "TXQ FICTION 向饭沼一家谢罪",
+   "desc": "日本2024年大森時生、皆口大地执导的电视剧"
   },
   {
    "id": "tv-d0ff055a",
@@ -661,7 +662,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/film-f0a407e9-imdb.jpg",
-   "name_cn": "Smile"
+   "name_cn": "Smile",
+   "desc": "中国编剧、导演、演员"
   },
   {
    "id": "film-bd00f0a6",
@@ -671,7 +673,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/film-bd00f0a6-imdb.jpg",
-   "name_cn": "Smile 2"
+   "name_cn": "Smile 2",
+   "desc": "美国2024年帕克·芬恩执导的恐怖片"
   },
   {
    "id": "film-a062302b",
@@ -712,7 +715,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/film-c1df3c7c-imdb.jpg",
-   "name_cn": "The Coffee Table"
+   "name_cn": "The Coffee Table",
+   "desc": "家居用品"
   },
   {
    "id": "film-076bd00e",
@@ -771,7 +775,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/film-6f932ad7-db.jpg",
-   "name_cn": "布达佩斯大饭店"
+   "name_cn": "布达佩斯大饭店",
+   "desc": "美国2014年韦斯·安德森执导的喜剧电影"
   },
   {
    "id": "film-0981a09c",
@@ -869,7 +874,8 @@
    "date": "2026-11-22",
    "time": "00:57",
    "cover": "assets/covers/film-807fd8d9-imdb.jpg",
-   "name_cn": "Wrath of Silence"
+   "name_cn": "Wrath of Silence",
+   "desc": "2017年忻钰坤执导的犯罪悬疑电影"
   },
   {
    "id": "film-0bf48116",
@@ -953,7 +959,8 @@
    "time": "00:58",
    "staff": "GCORES PUBLISHING",
    "cover": "assets/covers/film-942f9737-imdb.jpg",
-   "name_cn": "Vivarium"
+   "name_cn": "Vivarium",
+   "desc": "美国2019年罗根·费纳根执导电影"
   },
   {
    "id": "film-8bb93a55",
@@ -1019,7 +1026,8 @@
    "date": "2026-11-22",
    "time": "00:58",
    "cover": "assets/covers/film-dd4c87e0-imdb.jpg",
-   "name_cn": "Hereditary"
+   "name_cn": "Hereditary",
+   "desc": "美国2018年阿里·艾斯特自编自导的恐怖电影"
   },
   {
    "id": "film-5ecb8f81",
@@ -1033,7 +1041,8 @@
    "bgm_rating": 6.3,
    "bgm_id": 546050,
    "name_cn": "铁肺",
-   "cover": "assets/covers/film-5ecb8f81-cov2.jpg"
+   "cover": "assets/covers/film-5ecb8f81-cov2.jpg",
+   "desc": "脊髓灰质炎患者使用到的设备"
   },
   {
    "id": "film-3d03312f",
@@ -1043,7 +1052,8 @@
    "date": "2026-11-22",
    "time": "00:58",
    "cover": "assets/covers/film-3d03312f-imdb.jpg",
-   "name_cn": "Farewell My Concubine"
+   "name_cn": "Farewell My Concubine",
+   "desc": "1993年陈凯歌执导的爱情片"
   },
   {
    "id": "film-67cdc816",
@@ -1217,7 +1227,8 @@
    "date": "2026-11-22",
    "time": "02:40",
    "cover": "assets/covers/film-f723a035-imdb.jpg",
-   "name_cn": "Castle in the Sky"
+   "name_cn": "Castle in the Sky",
+   "desc": "日本1986年宫崎骏执导的动画电影"
   },
   {
    "id": "film-17073435",
@@ -1238,7 +1249,8 @@
    "date": "2026-11-22",
    "time": "02:40",
    "cover": "assets/covers/film-e49d3a7a-imdb.jpg",
-   "name_cn": "The Shawshank Redemption"
+   "name_cn": "The Shawshank Redemption",
+   "desc": "美国1994年弗兰克·德拉邦特执导的剧情片"
   },
   {
    "id": "film-ff69e63b",
@@ -1436,7 +1448,8 @@
    "date": "2026-11-22",
    "time": "02:41",
    "cover": "assets/covers/film-9ae24bf4-imdb.jpg",
-   "name_cn": "The Ruins"
+   "name_cn": "The Ruins",
+   "desc": "美国2008年卡特·史密斯执导的电影"
   },
   {
    "id": "film-84a8e3a6",
@@ -1446,7 +1459,8 @@
    "date": "2026-11-22",
    "time": "02:41",
    "cover": "assets/covers/film-84a8e3a6-imdb.jpg",
-   "name_cn": "In the Tall Grass"
+   "name_cn": "In the Tall Grass",
+   "desc": "加拿大、美国2019年文森佐·纳塔利执导的恐怖电影"
   },
   {
    "id": "film-200fbf04",
@@ -1503,7 +1517,8 @@
    "date": "2026-11-22",
    "time": "02:41",
    "cover": "assets/covers/film-485e8b34-imdb.jpg",
-   "name_cn": "1922"
+   "name_cn": "1922",
+   "desc": "加拿大2017年Zak Hilditch执导的电影"
   },
   {
    "id": "film-e3bd5e8f",
@@ -1567,7 +1582,8 @@
    "date": "2026-11-22",
    "time": "02:41",
    "cover": "assets/covers/film-c8389548-imdb.jpg",
-   "name_cn": "Tidal Wave"
+   "name_cn": "Tidal Wave",
+   "desc": "韩国釜山市旅游景区"
   },
   {
    "id": "film-a1653780",
@@ -1663,7 +1679,8 @@
    "date": "2026-11-22",
    "time": "02:41",
    "cover": "assets/covers/film-77d985c3-imdb.jpg",
-   "name_cn": "The Legend of 1900"
+   "name_cn": "The Legend of 1900",
+   "desc": "意大利1998年朱塞佩·托纳托雷执导的剧情电影"
   },
   {
    "id": "film-5c973230",
@@ -1839,7 +1856,8 @@
    "date": "2026-11-22",
    "time": "02:42",
    "cover": "assets/covers/film-d50f4e4b-imdb.jpg",
-   "name_cn": "The Mist"
+   "name_cn": "The Mist",
+   "desc": "美国2007年弗兰克·德拉邦特执导的恐怖电影"
   },
   {
    "id": "film-60f1d603",
@@ -1910,7 +1928,8 @@
    "time": "02:42",
    "staff": "「君の膵臓をたべたい」製作委員会（東宝、博報堂DYミュージック&ピクチャーズ、双葉社、ジェイアール東日本企画、博報堂、KDDI、日本出版販売、トライストーン・エ",
    "cover": "assets/covers/film-8f8db57d-imdb.jpg",
-   "name_cn": "I Want to Eat Your Pancreas"
+   "name_cn": "I Want to Eat Your Pancreas",
+   "desc": "日本2018年牛岛新一郎执导的动画电影"
   },
   {
    "id": "film-9b22a09d",
@@ -1931,7 +1950,8 @@
    "date": "2026-11-22",
    "time": "02:42",
    "cover": "assets/covers/film-5184febb-imdb.jpg",
-   "name_cn": "The Hunt"
+   "name_cn": "The Hunt",
+   "desc": "丹麦2012年托马斯·温特伯格执导的剧情片"
   },
   {
    "id": "film-db30259c",
@@ -2044,7 +2064,8 @@
    "bgm_rating": 7.5,
    "bgm_id": 370239,
    "name_cn": "Asakusa Kid",
-   "cover": "assets/covers/film-d6e18151-imdb.jpg"
+   "cover": "assets/covers/film-d6e18151-imdb.jpg",
+   "desc": "日本2021年剧团一人执导的电影"
   },
   {
    "id": "game-884bec3d",
@@ -2650,8 +2671,9 @@
    "status": "玩过",
    "date": "2026-11-22",
    "time": "02:43",
-   "desc": "還願，是一種向神圣許下心願，應驗後對神聖、廟宇或者是社會進行回饋的行為。拉丁文ex voto是指还愿时捐赠的物品，而非还愿行为。",
-   "name_cn": "還願"
+   "desc": "感谢您前来参观《非自愿摄入》美术展。\r\n\r\n2026年8月13-14日，在日本东京千代田区的艺术展厅Gallery CROP，先后发生了两起令人匪夷所思的事件。当时有许多朋友，通过这方小小的艺术展官网，和我一同见证并破解了事件的来龙去脉。\r\n\r\n现在，我会把这两个故事【档案化】，消除无谓的等待时间，保存为可一次性完整体验的作品。\r\n\r\n《非自愿摄入》美术展，随时欢迎每一位渴求着精彩故事的观众。\r\n\r\n\r\n8月13日的事件\r\n海报上的假人为什么在流血？\r\n\r\n终于……在开展前一天把中文版的官网调试完毕了！\r\n\r\n本想着赶紧发个兴奋的动态通知大家，结果刚准备把网站点击关闭的一瞬间，我愣住了。\r\n\r\n官网最上方的那张主海报，好像不太对劲。\r\n\r\n\r\n之前看过预告的朋友应该有印象，那里蜷缩着的原本是一个非常明显的球状关节假人。但现在显示在我屏幕上的，却好像是一个衣服上沾满血迹、一动不动的真人。\r\n\r\n\r\n我急忙又去找了日文原版的官网，发现那里现在还是原本的图案。\r\n\r\n所以这张诡异的真人素材是哪里来的？这绝不是我上传的版本。\r\n\r\n因为是受邀协助，我其实只认识主创团队里一个叫KAY的人，也只有",
+   "name_cn": "非自愿摄入",
+   "cover": "assets/covers/game-2e48f476-devotion.jpg"
   },
   {
    "id": "game-a2cb7157",
@@ -5692,7 +5714,8 @@
    "date": "2026-11-22",
    "time": "03:04",
    "cover": "assets/covers/film-18813719-imdb.jpg",
-   "name_cn": "Vesper"
+   "name_cn": "Vesper",
+   "desc": "立陶宛、法国等国2022年Kristina Buozyte和Bruno Samper执导电影"
   },
   {
    "id": "anime-47e225bd",
@@ -5910,7 +5933,8 @@
    "date": "2026-11-22",
    "time": "03:05",
    "cover": "assets/covers/film-d9b1169f-imdb2.jpg",
-   "name_cn": "Mirrormask"
+   "name_cn": "Mirrormask",
+   "desc": "英国2005年戴夫·马卡基执导的电影"
   },
   {
    "id": "film-8916514c",
@@ -5934,7 +5958,8 @@
    "date": "2026-11-22",
    "time": "03:05",
    "cover": "assets/covers/film-8eb82faa-imdb.jpg",
-   "name_cn": "Noroi"
+   "name_cn": "Noroi",
+   "desc": "日本2005年白石晃士导演的电影"
   },
   {
    "id": "film-3bff2cc1",
@@ -6114,7 +6139,8 @@
    "date": "2026-11-22",
    "time": "03:05",
    "cover": "assets/covers/film-09545efe-imdb.jpg",
-   "name_cn": "The Show"
+   "name_cn": "The Show",
+   "desc": "美国2017年吉安卡罗·埃斯波西托执导的电影"
   },
   {
    "id": "film-28895e0b",
@@ -6223,7 +6249,8 @@
    "date": "2026-11-22",
    "time": "03:05",
    "cover": "assets/covers/film-b8f98cf2-imdb2.jpg",
-   "name_cn": "Talk to Me"
+   "name_cn": "Talk to Me",
+   "desc": "2023年上映电影"
   },
   {
    "id": "film-da4cf4b5",
