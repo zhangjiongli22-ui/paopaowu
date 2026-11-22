@@ -138,7 +138,7 @@ function bindShots() {
           <span class="score-label">Kira 评分</span>
           <span class="score-stars" id="score-stars">${item.rating ? stars(item.rating) : "还没评分"}</span>
           <span class="score-num" id="score-num">${item.rating ? esc(five(item.rating)) + "/5" : ""}</span>
-          ${item.status ? `<button type="button" class="rec-status" id="status-toggle" title="点一下切换">${esc(item.status)}</button>` : ""}
+          ${item.status ? `<button type="button" class="rec-status${["在看","在玩"].includes(item.status) ? " inprogress" : ""}" id="status-toggle" title="点一下切换">${esc(item.status)}</button>` : ""}
           <button type="button" class="rec-status" id="fav-toggle" hidden>${item.pinned ? "★ 已收藏" : "☆ 收藏"}</button>
         </div>
         <div class="rate-box${hasReview ? " reviewed" : ""}">
@@ -268,9 +268,11 @@ function bindShots() {
       e.preventDefault();
       e.stopPropagation();
       const cur = statusBtn.textContent.trim();
-      const fmt = item.cat === "game" ? ["玩过", "想玩"] : ["看过", "想看"];
-      const next = cur === fmt[0] ? fmt[1] : fmt[0];
+      const fmt = item.cat === "game" ? ["想玩", "在玩", "玩过"] : ["想看", "在看", "看过"];
+      const i = fmt.indexOf(cur);
+      const next = fmt[(i + 1) % fmt.length];
       statusBtn.textContent = next;
+      statusBtn.classList.toggle("inprogress", next === fmt[1]);
       statusBtn.disabled = true;
       msg.textContent = "切换中…";
       try {
