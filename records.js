@@ -434,12 +434,18 @@ function buildToc() {
       if (rect.top <= probe && rect.bottom > probe) current = i;
     });
     if (current < 0) {
-      // 探针线落在区块间的空隙：取最后一个已经越过探针线的区块；都没有就回到第一块
-      let last = 0;
+      // 探针线落在区块空隙：选离探针线最近的区块，避免误跳到最后一个
+      let best = 0;
+      let bestDist = Infinity;
       targets.forEach(({ box }, i) => {
-        if (box.getBoundingClientRect().top <= probe) last = i;
+        const r = box.getBoundingClientRect();
+        const dist = Math.min(Math.abs(r.top - probe), Math.abs(r.bottom - probe));
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
       });
-      current = last;
+      current = best;
     }
     setActive(current);
   };
