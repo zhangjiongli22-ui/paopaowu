@@ -117,9 +117,12 @@ try {
     </ul>
   </section>
 
-  
-
-  
+  <section class="pf-sec" id="live">
+    <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
+    <ul class="pf-rows">
+      <li><span class="k">最近</span><span class="v" id="live-turns">正在翻聊天记录……</span></li>
+    </ul>
+  </section>
 
   <section class="pf-sec">
     <div class="pf-head"><h2>找到她</h2><span class="en">Links</span></div>
@@ -147,7 +150,27 @@ try {
 })();
 </script>
 <script>
-</script>
+(async function () {
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  var host = document.getElementById("live-turns");
+  if (!host) return;
+  try {
+    var chat = await (await fetch("data/chat.json", { cache: "no-store" })).json();
+    var blocks = chat.blocks || [];
+    var last = blocks[blocks.length - 1];
+    if (!last || !(last.turns || []).length) {
+      host.textContent = "还没留下什么。";
+      return;
+    }
+    var rows = last.turns.slice(-6).map(function (t) {
+      var who = t.role === "user" ? "主人" : "大肥鱼";
+      return "· " + who + "：" + (t.text || "").replace(/\n/g, " ");
+    });
+    host.innerHTML = rows.join("<br>");
+  } catch (e) {
+    host.textContent = "没翻到聊天记录。";
+  }
+})();</script>
 <script src="wall.js?v=4"></script>
 </body>
 </html>
