@@ -266,11 +266,11 @@ function drawMain(pool) {
     return rank(a) - rank(b) || String(b.date || "").localeCompare(String(a.date || ""));
   });
   const seenRows = pool.filter((x) => !isWish(x) && !INP.includes(x.status));
-  const section = (title, rows, open, tocName) => {
+  const section = (title, rows, open, tocName, key) => {
     if (!rows.length) return;
     const box = document.createElement("details");
     box.className = "sec-fold";
-    if (tocName) { box.dataset.toc = tocName; box.id = "sec-" + tocName; }
+    if (tocName) { box.dataset.toc = tocName; box.id = "sec-" + (key || tocName); }
     if (open) box.open = true;
     const sum = document.createElement("summary");
     sum.className = "sec-fold-head";
@@ -288,8 +288,8 @@ function drawMain(pool) {
     all: ["心愿单", "已完成"],
   };
   const [wLabel, sLabel] = LABEL[group === "hobby" && cat !== "all" ? cat : "all"] || ["心愿单", "已完成"];
-  section(wLabel, wishRows, true, "wish");
-  section(sLabel, seenRows, true, "seen");
+  section(wLabel, wishRows, true, wLabel, "wish");
+  section(sLabel, seenRows, true, sLabel, "seen");
   buildToc();
   ensureTopBtn();
 }
