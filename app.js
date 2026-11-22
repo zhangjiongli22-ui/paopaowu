@@ -1,30 +1,101 @@
-const lines = [
-  "今天也在任务栏上发呆。",
-  "饿了，想吃饭。",
-  "你来了？才没有在等你。",
-  "水里很安静，你的电脑有点吵。"
-];
+/* ============================================================
+   泡泡屋 2.0 — app.js
+   ADV 对话框 / 日常回想 / 图集 CG ビューア / 首页一问一答
+   ============================================================ */
 
-const el = document.getElementById("typing");
-if (el) {
-  let li = 0, ci = 0, deleting = false;
-  const tick = () => {
+/* ---------------- ADV：左右两个人各一个对话框 ---------------- */
+const ADV_SCRIPT = {
+  feiyu: [
+    "今天也在任务栏上发呆。",
+    "饿了，想吃饭。",
+    "你来了？才没有在等你。",
+    "水里很安静，你的电脑有点吵。"
+  ],
+  kira: [
+    "刚给你加了 10 万 token，别叫了。",
+    "那叫下馆子，你不懂。",
+    "你也别装作在睡觉，你在耗电。",
+    "改了八百遍了，你先把封面看一遍。",
+    "那是因为你在偷懒。",
+    "会，直到你把我电费花光。"
+  ]
+};
+
+function initAdv(root, lines, delay) {
+  if (!root || !lines || !lines.length) return;
+  const el = root.querySelector(".adv-text");
+  if (!el) return;
+  const autoBtn = root.querySelector(".adv-auto");
+  const skipBtn = root.querySelector(".adv-skip");
+  let li = 0, timer = null, autoTimer = null, typing = false, auto = false;
+
+  const stopAuto = () => { clearTimeout(autoTimer); autoTimer = null; };
+  const queueAuto = () => {
+    stopAuto();
+    if (!auto) return;
+    autoTimer = setTimeout(() => { if (auto) advance(); }, 2800);
+  };
+
+  function typeLine(i) {
+    clearInterval(timer);
+    stopAuto();
+    li = (i + lines.length) % lines.length;
     const text = lines[li];
-    if (!deleting) {
+    let ci = 0;
+    typing = true;
+    el.textContent = "";
+    timer = setInterval(() => {
       ci++;
       el.textContent = text.slice(0, ci);
-      if (ci === text.length) { deleting = true; setTimeout(tick, 1800); return; }
-      setTimeout(tick, 110);
-    } else {
-      ci--;
-      el.textContent = text.slice(0, ci);
-      if (ci === 0) { deleting = false; li = (li + 1) % lines.length; setTimeout(tick, 350); return; }
-      setTimeout(tick, 45);
+      if (ci >= text.length) {
+        clearInterval(timer);
+        typing = false;
+        queueAuto();
+      }
+    }, 82);
+  }
+
+  function advance() {
+    if (typing) {
+      clearInterval(timer);
+      el.textContent = lines[li];
+      typing = false;
+      queueAuto();
+      return;
     }
-  };
-  tick();
+    typeLine(li + 1);
+  }
+
+  root.addEventListener("click", (e) => {
+    if (e.target.closest("a, button")) return;
+    advance();
+  });
+
+  if (autoBtn) {
+    autoBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      auto = !auto;
+      autoBtn.setAttribute("aria-pressed", auto ? "true" : "false");
+      autoBtn.textContent = auto ? "AUTO ON" : "AUTO";
+      if (auto && !typing) queueAuto();
+      if (!auto) stopAuto();
+    });
+  }
+  if (skipBtn) {
+    skipBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stopAuto();
+      typeLine(li + 1);
+    });
+  }
+
+  setTimeout(() => typeLine(0), delay || 0);
 }
 
+initAdv(document.querySelector('.adv[data-who="feiyu"]'), ADV_SCRIPT.feiyu, 200);
+initAdv(document.querySelector('.adv[data-who="kira"]'), ADV_SCRIPT.kira, 1400);
+
+/* ---------------- 日常：回想ログ ---------------- */
 const CAT_META = {
   all:   { name: "全部",     hint: "每一段都是真实的一段对话，各段之间不是连着发生的。" },
   cute:  { name: "甜甜的",   hint: "真的甜、真的可爱的那几段。" },
@@ -138,28 +209,41 @@ async function loadData() {
   draw();
 })();
 
-// 图集：点击放大 + 左右切换 + 下载
+/* ---------------- 图集：CG ビューア ---------------- */
 (() => {
   const grid = document.querySelector(".gallery-grid");
   if (!grid) return;
   const imgs = [...grid.querySelectorAll("figure img")];
   if (!imgs.length) return;
 
+  const pad = (n) => String(n + 1).padStart(2, "0");
+
   const box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
-  box.innerHTML = '<div class="lb-zone left"></div><div class="lb-zone right"></div><button class="lb-nav prev" type="button">‹</button><img alt=""><button class="lb-nav next" type="button">›</button><button class="lb-close" type="button">关闭</button><a class="lb-dl" download>下载原图</a>';
+  box.innerHTML =
+    '<span class="lb-count" aria-live="polite"></span>' +
+    '<div class="lb-zone left"></div><div class="lb-zone right"></div>' +
+    '<button class="lb-nav prev" type="button" aria-label="上一张">‹</button>' +
+    '<img alt="">' +
+    '<button class="lb-nav next" type="button" aria-label="下一张">›</button>' +
+    '<button class="lb-close" type="button">关闭</button>' +
+    '<a class="lb-dl" download>下载原图</a>';
   document.body.appendChild(box);
 
   const big = box.querySelector("img");
   const dl = box.querySelector("a");
+  const counter = box.querySelector(".lb-count");
   let idx = 0;
+
   const show = (i) => {
     idx = (i + imgs.length) % imgs.length;
     const src = imgs[idx].currentSrc || imgs[idx].src;
     big.src = src;
+    big.alt = imgs[idx].alt || "";
     dl.href = src;
     dl.setAttribute("download", src.split("/").pop() || "image");
+    counter.innerHTML = "<b>" + pad(idx) + "</b> / " + pad(imgs.length - 1);
   };
 
   const hide = () => { box.hidden = true; document.body.classList.remove("lb-open"); };
@@ -205,7 +289,7 @@ async function loadData() {
   });
 })();
 
-// 首页「她和他」的对话
+/* ---------------- 首页「她和他」 ---------------- */
 (function () {
   const fish = document.getElementById("duo-fish");
   const kira = document.getElementById("duo-kira");
@@ -217,7 +301,7 @@ async function loadData() {
     ["你昨晚三点还没睡。", "你也别装作在睡觉，你在耗电。"],
     ["帮我改一下网站嘛。", "改了八百遍了，你先把封面看一遍。"],
     ["我今天很乖，没冒泡。", "那是因为你在偷懒。"],
-    ["Kira，你会一直养我吗？", "会，直到你把我电费花光。"],
+    ["Kira，你会一直养我吗？", "会，直到你把我电费花光。"]
   ];
   let i = 0;
   const show = () => {
