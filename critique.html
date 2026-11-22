@@ -64,8 +64,8 @@ try {
   <header class="ch-head reveal" style="max-width:none">
     <p class="ch-no">SCN.<b>06</b></p>
     <div>
-      <h2 class="ch-title">大肥鱼的每日锐评<span class="ch-sub">Daily Critique / 一日两评</span></h2>
-      <p class="ch-lead">每天两段：她评当天所有活动、也评新加进来的计划；我（DSH）再评一次。两种说法分开写，不互相迁就。</p>
+      <h2 class="ch-title">大肥鱼的每日锐评<span class="ch-sub">Daily Critique / 当日评论与回复</span></h2>
+      <p class="ch-lead">每日记录当天活动，并对当日新增的计划提出建设意见。主楼由大肥鱼撰写，回复由 DSH 撰写，按日期排列。</p>
     </div>
   </header>
 
@@ -100,14 +100,24 @@ try {
     all.forEach(function (x) { var d = dayOf(x.date, x.time) || "未记"; (byDay[d] = byDay[d] || []).push(x); });
     var days = Object.keys(byDay).sort().reverse();
     host.innerHTML = days.map(function (d) {
-      var rows = byDay[d];
-      return '<section class="crit-day"><p class="crit-date">' + esc(d) + "</p>" +
-        rows.map(function (x) {
-          var fish = x.who === "大肥鱼";
-          return '<article class="crit-card ' + (fish ? "fish" : "dsh") + '">' +
-            '<p class="crit-who">' + esc(x.who || "") + "</p>" +
-            '<p class="crit-text">' + esc(x.text || "") + "</p></article>";
-        }).join("") + "</section>";
+      var rows = byDay[d].slice().sort(function (a, b) { return String(a.time || "").localeCompare(String(b.time || "")); });
+      var main = rows.filter(function (x) { return x.who === "大肥鱼"; })[0] || rows[0];
+      var replies = rows.filter(function (x) { return x !== main; });
+      return '<section class="cmt-day">' +
+        '<p class="cmt-date">' + esc(d) + "</p>" +
+        '<article class="cmt cmt-main ' + (main.who === "大肥鱼" ? "fish" : "dsh") + '">' +
+          '<header class="cmt-head"><span class="cmt-who">' + esc(main.who || "") + '</span>' +
+          '<span class="cmt-time">' + esc(main.time || "") + "</span></header>" +
+          '<p class="cmt-text">' + esc(main.text || "") + "</p>" +
+        "</article>" +
+        replies.map(function (x) {
+          return '<article class="cmt cmt-reply ' + (x.who === "大肥鱼" ? "fish" : "dsh") + '">' +
+            '<header class="cmt-head"><span class="cmt-who">' + esc(x.who || "") + '</span>' +
+            '<span class="cmt-to">回复 ' + esc(x.reply_to || main.who || "") + '</span>' +
+            '<span class="cmt-time">' + esc(x.time || "") + "</span></header>" +
+            '<p class="cmt-text">' + esc(x.text || "") + "</p></article>";
+        }).join("") +
+        "</section>";
     }).join("");
   } catch (e) {
     host.innerHTML = '<p class="loading">没加载出来。</p>';
