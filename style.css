@@ -3774,3 +3774,33 @@ main#main { }
 .crit-page-wrap { padding: clamp(26px, 4vh, 52px) clamp(20px, 3.4vw, 56px) 0; }
 .crit-wrap { max-width: min(1180px, 100%); }
 .crit-card { max-width: none; }
+
+/* 评论式锐评 */
+.cmt-day { display: grid; gap: 12px; }
+.cmt-date { margin: 0 0 4px; font: clamp(12px, .7vw, 16px) var(--mono); letter-spacing: .28em; color: var(--gold); }
+.cmt {
+  position: relative;
+  padding: clamp(16px, 1.4vw, 24px) clamp(18px, 1.6vw, 26px);
+  border: 1px solid var(--line-soft);
+  background: rgba(12, 18, 27, .55);
+  display: grid;
+  gap: 8px;
+}
+.cmt-main.fish { border-left: 2px solid rgba(232, 167, 189, .6); }
+.cmt-main.dsh { border-left: 2px solid rgba(127, 211, 232, .55); }
+.cmt-reply { margin-left: clamp(28px, 4vw, 72px); background: rgba(9, 14, 21, .5); }
+.cmt-reply::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * clamp(28px, 4vw, 72px) + 12px);
+  top: 26px;
+  width: 26px;
+  height: 1px;
+  background: rgba(201, 168, 107, .3);
+}
+.cmt-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.cmt-who { font: clamp(11px, .64vw, 15px) var(--mono); letter-spacing: .24em; color: rgba(232, 167, 189, .95); }
+.cmt-reply.dsh .cmt-who, .cmt-main.dsh .cmt-who { color: rgba(127, 211, 232, .9); }
+.cmt-to { font: clamp(10px, .56vw, 13px) var(--mono); letter-spacing: .16em; color: var(--dim-2); }
+.cmt-time { margin-left: auto; font: clamp(10px, .56vw, 13px) var(--mono); letter-spacing: .14em; color: var(--dim-2); }
+.cmt-text { margin: 0; font-family: var(--serif); font-size: clamp(15px, 1vw, 20px); line-height: 2.05; color: var(--paper-2); }
