@@ -103,7 +103,8 @@
    "bgm_rating": 9.1,
    "bgm_id": 284506,
    "name_cn": "塞尔达传说 王国之泪",
-   "play_since": "2026-11-01"
+   "play_since": "2026-11-01",
+   "pinned": true
   },
   {
    "id": "g-1002",
@@ -404,8 +405,7 @@
    "shots": [
     "assets/shots/星穹铁道/s01-437546a9.jpg",
     "assets/shots/星穹铁道/s02-d7f5780f.jpg"
-   ],
-   "pinned": true
+   ]
   },
   {
    "id": "tv-a837004a",
@@ -2961,7 +2961,8 @@
    "bgm_rating": 9.4,
    "bgm_id": 62229,
    "name_cn": "塞尔达传说 旷野之息",
-   "cover": "assets/covers/game-7701fa8d-bg8.jpg"
+   "cover": "assets/covers/game-7701fa8d-bg8.jpg",
+   "pinned": true
   },
   {
    "id": "game-bcbe514c",
