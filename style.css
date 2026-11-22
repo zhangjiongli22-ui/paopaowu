@@ -1834,10 +1834,19 @@ body.lb-open { overflow: hidden; }
 .side-toc {
   position: absolute;
   left: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 10px;
   z-index: 30;
+}
+.side-toc-title {
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--muted);
+  opacity: .7;
+  margin-bottom: 2px;
 }
 .side-toc a {
   font-size: 13px;
