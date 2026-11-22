@@ -1733,17 +1733,6 @@
    "cover": "assets/covers/film-de8019bf-bgm.jpg"
   },
   {
-   "id": "film-e926c053",
-   "cat": "film",
-   "title": "惊天魔盗团12",
-   "status": "看过",
-   "date": "2026-11-22",
-   "time": "02:41",
-   "cover": "assets/covers/film-e926c053-cov.jpg",
-   "desc": "《惊天魔盗团》 是一部2013年上映的美国搶劫片，由法国导演路易斯·賴托瑞執導，傑西·艾森柏格、馬克·魯法洛、伍迪·哈里森、梅蘭妮·蘿倫、艾拉·費雪、戴夫·弗蘭科、米高·肯恩和摩根·弗里曼出演。美国于2013年5月31日上映。 續集也於2014年12月於英國，澳門開拍，丹尼爾·雷德克里夫、麗茲·凱普蘭以及周杰倫也参与客串演出。并于2016年6月10日在美国上映。",
-   "name_cn": "出神入化"
-  },
-  {
    "id": "film-be330e86",
    "cat": "film",
    "title": "雪国列车",
@@ -6629,6 +6618,28 @@
    "status": "看过",
    "date": "2026-11-22",
    "time": "12:00"
+  },
+  {
+   "id": "film-11a8b4db",
+   "cat": "film",
+   "title": "惊天魔盗团",
+   "name_cn": "惊天魔盗团",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/film-11a8b4db-nym.jpg",
+   "desc": "美国2013年路易斯·莱特里尔执导的犯罪悬疑电影"
+  },
+  {
+   "id": "film-bab0d0f7",
+   "cat": "film",
+   "title": "惊天魔盗团2",
+   "name_cn": "惊天魔盗团2",
+   "status": "看过",
+   "date": "2026-11-22",
+   "time": "12:00",
+   "cover": "assets/covers/film-bab0d0f7-nym.jpg",
+   "desc": "美国2016年朱浩伟执导的魔术犯罪片"
   }
  ]
 }
