@@ -1,16 +1,6 @@
 const OWNER = "zhangjiongli22-ui";
 const REPO = "paopaowu";
 const PASS_HASH = "6f65bb65";
-
-async function shiftPass(input) {
-  let x = 5381;
-  for (let i = 0; i < input.length; i++) {
-    x = ((x << 5) + x) ^ input.charCodeAt(i);
-    x >>>= 0;
-  }
-  return x.toString(16);
-}
-
 async function mergeOverrides(json, env) {
   try {
     const list = await env.RATINGS.list({ prefix: "item:" });
@@ -71,9 +61,7 @@ export default {
 
     if (url.pathname === "/data/records.json") {
       try {
-        const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?nocache=${Date.now()}`, {
-          cf: { cacheEverything: false, cacheTtl: 0 },
-        });
+        const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/records.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
         if (!res.ok) throw new Error("upstream " + res.status);
         const json = await res.json();
         const merged = await mergeOverrides(json, env);
@@ -87,9 +75,7 @@ export default {
 
     if (url.pathname === "/data/chat.json") {
       try {
-        const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/chat.json?nocache=${Date.now()}`, {
-          cf: { cacheEverything: false, cacheTtl: 0 },
-        });
+        const res = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/data/chat.json?t=${Date.now()}`, { cf: { cacheEverything: false, cacheTtl: 0 } });
         return new Response(res.body, {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
         });
