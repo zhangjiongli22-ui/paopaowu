@@ -213,14 +213,19 @@ try {
     const day = `${shifted.getFullYear()}-${pad(shifted.getMonth() + 1)}-${pad(shifted.getDate())}`;
     const todayLogs = logs.filter((x) => x.date === day);
     if (todayLogs.length) {
-      const byKind = {};
-      todayLogs.forEach((x) => { byKind[x.kind] = (byKind[x.kind] || 0) + (Number(x.minutes) || 0); });
       const total = todayLogs.reduce((a, x) => a + (Number(x.minutes) || 0), 0);
-      const top = Object.keys(byKind).sort((a, b) => byKind[b] - byKind[a])[0];
-      const NAME = { work: "工作", game: "游戏", fitness: "健身", piano: "练琴", study: "学习", media: "看片" };
-      const topName = NAME[top] || "别的事";
-      const share = Math.round((byKind[top] / total) * 100);
-      set("kira-today", `今天主要在${topName}，${fmtMin(byKind[top])}，占 ${share}%；一共 ${fmtMin(total)}。`);
+      const workLogs = todayLogs.filter((x) => x.kind === "work");
+      const src = (workLogs.length ? workLogs : todayLogs).slice()
+        .sort((a, b) => (Number(b.minutes) || 0) - (Number(a.minutes) || 0));
+      const seen = [];
+      src.forEach((x) => {
+        String(x.text || "").split(/[；;。、，,\n]/).forEach((p) => {
+          const t = p.trim().replace(/^(今天|主要|又|再)/, "");
+          if (t.length >= 4 && t.length <= 16 && !seen.includes(t) && seen.length < 3) seen.push(t);
+        });
+      });
+      const what = seen.length ? seen.join("、") : "按计划做事";
+      set("kira-today", `今天 ${fmtMin(total)}，做了${what}。`);
     }
 
     const byCat = {};
