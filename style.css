@@ -2649,3 +2649,13 @@ h1, h1 *, .kira-name, .page-head h1, .hero h1 {
   .log-row { grid-template-columns: 44px auto 1fr auto !important; gap: 6px; font-size: 12.5px; }
   .day-block { margin-top: 14px; }
 }
+
+
+/* 目录当前区块高亮 */
+.side-toc a.on,
+.side-toc a.on:hover {
+  color: #58c7ff !important;
+}
+.side-toc a.on::before {
+  background: #58c7ff !important;
+}
