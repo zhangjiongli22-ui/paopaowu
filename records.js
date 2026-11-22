@@ -41,6 +41,18 @@ function el(tag, cls, text) {
   return e;
 }
 
+// 凌晨 4 点前算前一天
+function dayOf(dateStr, timeStr) {
+  if (!dateStr) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateStr).trim());
+  if (!m) return String(dateStr);
+  const hh = parseInt(String(timeStr || "12:00").slice(0, 2), 10);
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  if (!isNaN(hh) && hh < 4) d.setDate(d.getDate() - 1);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 function stars(r) {
   if (!r) return "";
   const n = Math.max(0, Math.min(5, Math.round(r / 2)));
@@ -137,7 +149,7 @@ function drawLog(pool) {
   }
   const byDate = new Map();
   pool.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || ""))).forEach((r) => {
-    const d = r.date || "未记日期";
+    const d = dayOf(r.date, r.time) || "未记日期";
     if (!byDate.has(d)) byDate.set(d, []);
     byDate.get(d).push(r);
   });
@@ -273,7 +285,7 @@ function drawMain(pool) {
     } else {
       const byDate = new Map();
       done.forEach((x) => {
-        const d = x.date || "未记日期";
+        const d = dayOf(x.date, x.time) || "未记日期";
         if (!byDate.has(d)) byDate.set(d, []);
         byDate.get(d).push(x);
       });
@@ -618,7 +630,7 @@ function drawStats() {
       <ol class="flow">
         ${site.map((x) => `
           <li class="flow-row">
-            <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
+            <span class="flow-when">${esc(dayOf(x.date, x.time) || "")}<i>${esc(x.time || "")}</i></span>
             <span class="flow-what">${esc(x.text || "")}</span>
             <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
           </li>`).join("")}
