@@ -1864,7 +1864,8 @@ body.lb-open { overflow: hidden; }
 .side-toc a::before,
 .side-toc a::after {
   content: "";
-  flex: 1;
+  flex: 0 0 18px;
+  width: 18px;
   height: 1px;
   background: var(--line);
 }
