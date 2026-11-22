@@ -315,7 +315,20 @@ function bindShots() {
     msg.textContent = value / 2 + "/5";
   });
 
+  const __rateQueues = new Map();
   async function apiRate(payload) {
+    // 同一条目的写入按顺序排队，避免连点导致先后错乱
+    const key = String(payload.id || "");
+    const prev = __rateQueues.get(key) || Promise.resolve();
+    const task = prev.catch(() => {}).then(() => rawRate(payload));
+    __rateQueues.set(key, task);
+    task.finally(() => {
+      if (__rateQueues.get(key) === task) __rateQueues.delete(key);
+    });
+    return task;
+  }
+
+  async function rawRate(payload) {
     const res = await fetch("/api/rate", {
       method: "POST",
       headers: { "content-type": "application/json" },
