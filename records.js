@@ -190,6 +190,8 @@ function drawTimeline(pool) {
 
 function drawMain(pool) {
   main.innerHTML = "";
+  const staleToc = document.querySelector(".side-toc");
+  if (staleToc) staleToc.remove();
   if (group === "plan") { drawLog(pool); return; }
   if (group === "idea") {
     const planning = pool.filter((x) => x.status !== "已达成").sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
