@@ -595,7 +595,7 @@ function drawStats() {
   ];
   const flowStats = FLOWS.map((f) => {
     const rows = logs
-      .filter((x) => f.re.test(x.text || ""))
+      .filter((x) => x.kind === "work" && f.re.test(x.text || ""))
       .sort((a, b) => ((a.date || "") + (a.time || "")).localeCompare((b.date || "") + (b.time || "")));
     return { name: f.name, rows, mins: rows.reduce((a, x) => a + (Number(x.minutes) || 0), 0) };
   }).sort((a, b) => b.mins - a.mins);
