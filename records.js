@@ -63,7 +63,11 @@ function card(r, mode) {
   } else {
     box.appendChild(el("div", "poster-fallback", (r.title || "?").slice(0, 1)));
   }
-  if (r.status) box.appendChild(el("span", "poster-status", r.status));
+  if (r.status) {
+    const st = el("span", "poster-status", r.status);
+    if (["在看", "在玩"].includes(r.status)) st.classList.add("inprogress");
+    box.appendChild(st);
+  }
   if (r.rating || (r.note || "").trim()) box.appendChild(el("span", "poster-badge", "已评价"));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || "（没写标题）"));
