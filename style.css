@@ -2486,3 +2486,20 @@ body::after {
   border: 0 !important;
   box-shadow: none !important;
 }
+
+
+/* 海报卡片去掉蓝色选框/描边 */
+.poster,
+.poster:hover,
+.poster:focus,
+.poster:focus-visible,
+.poster:active {
+  outline: none !important;
+  border-color: rgba(255,255,255,.06) !important;
+  box-shadow: none !important;
+}
+.poster:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.06);
+}
+.poster-status.inprogress { outline: none !important; }
