@@ -353,7 +353,12 @@ function draw() {
   const cp = params.get("cat");
   if (cp) cat = cp;
   const restoreY = params.get("y");
-  if (restoreY) setTimeout(() => window.scrollTo(0, Number(restoreY) || 0), 120);
+  if (restoreY) {
+    setTimeout(() => window.scrollTo(0, Number(restoreY) || 0), 120);
+    const u = new URL(location.href);
+    u.searchParams.delete("y");
+    history.replaceState(null, "", u);
+  }
 
   // 小字视图切换，靠最右
   const drawViews = () => {
