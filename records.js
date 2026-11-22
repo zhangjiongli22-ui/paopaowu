@@ -249,14 +249,13 @@ function drawMain(pool) {
   if (inprogRows.length) {
     const ip = document.createElement("details");
     ip.className = "fav-fold";
-    const ipLabel = cat === "game" ? "在玩" : (cat === "anime" || cat === "tv" || cat === "film") ? "在看" : "进行中";
-    ipSum.textContent = ipLabel + " · " + inprogRows.length;
-    ip.dataset.toc = ipLabel;
     ip.id = "sec-inprog";
     ip.open = true;
+    const ipLabel = cat === "game" ? "在玩" : (cat === "anime" || cat === "tv" || cat === "film") ? "在看" : "进行中";
+    ip.dataset.toc = ipLabel;
     const ipSum = document.createElement("summary");
     ipSum.className = "sec-fold-head";
-    ipSum.textContent = "在玩 / 在看 · " + inprogRows.length;
+    ipSum.textContent = ipLabel + " · " + inprogRows.length;
     ip.appendChild(ipSum);
     ip.appendChild(gridOf(summarised(inprogRows)));
     main.appendChild(ip);
