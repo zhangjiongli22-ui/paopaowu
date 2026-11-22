@@ -8094,6 +8094,33 @@
    "kind": "fitness",
    "text": "有氧跑步 20 分钟，无氧训练 10 分钟",
    "minutes": 30
+  },
+  {
+   "id": "log-885f6bc2",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "14:47",
+   "kind": "game",
+   "text": "游玩《绝区零》约 56 分钟",
+   "minutes": 56
+  },
+  {
+   "id": "log-eedb78aa",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "16:29",
+   "kind": "game",
+   "text": "游玩《明日方舟：终末地》约 31 分钟",
+   "minutes": 31
+  },
+  {
+   "id": "log-0320057b",
+   "cat": "log",
+   "date": "2026-11-22",
+   "time": "21:44",
+   "kind": "game",
+   "text": "游玩《异环》约 6 分钟",
+   "minutes": 6
   }
  ],
  "__ovCount": 20
