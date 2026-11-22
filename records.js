@@ -317,11 +317,10 @@ function buildToc() {
   const anchor = document.getElementById("sec-fav") || rows[0];
   if (anchor) {
     const rect = anchor.getBoundingClientRect();
-    nav.style.top = (rect.top + window.scrollY) + "px";
+    nav.style.top = Math.max(88, rect.top) + "px";
     const box = (main.parentElement || main).getBoundingClientRect();
     const w = nav.getBoundingClientRect().width || 70;
-    const left = Math.max(12, box.left - w - 20 + window.scrollX);
-    nav.style.left = left + "px";
+    nav.style.left = Math.max(12, box.left - w - 20) + "px";
   }
 }
 
