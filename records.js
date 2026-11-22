@@ -639,6 +639,17 @@ function drawStats() {
         <span class="flow-last">最近 ${esc((site[site.length - 1] || {}).date || "—")}</span>
         <span class="flow-count">含 ${site.length} 条记录</span>
       </div>
+      <details class="flow-more">
+        <summary>展开 ${site.length} 条明细</summary>
+        <ol class="flow">
+          ${site.map((x) => `
+            <li class="flow-row">
+              <span class="flow-when">${esc(x.date || "")}<i>${esc(x.time || "")}</i></span>
+              <span class="flow-what">${esc(x.text || "")}</span>
+              <span class="flow-dur">${fmt(Number(x.minutes) || 0)}</span>
+            </li>`).join("")}
+        </ol>
+      </details>
     </section>`;
 }
 
