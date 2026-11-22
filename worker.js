@@ -138,6 +138,16 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/comments" && request.method === "GET") {
+      let comments = [];
+      try {
+        comments = (await env.RATINGS.get("comments_all", "json")) || [];
+      } catch (e) {}
+      return new Response(JSON.stringify({ ok: true, items: Array.isArray(comments) ? comments : [] }), {
+        headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+      });
+    }
+
     if (url.pathname === "/api/comment" && request.method === "POST") {
       try {
         const body = await request.json();
@@ -181,11 +191,14 @@ export default {
           text: text,
         };
         if (body.reply_to) item.reply_to = String(body.reply_to).slice(0, 12);
-        data.items.push(item);
-
-        const blob = JSON.stringify(data);
-        await env.RATINGS.put("records_blob", blob);
-        await env.RATINGS.put("records_blob_at", String(Date.now()));
+        // 评论单独存一个键，推 records.json 不会覆盖它
+        let comments = [];
+        try {
+          comments = (await env.RATINGS.get("comments_all", "json")) || [];
+        } catch (e) {}
+        if (!Array.isArray(comments)) comments = [];
+        comments.push(item);
+        await env.RATINGS.put("comments_all", JSON.stringify(comments));
         return new Response(JSON.stringify({ ok: true, item }), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
         });
@@ -212,6 +225,14 @@ export default {
         }
         json.__source = src;
         const merged = await mergeOverrides(json, env);
+        // 把独立存储的评论并进来，页面照常读
+        try {
+          let comments = (await env.RATINGS.get("comments_all", "json")) || [];
+          if (Array.isArray(comments) && comments.length) {
+            const ids = new Set((merged.items || []).map((x) => String(x.id)));
+            comments.forEach((c) => { if (c && c.id && !ids.has(String(c.id))) merged.items.push(c); });
+          }
+        } catch (e) {}
         return new Response(JSON.stringify(merged), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
         });
