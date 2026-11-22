@@ -386,12 +386,14 @@ function buildToc() {
       const navTop = nav.getBoundingClientRect().top;
       const headBottom = (head || box).getBoundingClientRect().bottom;
       const idx = rows.indexOf(box);
-      window.scrollBy({ top: headBottom - navTop, behavior: "smooth" });
-      // 滚动动画结束后再钉一次，避免被中途的 scroll 事件改回去
-      setTimeout(() => {
-        spyLockUntil = Date.now() + 300;
+      // 直接定位，不做平滑滚动，避免中途被判定成别的区块而“跳一下”
+      const root = document.documentElement;
+      root.style.scrollBehavior = "auto";
+      window.scrollBy({ top: headBottom - navTop, behavior: "auto" });
+      requestAnimationFrame(() => {
         setActive(idx);
-      }, 800);
+        root.style.scrollBehavior = "";
+      });
     });
     nav.appendChild(a);
   });
