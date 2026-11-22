@@ -2503,3 +2503,8 @@ body::after {
   filter: brightness(1.06);
 }
 .poster-status.inprogress { outline: none !important; }
+
+
+/* 背景兜底：图没加载出来也不至于纯黑 */
+body { background-color: #0a1a26; }
+body::before { background-color: #0a1a26; }
