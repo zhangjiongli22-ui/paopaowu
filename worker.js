@@ -47,6 +47,7 @@ export default {
         if (body.time) next.time = body.time;
         if (body.rated_on) next.rated_on = body.rated_on;
         else next.rated_on = null;
+        if (body.pinned !== undefined && body.pinned !== null) next.pinned = !!body.pinned;
         await env.RATINGS.put("item:" + id, JSON.stringify(next));
         return new Response(JSON.stringify({ ok: true, item: next }), {
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
