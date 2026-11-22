@@ -398,7 +398,8 @@ function buildToc() {
   const setActive = (idx) => links.forEach((a, i) => a.classList.toggle("on", i === idx));
   const onScroll = () => {
     if (Date.now() < spyLockUntil) return;
-    const probe = 160; // 视口上方这条线落在哪个区块里
+    // 探针线跟目录顶部对齐，和点击后滚动到的位置一致
+    const probe = nav.getBoundingClientRect().top + 6;
     let current = 0;
     targets.forEach(({ box }, i) => {
       const rect = box.getBoundingClientRect();
