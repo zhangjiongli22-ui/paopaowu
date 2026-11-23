@@ -101,10 +101,12 @@ try {
   var host = document.getElementById("crit-list");
   var toc = document.getElementById("crit-toc");
 
-  function avatar(who) { return who === "大肥鱼" ? "鱼" : who === "Kira" ? "K" : "D"; }
-  function side(who) { return who === "大肥鱼" ? "fish" : who === "Kira" ? "kira" : "dsh"; }
+  // 数据里旧的 who 还是「大肥鱼」，新写的可能是「一只鱼」，两种都当同一个作者
+  function isFish(who) { return who === "大肥鱼" || who === "一只鱼"; }
+  function avatar(who) { return isFish(who) ? "鱼" : who === "Kira" ? "K" : "D"; }
+  function side(who) { return isFish(who) ? "fish" : who === "Kira" ? "kira" : "dsh"; }
   // 站内现在叫她「一只鱼」，数据里的 who 不改，只换显示名
-  function shown(who) { return who === "大肥鱼" ? "一只鱼" : (who || ""); }
+  function shown(who) { return isFish(who) ? "一只鱼" : (who || ""); }
 
   // 凌晨那一批（3:30 结算后写的）日期算前一天，但实际发生在次日清晨：
   // 排序时排在当天所有条目之后，这样「谁先发谁是主评论」才对得上
@@ -118,7 +120,7 @@ try {
   }
 
   function block(x, isReply, replyTo) {
-    var fish = x.who === "大肥鱼";
+    var fish = isFish(x.who);
     var who = side(x.who);
     return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + who + '">' +
       '<span class="cmt-av ' + who + '">' + avatar(x.who) + "</span>" +
