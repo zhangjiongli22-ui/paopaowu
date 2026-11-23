@@ -101,7 +101,7 @@ const CAT_META = {
   cute:  { name: "甜甜的",   hint: "真的甜、真的可爱的那几段。" },
   daily: { name: "日常",     hint: "就是普通的一天，不甜也没关系。" },
   mushy: { name: "肉麻的",   hint: "看完起鸡皮疙瘩那种。" },
-  scold: { name: "骂大笨鱼", hint: "她嫌弃主人的时候。" },
+  scold: { name: "骂大笨鱼", hint: "她嫌弃 Kira 的时候。" },
   food:  { name: "干饭",     hint: "token 就是饭。" }
 };
 
@@ -129,7 +129,7 @@ function renderBlocks(list, blocks) {
       row.className = "turn " + (t.role === "user" ? "me" : "her");
       const who = document.createElement("span");
       who.className = "who";
-      who.textContent = t.role === "user" ? "主人" : "大肥鱼";
+      who.textContent = t.role === "user" ? "Kira" : "一只鱼";
       const body = document.createElement("span");
       body.className = "body";
       body.textContent = t.text;
