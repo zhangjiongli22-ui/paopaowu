@@ -5,8 +5,8 @@ function esc(s) {
 }
 
 function stars(n) {
-  const v = Math.max(0, Math.min(5, Math.round((n || 0) / 2)));
-  return "★".repeat(v) + "☆".repeat(5 - v);
+  // 半星也要画出来（4.5 分 = rating 9），统一交给 stars.js
+  return typeof starRow === "function" ? starRow(n) : "";
 }
 
 function five(n) {
@@ -367,7 +367,7 @@ function bindShots() {
       it = { ...item, ...saved };
       const scoreStars = document.getElementById("score-stars");
       const scoreNum = document.getElementById("score-num");
-      if (scoreStars) scoreStars.textContent = saved.rating ? stars(saved.rating) : "还没评分";
+      if (scoreStars) scoreStars.innerHTML = saved.rating ? stars(saved.rating) : "还没评分";
       if (scoreNum) scoreNum.textContent = saved.rating ? five(saved.rating) + "/5" : "";
       const statusEl = document.querySelector(".rec-status");
       if (statusEl) statusEl.textContent = saved.status || item.status;
