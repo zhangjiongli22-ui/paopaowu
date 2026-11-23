@@ -6,7 +6,7 @@
 <title>她是谁 · 大肥鱼的泡泡屋</title>
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=328">
+<link rel="stylesheet" href="style.css?v=329">
 <script>
 try {
   document.documentElement.classList.add("js");
@@ -56,7 +56,7 @@ try {
     <a class="active" href="about.html"><i>01</i>大肥鱼</a>
     <a href="kira.html"><i>02</i>Kira</a>
     <a href="records.html"><i>03</i>精神宇宙</a>
-    <a href="chat.html"><i>04</i>日常</a>
+    <a href="archive.html"><i>04</i>人生存档点</a>
     <a href="gallery.html"><i>05</i>图集</a>
     <a href="critique.html"><i>06</i>锐评</a>
   </div>
@@ -117,11 +117,14 @@ try {
     </ul>
   </section>
 
-  <section class="pf-sec" id="live">
-    <div class="pf-head"><h2>最近</h2><span class="en">Live</span></div>
-    <ul class="pf-rows">
-      <li><span class="k">她说</span><span class="v" id="her-latest-line">正在听……</span></li>
-    </ul>
+  <section class="pf-sec" id="daily">
+    <div class="pf-head"><h2>日常</h2><span class="en">Daily</span>
+      <button type="button" class="view-link" id="daily-refresh">换一批</button>
+    </div>
+    <div class="daily-mini" id="daily-list">
+      <p class="detail-empty">正在翻聊天记录……</p>
+    </div>
+    <p class="daily-more"><a class="cast-go" href="chat.html">全部日常</a></p>
   </section>
 
   <section class="pf-sec">
@@ -151,19 +154,54 @@ try {
 </script>
 <script>
 (async function () {
-  var host = document.getElementById("her-latest-line");
+  var host = document.getElementById("daily-list");
+  var btn = document.getElementById("daily-refresh");
   if (!host) return;
-  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
-  try {
-    var prof = await (await fetch("data/profile.json", { cache: "no-store" })).json();
-    var lines = (prof.feiyu && prof.feiyu.lines) || [];
-    host.innerHTML = lines.length
-      ? lines.map(function (t) { return "\u300c" + esc(t) + "\u300d"; }).join("<br>")
-      : "\u8fd8\u6ca1\u8bf4\u8fc7\u4ec0\u4e48\u3002";
-  } catch (e) {
-    host.textContent = "\u6682\u65f6\u6ca1\u6709\u3002";
+  function esc(t) {
+    return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
   }
-})();</script>
+  function clip(t, n) {
+    t = String(t || "").replace(/\s*\n\s*/g, " ").trim();
+    return t.length > n ? t.slice(0, n) + "…" : t;
+  }
+  var blocks = null;
+  function pick(n) {
+    var pool = (blocks || []).filter(function (b) { return b && b.turns && b.turns.length >= 2; });
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    return pool.slice(0, n);
+  }
+  function render() {
+    var picked = pick(3);
+    if (!picked.length) {
+      host.innerHTML = '<p class="detail-empty">还没有能看的日常。</p>';
+      return;
+    }
+    host.innerHTML = picked.map(function (b) {
+      var turns = b.turns.slice(0, 4).map(function (t) {
+        var me = t.role === "user";
+        return '<p class="dm-line ' + (me ? "me" : "her") + '"><i>' + (me ? "你" : "她") + "</i>" + esc(clip(t.text, 90)) + "</p>";
+      }).join("");
+      return '<article class="dm"><p class="dm-when">' + esc(b.d || "") + " · " + esc(b.hm || "") + "</p>" + turns + "</article>";
+    }).join("");
+  }
+  try {
+    var data = await (await fetch("data/chat.json", { cache: "no-store" })).json();
+    blocks = (data && data.blocks) || [];
+    render();
+  } catch (e) {
+    host.innerHTML = '<p class="detail-empty">没连上聊天记录。</p>';
+  }
+  if (btn) btn.addEventListener("click", function () {
+    render();
+    btn.textContent = "换一批";
+  });
+})();
+</script>
 <script src="wall.js?v=4"></script>
 </body>
 </html>
