@@ -3770,6 +3770,7 @@ main > section:not([class]) > h2 {
 
 /* 工作流时间统计 */
 .stat-sub { margin-left: 12px; font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .16em; color: var(--dim); }
+.stat-note { margin: -6px 0 clamp(12px, 1.6vh, 18px); font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .14em; color: var(--dim); }
 .flow { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 0; }
 .flow-row {
   display: grid;
@@ -4129,6 +4130,30 @@ main#main { }
 .cmt-form-to button { border: 0; background: none; color: var(--dim); cursor: pointer; font-size: 14px; line-height: 1; }
 .cmt-form-to[hidden] { display: none; }
 
+/* ---------------- 档案页：日常小切片 ---------------- */
+.pf-head .view-link { margin-left: auto; }
+.daily-mini { display: grid; gap: clamp(12px, 1.6vh, 18px); }
+.dm {
+  display: grid;
+  gap: 7px;
+  padding: clamp(12px, 1.4vw, 18px) clamp(14px, 1.6vw, 20px);
+  border: 1px solid var(--line-soft);
+  background: rgba(10, 16, 24, .55);
+}
+.dm-when { margin: 0 0 2px; font: clamp(10px, .58vw, 13px) var(--mono); letter-spacing: .18em; color: var(--dim-2); }
+.dm-line {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(15px, .98vw, 20px);
+  line-height: 1.75;
+  color: var(--paper-2);
+}
+.dm-line i { font-style: normal; margin-right: 8px; font: clamp(10px, .56vw, 12.5px) var(--mono); letter-spacing: .12em; color: var(--dim-2); }
+.dm-line.her { color: var(--paper); }
+.dm-line.her i { color: var(--sakura); }
+.dm-line.me i { color: var(--aqua); }
+.daily-more { margin: clamp(12px, 1.6vh, 18px) 0 0; }
+
 /* 工作流：单条汇总 */
 .flow-single {
   display: flex;
@@ -4224,6 +4249,9 @@ main#main { }
 @media (max-width: 720px) {
   /* 导航触控：一行链接也要够得着 */
   .nav .links a { padding: 11px 2px; }
+  /* 档案页「换一批」「全部日常」别只剩一条细字 */
+  .pf-head .view-link { padding: 10px 0 12px; }
+  .daily-more .cast-go { padding: 8px 0; }
   /* 评论：头像小一号，回复少缩进，正文别挤成窄条 */
   .cmt { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
   .cmt-av { width: 30px; height: 30px; font-size: 13px; }
