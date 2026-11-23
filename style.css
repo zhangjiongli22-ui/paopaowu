@@ -3792,7 +3792,11 @@ main > section:not([class]) > h2 {
 /* 锐评页：页面留白 */
 #main.crit-page, body.crit body { }
 main#main { }
-.crit-page-wrap { padding: clamp(26px, 4vh, 52px) clamp(20px, 3.4vw, 56px) 0; }
+.crit-page-wrap {
+  padding: clamp(26px, 4vh, 52px) clamp(20px, 3.4vw, 56px) 0;
+  max-width: calc(900px + 2 * clamp(20px, 3.4vw, 56px));
+  margin-inline: auto;
+}
 .crit-wrap { max-width: min(1180px, 100%); }
 .crit-card { max-width: none; }
 
@@ -4016,16 +4020,18 @@ main#main { }
 .crit-toc-title {
   font: clamp(10px, .56vw, 13px) var(--mono);
   letter-spacing: .3em;
-  color: var(--dim-2);
+  color: var(--paper-2);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, .85);
   margin: 0 6px 0 0;
 }
 .crit-toc a {
   padding: 4px 12px;
   border: 1px solid var(--line-soft);
   border-radius: 999px;
+  background: rgba(5, 8, 13, .5);
   font: clamp(11px, .62vw, 14px) var(--mono);
   letter-spacing: .12em;
-  color: var(--dim);
+  color: var(--paper-2);
   text-decoration: none;
   cursor: pointer;
 }
@@ -4218,4 +4224,37 @@ main#main { }
 @media (min-width: 721px) and (max-width: 1000px) {
   .nav { flex-wrap: wrap; gap: 4px; }
   .nav .links { width: 100%; justify-content: flex-start; gap: 6px 20px; }
+}
+
+/* ============================================================
+   锐评页：阅读栏居中，宽屏左侧留一条日期索引栏（2026-11-23）
+   ============================================================ */
+@media (min-width: 1500px) {
+  .crit-page-wrap {
+    max-width: calc(1080px + 2 * clamp(20px, 3.4vw, 56px));
+    display: grid;
+    grid-template-columns: 132px minmax(0, 900px);
+    column-gap: clamp(24px, 2vw, 42px);
+    align-content: start;
+  }
+  .crit-page-wrap > .ch-head { grid-column: 2; }
+  .crit-page-wrap > .crit-wrap { grid-column: 2; }
+  .crit-page-wrap > .cmt-form-bottom { grid-column: 2; }
+  .crit-toc {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+    position: sticky;
+    top: 108px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 14px 0 0;
+    border: 0;
+    z-index: 2;
+  }
+  .crit-toc-title { margin: 0 0 6px; }
+  .crit-toc a { width: 100%; padding: 5px 10px; text-align: left; }
 }
