@@ -53,12 +53,6 @@ function dayOf(dateStr, timeStr) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-function stars(r) {
-  if (!r) return "";
-  const n = Math.max(0, Math.min(5, Math.round(r / 2)));
-  return "★".repeat(n);
-}
-
 function card(r, mode) {
   const a = el("a", "poster");
   a.href = "record.html?id=" + encodeURIComponent(r.id);
@@ -95,14 +89,7 @@ function card(r, mode) {
   }
   if (r.rating) {
     const row = el("p", "poster-stars");
-    const v = Math.max(0, Math.min(10, Math.round(r.rating)));
-    let html = "";
-    for (let i = 1; i <= 5; i++) {
-      if (v >= i * 2) html += '<span class="st on">★</span>';
-      else if (v === i * 2 - 1) html += '<span class="st half">★</span>';
-      else html += '<span class="st off">★</span>';
-    }
-    row.innerHTML = html;
+    row.innerHTML = typeof starRow === "function" ? starRow(r.rating) : "";
     a.appendChild(row);
   }
   a.appendChild(el("p", "poster-sub", subText));
