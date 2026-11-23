@@ -134,24 +134,40 @@ function drawLog(pool) {
     main.innerHTML = '<p class="detail-empty">还没有记录。</p>';
     return;
   }
+  // 0–4 点的条目算前一天，凌晨那一批排在当天所有条目之后
+  const isDawn = (r) => {
+    const hh = parseInt(String(r.time || "").slice(0, 2), 10);
+    return !isNaN(hh) && hh < 4;
+  };
+  const orderKey = (r) => {
+    const t = String(r.time || "");
+    const hh = parseInt(t.slice(0, 2), 10);
+    const mm = parseInt(t.slice(3, 5), 10);
+    if (isNaN(hh)) return 0;
+    return (hh < 4 ? hh + 24 : hh) * 60 + (isNaN(mm) ? 0 : mm);
+  };
   const byDate = new Map();
-  pool.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || ""))).forEach((r) => {
+  pool.slice().sort((a, b) => orderKey(a) - orderKey(b)).forEach((r) => {
+    // 日期在写入时已经按「4 点前算前一天」落好，这里只按 date 分组，
+    // 0–4 点的那几条挂「次日凌晨」并在组内排到最后
     const d = r.date || "未记日期";
     if (!byDate.has(d)) byDate.set(d, []);
     byDate.get(d).push(r);
   });
-  for (const [d, rows] of byDate) {
+  for (const [d, rows] of [...byDate.entries()].sort((a, b) => String(b[0]).localeCompare(String(a[0])))) {
     const totals = {};
     rows.forEach((r) => { totals[r.kind] = (totals[r.kind] || 0) + (Number(r.minutes) || 0); });
     const sum = Object.values(totals).reduce((a, b) => a + b, 0);
+    const dawn = rows.filter(isDawn);
     const head = el("div", "day-block");
     head.id = "log-" + d;
     head.innerHTML = `<h2 class="log-date">${esc(d)}</h2>
+      ${dawn.length ? '<p class="log-dawn">次日凌晨</p>' : ""}
       <p class="log-sum">${Object.keys(KINDS).filter((k) => totals[k]).map((k) => `${KINDS[k]} ${fmtMin(totals[k])}`).join(" · ")}${sum ? ` · 共 ${fmtMin(sum)}` : ""}</p>`;
     main.appendChild(head);
     const list = el("ul", "log-list");
-    rows.slice().sort((a, b) => String(a.time || "").localeCompare(String(b.time || ""))).forEach((r) => {
-      const li = el("li", "log-row");
+    rows.slice().sort((a, b) => orderKey(a) - orderKey(b)).forEach((r) => {
+      const li = el("li", "log-row" + (isDawn(r) ? " dawn" : ""));
       li.innerHTML = `<span class="log-time">${esc(r.time || "")}</span>
         <span class="log-kind k-${esc(r.kind || "")}">${esc(KINDS[r.kind] || r.kind || "")}</span>
         <span class="log-text">${esc(r.text || r.title || "")}</span>
@@ -195,7 +211,13 @@ function buildLogToc(dates) {
     nav.style.top = Math.max(88, rect.top) + "px";
     const pageBox = (main.parentElement || main).getBoundingClientRect();
     const w = nav.getBoundingClientRect().width || 96;
-    nav.style.left = Math.max(12, pageBox.left - w - 18) + "px";
+    const left = pageBox.left - w - 18;
+    // 窄屏放不下就干脆不显示，别压在日期标题上
+    if (left < 12) {
+      nav.remove();
+      return;
+    }
+    nav.style.left = left + "px";
   }
 }
 
