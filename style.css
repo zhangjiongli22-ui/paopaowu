@@ -1687,15 +1687,21 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   letter-spacing: .16em;
   color: var(--dim-2);
 }
-/* 0–4 点的那条：时间前面挂一枚黄色小字，整行略往右让出位置 */
-.log-row.dawn { grid-template-columns: auto 68px minmax(0, 1fr) auto; }
+/* 0–4 点的那条：时间跟别的行对齐，黄色小字挂在时间左边的空白里 */
+.log-time { display: block; text-align: right; }
+.log-row.dawn {
+  --tagw: 56px;
+  margin-left: calc(-1 * var(--tagw));
+  grid-template-columns: calc(48px + var(--tagw)) 68px minmax(0, 1fr) auto;
+}
 .dawn-tag {
   display: inline-block;
   margin-right: 8px;
   font: clamp(10px, 0.62vw, 13px) var(--mono);
   font-style: normal;
-  letter-spacing: .1em;
+  letter-spacing: .06em;
   color: var(--gold);
+  white-space: nowrap;
 }
 .log-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-hair); }
 .log-row {
@@ -4254,9 +4260,10 @@ main#main { }
   /* 档案页「换一批」「全部日常」别只剩一条细字 */
   .pf-head .view-link { padding: 10px 0 12px; }
   .daily-more .cast-go { padding: 8px 0; }
-  /* 次日凌晨那行：标签别把正文挤没 */
-  .log-row.dawn { grid-template-columns: auto 52px minmax(0, 1fr); }
-  .dawn-tag { margin-right: 6px; }
+  /* 次日凌晨那行：手机没地方横着放，标签叠在时间上面，时间仍对齐 */
+  .log-row.dawn { --tagw: 0px; margin-left: 0; grid-template-columns: 42px 52px minmax(0, 1fr); }
+  .log-row.dawn .log-time { text-align: left; }
+  .dawn-tag { display: block; margin: 0 0 2px; font-size: 9.5px; letter-spacing: 0; }
   /* 评论：头像小一号，回复少缩进，正文别挤成窄条 */
   .cmt { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
   .cmt-av { width: 30px; height: 30px; font-size: 13px; }
