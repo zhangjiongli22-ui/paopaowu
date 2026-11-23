@@ -7,7 +7,7 @@
 <meta name="description" content="Kira：这间泡泡屋的主人，玩什么、看什么、在折腾什么。">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=326">
+<link rel="stylesheet" href="style.css?v=327">
 <script>
 try {
   document.documentElement.classList.add("js");
@@ -232,12 +232,18 @@ try {
 
     const ideas = items.filter((x) => x.cat === "idea");
     const doing = ideas.filter((x) => x.status !== "已达成");
-    const done = ideas.filter((x) => x.status === "已达成");
+    // 已经做到只留最新 5 条：先按完成日期倒序，同一天按记进 records 的先后（后面的更新）
+    const done = ideas
+      .map((x, i) => ({ x, i }))
+      .filter((o) => o.x.status === "已达成")
+      .sort((a, b) => String(b.x.done_date || b.x.date || "").localeCompare(String(a.x.done_date || a.x.date || "")) || b.i - a.i)
+      .map((o) => o.x);
+    const doneTop = done.slice(0, 5);
     const host = document.getElementById("kira-idea-list");
     if (host) {
-      const block = (title, list, cls) => `<article class="k2-card"><p class="k2-card-k">${title}</p><ul class="k2-idea ${cls}">` +
+      const block = (title, list, cls, note) => `<article class="k2-card"><p class="k2-card-k"><span class="k2-card-k-t">${title}</span>${note ? `<span class="k2-card-note">${note}</span>` : ""}</p><ul class="k2-idea ${cls}">` +
         list.map((x) => `<li><span class="k2-dot"></span>${x.title}${x.note ? `<em>${x.note}</em>` : ""}</li>`).join("") + "</ul></article>";
-      host.innerHTML = block("计划中", doing, "") + block("已经做到", done, "done");
+      host.innerHTML = block("计划中", doing, "") + block("已经做到", doneTop, "done", "只记录最新 5 条");
     }
   } catch (err) {}
 })();
