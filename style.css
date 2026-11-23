@@ -1687,15 +1687,18 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   letter-spacing: .16em;
   color: var(--dim-2);
 }
-/* 0–4 点的那条：行内间距跟别的行一样，黄色小字叠在时间上方 */
+/* 0–4 点的那条：时间、分类、正文仍在同一条基线上，黄色小字悬在时间上方 */
 .log-time { display: block; text-align: right; }
+.log-row.dawn { padding-top: 18px; padding-bottom: 18px; }
+.log-row.dawn .log-time { position: relative; }
 .dawn-tag {
-  display: block;
-  margin: 0 0 2px;
+  position: absolute;
+  right: 0;
+  top: -14px;
   font: clamp(9px, 0.52vw, 11px) var(--mono);
   font-style: normal;
   letter-spacing: .04em;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--gold);
   white-space: nowrap;
 }
@@ -4256,8 +4259,9 @@ main#main { }
   /* 档案页「换一批」「全部日常」别只剩一条细字 */
   .pf-head .view-link { padding: 10px 0 12px; }
   .daily-more .cast-go { padding: 8px 0; }
-  /* 次日凌晨：小字叠在时间上方，行内间距不变 */
-  .dawn-tag { font-size: 9px; }
+  /* 次日凌晨：小字悬在时间上方，整行上下留白对称，时间仍在横线中间 */
+  .log-row.dawn { padding-top: 16px; padding-bottom: 16px; }
+  .dawn-tag { font-size: 9px; top: -12px; }
   /* 评论：头像小一号，回复少缩进，正文别挤成窄条 */
   .cmt { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
   .cmt-av { width: 30px; height: 30px; font-size: 13px; }
