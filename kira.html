@@ -232,18 +232,52 @@ try {
 
     const ideas = items.filter((x) => x.cat === "idea");
     const doing = ideas.filter((x) => x.status !== "已达成");
-    // 已经做到只留最新 5 条：先按完成日期倒序，同一天按记进 records 的先后（后面的更新）
+    // 已经做到：先取最新 10 条，能显示几条由「计划中」那张卡的高度决定（不撑大框）
     const done = ideas
       .map((x, i) => ({ x, i }))
       .filter((o) => o.x.status === "已达成")
       .sort((a, b) => String(b.x.done_date || b.x.date || "").localeCompare(String(a.x.done_date || a.x.date || "")) || b.i - a.i)
       .map((o) => o.x);
-    const doneTop = done.slice(0, 5);
+    const doneTop = done.slice(0, 10);
     const host = document.getElementById("kira-idea-list");
     if (host) {
       const block = (title, list, cls, note) => `<article class="k2-card"><p class="k2-card-k"><span class="k2-card-k-t">${title}</span>${note ? `<span class="k2-card-note">${note}</span>` : ""}</p><ul class="k2-idea ${cls}">` +
         list.map((x) => `<li><span class="k2-dot"></span>${x.title}${x.note ? `<em>${x.note}</em>` : ""}</li>`).join("") + "</ul></article>";
-      host.innerHTML = block("计划中", doing, "") + block("已经做到", doneTop, "done", "只记录最新 5 条");
+
+      // 按左侧卡片的内容高度把右侧塞满：多的从最旧的开始去掉，卡片本身不长大
+      const fit = () => {
+        const cards = host.querySelectorAll(".k2-card");
+        const leftCard = cards[0];
+        const rightCard = cards[1];
+        if (!leftCard || !rightCard) return;
+        const ul = rightCard.querySelector(".k2-idea");
+        const noteEl = rightCard.querySelector(".k2-card-note");
+        if (!ul) return;
+        // 取消等高拉伸，量到的才是内容本身的高度
+        const prevAlign = host.style.alignItems;
+        host.style.alignItems = "start";
+        void host.offsetHeight;
+        const limit = leftCard.offsetHeight;
+        const items = [...ul.children];
+        for (let i = items.length - 1; i >= 0; i--) {
+          if (rightCard.offsetHeight <= limit + 1) break;
+          items[i].remove();
+        }
+        const shown = ul.children.length;
+        if (noteEl) noteEl.textContent = shown ? "最新 " + shown + " 条" : "";
+        host.style.alignItems = prevAlign;
+      };
+      const renderIdeas = () => {
+        host.innerHTML = block("计划中", doing, "") + block("已经做到", doneTop, "done", "最新 " + doneTop.length + " 条");
+        fit();
+      };
+      renderIdeas();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderIdeas).catch(() => {});
+      let fitTimer = 0;
+      window.addEventListener("resize", () => {
+        clearTimeout(fitTimer);
+        fitTimer = setTimeout(renderIdeas, 180);
+      }, { passive: true });
     }
   } catch (err) {}
 })();
