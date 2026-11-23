@@ -1687,13 +1687,15 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   letter-spacing: .16em;
   color: var(--dim-2);
 }
-/* 日期下方的黄色小字：这一天里有 0–4 点做的、其实属于次日凌晨的事 */
-.log-dawn {
-  margin: 5px 0 0;
-  font: clamp(11px, 0.78vw, 14.5px) var(--mono);
-  letter-spacing: .2em;
+/* 0–4 点的那条：时间前面挂一枚黄色小字，整行略往右让出位置 */
+.log-row.dawn { grid-template-columns: auto 68px minmax(0, 1fr) auto; }
+.dawn-tag {
+  display: inline-block;
+  margin-right: 8px;
+  font: clamp(10px, 0.62vw, 13px) var(--mono);
+  font-style: normal;
+  letter-spacing: .1em;
   color: var(--gold);
-  opacity: .9;
 }
 .log-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-hair); }
 .log-row {
@@ -4252,6 +4254,9 @@ main#main { }
   /* 档案页「换一批」「全部日常」别只剩一条细字 */
   .pf-head .view-link { padding: 10px 0 12px; }
   .daily-more .cast-go { padding: 8px 0; }
+  /* 次日凌晨那行：标签别把正文挤没 */
+  .log-row.dawn { grid-template-columns: auto 52px minmax(0, 1fr); }
+  .dawn-tag { margin-right: 6px; }
   /* 评论：头像小一号，回复少缩进，正文别挤成窄条 */
   .cmt { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
   .cmt-av { width: 30px; height: 30px; font-size: 13px; }
