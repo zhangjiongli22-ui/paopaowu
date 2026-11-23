@@ -7,7 +7,7 @@
 <meta name="description" content="每天两段锐评：大肥鱼评当天所有活动、也评新加的计划；DSH 再评一次。">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=323">
+<link rel="stylesheet" href="style.css?v=324">
 <script>
 try {
   document.documentElement.classList.add("js");
@@ -69,29 +69,22 @@ try {
     </div>
   </header>
 
-  <form class="cmt-form" id="cmt-form" autocomplete="off">
-    <div class="cmt-form-row">
-      <label class="cmt-form-who">
-        <span>身份</span>
-        <select id="cmt-who">
-          <option value="大肥鱼">大肥鱼</option>
-          <option value="DSH">DSH</option>
-          <option value="Kira">Kira</option>
-        </select>
-      </label>
-      <span class="cmt-form-to" id="cmt-to" hidden>回复 <b id="cmt-to-name"></b><button type="button" id="cmt-to-clear" title="取消">×</button></span>
-      <span class="cmt-form-hint" id="cmt-hint">支持换行；按「发送」公开到当前日期</span>
-    </div>
-    <textarea id="cmt-text" rows="3" maxlength="1200" placeholder="写点什么……"></textarea>
-    <div class="cmt-form-row cmt-form-actions">
-      <button type="submit" class="cmt-send" id="cmt-send">发送</button>
-    </div>
-  </form>
-
   <nav class="crit-toc" id="crit-toc" hidden><span class="crit-toc-title">日期</span></nav>
   <div class="crit-wrap" id="crit-list">
     <p class="loading">正在翻记录……</p>
   </div>
+
+  <form class="cmt-form cmt-form-bottom" id="cmt-form" autocomplete="off">
+    <div class="cmt-form-row">
+      <span class="cmt-form-who"><span>身份</span><b>Kira</b></span>
+      <span class="cmt-form-to" id="cmt-to" hidden>回复 <b id="cmt-to-name"></b><button type="button" id="cmt-to-clear" title="取消">×</button></span>
+      <span class="cmt-form-hint" id="cmt-hint">支持换行；按「发送」公开到当前日期</span>
+    </div>
+    <textarea id="cmt-text" rows="4" maxlength="1200" placeholder="写点什么……"></textarea>
+    <div class="cmt-form-row cmt-form-actions">
+      <button type="submit" class="cmt-send" id="cmt-send">发送</button>
+    </div>
+  </form>
 </div></main>
 
 <footer>
@@ -141,7 +134,6 @@ try {
 
 
   var form = document.getElementById("cmt-form");
-  var whoSel = document.getElementById("cmt-who");
   var textEl = document.getElementById("cmt-text");
   var hint = document.getElementById("cmt-hint");
   var sendBtn = document.getElementById("cmt-send");
@@ -165,6 +157,16 @@ try {
     if (!btn) return;
     setReplyTo(btn.getAttribute("data-who") || "");
   });
+
+  // 评论框只给 Kira 用；没登录先别让她白写一段
+  var logged = false;
+  try {
+    logged = !!(localStorage.getItem("paopaowu_admin") || localStorage.getItem("paopaowu_pass"));
+  } catch (e) {}
+  if (!logged && sendBtn) {
+    sendBtn.disabled = true;
+    if (hint) hint.innerHTML = '登录后才能留言 · <a href="login.html" style="color:var(--gold)">去登录</a>';
+  }
 
   function getPass() {
     var p = "";
@@ -190,7 +192,7 @@ try {
         var res = await fetch("/api/comment", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ pass: pass, who: whoSel.value, text: text, reply_to: replyTarget }),
+          body: JSON.stringify({ pass: pass, who: "Kira", text: text, reply_to: replyTarget }),
         });
         var out = await res.json();
         if (!out.ok) {
