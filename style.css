@@ -3923,6 +3923,7 @@ main#main { }
   color: #f7e2e8;
 }
 .cmt-av.dsh { background: rgba(127, 211, 232, .14); color: #dcf4fb; }
+.cmt-av.kira { background: rgba(201, 168, 107, .16); color: #f4e6c8; }
 .cmt-body { display: grid; gap: 9px; min-width: 0; }
 .cmt-name {
   margin: 0;
