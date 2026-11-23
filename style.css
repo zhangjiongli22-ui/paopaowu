@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    泡泡屋 2.0 —「夜光水槽」视觉体系
    场景层 / 立绘层 / 画框层 / ADV 层：先有纵深，再有内容。
    结构：1 tokens → 2 场景与图层 → 3 排版 → 4 导航 → 5 标题画面
@@ -1526,15 +1526,25 @@ body.lb-open { overflow: hidden; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.poster-stars {
-  margin: 5px 0 0;
-  font-size: clamp(11.5px, 0.80vw, 16.1px);
-  letter-spacing: .18em;
+/* 评分星：由 stars.js 生成，未得的部分压暗，半星按比例裁切 */
+.stars5 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .16em;
   line-height: 1;
+  letter-spacing: 0;
 }
-.poster-stars .st { color: rgba(242, 236, 225, .16); }
-.poster-stars .st.on { color: var(--gold); }
-.poster-stars .st.half { color: rgba(201, 168, 107, .55); }
+.stars5 .s5 {
+  display: inline-block;
+  color: transparent;
+  background-image: linear-gradient(90deg, var(--gold) var(--fill, 0%), rgba(242, 236, 225, .24) var(--fill, 0%));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.poster-stars {
+  margin: 6px 0 0;
+  font-size: clamp(11.5px, 0.80vw, 16.1px);
+}
 .poster-sub {
   margin: 4px 0 0;
   font: clamp(11.5px, 0.80vw, 16.1px) var(--mono);
@@ -1822,7 +1832,8 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   border-bottom: 1px solid var(--line-hair);
 }
 .score-label { font: clamp(11.5px, 0.80vw, 16.1px) var(--mono); letter-spacing: .26em; color: var(--gold); opacity: .8; }
-.score-stars { color: var(--gold); font-size: clamp(15px, 1.04vw, 21px); letter-spacing: .3em; }
+.score-stars { font-size: clamp(15px, 1.04vw, 21px); color: var(--dim); }
+.score-stars .stars5 { gap: .3em; }
 .score-num { font: clamp(12.5px, 0.87vw, 17.5px) var(--mono); letter-spacing: .14em; color: var(--dim); }
 .rec-status {
   padding: 3px 12px;
@@ -4084,6 +4095,7 @@ main#main { }
 }
 .cmt-form-to b { font-weight: 400; color: var(--gold); }
 .cmt-form-to button { border: 0; background: none; color: var(--dim); cursor: pointer; font-size: 14px; line-height: 1; }
+.cmt-form-to[hidden] { display: none; }
 
 /* 工作流：单条汇总 */
 .flow-single {
