@@ -163,17 +163,16 @@ function drawLog(pool) {
     const totals = {};
     rows.forEach((r) => { totals[r.kind] = (totals[r.kind] || 0) + (Number(r.minutes) || 0); });
     const sum = Object.values(totals).reduce((a, b) => a + b, 0);
-    const dawn = rows.filter(isDawn);
     const head = el("div", "day-block");
     head.id = "log-" + d;
     head.innerHTML = `<h2 class="log-date">${esc(d)}</h2>
-      ${dawn.length ? '<p class="log-dawn">次日凌晨</p>' : ""}
       <p class="log-sum">${Object.keys(KINDS).filter((k) => totals[k]).map((k) => `${KINDS[k]} ${fmtMin(totals[k])}`).join(" · ")}${sum ? ` · 共 ${fmtMin(sum)}` : ""}</p>`;
     main.appendChild(head);
     const list = el("ul", "log-list");
     rows.slice().sort((a, b) => orderKey(a) - orderKey(b)).forEach((r) => {
-      const li = el("li", "log-row" + (isDawn(r) ? " dawn" : ""));
-      li.innerHTML = `<span class="log-time">${esc(r.time || "")}</span>
+      const dawnRow = isDawn(r);
+      const li = el("li", "log-row" + (dawnRow ? " dawn" : ""));
+      li.innerHTML = `<span class="log-time">${dawnRow ? '<i class="dawn-tag">次日凌晨</i>' : ""}${esc(r.time || "")}</span>
         <span class="log-kind k-${esc(r.kind || "")}">${esc(KINDS[r.kind] || r.kind || "")}</span>
         <span class="log-text">${esc(r.text || r.title || "")}</span>
         <span class="log-min">${r.minutes ? fmtMin(r.minutes) : ""}</span>`;
