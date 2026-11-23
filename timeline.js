@@ -21,9 +21,13 @@ function card(r) {
   } else {
     box.appendChild(el("div", "poster-fallback", (r.title || "?")[0]));
   }
-  if (r.rating) box.appendChild(el("span", "poster-rating", "★".repeat(Math.max(0, Math.min(5, Math.round(r.rating / 2))))));
   a.appendChild(box);
   a.appendChild(el("p", "poster-title", r.title || ""));
+  if (r.rating) {
+    const row = el("p", "poster-stars");
+    row.innerHTML = typeof starRow === "function" ? starRow(r.rating) : "";
+    a.appendChild(row);
+  }
   a.appendChild(el("p", "poster-sub", ((r.play_since || r.date || "").slice(5) + " " + (r.time || "")).trim()));
   return a;
 }
