@@ -24,8 +24,13 @@ const groupRow = document.getElementById("group-row");
 const catRow = document.getElementById("cat-row");
 const viewRow = document.getElementById("view-row");
 
+// 每个页面自己决定显示哪几个大类：精神宇宙只有 hobby，人生存档点有 plan / idea / stats
+const PAGE_GROUPS = (groupRow && groupRow.dataset.groups ? groupRow.dataset.groups.split(",") : Object.keys(GROUPS))
+  .filter((k) => GROUPS[k]);
+const DEFAULT_GROUP = (groupRow && groupRow.dataset.default) || PAGE_GROUPS[0] || "hobby";
+
 let items = [];
-let group = "hobby";
+let group = DEFAULT_GROUP;
 let cat = "all";
 let view = "summary";
 let issueView = false;
@@ -619,6 +624,16 @@ function drawStats() {
   }
   const shownFlows = flowStats.filter((f) => f.mins > 0).sort((a, b) => b.mins - a.mins);
 
+  // 立项那条线：建仓库那天算起，到今天为止
+  const PROJECT_START = "2026-11-20";
+  const nowD = new Date();
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const todayD = `${nowD.getFullYear()}-${pad2(nowD.getMonth() + 1)}-${pad2(nowD.getDate())}`;
+  const workDates = workLogs.map((x) => x.date).filter(Boolean).sort();
+  const projectFrom = workDates[0] && workDates[0] < PROJECT_START ? workDates[0] : PROJECT_START;
+  const projectTo = todayD;
+  const projectSpan = projectTo ? `从 ${projectFrom} 到 ${projectTo}` : `${projectFrom} 起`;
+
   const catRowData = [
     ["动画", hobby.filter((x) => x.cat === "anime").length],
     ["剧集", hobby.filter((x) => x.cat === "tv").length],
@@ -649,13 +664,17 @@ function drawStats() {
       </div>
 
       <h3 class="stat-h">工作流时间统计<span class="stat-sub">${shownFlows.length} 类</span></h3>
+      <p class="stat-note">立项 ${esc(projectFrom)} · 记到 ${esc(projectTo)}</p>
       <div class="flow-list">
-        ${shownFlows.map((f) => `
+        ${shownFlows.map((f) => {
+          const fFirst = (f.rows[0] || {}).date || "—";
+          const fLast = (f.rows[f.rows.length - 1] || {}).date || fFirst;
+          return `
           <div class="flow-item">
             <div class="flow-single">
               <span class="flow-name">${esc(f.name)}</span>
               <span class="flow-total">${fmt(f.mins)}</span>
-              <span class="flow-last">最近 ${esc((f.rows[f.rows.length - 1] || {}).date || "—")}</span>
+              <span class="flow-last">从 ${esc(fFirst)} 到 ${esc(fLast)}</span>
               <span class="flow-count">含 ${f.rows.length} 条</span>
             </div>
             <details class="flow-more">
@@ -669,7 +688,8 @@ function drawStats() {
                   </li>`).join("")}
               </ol>
             </details>
-          </div>`).join("")}
+          </div>`;
+        }).join("")}
       </div>
     </section>`;
 }
@@ -748,7 +768,7 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   const params = new URLSearchParams(location.search);
   const cameWithY = params.has("y");
   const gp = params.get("group") || location.hash.replace("#", "");
-  if (gp && GROUPS[gp]) group = gp;
+  if (gp && GROUPS[gp] && PAGE_GROUPS.includes(gp)) group = gp;
   const cp = params.get("cat");
   if (cp && GROUPS[group].cats.includes(cp)) cat = cp;
   else cat = "all";
@@ -818,7 +838,10 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   };
   syncViewRow();
 
-  Object.keys(GROUPS).forEach((k) => {
+  if (PAGE_GROUPS.length <= 1) {
+    groupRow.style.display = "none";
+  }
+  PAGE_GROUPS.forEach((k) => {
     const b = el("button", "group-btn" + (k === group ? " on" : ""), GROUPS[k].name);
     b.addEventListener("click", () => {
       group = k;
