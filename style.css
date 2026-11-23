@@ -2094,7 +2094,10 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   transition: border-color .35s var(--ease);
 }
 .k2-card:hover { border-color: rgba(242, 236, 225, .16); }
-.k2-card-k { margin: 0 0 10px; font: clamp(11.5px, 0.80vw, 16.1px) var(--mono); letter-spacing: .28em; color: var(--gold); opacity: .75; }
+.k2-card-k { margin: 0 0 10px; font: clamp(11.5px, 0.80vw, 16.1px) var(--mono); letter-spacing: .28em; color: var(--gold); }
+.k2-card-k-t { opacity: .75; }
+/* 板块标题右边的灰色注脚，比如「只记录最新 5 条」 */
+.k2-card-note { margin-left: 10px; font-size: .86em; letter-spacing: .06em; color: var(--dim); white-space: nowrap; }
 .k2-card-t {
   margin: 0 0 8px;
   font-family: var(--serif);
