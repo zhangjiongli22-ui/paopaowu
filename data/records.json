@@ -8181,6 +8181,42 @@
    "title": "大肥鱼设定集页面",
    "note": "单独一页放她的形象设定：水彩完整版、Q 版、鳍耳尾巴同发色的细节、日常状态，将来可接图集。",
    "status": "计划中"
+  },
+  {
+   "id": "log-3c40af65",
+   "cat": "log",
+   "date": "2026-11-23",
+   "time": "19:00",
+   "kind": "fitness",
+   "text": "有氧跑步 20 分钟，卧推 20 分钟",
+   "minutes": 40
+  },
+  {
+   "id": "log-d84e29ae",
+   "cat": "log",
+   "date": "2026-11-23",
+   "time": "19:02",
+   "kind": "game",
+   "text": "游玩《绝区零》约 5 分钟",
+   "minutes": 5
+  },
+  {
+   "id": "log-e91b0a5f",
+   "cat": "log",
+   "date": "2026-11-23",
+   "time": "19:04",
+   "kind": "game",
+   "text": "游玩《异环》约 5 分钟",
+   "minutes": 5
+  },
+  {
+   "id": "log-04fd8a24",
+   "cat": "log",
+   "date": "2026-11-23",
+   "time": "19:06",
+   "kind": "game",
+   "text": "游玩《明日方舟：终末地》约 20 分钟",
+   "minutes": 20
   }
  ],
  "__ovCount": 20
