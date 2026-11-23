@@ -1687,6 +1687,14 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   letter-spacing: .16em;
   color: var(--dim-2);
 }
+/* 日期下方的黄色小字：这一天里有 0–4 点做的、其实属于次日凌晨的事 */
+.log-dawn {
+  margin: 5px 0 0;
+  font: clamp(11px, 0.78vw, 14.5px) var(--mono);
+  letter-spacing: .2em;
+  color: var(--gold);
+  opacity: .9;
+}
 .log-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-hair); }
 .log-row {
   display: grid;
@@ -1697,6 +1705,7 @@ details[open] > .sec-fold-head::before, details[open] > .wish-head::before { con
   border-bottom: 1px solid var(--line-hair);
 }
 .log-time { font: clamp(12.5px, 0.87vw, 17.5px) var(--mono); letter-spacing: .08em; color: var(--dim-2); }
+.log-row.dawn .log-time { color: var(--gold); }
 .log-kind {
   text-align: center;
   padding: 1px 6px;
