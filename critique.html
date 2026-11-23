@@ -7,7 +7,7 @@
 <meta name="description" content="每天两段锐评：大肥鱼评当天所有活动、也评新加的计划；DSH 再评一次。">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=324">
+<link rel="stylesheet" href="style.css?v=325">
 <script>
 try {
   document.documentElement.classList.add("js");
@@ -101,7 +101,8 @@ try {
   var host = document.getElementById("crit-list");
   var toc = document.getElementById("crit-toc");
 
-  function avatar(who) { return who === "大肥鱼" ? "鱼" : "D"; }
+  function avatar(who) { return who === "大肥鱼" ? "鱼" : who === "Kira" ? "K" : "D"; }
+  function side(who) { return who === "大肥鱼" ? "fish" : who === "Kira" ? "kira" : "dsh"; }
 
   // 凌晨那一批（3:30 结算后写的）日期算前一天，但实际发生在次日清晨：
   // 排序时排在当天所有条目之后，这样「谁先发谁是主评论」才对得上
@@ -116,8 +117,9 @@ try {
 
   function block(x, isReply, replyTo) {
     var fish = x.who === "大肥鱼";
-    return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + (fish ? "fish" : "dsh") + '">' +
-      '<span class="cmt-av ' + (fish ? "fish" : "dsh") + '">' + avatar(x.who) + "</span>" +
+    var who = side(x.who);
+    return '<article class="cmt ' + (isReply ? "cmt-reply " : "") + who + '">' +
+      '<span class="cmt-av ' + who + '">' + avatar(x.who) + "</span>" +
       '<div class="cmt-body">' +
         '<p class="cmt-name">' + esc(x.who || "") +
           (fish ? '<span class="cmt-badge">作者</span>' : "") +
