@@ -404,6 +404,9 @@ h1, h2, h3, h4 {
 .nav .links a:hover i { opacity: 1; }
 .nav .links a.active { color: var(--paper); border-bottom-color: var(--gold); }
 .nav .links a.active i { opacity: 1; }
+/* 700–1000px 之间一行放不下：品牌不许被挤成竖排，链接换行 */
+.nav .brand { flex: 0 0 auto; white-space: nowrap; }
+.nav .links { flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
 
 /* ---------------- 5. 标题画面（铺满屏） ---------------- */
 .title-screen {
@@ -774,6 +777,7 @@ html.scene-wall .scene-toggle i {
   display: grid;
   grid-template-columns: minmax(150px, 36%) minmax(0, 1fr);
   gap: clamp(16px, 2vw, 24px);
+  min-width: 0;
   padding: clamp(16px, 2vw, 22px);
   border: 1px solid var(--line-soft);
   background: linear-gradient(158deg, rgba(13, 21, 33, .74), rgba(8, 12, 19, .5));
@@ -793,6 +797,7 @@ html.scene-wall .scene-toggle i {
 .cast-item:hover { border-color: rgba(242, 236, 225, .18); background: linear-gradient(158deg, rgba(16, 26, 40, .82), rgba(8, 12, 19, .56)); }
 .cast-art {
   position: relative;
+  min-width: 0;
   min-height: 248px;
   overflow: hidden;
   border: 1px solid var(--line-soft);
@@ -2330,8 +2335,9 @@ main > section:not([class]) > h2 {
   .adv-text { min-height: 3.4em; }
   .adv-foot { flex-wrap: nowrap; gap: 8px; letter-spacing: .2em; }
   .cast-item { grid-template-columns: minmax(0, 1fr); }
-  .cast-art { aspect-ratio: 16 / 10; max-width: none; }
+  .cast-art { aspect-ratio: 16 / 10; max-width: none; min-height: 0; }
   .cast-art img { height: 100%; }
+  .cast-art.mono span { font-size: clamp(52px, 17vw, 96px); }
   .gallery-grid { column-count: 2; column-gap: 10px; }
   .rec-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 14px 10px; }
   .ch-head { grid-template-columns: 52px minmax(0, 1fr); }
@@ -3328,8 +3334,10 @@ main > section:not([class]) > h2 {
   object-position: bottom center;
 }
 .pf-art .pf-slot { display: grid; place-items: center; }
-/* 详情页：左栏只放封面与资料，简介挪到主栏按阅读宽度排 */
-.subject-grid { grid-template-columns: clamp(340px, 22vw, 480px) minmax(0, 1fr); }
+/* 详情页：左栏只放封面与资料，简介挪到主栏按阅读宽度排（只在宽屏生效，别盖掉手机单列） */
+@media (min-width: 901px) {
+  .subject-grid { grid-template-columns: clamp(340px, 22vw, 480px) minmax(0, 1fr); }
+}
 .subject-desc {
   margin: clamp(14px, 2vh, 22px) 0 clamp(10px, 1.6vh, 18px);
   max-width: 46em;
@@ -3389,7 +3397,9 @@ main > section:not([class]) > h2 {
   line-height: 1.95;
 }
 
-.subject-cover { max-width: clamp(220px, 15vw, 300px); }
+@media (min-width: 901px) {
+  .subject-cover { max-width: clamp(220px, 15vw, 300px); }
+}
 
 /* 品味里的逐部短句 */
 .taste-item p + p { margin-top: 8px; }
@@ -4037,6 +4047,9 @@ main#main { }
 }
 .cmt-form-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .cmt-form-who { display: inline-flex; align-items: center; gap: 8px; font: clamp(11px, .62vw, 14px) var(--mono); letter-spacing: .14em; color: var(--dim); }
+.cmt-form-who b { font-weight: 400; letter-spacing: .14em; color: var(--gold); }
+/* 输入框在整页最下面：和上面的评论留一段呼吸 */
+.cmt-form-bottom { max-width: min(900px, 100%); margin: clamp(34px, 5vh, 58px) 0 clamp(26px, 4vh, 46px); }
 .cmt-form-who select {
   background: #0a1019;
   color: var(--paper);
@@ -4152,3 +4165,56 @@ main#main { }
 .flow-item { padding: 0; }
 .flow-item + .flow-item { border-top: 1px solid var(--line-hair); padding-top: clamp(10px, 1.4vh, 16px); }
 .flow-single { padding: 0; }
+
+/* ============================================================
+   手机 / 平板重排（2026-11-23）：桌面不动，≤860px 才生效
+   ============================================================ */
+@media (max-width: 860px) {
+  /* 首页标题画面：立绘 → 文案 → 对话框竖排，别再压在一起 */
+  .vh { height: auto; }
+  .vh-bands { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .vh-band { display: flex; flex-direction: column; min-height: 0; }
+  .vh-band::after { display: none; }
+  .vh-band .art { position: relative; inset: auto; order: 1; height: clamp(200px, 52vw, 330px); }
+  .vh-band .art.k span { font-size: clamp(84px, 26vw, 170px); }
+  .vh-band .body { order: 2; padding: 12px clamp(16px, 4vw, 22px) 0; }
+  .vh-band .adv {
+    position: relative;
+    order: 3;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    margin: 12px clamp(16px, 4vw, 22px) 16px;
+  }
+
+  /* 详情页：封面 → 标题 → 评分 → 评价 → 资料 → 简介 → 截图 */
+  .subject-grid { gap: 20px; }
+  .subject-side, .subject-main { display: contents; }
+  .subject-cover { order: 1; max-width: 150px; justify-self: start; }
+  .subject-title { order: 2; font-size: clamp(25px, 7.4vw, 40px); }
+  .kira-score { order: 3; }
+  .rate-box { order: 4; }
+  .rate-locked { order: 5; }
+  .subject-meta { order: 6; }
+  .subject-desc { order: 7; }
+  .shots-head { order: 8; }
+  .shots, .detail-empty, .shots-more { order: 9; }
+}
+
+@media (max-width: 720px) {
+  /* 导航触控：一行链接也要够得着 */
+  .nav .links a { padding: 11px 2px; }
+  /* 评论：头像小一号，回复少缩进，正文别挤成窄条 */
+  .cmt { grid-template-columns: 30px minmax(0, 1fr); gap: 10px; }
+  .cmt-av { width: 30px; height: 30px; font-size: 13px; }
+  .cmt-reply { margin-left: 10px; padding-left: 10px; }
+  .cmt-name { flex-wrap: wrap; gap: 6px 10px; }
+  .cmt-text { font-size: 16px; line-height: 1.9; }
+}
+
+/* 平板：导航放不下就整排换到品牌下面，别让「锐评」单独掉一行 */
+@media (min-width: 721px) and (max-width: 1000px) {
+  .nav { flex-wrap: wrap; gap: 4px; }
+  .nav .links { width: 100%; justify-content: flex-start; gap: 6px 20px; }
+}
