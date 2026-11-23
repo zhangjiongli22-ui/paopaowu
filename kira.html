@@ -241,35 +241,36 @@ try {
     const doneTop = done.slice(0, 10);
     const host = document.getElementById("kira-idea-list");
     if (host) {
-      const block = (title, list, cls, note) => `<article class="k2-card"><p class="k2-card-k"><span class="k2-card-k-t">${title}</span>${note ? `<span class="k2-card-note">${note}</span>` : ""}</p><ul class="k2-idea ${cls}">` +
-        list.map((x) => `<li><span class="k2-dot"></span>${x.title}${x.note ? `<em>${x.note}</em>` : ""}</li>`).join("") + "</ul></article>";
+      const block = (title, list, cls, note, titlesOnly) => `<article class="k2-card"><p class="k2-card-k"><span class="k2-card-k-t">${title}</span>${note ? `<span class="k2-card-note">${note}</span>` : ""}</p><ul class="k2-idea ${cls}">` +
+        list.map((x) => `<li><span class="k2-dot"></span>${x.title}${(!titlesOnly && x.note) ? `<em>${x.note}</em>` : ""}</li>`).join("") + "</ul></article>";
 
-      // 按左侧卡片的内容高度把右侧塞满：多的从最旧的开始去掉，卡片本身不长大
-      const fit = () => {
+      // 两张卡等高：计划中只写标题，框高取两边内容里矮的那个，多的从最旧的去掉，框不长大
+      const renderIdeas = () => {
+        host.style.alignItems = "start";
+        host.innerHTML = block("计划中", doing, "", "", true) + block("已经做到", doneTop, "done", " ", false);
+        void host.offsetHeight;
         const cards = host.querySelectorAll(".k2-card");
         const leftCard = cards[0];
         const rightCard = cards[1];
-        if (!leftCard || !rightCard) return;
-        const ul = rightCard.querySelector(".k2-idea");
-        const noteEl = rightCard.querySelector(".k2-card-note");
-        if (!ul) return;
-        // 取消等高拉伸，量到的才是内容本身的高度
-        const prevAlign = host.style.alignItems;
-        host.style.alignItems = "start";
-        void host.offsetHeight;
-        const limit = leftCard.offsetHeight;
-        const items = [...ul.children];
-        for (let i = items.length - 1; i >= 0; i--) {
-          if (rightCard.offsetHeight <= limit + 1) break;
-          items[i].remove();
-        }
-        const shown = ul.children.length;
+        const heights = [leftCard, rightCard].filter(Boolean).map((c) => c.offsetHeight).filter((h) => h > 0);
+        const frame = heights.length ? Math.min(...heights) : 0;
+        const trim = (card) => {
+          if (!card || !frame) return;
+          const ul = card.querySelector(".k2-idea");
+          if (!ul) return;
+          const items = [...ul.children];
+          for (let i = items.length - 1; i >= 0; i--) {
+            if (card.offsetHeight <= frame + 1) break;
+            items[i].remove();
+          }
+        };
+        trim(leftCard);
+        trim(rightCard);
+        const noteEl = rightCard && rightCard.querySelector(".k2-card-note");
+        const shown = rightCard ? rightCard.querySelectorAll(".k2-idea li").length : 0;
         if (noteEl) noteEl.textContent = shown ? "最新 " + shown + " 条" : "";
-        host.style.alignItems = prevAlign;
-      };
-      const renderIdeas = () => {
-        host.innerHTML = block("计划中", doing, "") + block("已经做到", doneTop, "done", "最新 " + doneTop.length + " 条");
-        fit();
+        if (frame) [leftCard, rightCard].forEach((c) => { if (c) c.style.minHeight = frame + "px"; });
+        host.style.alignItems = "";
       };
       renderIdeas();
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderIdeas).catch(() => {});
