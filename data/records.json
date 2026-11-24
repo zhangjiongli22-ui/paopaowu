@@ -8373,6 +8373,33 @@
    "kind": "piano",
    "text": "练琴 45 分钟",
    "minutes": 45
+  },
+  {
+   "id": "log-15136da7",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "22:00",
+   "kind": "game",
+   "text": "游玩《塞尔达 王国之泪》约 60 分钟",
+   "minutes": 60
+  },
+  {
+   "id": "log-a3ab02d3",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "23:10",
+   "kind": "game",
+   "text": "游玩《集合啦！动物森友会》约 30 分钟",
+   "minutes": 30
+  },
+  {
+   "id": "log-18d12f17",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "23:40",
+   "kind": "media",
+   "text": "看《金牌律师》第九季 约 30 分钟",
+   "minutes": 30
   }
  ],
  "__ovCount": 20
