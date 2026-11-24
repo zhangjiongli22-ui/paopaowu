@@ -132,7 +132,6 @@ try {
       <span>恐怖片</span><span>日本动画</span><span>剧情电影</span><span>长线游戏</span><span>钢琴 / 音乐</span>
     </div>
     <div class="k2-picks" id="kira-picks"></div>
-    <button type="button" class="blk-edit corner-edit" data-edit-block="taste">编辑</button>
   </section>
 
   <section class="pf-sec">
@@ -156,7 +155,6 @@ try {
       <div><dt>常听</dt><dd>日本流行音乐，以 YOASOBI 为多。</dd></div>
       <div><dt>饲养</dt><dd>一只金丝熊，未满三个月，正在治疗滴虫。</dd></div>
     </dl>
-      <button type="button" class="blk-edit corner-edit" data-edit-block="profile">编辑</button>
   </section>
 
 </main>
@@ -296,43 +294,21 @@ try {
 </script>
 
 <script>
-/* Kira page: each block edits only itself; buttons are static in the HTML. */
+/* 旧版角落「编辑」按钮的存档只回填、不再提供入口；文字编辑统一走 editpage.js，免得两套存档打架。 */
 (function () {
-  var isLocal = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
-  var isAdmin = false;
-  try { isAdmin = !!localStorage.getItem("paopaowu_admin"); } catch (e) {}
-  if (!isAdmin && !isLocal) return;
-
-  var SEL = "p, dd, dt, .v, .k, .tk";
   var page = location.pathname.split("/").pop() || "index";
-
-  [].slice.call(document.querySelectorAll("[data-edit-block]")).forEach(function (btn) {
-    var host = document.getElementById(btn.getAttribute("data-edit-block"));
+  ["taste", "profile"].forEach(function (name) {
+    var host = document.getElementById(name);
     if (!host) return;
-    var key = "edits_" + btn.getAttribute("data-edit-block") + "_" + page;
-    var on = false;
-
-    function items() { return [].slice.call(host.querySelectorAll(SEL)); }
-
+    var key = "edits_" + name + "_" + page;
     try {
       var saved = JSON.parse(localStorage.getItem(key) || "{}");
-      items().forEach(function (el, i) { if (saved[i] != null) el.innerHTML = saved[i]; });
+      [].slice.call(host.querySelectorAll("p, dd, dt, .v, .k, .tk")).forEach(function (el, i) {
+        if (saved[i] != null) el.innerHTML = saved[i];
+      });
     } catch (e) {}
-
-    btn.addEventListener("click", function () {
-      on = !on;
-      btn.textContent = on ? "\u5b8c\u6210" : "\u7f16\u8f91";
-      btn.classList.toggle("on", on);
-      items().forEach(function (el) { el.contentEditable = on ? "true" : "false"; });
-      if (!on) {
-        var out = {};
-        items().forEach(function (el, i) { out[i] = el.innerHTML; });
-        try { localStorage.setItem(key, JSON.stringify(out)); } catch (e) {}
-      }
-    });
   });
 })();
-
 </script>
 <script src="editpage.js?v=12"></script>
 <script src="wall.js?v=4"></script>
