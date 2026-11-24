@@ -7,7 +7,7 @@
   var canEdit = isAdmin || isLocal;
 
   var page = (location.pathname.split("/").pop() || "index.html");
-  var KEY = "pageText_" + page;
+  var KEY = "pageText_v2_" + page;
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1, BR: 1, IMG: 1, SVG: 1, PATH: 1, CIRCLE: 1, I: 1, EM: 0 };
 
   function pathOf(el) {
@@ -39,6 +39,11 @@
     return out;
   }
 
+  // 存的时候带上当时那段文字的特征：结构一变、对不上就不套用，免得把字挪到别人身上
+  function sigOf(el) {
+    return (el.textContent || "").replace(/\s+/g, "").slice(0, 40);
+  }
+
   function applySaved() {
     var saved = {};
     try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
@@ -47,7 +52,12 @@
     var hits = 0;
     nodes.forEach(function (el) {
       var k = pathOf(el);
-      if (saved[k] != null) { el.innerHTML = saved[k]; hits++; }
+      var rec = saved[k];
+      if (!rec) return;
+      if (typeof rec === "string") return; // 旧格式一律不用
+      if (rec.s && rec.s !== sigOf(el)) return;
+      el.innerHTML = rec.h;
+      hits++;
     });
     return hits;
   }
@@ -88,7 +98,7 @@
   function save() {
     var out = {};
     nodes.forEach(function (el) {
-      if (el.dataset && el.dataset.xk) out[el.dataset.xk] = el.innerHTML;
+      if (el.dataset && el.dataset.xk) out[el.dataset.xk] = { s: sigOf(el), h: el.innerHTML };
     });
     try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
   }
