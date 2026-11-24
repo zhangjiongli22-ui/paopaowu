@@ -3234,6 +3234,7 @@ main > section:not([class]) > h2 {
 }
 .vh-band:hover { border-color: rgba(201, 168, 107, .45); }
 /* 2026-11-24 首页左右换位：Kira 在左，一只鱼在右 */
+/* 现在编号是 01 Kira / 02 一只鱼：Kira 排左，一只鱼排右 */
 .vh-band.kira { order: 1; }
 .vh-band.feiyu { order: 2; }
 
@@ -4311,4 +4312,40 @@ main#main { }
   }
   .crit-toc-title { margin: 0 0 6px; }
   .crit-toc a { width: 100%; padding: 5px 10px; text-align: left; }
+}
+
+/* ---------- 页面文字编辑（右上角） ---------- */
+.page-edit-bar {
+  position: fixed;
+  right: clamp(12px, 2vw, 24px);
+  top: clamp(86px, 9.5vh, 104px);
+  z-index: 80;
+  display: flex;
+  gap: 8px;
+}
+.page-edit-btn,
+.page-edit-reset {
+  padding: 9px 15px;
+  border: 1px solid var(--line);
+  background: rgba(8, 12, 19, .88);
+  color: var(--paper-2);
+  font: clamp(11px, .62vw, 14px) var(--mono);
+  letter-spacing: .16em;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.page-edit-btn:hover { color: var(--gold); border-color: var(--gold-soft); }
+.page-edit-btn.on { color: #0b1016; background: var(--gold); border-color: transparent; }
+.page-edit-reset { color: var(--dim); }
+.page-edit-reset:hover { color: var(--sakura); border-color: rgba(232, 167, 189, .45); }
+.page-edit-reset[hidden] { display: none; }
+body.text-editing [contenteditable="true"] {
+  outline: 1px dashed rgba(201, 168, 107, .45);
+  outline-offset: 3px;
+  cursor: text;
+}
+body.text-editing a { pointer-events: none; }
+@media (max-width: 720px) {
+  .page-edit-bar { top: auto; bottom: 64px; right: 12px; }
 }
