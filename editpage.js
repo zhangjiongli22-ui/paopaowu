@@ -1,7 +1,6 @@
 /* 页面文字编辑：点右上角「编辑文字」，页面上所有文字直接改，边改边存。
    改动存在本机浏览器（localStorage），同一台电脑刷新后照旧；换设备看不到。
-   存档格式：路径 → { s: 改之前的文字特征, h: 改后的 HTML }
-   套用规则：路径和原文都对得上才套；路径挪了，就按原文找唯一对得上的那一个。 */
+   存档按「标签 + 改之前的文字 + 同名序号」认人，页面结构挪动也不会认错、不会丢。 */
 (function () {
   var isLocal = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
   var isAdmin = false;
@@ -9,22 +8,11 @@
   var canEdit = isAdmin || isLocal;
 
   var page = (location.pathname.split("/").pop() || "index.html");
-  var KEY = "pageText_v2_" + page;
+  var KEY = "pageText_v3_" + page;
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1, BR: 1, IMG: 1, SVG: 1, PATH: 1, CIRCLE: 1, I: 1, EM: 0 };
 
-  function pathOf(el) {
-    var parts = [];
-    while (el && el !== document.body && el.parentElement) {
-      var i = 1, p = el;
-      while ((p = p.previousElementSibling)) if (p.tagName === el.tagName) i++;
-      parts.unshift(el.tagName.toLowerCase() + ":" + i);
-      el = el.parentElement;
-    }
-    return parts.join(">");
-  }
-
-  function sigOf(el) {
-    return (el.textContent || "").replace(/\s+/g, "").slice(0, 40);
+  function textOf(el) {
+    return (el.textContent || "").replace(/\s+/g, "");
   }
 
   function editableNodes() {
@@ -45,32 +33,32 @@
     return out;
   }
 
+  // 认人规则：标签 + 前 40 字的原文 + 同标签同原文里的第几个
+  function keyFor(el, nodes) {
+    var t = textOf(el).slice(0, 40);
+    var idx = 0;
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i] === el) break;
+      if (nodes[i].tagName === el.tagName && textOf(nodes[i]).slice(0, 40) === t) idx++;
+    }
+    return el.tagName + "|" + t + "|" + idx;
+  }
+
   function readStore() {
     try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; }
   }
 
   function applySaved() {
     var saved = readStore();
-    var keys = Object.keys(saved);
-    if (!keys.length) return 0;
+    if (!Object.keys(saved).length) return 0;
     var nodes = editableNodes();
-    var byPath = {}, bySig = {};
-    nodes.forEach(function (el) {
-      byPath[pathOf(el)] = el;
-      var s = sigOf(el);
-      (bySig[s] = bySig[s] || []).push(el);
-    });
     var hits = 0;
-    keys.forEach(function (k) {
+    nodes.forEach(function (el) {
+      var k = keyFor(el, nodes);
       var rec = saved[k];
-      if (!rec || typeof rec !== "object" || typeof rec.h !== "string") return; // 旧格式不用，避免串位
-      var el = byPath[k];
-      if (el && (!rec.s || rec.s === sigOf(el))) { el.innerHTML = rec.h; hits++; return; }
-      // 页面结构挪过：按改之前的原文找唯一对得上的那个元素
-      if (rec.s && bySig[rec.s] && bySig[rec.s].length === 1) {
-        bySig[rec.s][0].innerHTML = rec.h;
-        hits++;
-      }
+      if (!rec || typeof rec !== "object" || typeof rec.h !== "string") return;
+      el.innerHTML = rec.h;
+      hits++;
     });
     return hits;
   }
@@ -95,18 +83,10 @@
   var saveTimer = 0;
 
   function save() {
-    var prev = readStore();
     var out = {};
-    // 先把这一轮没动过的旧记录留在原地（按原文特征去重）
-    var keep = Object.keys(prev).filter(function (k) {
-      var r = prev[k];
-      return r && typeof r === "object" && typeof r.h === "string";
-    });
-    keep.forEach(function (k) { out[k] = prev[k]; });
     nodes.forEach(function (el) {
-      var k = el.dataset.xk || pathOf(el);
-      var s = el.dataset.xs || sigOf(el);
-      out[k] = { s: s, h: el.innerHTML };
+      if (!el.dataset.xk) return;
+      out[el.dataset.xk] = { s: el.dataset.xs || "", h: el.innerHTML };
     });
     try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
   }
@@ -124,8 +104,8 @@
     document.body.classList.add("text-editing");
     nodes = editableNodes();
     nodes.forEach(function (el) {
-      el.dataset.xk = pathOf(el);
-      el.dataset.xs = sigOf(el); // 改之前的文字特征
+      el.dataset.xk = keyFor(el, nodes);
+      el.dataset.xs = textOf(el).slice(0, 40);
       el.setAttribute("contenteditable", "true");
       el.addEventListener("input", scheduleSave);
     });
@@ -156,6 +136,11 @@
     try { localStorage.removeItem(KEY); } catch (e) {}
     location.reload();
   });
+
+  // 编辑状态点链接只改字，不跳走
+  document.addEventListener("click", function (e) {
+    if (on && e.target && e.target.closest && e.target.closest("a")) { e.preventDefault(); }
+  }, true);
 
   document.addEventListener("keydown", function (e) {
     if (on && e.key === "Escape") leave();
