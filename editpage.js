@@ -92,13 +92,14 @@
     nodes.forEach(function (el) {
       el.setAttribute("contenteditable", "true");
       el.dataset.xk = pathOf(el);
+      el.dataset.xs = sigOf(el); // 记下改之前的文字特征，下次套用要对得上
     });
   }
 
   function save() {
     var out = {};
     nodes.forEach(function (el) {
-      if (el.dataset && el.dataset.xk) out[el.dataset.xk] = { s: sigOf(el), h: el.innerHTML };
+      if (el.dataset && el.dataset.xk) out[el.dataset.xk] = { s: el.dataset.xs || sigOf(el), h: el.innerHTML };
     });
     try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
   }
