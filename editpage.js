@@ -1,5 +1,7 @@
-/* 页面文字编辑：点右上角「编辑文字」，页面上所有文字直接改，改完点「完成」存下来。
-   改动存在本机浏览器（localStorage），同一台电脑刷新后照旧；换设备看不到。 */
+/* 页面文字编辑：点右上角「编辑文字」，页面上所有文字直接改，边改边存。
+   改动存在本机浏览器（localStorage），同一台电脑刷新后照旧；换设备看不到。
+   存档格式：路径 → { s: 改之前的文字特征, h: 改后的 HTML }
+   套用规则：路径和原文都对得上才套；路径挪了，就按原文找唯一对得上的那一个。 */
 (function () {
   var isLocal = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
   var isAdmin = false;
@@ -21,6 +23,10 @@
     return parts.join(">");
   }
 
+  function sigOf(el) {
+    return (el.textContent || "").replace(/\s+/g, "").slice(0, 40);
+  }
+
   function editableNodes() {
     var out = [];
     var all = document.body.querySelectorAll("*");
@@ -39,25 +45,32 @@
     return out;
   }
 
-  // 存的时候带上当时那段文字的特征：结构一变、对不上就不套用，免得把字挪到别人身上
-  function sigOf(el) {
-    return (el.textContent || "").replace(/\s+/g, "").slice(0, 40);
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; }
   }
 
   function applySaved() {
-    var saved = {};
-    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
-    if (!saved || !Object.keys(saved).length) return 0;
+    var saved = readStore();
+    var keys = Object.keys(saved);
+    if (!keys.length) return 0;
     var nodes = editableNodes();
-    var hits = 0;
+    var byPath = {}, bySig = {};
     nodes.forEach(function (el) {
-      var k = pathOf(el);
+      byPath[pathOf(el)] = el;
+      var s = sigOf(el);
+      (bySig[s] = bySig[s] || []).push(el);
+    });
+    var hits = 0;
+    keys.forEach(function (k) {
       var rec = saved[k];
-      if (!rec) return;
-      if (typeof rec === "string") return; // 旧格式一律不用
-      if (rec.s && rec.s !== sigOf(el)) return;
-      el.innerHTML = rec.h;
-      hits++;
+      if (!rec || typeof rec !== "object" || typeof rec.h !== "string") return; // 旧格式不用，避免串位
+      var el = byPath[k];
+      if (el && (!rec.s || rec.s === sigOf(el))) { el.innerHTML = rec.h; hits++; return; }
+      // 页面结构挪过：按改之前的原文找唯一对得上的那个元素
+      if (rec.s && bySig[rec.s] && bySig[rec.s].length === 1) {
+        bySig[rec.s][0].innerHTML = rec.h;
+        hits++;
+      }
     });
     return hits;
   }
@@ -79,8 +92,29 @@
 
   var on = false;
   var nodes = [];
+  var saveTimer = 0;
 
-  function collect() { return editableNodes(); }
+  function save() {
+    var prev = readStore();
+    var out = {};
+    // 先把这一轮没动过的旧记录留在原地（按原文特征去重）
+    var keep = Object.keys(prev).filter(function (k) {
+      var r = prev[k];
+      return r && typeof r === "object" && typeof r.h === "string";
+    });
+    keep.forEach(function (k) { out[k] = prev[k]; });
+    nodes.forEach(function (el) {
+      var k = el.dataset.xk || pathOf(el);
+      var s = el.dataset.xs || sigOf(el);
+      out[k] = { s: s, h: el.innerHTML };
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
+  }
+
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, 600);
+  }
 
   function enter() {
     on = true;
@@ -88,20 +122,13 @@
     btn.classList.add("on");
     reset.hidden = false;
     document.body.classList.add("text-editing");
-    nodes = collect();
+    nodes = editableNodes();
     nodes.forEach(function (el) {
-      el.setAttribute("contenteditable", "true");
       el.dataset.xk = pathOf(el);
-      el.dataset.xs = sigOf(el); // 记下改之前的文字特征，下次套用要对得上
+      el.dataset.xs = sigOf(el); // 改之前的文字特征
+      el.setAttribute("contenteditable", "true");
+      el.addEventListener("input", scheduleSave);
     });
-  }
-
-  function save() {
-    var out = {};
-    nodes.forEach(function (el) {
-      if (el.dataset && el.dataset.xk) out[el.dataset.xk] = { s: el.dataset.xs || sigOf(el), h: el.innerHTML };
-    });
-    try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
   }
 
   function leave() {
@@ -109,7 +136,10 @@
     btn.textContent = "编辑文字";
     btn.classList.remove("on");
     document.body.classList.remove("text-editing");
-    nodes.forEach(function (el) { el.removeAttribute("contenteditable"); });
+    nodes.forEach(function (el) {
+      el.removeAttribute("contenteditable");
+      el.removeEventListener("input", scheduleSave);
+    });
     save();
     reset.hidden = false;
   }
@@ -128,6 +158,10 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    if (on && (e.key === "Escape")) leave();
+    if (on && e.key === "Escape") leave();
+  });
+
+  window.addEventListener("beforeunload", function () {
+    if (on) save();
   });
 })();
