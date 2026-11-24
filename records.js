@@ -603,6 +603,7 @@ function drawStats() {
   // 工作流只统计「工作」这一类记录，健身/练琴等不算
   const workLogs = logs.filter((x) => (x.kind || "") === "work");
   const FLOWS = [
+    { name: "App 开发", re: /app|应用|客户端|安卓|ios|flutter|react native|小程序/i },
     { name: "网站建设", re: /网站|站点|页面|封面|部署|推送|改版|上线|统计|锐评|档案|首页/ },
     { name: "视频剪辑", re: /剪辑|片子|视频|素材管理/ }
   ];
