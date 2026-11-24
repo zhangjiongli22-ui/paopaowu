@@ -15,6 +15,18 @@
     return (el.textContent || "").replace(/\s+/g, "");
   }
 
+  // 结构路径：body 下的 tag:序号 链，页面结构不变就稳定
+  function pathOf(el) {
+    var parts = [];
+    while (el && el !== document.body && el.parentElement) {
+      var i = 1, p = el;
+      while ((p = p.previousElementSibling)) if (p.tagName === el.tagName) i++;
+      parts.unshift(el.tagName.toLowerCase() + ":" + i);
+      el = el.parentElement;
+    }
+    return parts.join(">");
+  }
+
   function editableNodes() {
     var out = [];
     var all = document.body.querySelectorAll("*");
@@ -30,18 +42,15 @@
       }
       if (hasText) out.push(el);
     }
-    return out;
+    // 只让最里层的文字可编辑：父元素一起变成可编辑的话，打字会把子结构吃掉
+    return out.filter(function (el) {
+      return !out.some(function (other) { return other !== el && el.contains(other); });
+    });
   }
 
-  // 认人规则：标签 + 前 40 字的原文 + 同标签同原文里的第几个
+  // 认人规则：按结构路径认（同一页结构不变就稳定），文字只作校验与兜底
   function keyFor(el, nodes) {
-    var t = textOf(el).slice(0, 40);
-    var idx = 0;
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i] === el) break;
-      if (nodes[i].tagName === el.tagName && textOf(nodes[i]).slice(0, 40) === t) idx++;
-    }
-    return el.tagName + "|" + t + "|" + idx;
+    return el.dataset.xkPath || pathOf(el);
   }
 
   function readStore() {
@@ -49,18 +58,23 @@
   }
 
   function applySaved() {
+    if (on) return 0;
     var saved = readStore();
     if (!Object.keys(saved).length) return 0;
     var nodes = editableNodes();
     var hits = 0;
     nodes.forEach(function (el) {
-      var k = keyFor(el, nodes);
-      var rec = saved[k];
+      var rec = saved[pathOf(el)];
       if (!rec || typeof rec !== "object" || typeof rec.h !== "string") return;
       el.innerHTML = rec.h;
       hits++;
     });
     return hits;
+  }
+
+  // 页面有些字是数据加载完才填进来的，所以在数据落地后再补几次
+  function applyLater() {
+    if (applySaved() > 0) reset.hidden = false;
   }
 
   var bar = document.createElement("div");
@@ -80,12 +94,20 @@
 
   var on = false;
   var nodes = [];
+  var dirty = [];
   var saveTimer = 0;
 
   function save() {
-    var out = {};
-    nodes.forEach(function (el) {
-      if (!el.dataset.xk) return;
+    var out = readStore();
+    var changed = dirty.filter(function (el) {
+      return el.dataset && el.dataset.xk;
+    });
+    changed.forEach(function (el) {
+      // 父元素只是因为包含子元素才“变了”，这种不存，只存最里面真正改的那个
+      var hasChangedChild = changed.some(function (other) {
+        return other !== el && el.contains(other);
+      });
+      if (hasChangedChild) return;
       out[el.dataset.xk] = { s: el.dataset.xs || "", h: el.innerHTML };
     });
     try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
@@ -107,7 +129,10 @@
       el.dataset.xk = keyFor(el, nodes);
       el.dataset.xs = textOf(el).slice(0, 40);
       el.setAttribute("contenteditable", "true");
-      el.addEventListener("input", scheduleSave);
+      el.addEventListener("input", function () {
+        if (dirty.indexOf(el) < 0) dirty.push(el);
+        scheduleSave();
+      });
     });
   }
 
@@ -118,7 +143,6 @@
     document.body.classList.remove("text-editing");
     nodes.forEach(function (el) {
       el.removeAttribute("contenteditable");
-      el.removeEventListener("input", scheduleSave);
     });
     save();
     reset.hidden = false;
@@ -126,6 +150,14 @@
 
   var hits = applySaved();
   if (hits > 0) reset.hidden = false;
+  applyLater();
+  window.addEventListener("load", function () {
+    applyLater();
+    setTimeout(applyLater, 600);
+    setTimeout(applyLater, 1800);
+    setTimeout(applyLater, 3500);
+  });
+  setTimeout(applyLater, 1200);
 
   btn.addEventListener("click", function () {
     if (!canEdit) { location.href = "login.html"; return; }
