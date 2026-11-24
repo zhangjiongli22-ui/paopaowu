@@ -3233,6 +3233,10 @@ main > section:not([class]) > h2 {
   transition: border-color .4s var(--ease), background .4s var(--ease);
 }
 .vh-band:hover { border-color: rgba(201, 168, 107, .45); }
+/* 2026-11-24 首页左右换位：Kira 在左，一只鱼在右 */
+.vh-band.kira { order: 1; }
+.vh-band.feiyu { order: 2; }
+
 .vh-band .art {
   position: absolute;
   inset: 0;
