@@ -4345,7 +4345,7 @@ body.text-editing [contenteditable="true"] {
   outline-offset: 3px;
   cursor: text;
 }
-body.text-editing a { pointer-events: none; }
+/* 编辑态下链接可编辑，点击由脚本拦下，不跳转 */
 @media (max-width: 720px) {
   .page-edit-bar { top: auto; bottom: 64px; right: 12px; }
 }
