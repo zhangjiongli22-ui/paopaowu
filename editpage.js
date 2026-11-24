@@ -4,7 +4,7 @@
   var isLocal = /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
   var isAdmin = false;
   try { isAdmin = !!localStorage.getItem("paopaowu_admin"); } catch (e) {}
-  if (!isAdmin && !isLocal) return;
+  var canEdit = isAdmin || isLocal;
 
   var page = (location.pathname.split("/").pop() || "index.html");
   var KEY = "pageText_" + page;
@@ -107,6 +107,7 @@
   if (hits > 0) reset.hidden = false;
 
   btn.addEventListener("click", function () {
+    if (!canEdit) { location.href = "login.html"; return; }
     if (on) leave(); else enter();
   });
 
