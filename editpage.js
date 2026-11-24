@@ -27,6 +27,8 @@
     return parts.join(">");
   }
 
+  var DECO = /^(latin|ch-sub|en|n|pf-yomi|go|role|ds|duo-name|adv-name|k)$/;
+
   function editableNodes() {
     var out = [];
     var all = document.body.querySelectorAll("*");
@@ -35,6 +37,7 @@
       if (SKIP_TAGS[el.tagName] === 1) continue;
       if (el.closest(".page-edit-bar")) continue;
       if (el.classList.contains("dawn-tag")) continue;
+      if (DECO.test(el.getAttribute("class") || "")) continue; // 标题里的英文小字、编号这类附属文字不单独编辑
       var hasText = false;
       for (var j = 0; j < el.childNodes.length; j++) {
         var n = el.childNodes[j];
