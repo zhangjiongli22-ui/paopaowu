@@ -8328,6 +8328,51 @@
    "desc": "",
    "date": "2026-11-24",
    "time": "16:24"
+  },
+  {
+   "id": "log-b8cf4314",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "19:00",
+   "kind": "fitness",
+   "text": "跑步 20 分钟，杠铃深蹲 15 分钟，哑铃侧平举 10 分钟",
+   "minutes": 45
+  },
+  {
+   "id": "log-3f008510",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "19:50",
+   "kind": "game",
+   "text": "游玩《绝区零》约 3 分钟",
+   "minutes": 3
+  },
+  {
+   "id": "log-1f249546",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "19:53",
+   "kind": "game",
+   "text": "游玩《异环》约 5 分钟",
+   "minutes": 5
+  },
+  {
+   "id": "log-1bac9382",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "19:58",
+   "kind": "game",
+   "text": "游玩《明日方舟：终末地》约 5 分钟",
+   "minutes": 5
+  },
+  {
+   "id": "log-9e5811cb",
+   "cat": "log",
+   "date": "2026-11-24",
+   "time": "20:05",
+   "kind": "piano",
+   "text": "练琴 45 分钟",
+   "minutes": 45
   }
  ],
  "__ovCount": 20
