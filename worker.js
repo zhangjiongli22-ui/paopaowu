@@ -156,6 +156,36 @@ export default {
       }
     }
 
+    if (url.pathname === "/api/comment/delete" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) {
+          return new Response(JSON.stringify({ ok: false, error: "密码不对" }), {
+            status: 403,
+            headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+          });
+        }
+        const id = String(body.id || "").trim();
+        if (!id) throw new Error("缺 id");
+        let comments = [];
+        try {
+          comments = (await env.RATINGS.get("comments_all", "json")) || [];
+        } catch (e) {}
+        if (!Array.isArray(comments)) comments = [];
+        const before = comments.length;
+        comments = comments.filter((c) => String(c && c.id) !== id);
+        await env.RATINGS.put("comments_all", JSON.stringify(comments));
+        return new Response(JSON.stringify({ ok: true, removed: before - comments.length, left: comments.length }), {
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: String(e).slice(0, 160) }), {
+          status: 400,
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      }
+    }
+
     if (url.pathname === "/api/comments" && request.method === "GET") {
       let comments = [];
       try {
