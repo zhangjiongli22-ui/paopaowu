@@ -860,3 +860,11 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   });
   draw();
 })();
+
+/* 2026-11-25 存档：点条目展开／收起完整说明 */
+document.addEventListener("click", (e) => {
+  const item = e.target.closest(".todo-item");
+  if (!item) return;
+  if (e.target.closest("a, button")) return;
+  item.classList.toggle("open");
+});
