@@ -18,21 +18,21 @@ try {
 } catch (e) { document.documentElement.classList.add("js"); }
 </script>
 <style>
-/* 2026-11-25 锐评：日期条常驻在上、回复缩进挂在原帖下 */
-.crit-toc{position:sticky;top:62px;z-index:40;display:flex;align-items:center;gap:14px;
+/* 2026-11-25 锐评：独立日期条（横向、钉在导航下）、回复挂在原帖下 */
+.day-bar{position:relative;z-index:60;display:flex;align-items:center;gap:16px;
   flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
-  padding:10px 0 18px;margin:0;
-  background:linear-gradient(180deg,rgba(5,7,12,.98) 62%,rgba(5,7,12,0));
-  border-bottom:0}
-.crit-toc::-webkit-scrollbar{display:none}
-.crit-toc[hidden]{display:none}
-.crit-toc-title{flex:0 0 auto;font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.42)}
-.crit-toc a{flex:0 0 auto;font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.7);
-  text-decoration:none;padding:3px 1px;border:0;border-bottom:1px solid transparent;border-radius:0;
-  background:transparent;transition:color .3s,border-color .3s}
-.crit-toc a:hover,.crit-toc a.on{color:var(--gold);border-color:rgba(201,168,107,.55)}
+  padding:9px 0 16px;margin:0;
+  background:linear-gradient(180deg,rgba(5,7,12,.9),rgba(5,7,12,0) 92%);border:0}
+.day-bar::-webkit-scrollbar{display:none}
+.day-bar[hidden]{display:none}
+.day-bar-title{flex:0 0 auto;font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.42)}
+.day-bar a{flex:0 0 auto;font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.72);
+  text-decoration:none;padding:3px 1px;border:0;border-bottom:1px solid transparent;background:none;
+  transition:color .3s,border-color .3s}
+.day-bar a:hover,.day-bar a.on{color:var(--gold);border-color:rgba(201,168,107,.6)}
+.day-bar-ph{height:0}
 
-.cmt-day{scroll-margin-top:118px;margin:0 0 clamp(22px,3.4vh,36px)}
+.cmt-day{scroll-margin-top:132px;margin:0 0 clamp(22px,3.4vh,36px)}
 .cmt-date{font-family:var(--serif);font-size:15px;letter-spacing:.2em;color:rgba(242,236,225,.6);
   margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid rgba(242,236,225,.1)}
 
@@ -57,10 +57,10 @@ try {
 .cmt-reply .cmt-text{color:#b9c1cb}
 
 @media (max-width:700px){
-  .crit-toc{top:56px}
   .cmt{grid-template-columns:30px minmax(0,1fr);gap:10px}
   .cmt-av{width:30px;height:30px;font-size:12.5px}
   .cmt-reply{margin-left:6px;padding-left:10px}
+  .day-bar{padding:8px 10px;gap:12px}
 }</style></head>
 <body>
 
@@ -113,7 +113,7 @@ try {
     </div>
   </header>
 
-  <nav class="crit-toc" id="crit-toc" hidden><span class="crit-toc-title">日期</span></nav>
+  <nav class="day-bar" id="crit-toc" hidden><span class="day-bar-title">日期</span></nav>
   <div class="crit-wrap" id="crit-list">
     <p class="loading">正在翻记录……</p>
   </div>
@@ -222,7 +222,35 @@ try {
         if (!j.ok) throw new Error(j.error || "删失败");
         var art = del.closest("article");
         if (art) art.remove();
-      } catch (e) {
+        // 2026-11-25 日期条：滚过就钉在顶部（sticky 会被页面的 overflow 吃掉）
+    (function () {
+      if (!toc) return;
+      var nav = document.querySelector("nav.nav");
+      var ph = document.createElement("div");
+      ph.className = "crit-toc-ph";
+      toc.parentNode.insertBefore(ph, toc);
+      function sync() {
+        var navH = (nav ? nav.getBoundingClientRect().height : 62) + 6;
+        var r = ph.getBoundingClientRect();
+        if (r.top < navH) {
+          toc.style.position = "fixed";
+          toc.style.top = navH + "px";
+          toc.style.left = r.left + "px";
+          toc.style.width = r.width + "px";
+          ph.style.height = toc.offsetHeight + "px";
+        } else {
+          toc.style.position = "";
+          toc.style.top = "";
+          toc.style.left = "";
+          toc.style.width = "";
+          ph.style.height = "0px";
+        }
+      }
+      window.addEventListener("scroll", sync, { passive: true });
+      window.addEventListener("resize", sync);
+      sync();
+    })();
+  } catch (e) {
         del.disabled = false;
         alert("没删掉：" + e.message + "（如果这条是昨天前的锐评，存在主数据里，要用后台删）");
       }
@@ -316,10 +344,11 @@ try {
 
     host.innerHTML = days.map(function (d) {
       var rows = byDay[d].slice().sort(function (a, b) { return orderKey(a) - orderKey(b); });
-      var first = rows[0];
+      var first = rows.find(function (x) { return isFish(x.who); }) || rows[0];
       // 谁先发谁是主评论：只有明确写了 reply_to 的才挂「回复 X」，不按先后硬套
-      var rest = rows.slice(1).map(function (x) {
-        var to = x.reply_to && x.reply_to !== x.who ? x.reply_to : "";
+      var rest = rows.filter(function (x) { return x !== first; }).map(function (x) {
+        var to = x.reply_to && x.reply_to !== x.who ? x.reply_to
+          : (first && x.who !== first.who ? first.who : "");
         return block(x, !!to, to);
       }).join("");
       return '<section class="cmt-day" id="cday-' + esc(d) + '">' +
