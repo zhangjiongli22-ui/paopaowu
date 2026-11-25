@@ -3233,10 +3233,19 @@ main > section:not([class]) > h2 {
   transition: border-color .4s var(--ease), background .4s var(--ease);
 }
 .vh-band:hover { border-color: rgba(201, 168, 107, .45); }
-/* 2026-11-24 首页左右换位：Kira 在左，一只鱼在右 */
-/* 现在编号是 01 Kira / 02 一只鱼：Kira 排左，一只鱼排右 */
-.vh-band.kira { order: 1; }
-.vh-band.feiyu { order: 2; }
+/* 2026-11-25 首页三人版：Kira 在左，右边两条鱼上下叠 */
+.vh-col { display: grid; grid-template-rows: 1fr 1fr; gap: clamp(10px, 1.2vw, 18px); min-height: 0; }
+.vh-col .vh-band { align-items: center; }
+.vh-col .vh-band .art { inset: 0 0 0 auto; width: 54%; }
+.vh-col .vh-band .art img { object-fit: cover; object-position: top center; -webkit-mask-image: none; mask-image: none; }
+.vh-col .vh-band .body { max-width: 62%; }
+.vh-col .vh-band .nm { font-size: clamp(22px, 2.4vw, 36px); }
+.vh-col .vh-band .ds { font-size: clamp(11px, .8vw, 14px); }
+@media (max-width: 820px) {
+  .vh-col { grid-template-rows: auto auto; }
+  .vh-col .vh-band { min-height: 200px; }
+  .vh-col .vh-band .art { width: 46%; }
+}
 
 .vh-band .art {
   position: absolute;
