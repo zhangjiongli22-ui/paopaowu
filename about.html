@@ -18,6 +18,18 @@ try {
 </script>
 </head>
 <body>
+<div class="pf-bg" aria-hidden="true"></div>
+<style>
+  .pf-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(1100px 700px at 78% -12%, rgba(48,78,128,.38), transparent 62%),
+      radial-gradient(800px 520px at 8% 104%, rgba(120,92,44,.16), transparent 62%),
+      radial-gradient(600px 480px at 40% 30%, rgba(30,44,66,.35), transparent 70%),
+      #080c12; }
+  .pf-bg::after{ content:""; position:absolute; inset:0; opacity:.05;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>"); }
+</style>
+
 
 <a class="skip" href="#main">跳到正文</a>
 
