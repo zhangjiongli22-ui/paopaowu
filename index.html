@@ -204,6 +204,12 @@ try {
   .now-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
   .ch-index .ch-row::after{display:none}
 }
+</style><style>
+/* 2026-11-25 首页作品墙：每次随机挑，过一会儿自己换一张 */
+.pk-shot{opacity:1;transition:transform .45s var(--ease),box-shadow .45s var(--ease),filter .45s var(--ease),opacity .5s var(--ease)}
+.pk-shot.pk-in{opacity:0}
+.pk-wall .pk-shot img{background:#0b1119;aspect-ratio:3/4;object-fit:cover;object-position:center top}
+@media (prefers-reduced-motion: reduce){.pk-shot{transition:none}}
 </style></head>
 <body>
 
@@ -288,16 +294,7 @@ try {
       </a>
 
       <a class="pk-col pk-k" href="k02.html">
-        <span class="pk-wall" aria-hidden="true">
-          <span class="pk-shot pk-s1"><img src="assets/covers/anime-fcb8af21-bg8.jpg" alt=""><span class="pk-cap">命运石之门</span></span>
-          <span class="pk-shot pk-s2"><img src="assets/covers/anime-a27b7fe1-bgm.jpg" alt=""><span class="pk-cap">钢之炼金术师 FA</span></span>
-          <span class="pk-shot pk-s3"><img src="assets/covers/anime-f3a85cd6-bg8.jpg" alt=""><span class="pk-cap">魔法少女小圆</span></span>
-          <span class="pk-shot pk-s4"><img src="assets/covers/film-ddfb61d3-cov.jpg" alt=""><span class="pk-cap">你的名字</span></span>
-          <span class="pk-shot pk-s5"><img src="assets/covers/film-60f1d603-bgm.jpg" alt=""><span class="pk-cap">星际穿越</span></span>
-          <span class="pk-shot pk-s6"><img src="assets/covers/m-2079-bgm-b91a16f2.jpg" alt=""><span class="pk-cap">EVA</span></span>
-          <span class="pk-shot pk-s7"><img src="assets/covers/g-1001-bgm-086301b6.jpg" alt=""><span class="pk-cap">塞尔达 王国之泪</span></span>
-          <span class="pk-shot pk-s8"><img src="assets/covers/g-1003-bg8.jpg" alt=""><span class="pk-cap">绝区零</span></span>
-        </span>
+        <span class="pk-wall" id="pk-wall" aria-hidden="true"></span>
         <span class="pk-vtag" aria-hidden="true">この屋敷の主</span>
         <div class="pk-in">
           <span class="pk-no">01<em>OWNER</em></span>
@@ -458,6 +455,70 @@ try {
           '<div class="now-cards">' + rows.map(card).join("") + "</div></div>";
       };
       g.innerHTML = col("在玩", playing) + col("在看", watching);
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+/* 首页作品墙：从收藏里随机挑 8 张，隔一会儿换一张 */
+(async function () {
+  var host = document.getElementById("pk-wall");
+  if (!host) return;
+  var slots = ["pk-s1","pk-s2","pk-s3","pk-s4","pk-s5","pk-s6","pk-s7","pk-s8"];
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pool = [], shown = {}, tiles = [];
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function makeTile(x, i) {
+    var s = document.createElement("span");
+    s.className = "pk-shot " + slots[i] + " pk-in";
+    var img = document.createElement("img");
+    img.src = x.cover; img.alt = ""; img.loading = "lazy";
+    var cap = document.createElement("span");
+    cap.className = "pk-cap"; cap.textContent = x.title || "";
+    s.appendChild(img); s.appendChild(cap);
+    host.appendChild(s);
+    requestAnimationFrame(function () { s.classList.remove("pk-in"); });
+    tiles[i] = s;
+    shown[x.id] = true;
+    return s;
+  }
+  function next() {
+    var tries = 0;
+    while (tries++ < 60) {
+      var x = pool[Math.floor(Math.random() * pool.length)];
+      if (x && !shown[x.id]) return x;
+    }
+    return null;
+  }
+  try {
+    var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
+    var items = (data.items || []).filter(function (x) {
+      return x.cover && ["anime","tv","film","game"].indexOf(x.cat) >= 0 &&
+        ["看过","玩过","在看","在玩"].indexOf(x.status) >= 0;
+    });
+    items.sort(function (a, b) { return (Number(b.bgm_rating) || 0) - (Number(a.bgm_rating) || 0); });
+    pool = items.slice(0, 80);
+    if (!pool.length) return;
+    var first = shuffle(pool.slice()).slice(0, 8);
+    first.forEach(function (x, i) { makeTile(x, i); });
+    if (!reduce) {
+      setInterval(function () {
+        var i = Math.floor(Math.random() * slots.length);
+        var x = next();
+        if (!x) return;
+        var s = tiles[i];
+        if (!s) return;
+        s.classList.add("pk-in");
+        setTimeout(function () {
+          var img = s.querySelector("img");
+          if (img) img.src = x.cover;
+          var cap = s.querySelector(".pk-cap");
+          if (cap) cap.textContent = x.title || "";
+          shown[x.id] = true;
+          s.classList.remove("pk-in");
+        }, 420);
+      }, 7000);
     }
   } catch (e) {}
 })();
