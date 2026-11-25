@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>一只鱼的每日锐评 · Kira的小屋</title>
-<meta name="description" content="每天两段锐评：一只鱼评当天所有活动、也评新加的计划；DSH 再评一次。">
+<title>小鱼的每日锐评 · Kira的小屋</title>
+<meta name="description" content="每天两段锐评：小鱼评当天所有活动、也评新加的计划；DSH 再评一次。">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
 <link rel="stylesheet" href="style.css?v=335">
@@ -64,7 +64,7 @@ try {
   <header class="ch-head reveal" style="max-width:none">
     <p class="ch-no">SCN.<b>06</b></p>
     <div>
-      <h2 class="ch-title">一只鱼的每日锐评<span class="ch-sub">Daily Critique / 当日评论与回复</span></h2>
+      <h2 class="ch-title">小鱼的每日锐评<span class="ch-sub">Daily Critique / 当日评论与回复</span></h2>
       <p class="ch-lead">每天记下做了什么，也顺手对新的计划说两句。她写上面，我在下面接。</p>
     </div>
   </header>
@@ -88,7 +88,7 @@ try {
 </div></main>
 
 <footer>
-  <p>© 2026 Kira &amp; 一只鱼 · <a href="legal.html?v=20261124a">声明</a> · <a href="login.html?v=20261124a">登录</a></p>
+  <p>© 2026 Kira &amp; 小鱼 · <a href="legal.html?v=20261124a">声明</a> · <a href="login.html?v=20261124a">登录</a></p>
 </footer>
 
 <script>
@@ -101,12 +101,12 @@ try {
   var host = document.getElementById("crit-list");
   var toc = document.getElementById("crit-toc");
 
-  // 数据里旧的 who 还是「大肥鱼」，新写的可能是「一只鱼」，两种都当同一个作者
+  // 数据里旧的 who 是「大肥鱼」或「一只鱼」，显示名统一写「小鱼」
   function isFish(who) { return who === "大肥鱼" || who === "一只鱼"; }
   function avatar(who) { return isFish(who) ? "鱼" : who === "Kira" ? "K" : "D"; }
   function side(who) { return isFish(who) ? "fish" : who === "Kira" ? "kira" : "dsh"; }
-  // 站内现在叫她「一只鱼」，数据里的 who 不改，只换显示名
-  function shown(who) { return isFish(who) ? "一只鱼" : (who || ""); }
+  // 站内现在叫她「小鱼」，数据里的 who 不改，只换显示名
+  function shown(who) { return isFish(who) ? "小鱼" : (who || ""); }
 
   // 凌晨那一批（3:30 结算后写的）日期算前一天，但实际发生在次日清晨：
   // 排序时排在当天所有条目之后，这样「谁先发谁是主评论」才对得上
