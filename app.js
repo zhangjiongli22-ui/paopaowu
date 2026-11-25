@@ -136,7 +136,7 @@ function renderBlocks(list, blocks) {
       row.className = "turn " + (t.role === "user" ? "me" : "her");
       const who = document.createElement("span");
       who.className = "who";
-      who.textContent = t.role === "user" ? "Kira" : "一只鱼";
+      who.textContent = t.role === "user" ? "Kira" : "小鱼";
       const body = document.createElement("span");
       body.className = "body";
       body.textContent = t.text;
