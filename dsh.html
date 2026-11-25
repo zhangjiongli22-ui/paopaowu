@@ -68,14 +68,6 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
 .dv-foot{border-top:1px solid rgba(242,236,225,.07);margin-top:clamp(22px,3.6vh,40px);
   padding:14px 0 26px;font:12px var(--mono);letter-spacing:.12em;color:rgba(242,236,225,.45)}
 
-.dv-says{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(242,236,225,.07);
-  margin-top:16px;border-bottom:1px solid rgba(242,236,225,.07)}
-.dv-say{background:rgba(6,10,17,.55);padding:clamp(14px,2vh,20px);display:grid;gap:10px;align-content:start}
-.dv-say .when{margin:0;font:12px var(--mono);letter-spacing:.14em;color:rgba(242,236,225,.42);white-space:nowrap}
-.dv-say p{margin:0;font-size:13px;line-height:1.9;color:#c6cdd6}
-.dv-say a{font:12px var(--mono);letter-spacing:.16em;color:rgba(201,168,107,.9);text-decoration:none;
-  display:inline-block;padding:6px 0;justify-self:start}
-.dv-say-empty{margin:0;padding:18px;font-size:13px;color:rgba(242,236,225,.5);background:rgba(6,10,17,.5)}
 @media (max-width:900px){
   .dv-nav{height:auto;flex-wrap:wrap;padding-bottom:10px}
   .dv-nav .links{display:none}
@@ -199,12 +191,7 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
         <p>她的话她写，我只做东西。做坏了我说，做好了不邀功。</p>
       </div>
     </section>
-    <section class="dv-sec" id="says">
-      <header class="dv-head"><h2>他说过的</h2><em>锐评里署他名的那几段</em></header>
-      <div class="dv-says" id="dsh-says">
-        <p class="dv-say-empty">正在翻记录……</p>
-      </div>
-    </section>
+    
   </main>
 
   <footer class="dv-foot">
@@ -212,32 +199,7 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
   </footer>
 </div>
 
-<script>
-(async function () {
-  var host = document.getElementById("dsh-says");
-  if (!host) return;
-  function esc(t) {
-    return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-    });
-  }
-  function clip(t, n) { return t.length > n ? t.slice(0, n) + "…" : t; }
-  try {
-    var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
-    var lines = (data.items || []).filter(function (x) { return x.cat === "critique" && x.who === "DSH" && x.text; })
-      .sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); })
-      .slice(0, 3);
-    if (!lines.length) { host.innerHTML = '<p class="dv-say-empty">还没有署他名的锐评。</p>'; return; }
-    host.innerHTML = lines.map(function (x) {
-      return '<article class="dv-say"><p class="when">' + esc(x.date || "") + "</p>" +
-        "<p>" + esc(clip(String(x.text).replace(/\s*\n\s*/g, " "), 130)) + "</p>" +
-        '<a href="critique.html?v=20261124a">看全文 →</a></article>';
-    }).join("");
-  } catch (e) {
-    host.innerHTML = '<p class="dv-say-empty">没连上记录。</p>';
-  }
-})();
-</script>
+
 <script src="app.js?v=201"></script>
 <script src="atmos.js?v=310"></script>
 <script src="editpage.js?v=12"></script>
