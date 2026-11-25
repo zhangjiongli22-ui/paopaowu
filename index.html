@@ -242,6 +242,26 @@ try {
 @media (prefers-reduced-motion:reduce){
   .pk-shot,.quote-card,.now-card .now-pic img{animation:none!important;transition:none!important}
 }
+</style><style>
+/* 2026-11-25 花活：右侧滚动金线 / 人物卡轻微透视 / 作品墙可拖一小段 */
+.scroll-rail{position:fixed;right:9px;top:0;bottom:0;width:2px;z-index:60;pointer-events:none;
+  background:linear-gradient(180deg,rgba(201,168,107,0),rgba(201,168,107,.12) 10%,rgba(201,168,107,.12) 90%,rgba(201,168,107,0))}
+.scroll-rail i{display:block;width:100%;height:calc(var(--sp,0) * 100%);
+  background:linear-gradient(180deg,rgba(201,168,107,.9),rgba(201,168,107,.22));
+  box-shadow:0 0 12px rgba(201,168,107,.45);transition:height .12s linear}
+
+.pk-band{perspective:1500px}
+.pk-col{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform .3s var(--ease),flex-grow .7s var(--ease),filter .7s var(--ease)}
+.pk-col:hover{will-change:transform}
+
+.pk-wall{touch-action:pan-y;cursor:grab;transform:translateX(var(--pan,0px));
+  transition:transform .35s var(--ease)}
+.pk-wall.pk-drag{cursor:grabbing;transition:none}
+@media (prefers-reduced-motion:reduce){
+  .pk-col,.pk-wall{transform:none!important;transition:none!important}
+  .scroll-rail i{transition:none}
+}
 </style></head>
 <body>
 
@@ -260,6 +280,7 @@ try {
 <div class="dust" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <!-- 画框 -->
+<div class="scroll-rail" aria-hidden="true"><i></i></div>
 <div class="frame" aria-hidden="true">
   <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
   <span class="frame-tag r">Bubble House ver.2.0 — 2026</span>
@@ -583,6 +604,62 @@ try {
       col.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
     }, { passive: true });
   });
+})();
+</script>
+<script>
+/* 右侧金线跟着滚，人物卡微微歪，作品墙能用手拖一段 */
+(function () {
+  var rail = document.querySelector(".scroll-rail i");
+  function onScroll() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    document.documentElement.style.setProperty("--sp", p.toFixed(4));
+  }
+  if (rail) { onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); window.addEventListener("resize", onScroll); }
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce) {
+    document.querySelectorAll(".pk-col").forEach(function (col) {
+      col.addEventListener("pointermove", function (e) {
+        if (e.pointerType === "touch") return;
+        var r = col.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        col.style.setProperty("--ry", (x * 5).toFixed(2) + "deg");
+        col.style.setProperty("--rx", (-y * 4).toFixed(2) + "deg");
+      }, { passive: true });
+      col.addEventListener("pointerleave", function () {
+        col.style.setProperty("--ry", "0deg");
+        col.style.setProperty("--rx", "0deg");
+      });
+    });
+
+    var wall = document.getElementById("pk-wall");
+    if (wall) {
+      var startX = 0, base = 0, moved = false;
+      wall.addEventListener("pointerdown", function (e) {
+        if (e.pointerType === "touch") return;
+        startX = e.clientX; base = parseFloat(wall.style.getPropertyValue("--pan")) || 0; moved = false;
+        wall.classList.add("pk-drag");
+        wall.setPointerCapture(e.pointerId);
+      });
+      wall.addEventListener("pointermove", function (e) {
+        if (!wall.classList.contains("pk-drag")) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        var pan = Math.max(-56, Math.min(56, base + dx * 0.5));
+        wall.style.setProperty("--pan", pan.toFixed(1) + "px");
+      });
+      wall.addEventListener("pointerup", function (e) {
+        wall.classList.remove("pk-drag");
+        try { wall.releasePointerCapture(e.pointerId); } catch (err) {}
+        if (moved) { e.preventDefault(); }
+        setTimeout(function () { moved = false; }, 30);
+      });
+      wall.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    }
+  }
 })();
 </script>
 <script src="app.js?v=201"></script>
