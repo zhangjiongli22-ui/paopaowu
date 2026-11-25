@@ -35,6 +35,7 @@ try {
 .h3-left .body{padding:clamp(16px,1.6vw,26px);display:grid;gap:6px;align-content:start;}
 .h3-left .nm{font-size:clamp(30px,3.4vw,52px);}
 .h3-left .adv{left:10px;right:10px;bottom:10px;width:auto;}
+.h3-left .kmark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:clamp(140px,17vw,260px);line-height:1;color:rgba(140,160,190,.10);pointer-events:none;user-select:none;}
 </style>
 <style>.hero3{align-items:stretch;height:100%;}
 .h3-main{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(14px,2vw,26px);align-items:center;min-height:0;border-bottom:0;}
@@ -121,7 +122,7 @@ try {
 
     <div class="hero3">
       <div class="vh-band kira h3-left">
-        <span class="art"><img src="assets/portraits/kira-tall.jpg" alt="Kira" width="900" height="900"></span>
+        <span class="kmark" aria-hidden="true">K</span>
         <a class="body" href="k02.html" aria-label="进入 Kira">
           <span class="role">01 — OWNER</span>
           <span class="nm">Kira</span>
