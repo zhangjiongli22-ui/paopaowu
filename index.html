@@ -167,7 +167,10 @@ try {
 @media (max-width:900px){ .quotes{grid-template-columns:1fr} }
 </style><style>
 /* 2026-11-25 首页 02 / 03 段：封面卡 + 悬停预览 */
-.now-grid{display:grid;grid-template-columns:1fr;gap:clamp(18px,3vh,30px)}
+.now-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(18px,2.6vw,44px);align-items:start}
+.now-col:nth-child(1) .now-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.now-col:nth-child(2){padding-top:clamp(28px,7vh,64px)}
+.now-col:nth-child(2) .now-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
 .now-col{display:grid;gap:12px}
 .now-grid .now-k{display:flex;align-items:baseline;gap:10px;margin:0;
   font:12px var(--mono);letter-spacing:.24em;color:var(--gold)}
@@ -201,7 +204,9 @@ try {
 .ch-index .ch-row:hover .n{color:var(--gold)}
 
 @media (max-width:900px){
-  .now-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .now-grid{grid-template-columns:1fr}
+  .now-col:nth-child(2){padding-top:0}
+  .now-col:nth-child(1) .now-cards,.now-col:nth-child(2) .now-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
   .ch-index .ch-row::after{display:none}
 }
 </style><style>
