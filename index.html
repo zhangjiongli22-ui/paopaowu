@@ -271,6 +271,13 @@ try {
 .quotes{border-top:1px solid rgba(242,236,225,.12)}
 .now-grid{border-top:1px solid rgba(242,236,225,.12);padding-top:clamp(18px,2.6vh,28px)}
 .ch-index{border-top:1px solid rgba(242,236,225,.12)}
+</style><style>
+/* 2026-11-25 小修：章节数字不溢出、手机端标题拉丁字够大、封面标题不挤断 */
+.ch-no b{font-size:clamp(24px,3vw,34px);line-height:1.34}
+@media (max-width:900px){
+  .vh-title .latin{font-size:12px;letter-spacing:.18em}
+  .now-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style></head>
 <body>
 
@@ -326,7 +333,7 @@ try {
   <section class="vh home-vh">
     <div class="vh-top">
       <div>
-        <p class="vh-eyebrow">Aquarium of two — prologue</p>
+        <p class="vh-eyebrow">PROLOGUE 00 · BUBBLE HOUSE</p>
         <h1 class="vh-title">Kira的小屋<span class="latin">Bubble House</span></h1>
         <p class="vh-sub">一间屋子，一个人许愿，两条鱼动手。</p>
       </div>
