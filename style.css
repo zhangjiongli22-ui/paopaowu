@@ -3236,6 +3236,7 @@ main > section:not([class]) > h2 {
 /* 2026-11-25 首页三人版：Kira 在左，右边两条鱼上下叠 */
 .vh-col { display: grid; grid-template-rows: 1fr 1fr; gap: clamp(10px, 1.2vw, 18px); min-height: 0; }
 .vh-col .vh-band { align-items: center; }
+.vh-col .vh-band::after { display: none; }
 .vh-col .vh-band .art { inset: 0 0 0 auto; width: 54%; }
 .vh-col .vh-band .art img { object-fit: cover; object-position: top center; -webkit-mask-image: none; mask-image: none; }
 .vh-col .vh-band .body { max-width: 62%; }
