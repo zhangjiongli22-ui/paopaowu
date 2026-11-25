@@ -17,7 +17,19 @@ try {
 } catch (e) { document.documentElement.classList.add("js"); }
 try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
 </script>
-</head>
+<style>
+/* 2026-11-25 存档：目录吸顶、条目呼吸感 */
+.group-row,.view-row,.cat-row{padding:6px 0;border-bottom:1px solid rgba(242,236,225,.06)}
+.rec-main{max-width:min(1240px,95vw)}
+.flow-item{padding:12px 0;border-bottom:1px solid rgba(242,236,225,.06)}
+.flow-name{font-family:var(--serif);font-size:16px;letter-spacing:.03em;color:#eae5d8}
+.flow-when,.flow-dur,.flow-what{font-size:13px;line-height:1.85;color:#aab3bf}
+.flow-total,.flow-count{font:12px var(--mono);letter-spacing:.14em;color:rgba(242,236,225,.55)}
+.group-row a,.view-row a,.cat-row a{padding:6px 12px;border:1px solid transparent;
+  font:12px var(--mono);letter-spacing:.14em;color:rgba(242,236,225,.66)}
+.group-row a.active,.view-row a.active,.cat-row a.active{color:var(--gold);border-color:rgba(201,168,107,.45);
+  background:rgba(201,168,107,.08)}
+</style></head>
 <body>
 
 <a class="skip" href="#main">跳到正文</a>
