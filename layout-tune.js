@@ -6,7 +6,7 @@
   var saved = {};
   try { saved = JSON.parse(localStorage.getItem("homeTune") || "{}"); } catch (e) {}
 
-  var DEFAULTS = { "--faceH": 345, "--faceX": 0, "--faceY": 0, "--midY": 180, "--rowA": 180, "--rowB": 175 };
+  var DEFAULTS = { "--faceH": 290, "--faceX": -9, "--faceY": 20, "--midY": 0, "--rowA": 183, "--rowB": 172 };
   var UNITS = { "--faceH": "px", "--faceX": "px", "--faceY": "px", "--midY": "px", "--rowA": "px", "--rowB": "px" };
 
   function apply(name, val) {
