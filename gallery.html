@@ -16,7 +16,17 @@ try {
   if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
 } catch (e) { document.documentElement.classList.add("js"); }
 </script>
-</head>
+<style>
+/* 2026-11-25 图集：卡片化 + 悬停放大 */
+.gallery-grid{gap:clamp(10px,1.3vw,18px)}
+.gallery-grid figure{margin:0;overflow:hidden;background:#0a1119;border:1px solid rgba(242,236,225,.08);
+  transition:border-color .4s var(--ease),transform .4s var(--ease)}
+.gallery-grid figure:hover{border-color:rgba(201,168,107,.45);transform:translateY(-3px)}
+.gallery-grid img{display:block;width:100%;height:auto;transition:transform .7s var(--ease),filter .7s var(--ease)}
+.gallery-grid figure:hover img{transform:scale(1.04);filter:saturate(1.06) brightness(1.03)}
+.gallery-grid figcaption{padding:12px 14px 14px;font-family:var(--serif);font-size:13.5px;line-height:1.85;
+  color:#d6dbe2;border-top:1px solid rgba(242,236,225,.06)}
+</style></head>
 <body>
 
 <a class="skip" href="#main">跳到正文</a>
