@@ -133,6 +133,7 @@ try {
         '<div class="cmt-foot">' +
           '<span class="cmt-meta">' + esc(x.time || "") + " · " + esc(String(x.date || "").slice(5)) + "</span>" +
           '<button type="button" class="cmt-reply-btn" data-who="' + esc(x.who || "") + '">\u56de\u590d</button>' +
+          '<button type="button" class="cmt-del" data-id="' + esc(x.id || "") + '">删除</button>' +
           '<span class="cmt-like" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z"/></svg></span>' +
         "</div>" +
       "</div></article>";
@@ -158,11 +159,46 @@ try {
   }
 
   if (toClear) toClear.addEventListener("click", function () { setReplyTo(""); });
-  host.addEventListener("click", function (ev) {
+  host.addEventListener("click", async function (ev) {
+    var del = ev.target && ev.target.closest ? ev.target.closest(".cmt-del") : null;
+    if (del) {
+      if (!confirm("删掉这条评论？删了不会回来。")) return;
+      var id = del.getAttribute("data-id") || "";
+      var pass = "";
+      try { pass = localStorage.getItem("paopaowu_pass") || localStorage.getItem("comment_pass") || ""; } catch (e) {}
+      if (!pass) { alert("先登录再删"); return; }
+      del.disabled = true;
+      try {
+        var res = await fetch("/api/comment/delete", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ id: id, pass: pass }),
+        });
+        var j = await res.json();
+        if (!j.ok) throw new Error(j.error || "删失败");
+        var art = del.closest("article");
+        if (art) art.remove();
+      } catch (e) {
+        del.disabled = false;
+        alert("没删掉：" + e.message + "（如果这条是昨天前的锐评，存在主数据里，要用后台删）");
+      }
+      return;
+    }
     var btn = ev.target && ev.target.closest ? ev.target.closest(".cmt-reply-btn") : null;
     if (!btn) return;
     setReplyTo(btn.getAttribute("data-who") || "");
   });
+
+  // 只有登录后才显示删除按钮
+  (function () {
+    var logged = false;
+    try { logged = !!(localStorage.getItem("paopaowu_admin") || localStorage.getItem("paopaowu_pass")); } catch (e) {}
+    if (!logged) {
+      var st = document.createElement("style");
+      st.textContent = ".cmt-del{display:none!important}";
+      document.head.appendChild(st);
+    }
+  })();
 
   // 评论框只给 Kira 用；没登录先别让她白写一段
   var logged = false;
