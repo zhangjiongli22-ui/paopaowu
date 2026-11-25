@@ -20,6 +20,14 @@ try {
 </script>
 <style>/* 2026-11-25 三人版：版本角标让开右下角立绘 */
 .frame-tag.r{ display:none; }
+.h3-side{display:grid;grid-template-rows:1fr 1fr;gap:clamp(10px,1.2vw,16px);height:100%;}
+.h3-side .vh-band{min-height:0;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,22,34,.72),rgba(8,12,18,.9));}
+.h3-side .vh-band .art{inset:0;justify-content:flex-end;align-items:flex-end;}
+.h3-side .vh-band .art img{width:auto;height:100%;max-width:56%;object-fit:contain;object-position:bottom right;opacity:.95;}
+.h3-side .vh-band .body{padding:clamp(12px,1.2vw,18px);display:grid;gap:4px;align-content:start;z-index:2;}
+.h3-side .vh-band .nm{font-size:clamp(20px,2vw,30px);}
+.h3-side .vh-band .ds{font-size:clamp(10px,.8vw,13px);max-width:60%;}
+.h3-side .vh-band .adv{left:10px;right:10px;bottom:10px;width:auto;}
 </style>
 <style>.hero3{align-items:stretch;height:100%;}
 .h3-main{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(14px,2vw,26px);align-items:center;min-height:0;border-bottom:0;}
@@ -117,24 +125,47 @@ try {
         <div class="h3-face"><img src="assets/portraits/kira.jpg" alt="Kira"></div>
       </div>
       <div class="h3-side">
-        <a class="h3-row" href="dsh.html">
-          <span class="h3-txt">
+        <div class="vh-band dsh">
+          <span class="art"><img src="assets/portraits/dsh.jpg" alt="DSH" width="900" height="900"></span>
+          <a class="body" href="dsh.html" aria-label="进入 DSH">
             <span class="role">02 — ASSISTANT 1</span>
             <span class="nm">DSH</span>
             <span class="ds">冷静可靠的助手，管把事做成</span>
             <span class="go">进入 →</span>
-          </span>
-          <span class="h3-pic"><img src="assets/portraits/dsh.jpg" alt="DSH" width="900" height="900"></span>
-        </a>
-        <a class="h3-row" href="about.html">
-          <span class="h3-txt">
+          </a>
+          <div class="adv" data-who="dsh" role="group" aria-label="DSH 在说话">
+            <span class="adv-name">DSH</span>
+            <p class="adv-text"></p>
+            <div class="adv-foot">
+              <span class="adv-tools">
+                <button class="adv-btn adv-auto" type="button" aria-pressed="false">AUTO</button>
+                <button class="adv-btn adv-skip" type="button">SKIP</button>
+              </span>
+              <span class="adv-next">CLICK</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vh-band feiyu">
+          <span class="art"><img src="assets/portraits/feiyu.jpg" alt="小鱼" width="900" height="900"></span>
+          <a class="body" href="about.html" aria-label="进入小鱼">
             <span class="role">03 — ASSISTANT 2</span>
             <span class="nm">小鱼</span>
             <span class="ds">懒、馋、傲娇，管把日子过下去</span>
             <span class="go">进入 →</span>
-          </span>
-          <span class="h3-pic"><img src="assets/portraits/feiyu.jpg" alt="小鱼" width="900" height="900"></span>
-        </a>
+          </a>
+          <div class="adv" data-who="feiyu" role="group" aria-label="小鱼在说话">
+            <span class="adv-name">小鱼</span>
+            <p class="adv-text"></p>
+            <div class="adv-foot">
+              <span class="adv-tools">
+                <button class="adv-btn adv-auto" type="button" aria-pressed="false">AUTO</button>
+                <button class="adv-btn adv-skip" type="button">SKIP</button>
+              </span>
+              <span class="adv-next">CLICK</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
