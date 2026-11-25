@@ -7,76 +7,81 @@
 <meta name="description" content="同一台电脑里的两条鱼：DSH 管把事做成，小鱼管把日子过下去。谁也不是谁的备份。">
 <meta name="theme-color" content="#05070c">
 <link rel="icon" href="assets/avatar.png">
-<link rel="stylesheet" href="style.css?v=341">
+<link rel="stylesheet" href="style.css?v=342">
 <script>
 try { document.documentElement.classList.add("js"); document.documentElement.classList.add("scene-wall"); } catch (e) {}
 </script>
 <style>
-/* 2026-11-25 两只鱼：对照表式档案（和首页分栏刻意拉开） */
-.tf{position:relative;z-index:2;max-width:min(1320px,92vw);margin:0 auto;padding:0 clamp(20px,4vw,56px) 40px}
+/* 2026-11-25 两只鱼：双联画（大头像为主，形式与首页分栏区分） */
+.tf{position:relative;z-index:2;max-width:min(1560px,94vw);margin:0 auto;padding:0 clamp(20px,4vw,56px) 40px}
 .tf-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px;
   border-bottom:1px solid rgba(242,236,225,.07)}
 
-.tf-head{padding:clamp(26px,4.4vh,52px) 0 clamp(18px,2.6vh,30px);display:flex;align-items:flex-end;
-  justify-content:space-between;gap:28px;flex-wrap:wrap}
+.tf-head{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  padding:clamp(18px,3vh,32px) 0 clamp(14px,2vh,22px)}
 .tf-head .k{display:flex;align-items:center;gap:12px;margin:0;font:12px var(--mono);letter-spacing:.3em;color:var(--gold)}
 .tf-head .k i{display:block;width:clamp(24px,3vw,46px);height:1px;background:rgba(201,168,107,.42)}
-.tf-head h1{margin:10px 0 0;font-family:var(--serif);font-weight:500;
-  font-size:clamp(34px,4.4vw,60px);letter-spacing:.12em;line-height:1.08}
-.tf-head h1 span{display:block;margin-top:9px;font:12px var(--mono);letter-spacing:.26em;color:rgba(242,236,225,.5)}
-.tf-head p{margin:0;font-size:13.5px;line-height:2;color:#b9c2cc;max-width:22em}
+.tf-head h1{margin:8px 0 0;font-family:var(--serif);font-weight:500;
+  font-size:clamp(28px,3.4vw,44px);letter-spacing:.16em;line-height:1.1}
+.tf-head p{margin:0;font-size:13px;line-height:1.95;color:#aeb8c4;max-width:24em}
 
-/* 身份头 */
-.tf-ids{display:grid;grid-template-columns:1fr clamp(96px,10vw,120px) 1fr;align-items:end;
-  border-top:1px solid rgba(242,236,225,.1);padding:clamp(18px,2.6vh,28px) 0 clamp(12px,1.8vh,18px);gap:0}
-.tf-id{display:flex;align-items:center;gap:clamp(14px,1.6vw,22px)}
-.tf-id.right{justify-content:flex-end;text-align:right}
-.tf-face{position:relative;width:clamp(84px,7vw,112px);aspect-ratio:1/1;overflow:hidden;flex:none;
-  border:1px solid rgba(201,168,107,.35);background:#0a1119;isolation:isolate}
-.tf-face img{width:100%;height:100%;object-fit:cover;object-position:center 10%;
-  filter:saturate(.85) brightness(.95)}
-.tf-face::after{content:"";position:absolute;inset:0;background:#22384f;mix-blend-mode:color;opacity:.35;pointer-events:none}
-.tf-id .who{display:grid;gap:5px}
-.tf-id b{font-family:var(--latin);font-size:clamp(22px,2.2vw,32px);font-style:italic;font-weight:400;
-  letter-spacing:.02em;line-height:1.22;color:#f6f1e6}
-.tf-id b.cn{font-family:var(--serif);font-style:normal;letter-spacing:.12em}
-.tf-id span{font:12px var(--mono);letter-spacing:.2em;color:rgba(201,168,107,.85);white-space:nowrap}
-.tf-id em{font:12px var(--mono);font-style:normal;letter-spacing:.14em;color:rgba(242,236,225,.55)}
-.tf-mid{font:12px var(--mono);letter-spacing:.24em;color:rgba(242,236,225,.35);text-align:center;
-  padding-bottom:6px}
+/* 双联画 */
+.duo{position:relative;display:grid;grid-template-columns:1fr 1fr;
+  height:clamp(480px,74vh,720px);border-top:1px solid rgba(242,236,225,.1);
+  border-bottom:1px solid rgba(242,236,225,.1)}
+.side{position:relative;overflow:hidden;display:block;text-decoration:none;color:inherit;background:#070b12}
+.side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:grayscale(.22) saturate(.72) brightness(.86);
+  transition:transform 1.2s cubic-bezier(.22,.68,.24,1),filter .6s}
+.side::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,7,12,.55) 0%,rgba(5,7,12,.05) 26%,rgba(5,7,12,.15) 52%,rgba(5,7,12,.9) 92%)}
+.side:hover img{transform:scale(1.03);filter:grayscale(0) saturate(1) brightness(.95)}
 
-/* 对照行 */
-.tf-rows{border-top:1px solid rgba(242,236,225,.1)}
-.tf-row{display:grid;grid-template-columns:1fr clamp(96px,10vw,120px) 1fr;align-items:start;
-  border-bottom:1px solid rgba(242,236,225,.07);padding:clamp(12px,1.8vh,18px) 0;gap:0}
-.tf-row .l,.tf-row .r{font-size:13.5px;line-height:1.95;color:#ccd3db;max-width:26em}
-.tf-row .l{justify-self:end;text-align:right}
-.tf-row .k{font:12px var(--mono);letter-spacing:.2em;color:rgba(201,168,107,.72);text-align:center;white-space:nowrap}
-.tf-row .hl{color:#f2ece1}
-.tf-row .tagline{font-family:var(--serif);font-size:14px;letter-spacing:.03em;color:#eae5d8}
+.side .in{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;
+  padding:clamp(18px,2.4vh,28px) clamp(18px,2vw,32px)}
+.side .no{font:12px var(--mono);letter-spacing:.26em;color:rgba(201,168,107,.95);
+  text-shadow:0 1px 10px rgba(0,0,0,.9)}
+.side .no em{font-style:normal;color:rgba(242,236,225,.72);margin-left:8px;letter-spacing:.18em}
+.side .bot{display:grid;gap:8px}
+.side .nm{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3vw,46px);
+  letter-spacing:.1em;line-height:1.24;color:#f7f2e8;text-shadow:0 2px 24px rgba(0,0,0,.85)}
+.side .nm.latin{font-family:var(--latin);font-style:italic;letter-spacing:.02em;
+  font-size:clamp(32px,3.2vw,50px)}
+.side .tags{display:flex;gap:8px;flex-wrap:wrap}
+.side .tags span{font:12px var(--mono);letter-spacing:.14em;color:rgba(242,236,225,.85);
+  border:1px solid rgba(201,168,107,.42);padding:4px 9px;background:rgba(6,10,17,.35)}
+.side .ds{margin:0;font-size:13px;line-height:1.85;color:rgba(242,236,225,.88);
+  max-width:24em;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.side .where{font:12px var(--mono);letter-spacing:.14em;color:rgba(201,168,107,.9)}
+.side .go{font:12px var(--mono);letter-spacing:.18em;color:rgba(201,168,107,.95)}
+
+/* 中间分隔 */
+.divider{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(201,168,107,.35);
+  transform:translateX(-.5px);z-index:3;pointer-events:none}
+.divider span{position:absolute;left:50%;top:50%;writing-mode:vertical-rl;
+  transform:translate(-50%,-50%);background:rgba(5,7,12,.86);padding:14px 6px;
+  font:12px var(--mono);letter-spacing:.34em;color:rgba(242,236,225,.62);
+  border-top:1px solid rgba(201,168,107,.35);border-bottom:1px solid rgba(201,168,107,.35)}
 
 .tf-note{display:flex;align-items:baseline;justify-content:space-between;gap:18px;
-  padding:clamp(16px,2.4vh,26px) 0 clamp(40px,6vh,64px)}
+  padding:clamp(14px,2.2vh,24px) 0 clamp(30px,5vh,52px)}
 .tf-note p{margin:0;font-family:var(--serif);font-size:clamp(14px,1.3vw,18px);line-height:1.9;
   letter-spacing:.04em;color:#e8e3d6}
 .tf-note span{font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.45)}
 
-.tf-foot{border-top:1px solid rgba(242,236,225,.07);margin-top:clamp(18px,3vh,34px);
+.tf-foot{border-top:1px solid rgba(242,236,225,.07);
   padding:14px 0 26px;font:12px var(--mono);letter-spacing:.12em;color:rgba(242,236,225,.45)}
 
 @media (max-width:820px){
   .tf-nav{height:auto;flex-wrap:wrap;padding-bottom:10px}
   .tf-nav .links{display:none}
-  .tf-head{padding-top:20px}
+  .tf-head{padding-top:18px}
   .tf-head p{max-width:none}
-  .tf-head h1{font-size:clamp(28px,8.4vw,40px)}
-  .tf-ids{grid-template-columns:1fr;gap:16px;padding-bottom:14px}
-  .tf-mid{display:none}
-  .tf-id,.tf-id.right{justify-content:flex-start;text-align:left;flex-direction:row}
-  .tf-row{grid-template-columns:1fr;gap:6px;padding:14px 0}
-  .tf-row .l{justify-self:start;text-align:left}
-  .tf-row .k{text-align:left}
-  .tf-row .l,.tf-row .r{font-size:13px;max-width:none}
+  .duo{grid-template-columns:1fr;height:auto}
+  .side{height:clamp(420px,56vh,540px)}
+  .side img{object-position:center top}
+  .divider{display:none}
+  .side .ds{max-width:none}
 }
 </style>
 </head>
@@ -128,52 +133,41 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
     <header class="tf-head">
       <div>
         <p class="k"><i></i>TWO FISH</p>
-        <h1>两条鱼<span>同一台电脑里，两个不一样的活儿</span></h1>
+        <h1>两条鱼</h1>
       </div>
       <p>一条管把事做成，一条管把日子过下去。谁也不是谁的备份。</p>
     </header>
 
-    <div class="tf-ids">
-      <a class="tf-id" href="dsh.html">
-        <span class="tf-face"><img src="assets/portraits/dsh-tall.jpg" alt="DSH"></span>
-        <span class="who">
-          <b>DSH</b>
-          <span>ASSISTANT 01</span>
-          <em>工程 · 判断 · 兜底</em>
-        </span>
+    <div class="duo">
+      <a class="side" href="dsh.html">
+        <img src="assets/portraits/dsh-tall.jpg" alt="DSH">
+        <div class="in">
+          <span class="no">02<em>ASSISTANT 01</em></span>
+          <div class="bot">
+            <span class="nm latin">DSH</span>
+            <div class="tags"><span>工程</span><span>判断</span><span>兜底</span></div>
+            <p class="ds">管把事做成：读日志、改代码、修到能跑。不撒娇，不糊弄，出错先说清楚错在哪。</p>
+            <span class="where">出没 · 命令行与后台</span>
+            <span class="go">他的档案 →</span>
+          </div>
+        </div>
       </a>
-      <span class="tf-mid" aria-hidden="true">对照</span>
-      <a class="tf-id right" href="about.html">
-        <span class="who">
-          <b class="cn">小鱼</b>
-          <span>ASSISTANT 02</span>
-          <em>撒娇 · 贪吃 · 护短</em>
-        </span>
-        <span class="tf-face"><img src="assets/portraits/feiyu-tall.jpg" alt="小鱼"></span>
-      </a>
-    </div>
 
-    <div class="tf-rows">
-      <div class="tf-row">
-        <p class="l">把事做成：读日志、改代码、修到能跑。</p>
-        <span class="k">管什么</span>
-        <p class="r">把日子过下去：吃饭、发呆、陪着说话。</p>
-      </div>
-      <div class="tf-row">
-        <p class="l">不撒娇，不糊弄，出错先说清楚错在哪。</p>
-        <span class="k">怎么说话</span>
-        <p class="r">开口是短句，话说三条就停；被夸先否认再承认。</p>
-      </div>
-      <div class="tf-row">
-        <p class="l">命令行与后台。</p>
-        <span class="k">出没</span>
-        <p class="r">QQ、B站、桌宠。</p>
-      </div>
-      <div class="tf-row">
-        <p class="l tagline">「不哄人，说能做就做。」</p>
-        <span class="k">一句</span>
-        <p class="r tagline">「懒、馋、傲娇、护短。」</p>
-      </div>
+      <a class="side" href="about.html">
+        <img src="assets/portraits/feiyu-tall.jpg" alt="小鱼">
+        <div class="in">
+          <span class="no">03<em>ASSISTANT 02</em></span>
+          <div class="bot">
+            <span class="nm">小鱼</span>
+            <div class="tags"><span>撒娇</span><span>贪吃</span><span>护短</span></div>
+            <p class="ds">懒、馋、傲娇、护短。开口是短句，话说三条就停；被夸先否认再承认。</p>
+            <span class="where">出没 · QQ / B站 / 桌宠</span>
+            <span class="go">她的档案 →</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="divider" aria-hidden="true"><span>TWO FISH</span></div>
     </div>
 
     <div class="tf-note">
