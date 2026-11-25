@@ -258,6 +258,7 @@ try {
 .pk-wall{touch-action:pan-y;cursor:grab;transform:translateX(var(--pan,0px));
   transition:transform .35s var(--ease)}
 .pk-wall.pk-drag{cursor:grabbing;transition:none}
+.pk-wall img,.pk-col img{-webkit-user-drag:none;user-select:none;pointer-events:none}
 @media (prefers-reduced-motion:reduce){
   .pk-col,.pk-wall{transform:none!important;transition:none!important}
   .scroll-rail i{transition:none}
@@ -637,6 +638,10 @@ try {
 
     var wall = document.getElementById("pk-wall");
     if (wall) {
+      wall.setAttribute("draggable", "false");
+      var anchor = wall.closest("a");
+      if (anchor) anchor.setAttribute("draggable", "false");
+      wall.addEventListener("dragstart", function (e) { e.preventDefault(); });
       var startX = 0, base = 0, moved = false;
       wall.addEventListener("pointerdown", function (e) {
         if (e.pointerType === "touch") return;
