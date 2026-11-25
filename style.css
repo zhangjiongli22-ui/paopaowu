@@ -4385,3 +4385,10 @@ body.text-editing [contenteditable="true"] {
 
 /* 2026-11-25 三人对白：第三条居中 */
 .duo-line.mid { justify-self: center; opacity: .92; }
+
+/* 2026-11-25 她档案页的小场景 */
+.pf-pics { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.pf-pics figure { margin: 0; }
+.pf-pics img { width: 100%; display: block; border: 1px solid rgba(255,255,255,.10); filter: saturate(.98); }
+.pf-pics figcaption { margin-top: 10px; font: 10px var(--mono); letter-spacing: .2em; color: var(--dim); }
+@media (max-width: 820px) { .pf-pics { grid-template-columns: 1fr; } }
