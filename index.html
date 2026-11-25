@@ -28,6 +28,13 @@ try {
 .h3-side .vh-band .nm{font-size:clamp(20px,2vw,30px);}
 .h3-side .vh-band .ds{font-size:clamp(10px,.8vw,13px);max-width:60%;}
 .h3-side .vh-band .adv{left:10px;right:10px;bottom:10px;width:auto;}
+
+.h3-left{min-height:100%;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,22,34,.72),rgba(8,12,18,.9));}
+.h3-left .art{inset:0;justify-content:flex-end;align-items:flex-end;}
+.h3-left .art img{width:auto;height:100%;max-width:72%;object-fit:contain;object-position:bottom right;filter:saturate(.98);}
+.h3-left .body{padding:clamp(16px,1.6vw,26px);display:grid;gap:6px;align-content:start;}
+.h3-left .nm{font-size:clamp(30px,3.4vw,52px);}
+.h3-left .adv{left:10px;right:10px;bottom:10px;width:auto;}
 </style>
 <style>.hero3{align-items:stretch;height:100%;}
 .h3-main{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(14px,2vw,26px);align-items:center;min-height:0;border-bottom:0;}
@@ -113,17 +120,27 @@ try {
     </div>
 
     <div class="hero3">
-      <div class="h3-main">
-        <span class="h3-rule mid" aria-hidden="true"></span>
-        <span class="h3-rule bot" aria-hidden="true"></span>
-        <div class="h3-meta">
-          <p class="role">01 — OWNER</p>
-          <h2 class="h3-nm">Kira</h2>
-          <p class="ds">只会许愿的普通人</p>
-          <a class="go" href="k02.html">进入 →</a>
+      <div class="vh-band kira h3-left">
+        <span class="art"><img src="assets/portraits/kira.jpg" alt="Kira" width="900" height="900"></span>
+        <a class="body" href="k02.html" aria-label="进入 Kira">
+          <span class="role">01 — OWNER</span>
+          <span class="nm">Kira</span>
+          <span class="ds">只会许愿的普通人</span>
+          <span class="go">进入 →</span>
+        </a>
+        <div class="adv adv-k" data-who="kira" role="group" aria-label="Kira 在说话">
+          <span class="adv-name">Kira</span>
+          <p class="adv-text"></p>
+          <div class="adv-foot">
+            <span class="adv-tools">
+              <button class="adv-btn adv-auto" type="button" aria-pressed="false">AUTO</button>
+              <button class="adv-btn adv-skip" type="button">SKIP</button>
+            </span>
+            <span class="adv-next">CLICK</span>
+          </div>
         </div>
-        <div class="h3-face"><img src="assets/portraits/kira.jpg" alt="Kira"></div>
       </div>
+
       <div class="h3-side">
         <div class="vh-band dsh">
           <span class="art"><img src="assets/portraits/dsh.jpg" alt="DSH" width="900" height="900"></span>
