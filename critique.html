@@ -17,7 +17,20 @@ try {
   if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
 } catch (e) { document.documentElement.classList.add("js"); }
 </script>
-</head>
+<style>
+/* 2026-11-25 锐评：日期做大标题、每条做卡片、正文限宽 */
+.cmt-day{font-family:var(--serif);font-size:clamp(18px,1.8vw,24px);letter-spacing:.1em;color:#f2ece1;
+  border-bottom:1px solid rgba(242,236,225,.12);padding-bottom:10px;margin-top:clamp(26px,4vh,44px)}
+.cmt{background:rgba(6,10,17,.52);border:1px solid rgba(242,236,225,.07);
+  padding:clamp(14px,1.8vh,20px) clamp(14px,1.6vw,22px);margin:12px 0;
+  transition:border-color .35s var(--ease),background .35s var(--ease)}
+.cmt:hover{border-color:rgba(201,168,107,.22);background:rgba(9,14,21,.68)}
+.cmt-av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(201,168,107,.42);background:rgba(201,168,107,.08);
+  font-family:var(--serif);font-size:14px;color:var(--gold)}
+.cmt-body,.cmt-text{max-width:36em;font-size:13.5px;line-height:2;color:#c6cdd6}
+.cmt-reply{margin-left:clamp(18px,3vw,42px);border-left:1px solid rgba(201,168,107,.28)}
+</style></head>
 <body>
 
 <div class="scene" aria-hidden="true">
