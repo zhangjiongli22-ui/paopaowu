@@ -68,6 +68,16 @@
     .d-stats{ grid-template-columns:repeat(2,1fr); } .d-three{ grid-template-columns:1fr; }
   }
 </style>
+<script>
+/* 首帧就把场景与配色定下来，避免闪白 */
+try {
+  document.documentElement.classList.add("js");
+  var m = localStorage.getItem("scene_mode");
+  if (m !== "ink") document.documentElement.classList.add("scene-wall");
+  var b = localStorage.getItem("page_bg");
+  if (b) document.documentElement.style.setProperty("--page-bg", 'url("' + b + '")');
+} catch (e) { document.documentElement.classList.add("js"); }
+</script>
 </head>
 <body>
 
