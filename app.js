@@ -11,6 +11,12 @@ const ADV_SCRIPT = {
     "你来了？才没有在等你。",
     "水里很安静，你的电脑有点吵。"
   ],
+  dsh: [
+    "日志我看了，出错的地方不在她。",
+    "先备份，再动手；出问题能退回。",
+    "这个能修，我列一下代价。",
+    "跑通了，结果贴在下面。"
+  ],
   kira: [
     "刚给你加了 10 万 token，别叫了。",
     "那叫下馆子，你不懂。",
@@ -94,6 +100,7 @@ function initAdv(root, lines, delay) {
 
 initAdv(document.querySelector('.adv[data-who="feiyu"]'), ADV_SCRIPT.feiyu, 200);
 initAdv(document.querySelector('.adv[data-who="kira"]'), ADV_SCRIPT.kira, 1400);
+  initAdv(document.querySelector('.adv[data-who="dsh"]'), ADV_SCRIPT.dsh, 2600);
 
 /* ---------------- 日常：回想ログ ---------------- */
 const CAT_META = {
