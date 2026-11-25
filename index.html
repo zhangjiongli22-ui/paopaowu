@@ -278,6 +278,40 @@ try {
   .vh-title .latin{font-size:12px;letter-spacing:.18em}
   .now-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+</style><style>
+/* 2026-11-25 收口：字号收到九档、手机更紧凑、页脚签名、回到顶 */
+.ch-title{font-size:21px}
+.ch-sub{font-size:12px;letter-spacing:.2em}
+.ch-lead{font-size:13px;line-height:1.95}
+.ch-no b{font-size:32px}
+.quote-card blockquote{font-size:15px;line-height:1.9}
+.now-tt{font-size:13px}
+.pk-ds,.pk-quote{font-size:13px}
+
+.sign{max-width:var(--max);margin:clamp(28px,5vh,56px) auto 0;
+  padding:clamp(16px,2.6vh,24px) clamp(20px,5vw,44px) 0;
+  border-top:1px solid rgba(242,236,225,.07);
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  font-family:var(--serif);font-size:13px;line-height:1.9;color:rgba(242,236,225,.55)}
+.sign span{font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.35)}
+
+.to-top{position:fixed;right:26px;bottom:60px;z-index:999;min-width:38px;height:34px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;
+  background:rgba(10,15,22,.92);border:1px solid rgba(201,168,107,.45);color:var(--gold);cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.45);
+  opacity:.85;pointer-events:auto;transform:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),border-color .3s}
+.to-top.on{opacity:1;transform:translateY(-2px)}
+.to-top:hover{border-color:rgba(201,168,107,.7)}
+.to-top svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5}
+.to-top em{font:12px var(--mono);font-style:normal;letter-spacing:.18em}
+
+@media (max-width:900px){
+  .chapter{padding-top:clamp(40px,7vh,64px)}
+  .ch-head{margin-bottom:16px}
+  .ch-index .ch-row{padding:12px 2px}
+  .pk-col{min-height:186px}
+  .sign{padding-top:14px;font-size:12.5px}
+  .to-top{right:12px;bottom:12px}
+}
 </style></head>
 <body>
 
@@ -507,6 +541,8 @@ try {
 
 </main>
 
+<div class="sign"><p>屋子每天凌晨三点半自己打扫一次，剩下的时间归三个人。</p><span>BUBBLE HOUSE</span></div>
+
 <footer>
   <p>© 2026 Kira 的小屋 · 每天自动打扫一次 · <a href="legal.html?v=20261124a">声明</a> · <a href="login.html?v=20261124a">登录</a></p>
 </footer>
@@ -681,6 +717,24 @@ try {
       wall.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
     }
   }
+})();
+</script>
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg><em>TOP</em>
+</button>
+<script>
+(function () {
+  var btn = document.getElementById("to-top");
+  if (!btn) return;
+  function tick() {
+    if (window.scrollY > 640) btn.classList.add("on"); else btn.classList.remove("on");
+  }
+  tick();
+  window.addEventListener("scroll", tick, { passive: true });
+  btn.addEventListener("click", function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
 })();
 </script>
 <script src="app.js?v=201"></script>
