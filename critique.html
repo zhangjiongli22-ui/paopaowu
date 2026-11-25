@@ -18,21 +18,15 @@ try {
 } catch (e) { document.documentElement.classList.add("js"); }
 </script>
 <style>
-/* 2026-11-25 锐评：独立日期条（横向、钉在导航下）、回复挂在原帖下 */
-.day-bar{position:relative;z-index:60;display:flex;align-items:center;gap:16px;
-  flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
-  padding:9px 0 16px;margin:0;
-  background:linear-gradient(180deg,rgba(5,7,12,.9),rgba(5,7,12,0) 92%);border:0}
-.day-bar::-webkit-scrollbar{display:none}
-.day-bar[hidden]{display:none}
-.day-bar-title{flex:0 0 auto;font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.42)}
-.day-bar a{flex:0 0 auto;font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.72);
-  text-decoration:none;padding:3px 1px;border:0;border-bottom:1px solid transparent;background:none;
-  transition:color .3s,border-color .3s}
-.day-bar a:hover,.day-bar a.on{color:var(--gold);border-color:rgba(201,168,107,.6)}
-.day-bar-ph{height:0}
+/* 2026-11-25 锐评：日期走左侧竖排目录，滚动时高亮当天 */
+.crit-toc{align-items:flex-start}
+.crit-toc a{position:relative;padding:2px 0 2px 12px}
+.crit-toc a::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:4px;height:4px;border-radius:50%;background:rgba(242,236,225,.25);transition:background .3s}
+.crit-toc a.on::before{background:var(--gold);box-shadow:0 0 8px rgba(201,168,107,.6)}
+@media (max-width:1180px){ .crit-toc{display:none!important} }
 
-.cmt-day{scroll-margin-top:132px;margin:0 0 clamp(22px,3.4vh,36px)}
+.cmt-day{scroll-margin-top:96px;margin:0 0 clamp(22px,3.4vh,36px)}
 .cmt-date{font-family:var(--serif);font-size:15px;letter-spacing:.2em;color:rgba(242,236,225,.6);
   margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid rgba(242,236,225,.1)}
 
@@ -60,7 +54,6 @@ try {
   .cmt{grid-template-columns:30px minmax(0,1fr);gap:10px}
   .cmt-av{width:30px;height:30px;font-size:12.5px}
   .cmt-reply{margin-left:6px;padding-left:10px}
-  .day-bar{padding:8px 10px;gap:12px}
 }</style></head>
 <body>
 
@@ -113,7 +106,7 @@ try {
     </div>
   </header>
 
-  <nav class="day-bar" id="crit-toc" hidden><span class="day-bar-title">日期</span></nav>
+  <nav class="crit-toc" id="crit-toc" hidden><span class="crit-toc-title">日期</span></nav>
   <div class="crit-wrap" id="crit-list">
     <p class="loading">正在翻记录……</p>
   </div>
@@ -222,33 +215,24 @@ try {
         if (!j.ok) throw new Error(j.error || "删失败");
         var art = del.closest("article");
         if (art) art.remove();
-        // 2026-11-25 日期条：滚过就钉在顶部（sticky 会被页面的 overflow 吃掉）
+    
+    // 2026-11-25 滚动时高亮当前日期
     (function () {
       if (!toc) return;
-      var nav = document.querySelector("nav.nav");
-      var ph = document.createElement("div");
-      ph.className = "crit-toc-ph";
-      toc.parentNode.insertBefore(ph, toc);
-      function sync() {
-        var navH = (nav ? nav.getBoundingClientRect().height : 62) + 6;
-        var r = ph.getBoundingClientRect();
-        if (r.top < navH) {
-          toc.style.position = "fixed";
-          toc.style.top = navH + "px";
-          toc.style.left = r.left + "px";
-          toc.style.width = r.width + "px";
-          ph.style.height = toc.offsetHeight + "px";
-        } else {
-          toc.style.position = "";
-          toc.style.top = "";
-          toc.style.left = "";
-          toc.style.width = "";
-          ph.style.height = "0px";
-        }
+      var links = [].slice.call(toc.querySelectorAll("a"));
+      if (!links.length) return;
+      function spy() {
+        var best = null, bestTop = -Infinity;
+        links.forEach(function (a) {
+          var sec = document.getElementById(a.getAttribute("href").slice(1));
+          if (!sec) return;
+          var top = sec.getBoundingClientRect().top - 120;
+          if (top <= 0 && top > bestTop) { bestTop = top; best = a; }
+        });
+        links.forEach(function (a) { a.classList.toggle("on", a === best); });
       }
-      window.addEventListener("scroll", sync, { passive: true });
-      window.addEventListener("resize", sync);
-      sync();
+      window.addEventListener("scroll", spy, { passive: true });
+      spy();
     })();
   } catch (e) {
         del.disabled = false;
