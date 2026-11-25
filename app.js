@@ -259,9 +259,11 @@ async function loadData() {
   box.querySelector(".lb-nav.next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
   const zL = box.querySelector(".lb-zone.left");
   const zR = box.querySelector(".lb-zone.right");
-  if (zL) zL.addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
-  if (zR) zR.addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
-  box.addEventListener("click", (e) => { if (e.target === box) hide(); });
+  // 2026-11-25 点空白处直接退出全屏（箭头、关闭、下载、图片本身除外）
+  box.addEventListener("click", (e) => {
+    if (e.target.closest(".lb-nav, .lb-close, .lb-dl, img")) return;
+    hide();
+  });
   document.addEventListener("keydown", (e) => {
     if (box.hidden) return;
     if (e.key === "Escape") hide();
