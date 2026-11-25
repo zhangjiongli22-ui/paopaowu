@@ -343,8 +343,7 @@ try {
       var first = rows.find(function (x) { return isFish(x.who); }) || rows[0];
       // 谁先发谁是主评论：只有明确写了 reply_to 的才挂「回复 X」，不按先后硬套
       var rest = rows.filter(function (x) { return x !== first; }).map(function (x) {
-        var to = x.reply_to && x.reply_to !== x.who ? x.reply_to
-          : (first && x.who !== first.who ? first.who : "");
+        var to = x.reply_to && x.reply_to !== x.who ? x.reply_to : "";
         return block(x, !!to, to);
       }).join("");
       return '<section class="cmt-day" id="cday-' + esc(d) + '">' +
