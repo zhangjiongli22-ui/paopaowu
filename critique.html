@@ -54,7 +54,19 @@ try {
   .cmt{grid-template-columns:30px minmax(0,1fr);gap:10px}
   .cmt-av{width:30px;height:30px;font-size:12.5px}
   .cmt-reply{margin-left:6px;padding-left:10px}
-}</style></head>
+}/* 左侧日期目录 */
+.crit-toc{display:none!important}
+.day-rail{position:fixed;left:clamp(16px,2vw,34px);top:150px;z-index:35;
+  display:flex;flex-direction:column;gap:9px;padding:0}
+.day-rail-title{font:12px var(--mono);letter-spacing:.28em;color:rgba(242,236,225,.35);margin-bottom:4px}
+.day-rail a{position:relative;font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.45);
+  text-decoration:none;padding-left:13px;transition:color .3s}
+.day-rail a::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:4px;height:4px;border-radius:50%;background:rgba(242,236,225,.22);transition:background .3s,box-shadow .3s}
+.day-rail a:hover{color:rgba(242,236,225,.8)}
+.day-rail a.on{color:var(--gold)}
+.day-rail a.on::before{background:var(--gold);box-shadow:0 0 10px rgba(201,168,107,.7)}
+@media (max-width:1180px){ .day-rail{display:none} }</style></head>
 <body>
 
 <div class="scene" aria-hidden="true">
@@ -342,8 +354,17 @@ try {
         "</section>";
     }).join("");
 
-    if (toc) {
-      toc.hidden = false;
+        // 2026-11-25 日期目录：左侧竖排，跟正文同高，滚动高亮
+    (function () {
+      if (!toc) return;
+      toc.hidden = true;
+      var rail = document.createElement("aside");
+      rail.className = "day-rail";
+      rail.setAttribute("aria-label", "日期目录");
+      var head = document.createElement("span");
+      head.className = "day-rail-title";
+      head.textContent = "日期";
+      rail.appendChild(head);
       days.forEach(function (d) {
         var a = document.createElement("a");
         a.href = "#cday-" + d;
@@ -352,14 +373,25 @@ try {
           ev.preventDefault();
           var t = document.getElementById("cday-" + d);
           if (!t) return;
-          var off = (toc ? toc.getBoundingClientRect().height : 0) + 70;
-          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - off, behavior: "smooth" });
-          a.classList.add("on");
-          setTimeout(function () { a.classList.remove("on"); }, 1400);
+          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 96, behavior: "smooth" });
         });
-        toc.appendChild(a);
+        rail.appendChild(a);
       });
-    }
+      document.body.appendChild(rail);
+      var links = [].slice.call(rail.querySelectorAll("a"));
+      function spy() {
+        var best = null, bestTop = -Infinity;
+        links.forEach(function (a) {
+          var sec = document.getElementById(a.getAttribute("href").slice(1));
+          if (!sec) return;
+          var top = sec.getBoundingClientRect().top - 140;
+          if (top <= 0 && top > bestTop) { bestTop = top; best = a; }
+        });
+        links.forEach(function (a) { a.classList.toggle("on", a === best); });
+      }
+      window.addEventListener("scroll", spy, { passive: true });
+      spy();
+    })();
   } catch (e) {
     host.innerHTML = '<p class="loading">没加载出来。</p>';
   }
