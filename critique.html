@@ -18,48 +18,50 @@ try {
 } catch (e) { document.documentElement.classList.add("js"); }
 </script>
 <style>
-/* 2026-11-25 锐评：作者与回复分层、正文限量、日期条悬浮 */
-.crit-page-wrap{position:relative}
-#crit-toc{position:sticky;top:58px;z-index:40;display:flex;align-items:center;gap:8px;
+/* 2026-11-25 锐评：日期条常驻在上、回复缩进挂在原帖下 */
+.crit-toc{position:sticky;top:62px;z-index:40;display:flex;align-items:center;gap:14px;
   flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
-  background:linear-gradient(180deg,rgba(5,7,12,.96),rgba(5,7,12,.82));
-  backdrop-filter:blur(10px);padding:9px 0 8px;margin:0 0 2px;
-  border-bottom:1px solid rgba(242,236,225,.08)}
-#crit-toc::-webkit-scrollbar{display:none}
-#crit-toc .crit-toc-title{flex:0 0 auto;font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.45)}
-#crit-toc a,#crit-toc button{flex:0 0 auto;font:12px var(--mono);letter-spacing:.12em;
-  color:rgba(242,236,225,.72);border:1px solid rgba(242,236,225,.12);padding:5px 10px;text-decoration:none}
-#crit-toc a.on,#crit-toc a:hover{color:var(--gold);border-color:rgba(201,168,107,.5)}
+  padding:10px 0 18px;margin:0;
+  background:linear-gradient(180deg,rgba(5,7,12,.98) 62%,rgba(5,7,12,0));
+  border-bottom:0}
+.crit-toc::-webkit-scrollbar{display:none}
+.crit-toc[hidden]{display:none}
+.crit-toc-title{flex:0 0 auto;font:12px var(--mono);letter-spacing:.2em;color:rgba(242,236,225,.42)}
+.crit-toc a{flex:0 0 auto;font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.7);
+  text-decoration:none;padding:3px 1px;border:0;border-bottom:1px solid transparent;border-radius:0;
+  background:transparent;transition:color .3s,border-color .3s}
+.crit-toc a:hover,.crit-toc a.on{color:var(--gold);border-color:rgba(201,168,107,.55)}
 
-.cmt-day{font-family:var(--serif);font-size:clamp(17px,1.6vw,22px);letter-spacing:.1em;color:#f2ece1;
-  border-bottom:1px solid rgba(242,236,225,.12);padding:0 0 8px;margin:clamp(24px,4vh,40px) 0 14px}
+.cmt-day{scroll-margin-top:118px;margin:0 0 clamp(22px,3.4vh,36px)}
+.cmt-date{font-family:var(--serif);font-size:15px;letter-spacing:.2em;color:rgba(242,236,225,.6);
+  margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid rgba(242,236,225,.1)}
 
-.cmt{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;align-items:start;
-  background:rgba(6,10,17,.5);border:1px solid rgba(242,236,225,.07);
-  padding:clamp(14px,1.8vh,20px) clamp(14px,1.6vw,22px);margin:12px 0;
-  transition:border-color .35s var(--ease),background .35s var(--ease)}
-.cmt:hover{border-color:rgba(201,168,107,.22);background:rgba(9,14,21,.68)}
-.cmt-av{grid-column:1;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid rgba(201,168,107,.42);background:rgba(201,168,107,.08);
-  font-family:var(--serif);font-size:15px;color:var(--gold)}
-.cmt-body{grid-column:2;min-width:0}
-.cmt-name{display:flex;align-items:center;gap:9px;margin:0;font-family:var(--serif);
-  font-size:15px;letter-spacing:.06em;color:#f2ece1}
-.cmt-badge{font:11px var(--mono);letter-spacing:.14em;color:var(--gold);
-  border:1px solid rgba(201,168,107,.4);padding:1px 6px}
-.cmt-to{font:12px var(--mono);letter-spacing:.1em;color:rgba(201,168,107,.85)}
-.cmt-text{max-width:33em;margin:9px 0 0;font-size:13px;line-height:1.98;color:#c4ccd5;white-space:pre-wrap}
-.cmt-foot{display:flex;align-items:center;gap:14px;margin-top:10px}
-.cmt-meta{font:12px var(--mono);letter-spacing:.1em;color:rgba(242,236,225,.42)}
-.cmt-reply-btn{font:12px var(--mono);letter-spacing:.1em;color:rgba(201,168,107,.8);
-  background:transparent;border:0;padding:4px 2px;cursor:pointer}
+.cmt{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;
+  padding:14px 0;border-bottom:1px solid rgba(242,236,225,.05)}
+.cmt-day .cmt:last-child{border-bottom:0}
+.cmt-av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(201,168,107,.38);font-family:var(--serif);font-size:14px;color:var(--gold);
+  background:rgba(201,168,107,.06)}
+.cmt-body{min-width:0}
+.cmt-name{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--serif);
+  font-size:14.5px;letter-spacing:.06em;color:#f2ece1}
+.cmt-badge{font:11px var(--mono);letter-spacing:.12em;color:var(--gold);
+  border:1px solid rgba(201,168,107,.38);padding:0 5px}
+.cmt-to{font:12px var(--mono);letter-spacing:.08em;color:rgba(201,168,107,.85)}
+.cmt-text{margin:8px 0 0;font-size:13.5px;line-height:1.95;color:#c3cad3;overflow-wrap:anywhere}
+.cmt-foot{display:flex;align-items:center;gap:12px;margin-top:8px}
+.cmt-meta{font:12px var(--mono);letter-spacing:.08em;color:rgba(242,236,225,.4)}
 
-.cmt-reply{position:relative;margin-left:clamp(26px,4vw,56px);background:rgba(8,12,19,.62);
-  border-left:2px solid rgba(201,168,107,.45)}
-.cmt-reply::before{content:"";position:absolute;left:calc(-1 * clamp(14px,2vw,26px));top:18px;bottom:18px;
-  width:1px;background:rgba(201,168,107,.32)}
-.cmt-reply::after{content:"";position:absolute;left:calc(-1 * clamp(14px,2vw,26px));top:18px;
-  width:clamp(10px,1.4vw,18px);height:1px;background:rgba(201,168,107,.32)}</style></head>
+.cmt-reply{margin-left:14px;padding-left:14px;border-left:1px solid rgba(201,168,107,.3)}
+.cmt-reply .cmt-av{width:30px;height:30px;font-size:12.5px}
+.cmt-reply .cmt-text{color:#b9c1cb}
+
+@media (max-width:700px){
+  .crit-toc{top:56px}
+  .cmt{grid-template-columns:30px minmax(0,1fr);gap:10px}
+  .cmt-av{width:30px;height:30px;font-size:12.5px}
+  .cmt-reply{margin-left:6px;padding-left:10px}
+}</style></head>
 <body>
 
 <div class="scene" aria-hidden="true">
@@ -337,7 +339,8 @@ try {
           ev.preventDefault();
           var t = document.getElementById("cday-" + d);
           if (!t) return;
-          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 28, behavior: "smooth" });
+          var off = (toc ? toc.getBoundingClientRect().height : 0) + 70;
+          window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - off, behavior: "smooth" });
           a.classList.add("on");
           setTimeout(function () { a.classList.remove("on"); }, 1400);
         });
