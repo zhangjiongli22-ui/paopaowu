@@ -36,6 +36,7 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
 .side::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,rgba(5,7,12,.55) 0%,rgba(5,7,12,.05) 26%,rgba(5,7,12,.15) 52%,rgba(5,7,12,.9) 92%)}
 .side:hover img{transform:scale(1.03);filter:grayscale(0) saturate(1) brightness(.95)}
+.side.side-fish img{height:130%;top:-13%;object-position:center 2%;transform-origin:center 8%}
 
 .side .in{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;
   padding:clamp(18px,2.4vh,28px) clamp(18px,2vw,32px)}
@@ -153,7 +154,7 @@ try { document.documentElement.classList.add("js"); document.documentElement.cla
         </div>
       </a>
 
-      <a class="side" href="about.html">
+      <a class="side side-fish" href="about.html">
         <img src="assets/portraits/feiyu-tall.jpg" alt="小鱼">
         <div class="in">
           <span class="no">03<em>ASSISTANT 02</em></span>
