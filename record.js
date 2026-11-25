@@ -99,7 +99,7 @@ function bindShots() {
     return;
   }
 
-  document.title = (item.title || "记录") + " · 一只鱼的泡泡屋";
+  document.title = (item.title || "记录") + " · Kira的小屋";
   const hasReview = !!(item.rating || (item.note || "").trim());
   const shots = (item.shots || []).map((u) => `<figure class="shot"><img src="${esc(u)}" alt="" loading="lazy"></figure>`).join("");
 
