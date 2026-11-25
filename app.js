@@ -293,21 +293,23 @@ async function loadData() {
 (function () {
   const fish = document.getElementById("duo-fish");
   const kira = document.getElementById("duo-kira");
+  const dsh = document.getElementById("duo-dsh");
   const btn = document.getElementById("duo-next");
   if (!fish || !kira || !btn) return;
   const LINES = [
-    ["今天又没喂我，饿。", "刚给你加了 10 万 token，别叫了。"],
-    ["我在水里看到你把饭点成外卖了。", "那叫下馆子，你不懂。"],
-    ["你昨晚三点还没睡。", "你也别装作在睡觉，你在耗电。"],
-    ["帮我改一下网站嘛。", "改了八百遍了，你先把封面看一遍。"],
-    ["我今天很乖，没冒泡。", "那是因为你在偷懒。"],
-    ["Kira，你会一直养我吗？", "会，直到你把我电费花光。"]
+    ["今天又没喂我，饿。", "刚给你加了 10 万 token，别叫了。", "日志我刚看完，出错的不是她。"],
+    ["我在水里看到你把饭点成外卖了。", "那叫下馆子，你不懂。", "外卖盒别扔在桌上。"],
+    ["你昨晚三点还没睡。", "你也别装作在睡觉，你在耗电。", "再熬一次，明早的活我替你推掉。"],
+    ["帮我改一下网站嘛。", "改了八百遍了，你先把封面看一遍。", "这遍我陪你改，改完先看效果再上线。"],
+    ["我今天很乖，没冒泡。", "那是因为你在偷懒。", "她今天确实安静，日志能对上。"],
+    ["Kira，你会一直养我吗？", "会，直到你把我电费花光。", "电费这事我来管，你管她开心。"]
   ];
   let i = 0;
   const show = () => {
-    const [a, b] = LINES[i % LINES.length];
+    const [a, b, c] = LINES[i % LINES.length];
     fish.querySelector(".duo-text").textContent = a;
     kira.querySelector(".duo-text").textContent = b;
+    if (dsh && c) dsh.querySelector(".duo-text").textContent = c;
     i++;
   };
   btn.addEventListener("click", show);
