@@ -168,13 +168,23 @@ function bindShots() {
             </div>
           </div>
         </div>
-        <h2 class="shots-head">截图</h2>
+        <h2 class="shots-head">截图
+          <a id="shots-add" href="add.html?tab=shots&amp;id=${encodeURIComponent(item.id)}" hidden
+            style="margin-left:12px;padding:4px 10px;border:1px solid var(--gold-soft);color:var(--gold);font:clamp(12px,.8vw,15px) var(--mono);letter-spacing:.1em;font-weight:400">＋ 加截图</a>
+        </h2>
         ${shots ? `<div class="shots">${shots}</div>` : `<p class="detail-empty">还没有截图。</p>`}
       </section>
     </div>
   `;
 
   bindShots();
+
+  try {
+    if (localStorage.getItem("paopaowu_admin")) {
+      const add = document.getElementById("shots-add");
+      if (add) add.hidden = false;
+    }
+  } catch (e) {}
 
   // 同系列其他季
   (function () {
