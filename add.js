@@ -2,7 +2,7 @@
   "use strict";
 
   var MAX_BYTES = 22 * 1024 * 1024;
-  var MAX_SHOTS = 30;
+  var MAX_SHOTS = 1000;
 
   function getPass() {
     try { return localStorage.getItem("paopaowu_pass") || ""; } catch (e) { return ""; }
@@ -259,7 +259,7 @@
     if (!files.length) return;
     var room = MAX_SHOTS - state.shots.length;
     if (room <= 0) {
-      $("#new-msg").textContent = "截图最多 " + MAX_SHOTS + " 张。";
+      $("#new-msg").textContent = "实在太多了，先删几张再加。";
       return;
     }
     files = files.slice(0, room);
@@ -461,7 +461,7 @@
     var room = MAX_SHOTS - state.editShots.length;
     if (room <= 0) {
       msg.className = "add-msg err";
-      msg.textContent = "截图最多 " + MAX_SHOTS + " 张，先删几张再加。";
+      msg.textContent = "实在太多了，先删几张再加。";
       return;
     }
     files = files.slice(0, room);
