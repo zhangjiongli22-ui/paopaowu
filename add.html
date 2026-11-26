@@ -63,6 +63,7 @@ try {
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .field input[type="checkbox"] { width: 22px; height: 22px; accent-color: #c9a86b; }
   .pin-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; cursor: pointer; color: var(--dim); }
+  .pin-row input[type="checkbox"] { width: 24px; height: 24px; min-width: 24px; min-height: 24px; }
 
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
@@ -96,6 +97,8 @@ try {
   .prev-empty { color: var(--dim-2); font: clamp(12px, .8vw, 15px) var(--mono); letter-spacing: .08em; }
 
   .add-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .lb-btn[disabled] { opacity: .45; cursor: not-allowed; }
+  .add-status a { display: inline-block; padding: 6px 8px; margin: -6px -2px; color: var(--aqua); }
   .add-msg { font: clamp(12.5px, .84vw, 16px) var(--mono); letter-spacing: .1em; color: var(--dim); }
   .add-msg.ok { color: #9fe0a8; }
   .add-msg.err { color: var(--sakura); }
