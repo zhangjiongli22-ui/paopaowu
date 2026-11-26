@@ -17,6 +17,17 @@ try {
 } catch (e) { document.documentElement.classList.add("js"); }
 try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
 </script>
+<style>
+  .rec-head { position: relative; }
+  .rec-add {
+    display: inline-block; margin-top: 14px;
+    padding: 8px 16px; border: 1px solid var(--gold-soft);
+    background: rgba(201, 168, 107, .08); color: var(--gold);
+    font: clamp(13px, .9vw, 17px) var(--mono); letter-spacing: .12em;
+  }
+  .rec-add[hidden] { display: none; }
+  .rec-add:hover { background: rgba(201, 168, 107, .18); color: var(--paper); border-color: var(--gold); }
+</style>
 </head>
 <body>
 
@@ -71,6 +82,7 @@ try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; 
     <p class="kicker">KIRA — 図鑑</p>
     <h1>Kira的精神宇宙</h1>
     <p class="lead">看过的动画、剧集、电影、游戏、书，都收在这里。</p>
+    <a class="rec-add" id="rec-add" href="add.html" hidden>＋ 添加条目 / 截图</a>
   </header>
 
   <div class="rec-top">
@@ -93,7 +105,9 @@ try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; 
 <script src="atmos.js?v=200"></script>
 <script>
 (function () {
+  var ra = document.getElementById("rec-add");
   if (!localStorage.getItem("paopaowu_admin")) return;
+  if (ra) ra.hidden = false;
   document.querySelectorAll('footer a[href="login.html?v=20261124a"]').forEach(function (a) {
     a.textContent = "Kira";
     a.style.color = "var(--gold)";
