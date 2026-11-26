@@ -95,7 +95,7 @@ export default {
         const raw = String(body.data || "");
         const m = raw.match(/^data:(image\/[a-z0-9.+-]+);base64,([A-Za-z0-9+/=]+)$/i);
         if (!m) throw new Error("不是图片");
-        if (m[2].length > 4 * 1024 * 1024) throw new Error("图太大");
+        if (m[2].length > 12 * 1024 * 1024) throw new Error("图太大");
         const id = crypto.randomUUID();
         await env.RATINGS.put("media:" + id, JSON.stringify({ type: m[1], data: m[2], at: Date.now() }));
         return jsonRes({ ok: true, id, url: "/img/" + id });
