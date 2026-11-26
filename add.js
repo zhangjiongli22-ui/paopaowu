@@ -1,9 +1,12 @@
 (function () {
   "use strict";
 
-  var PASS = "kira:miku1998:paopaowu";
   var MAX_BYTES = 22 * 1024 * 1024;
   var MAX_SHOTS = 9;
+
+  function getPass() {
+    try { return localStorage.getItem("paopaowu_pass") || ""; } catch (e) { return ""; }
+  }
 
   var CATS = [
     { id: "game", name: "游戏", statuses: ["在玩", "玩过", "想玩"] },
@@ -75,7 +78,7 @@
     var heavy = bytes > MAX_BYTES * 0.55;
     box.className = "add-status" + (heavy ? " warn" : "");
     var login = "";
-    try { login = localStorage.getItem("paopaowu_admin") ? "" : " · 未登录也能加"; } catch (e) {}
+    if (!getPass()) login = ' · <a href="login.html">先登录</a>才能存';
     box.innerHTML = "现在 <b>" + state.data.items.length + "</b> 条 · <b>" + mb(bytes) + "</b> / " + mb(MAX_BYTES) + login;
   }
 
@@ -101,6 +104,8 @@
   }
 
   async function saveData(data) {
+    var pass = getPass();
+    if (!pass) throw new Error("还没登录，先去登录页登一下再来。");
     var blob = JSON.stringify(data);
     if (blob.length > MAX_BYTES) {
       throw new Error("数据已经 " + mb(blob.length) + "，超过上限了。先删掉一些带图的旧条目再加。");
@@ -108,7 +113,7 @@
     var res = await fetch("/api/data", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ pass: PASS, data: data })
+      body: JSON.stringify({ pass: pass, data: data })
     });
     var out = await res.json().catch(function () { return {}; });
     if (!res.ok || !out.ok) throw new Error(out.error || "保存失败 " + res.status);
@@ -475,6 +480,12 @@
   renderPrev($("#cover-prev"), []);
   renderNewShots();
   loadData();
+
+  if (!getPass()) {
+    $("#new-save").disabled = true;
+    $("#edit-save").disabled = true;
+    $("#new-msg").textContent = "没登录，先去登录再来。";
+  }
 
   try {
     if (localStorage.getItem("paopaowu_admin")) {
