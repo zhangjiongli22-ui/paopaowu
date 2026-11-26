@@ -263,6 +263,11 @@ try {
         </div>
 
         <label class="pin-row">
+          <input type="checkbox" id="f-original">
+          <span style="font: clamp(13px,.88vw,17px) var(--mono); letter-spacing:.1em">传原图（不压缩，一张最多 12MB）</span>
+        </label>
+
+        <label class="pin-row">
           <input type="checkbox" id="f-pinned">
           <span style="font: clamp(13px,.88vw,17px) var(--mono); letter-spacing:.1em">放在最前面（pinned）</span>
         </label>
@@ -316,6 +321,11 @@ try {
         <button type="button" class="lb-btn" id="edit-save">保存</button>
         <span class="add-msg" id="edit-msg"></span>
       </div>
+
+      <label class="pin-row">
+        <input type="checkbox" id="edit-original">
+        <span style="font: clamp(13px,.88vw,17px) var(--mono); letter-spacing:.1em">传原图（不压缩，一张最多 12MB）</span>
+      </label>
     </div>
   </section>
 </main>
