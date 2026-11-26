@@ -10,6 +10,22 @@ function shiftPass(input) {
   }
   return x.toString(16);
 }
+function jsonRes(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+  });
+}
+
+function bytesFromBase64(b64) {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+const MEDIA_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 async function loadOverrides(env) {
   try {
     return (await env.RATINGS.get("overrides_all", "json")) || {};
@@ -47,6 +63,61 @@ export default {
       return new Response(JSON.stringify({ ok: true, ts: Date.now(), v: "ping-1" }), {
         headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
       });
+    }
+
+    // 图片：单独存 KV，记录里只放 /img/<uuid>，不占 records.json 的体积
+    if (url.pathname.startsWith("/img/")) {
+      const id = url.pathname.slice("/img/".length);
+      if (!MEDIA_ID.test(id)) return new Response("not found", { status: 404 });
+      const key = new Request(url.origin + "/img/" + id);
+      try {
+        const hit = await caches.default.match(key);
+        if (hit) return hit;
+      } catch (e) {}
+      const m = await env.RATINGS.get("media:" + id, "json");
+      if (!m || !m.data) return new Response("not found", { status: 404 });
+      const res = new Response(bytesFromBase64(m.data), {
+        headers: {
+          "content-type": m.type || "image/jpeg",
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      });
+      try {
+        await caches.default.put(key, res.clone());
+      } catch (e) {}
+      return res;
+    }
+
+    if (url.pathname === "/api/media" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) return jsonRes({ ok: false, error: "密码不对" }, 403);
+        const raw = String(body.data || "");
+        const m = raw.match(/^data:(image\/[a-z0-9.+-]+);base64,([A-Za-z0-9+/=]+)$/i);
+        if (!m) throw new Error("不是图片");
+        if (m[2].length > 4 * 1024 * 1024) throw new Error("图太大");
+        const id = crypto.randomUUID();
+        await env.RATINGS.put("media:" + id, JSON.stringify({ type: m[1], data: m[2], at: Date.now() }));
+        return jsonRes({ ok: true, id, url: "/img/" + id });
+      } catch (e) {
+        return jsonRes({ ok: false, error: String(e).slice(0, 140) }, 400);
+      }
+    }
+
+    if (url.pathname === "/api/media/delete" && request.method === "POST") {
+      try {
+        const body = await request.json();
+        if ((await shiftPass(body.pass || "")) !== PASS_HASH) return jsonRes({ ok: false, error: "密码不对" }, 403);
+        const id = String(body.id || "");
+        if (!MEDIA_ID.test(id)) throw new Error("id 不对");
+        await env.RATINGS.delete("media:" + id);
+        try {
+          await caches.default.delete(new Request(url.origin + "/img/" + id));
+        } catch (e) {}
+        return jsonRes({ ok: true });
+      } catch (e) {
+        return jsonRes({ ok: false, error: String(e).slice(0, 140) }, 400);
+      }
     }
 
     if (url.pathname === "/api/debug") {
