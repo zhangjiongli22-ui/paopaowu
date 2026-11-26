@@ -43,6 +43,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/api/ping") {
+      return new Response(JSON.stringify({ ok: true, ts: Date.now(), v: "ping-1" }), {
+        headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+      });
+    }
+
     if (url.pathname === "/api/debug") {
       const id = url.searchParams.get("id") || "";
       const all = (await env.RATINGS.get("overrides_all", "json")) || {};
