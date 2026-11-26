@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   var MAX_BYTES = 22 * 1024 * 1024;
@@ -24,7 +24,8 @@
     shots: [],
     picked: null,
     editCover: "",
-    editShots: []
+    editShots: [],
+    newShots: []
   };
 
   function $(s, r) { return (r || document).querySelector(s); }
@@ -75,11 +76,10 @@
       return;
     }
     var bytes = new Blob([JSON.stringify(state.data)]).size;
-    var heavy = bytes > MAX_BYTES * 0.55;
-    box.className = "add-status" + (heavy ? " warn" : "");
+    box.className = "add-status";
     var login = "";
     if (!getPass()) login = ' · <a href="login.html">先登录</a>才能存';
-    box.innerHTML = "现在 <b>" + state.data.items.length + "</b> 条 · <b>" + mb(bytes) + "</b> / " + mb(MAX_BYTES) + login;
+    box.innerHTML = "现在 <b>" + state.data.items.length + "</b> 条 · 记录 <b>" + mb(bytes) + "</b> · 图片单独存" + login;
   }
 
   async function loadData() {
@@ -154,6 +154,34 @@
     });
   }
 
+  /* ---------------- 图片上传（单独存，不占记录体积） ---------------- */
+
+  function uploadMedia(dataUrl) {
+    var pass = getPass();
+    if (!pass) return Promise.reject(new Error("还没登录，先去登录。"));
+    return fetch("/api/media", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pass: pass, data: dataUrl })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (out) {
+        if (!res.ok || !out.ok) throw new Error(out.error || "上传失败 " + res.status);
+        return out.url;
+      });
+    });
+  }
+
+  function deleteMedia(url) {
+    if (!/^\/img\//.test(url || "")) return;
+    var pass = getPass();
+    if (!pass) return;
+    fetch("/api/media/delete", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pass: pass, id: url.slice(5) })
+    }).catch(function () {});
+  }
+
   /* ---------------- 预览 ---------------- */
 
   function renderPrev(box, list, onRemove, wide) {
@@ -211,16 +239,17 @@
     e.target.value = "";
     if (!f) return;
     var hint = $("#cover-hint");
-    hint.textContent = "压小中…";
-    compress(f, 800, 110 * 1024).then(function (url) {
+    hint.textContent = "压小并上传中…";
+    compress(f, 1000, 240 * 1024).then(uploadMedia).then(function (url) {
       state.cover = url;
       renderPrev($("#cover-prev"), [url], function () {
+        deleteMedia(state.cover);
         state.cover = "";
         renderPrev($("#cover-prev"), []);
       }, true);
-      hint.textContent = "已选，约 " + Math.round(url.length * 0.75 / 1024) + " KB";
+      hint.textContent = "已存好，图片单独放着";
     }).catch(function (err) {
-      hint.textContent = "这张读不了：" + err.message;
+      hint.textContent = "没存上：" + err.message;
     });
   });
 
@@ -234,17 +263,39 @@
       return;
     }
     files = files.slice(0, room);
+    var msg = $("#new-msg");
+    msg.textContent = "压小中…";
     Promise.all(files.map(function (f) {
-      return compress(f, 1280, 150 * 1024).catch(function () { return ""; });
+      return compress(f, 1600, 240 * 1024).catch(function () { return ""; });
     })).then(function (urls) {
-      urls.forEach(function (u) { if (u) state.shots.push(u); });
-      renderNewShots();
+      var todo = urls.filter(Boolean);
+      if (!todo.length) {
+        msg.textContent = "这几张都读不了。";
+        return;
+      }
+      var done = 0;
+      msg.textContent = "上传 0/" + todo.length;
+      return Promise.all(todo.map(function (dataUrl) {
+        return uploadMedia(dataUrl).then(function (url) {
+          done++;
+          msg.textContent = "上传 " + done + "/" + todo.length;
+          return url;
+        });
+      })).then(function (saved) {
+        saved.forEach(function (u) { state.shots.push(u); });
+        renderNewShots();
+        msg.textContent = "";
+      });
+    }).catch(function (err) {
+      msg.textContent = "有图没传上：" + err.message;
     });
   });
 
   function renderNewShots() {
     renderPrev($("#shots-prev"), state.shots, function (i) {
+      var gone = state.shots[i];
       state.shots.splice(i, 1);
+      deleteMedia(gone);
       renderNewShots();
     });
   }
@@ -357,6 +408,7 @@
   function pickItem(it) {
     state.picked = it;
     state.editCover = "";
+    state.newShots = [];
     state.editShots = (it.shots || []).slice();
     $("#pick-panel").hidden = false;
     $("#pick-title").textContent = it.title + "（" + catName(it.cat) + "）";
@@ -368,7 +420,12 @@
 
   function renderEditShots() {
     renderPrev($("#edit-shots-prev"), state.editShots, function (i) {
+      var gone = state.editShots[i];
       state.editShots.splice(i, 1);
+      if (state.newShots.indexOf(gone) >= 0) {
+        deleteMedia(gone);
+        state.newShots = state.newShots.filter(function (u) { return u !== gone; });
+      }
       renderEditShots();
     });
   }
@@ -379,17 +436,20 @@
     if (!f) return;
     var msg = $("#edit-msg");
     msg.className = "add-msg";
-    msg.textContent = "压小中…";
-    compress(f, 800, 110 * 1024).then(function (url) {
+    msg.textContent = "压小并上传中…";
+    compress(f, 1000, 240 * 1024).then(uploadMedia).then(function (url) {
+      var old = state.editCover;
       state.editCover = url;
+      if (old && old !== url) deleteMedia(old);
       renderPrev($("#edit-cover-prev"), [url], function () {
+        deleteMedia(state.editCover);
         state.editCover = "";
         renderPrev($("#edit-cover-prev"), []);
       }, true);
-      msg.textContent = "新封面约 " + Math.round(url.length * 0.75 / 1024) + " KB";
+      msg.textContent = "新封面存好了，记得保存。";
     }).catch(function (err) {
       msg.className = "add-msg err";
-      msg.textContent = "这张读不了：" + err.message;
+      msg.textContent = "没存上：" + err.message;
     });
   });
 
@@ -408,11 +468,32 @@
     msg.className = "add-msg";
     msg.textContent = "压小中…";
     Promise.all(files.map(function (f) {
-      return compress(f, 1280, 150 * 1024).catch(function () { return ""; });
+      return compress(f, 1600, 240 * 1024).catch(function () { return ""; });
     })).then(function (urls) {
-      urls.forEach(function (u) { if (u) state.editShots.push(u); });
-      renderEditShots();
-      msg.textContent = "共 " + state.editShots.length + " 张，记得保存。";
+      var todo = urls.filter(Boolean);
+      if (!todo.length) {
+        msg.textContent = "这几张都读不了。";
+        return;
+      }
+      var done = 0;
+      msg.textContent = "上传 0/" + todo.length;
+      return Promise.all(todo.map(function (dataUrl) {
+        return uploadMedia(dataUrl).then(function (url) {
+          done++;
+          msg.textContent = "上传 " + done + "/" + todo.length;
+          return url;
+        });
+      })).then(function (saved) {
+        saved.forEach(function (u) {
+          state.editShots.push(u);
+          state.newShots.push(u);
+        });
+        renderEditShots();
+        msg.textContent = "共 " + state.editShots.length + " 张，记得保存。";
+      });
+    }).catch(function (err) {
+      msg.className = "add-msg err";
+      msg.textContent = "有图没传上：" + err.message;
     });
   });
 
@@ -434,6 +515,8 @@
       else delete target.shots;
       await saveData(state.data);
       state.picked = target;
+      state.editCover = "";
+      state.newShots = [];
       msg.className = "add-msg ok";
       msg.innerHTML = '保存了，<a href="record.html?id=' + encodeURIComponent(target.id) + '">去详情页看看</a>';
       refreshStatus();
