@@ -1,8 +1,8 @@
-(function () {
+﻿(function () {
   "use strict";
 
   var MAX_BYTES = 22 * 1024 * 1024;
-  var MAX_SHOTS = 9;
+  var MAX_SHOTS = 30;
 
   function getPass() {
     try { return localStorage.getItem("paopaowu_pass") || ""; } catch (e) { return ""; }
@@ -235,7 +235,7 @@
     }
     files = files.slice(0, room);
     Promise.all(files.map(function (f) {
-      return compress(f, 1280, 190 * 1024).catch(function () { return ""; });
+      return compress(f, 1280, 150 * 1024).catch(function () { return ""; });
     })).then(function (urls) {
       urls.forEach(function (u) { if (u) state.shots.push(u); });
       renderNewShots();
@@ -408,7 +408,7 @@
     msg.className = "add-msg";
     msg.textContent = "压小中…";
     Promise.all(files.map(function (f) {
-      return compress(f, 1280, 190 * 1024).catch(function () { return ""; });
+      return compress(f, 1280, 150 * 1024).catch(function () { return ""; });
     })).then(function (urls) {
       urls.forEach(function (u) { if (u) state.editShots.push(u); });
       renderEditShots();
