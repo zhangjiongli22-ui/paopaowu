@@ -156,6 +156,30 @@
 
   /* ---------------- 图片上传（单独存，不占记录体积） ---------------- */
 
+  var ORIGINAL_MAX = 12 * 1024 * 1024;
+
+  function readDataUrl(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () { resolve(String(fr.result)); };
+      fr.onerror = function () { reject(new Error("读文件失败")); };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  function prepare(file, maxSide, maxBytes, original) {
+    if (!original) return compress(file, maxSide, maxBytes);
+    return readDataUrl(file).then(function (url) {
+      if (url.length * 0.75 > ORIGINAL_MAX) throw new Error("原图太大（超过 12MB）");
+      return url;
+    });
+  }
+
+  function wantsOriginal(id) {
+    var box = document.getElementById(id);
+    return !!(box && box.checked);
+  }
+
   function uploadMedia(dataUrl) {
     var pass = getPass();
     if (!pass) return Promise.reject(new Error("还没登录，先去登录。"));
@@ -239,8 +263,8 @@
     e.target.value = "";
     if (!f) return;
     var hint = $("#cover-hint");
-    hint.textContent = "压小并上传中…";
-    compress(f, 1000, 240 * 1024).then(uploadMedia).then(function (url) {
+    hint.textContent = "上传中…";
+    prepare(f, 1000, 240 * 1024, wantsOriginal("f-original")).then(uploadMedia).then(function (url) {
       state.cover = url;
       renderPrev($("#cover-prev"), [url], function () {
         deleteMedia(state.cover);
@@ -266,7 +290,7 @@
     var msg = $("#new-msg");
     msg.textContent = "压小中…";
     Promise.all(files.map(function (f) {
-      return compress(f, 1600, 240 * 1024).catch(function () { return ""; });
+      return prepare(f, 1600, 240 * 1024, wantsOriginal("f-original")).catch(function () { return ""; });
     })).then(function (urls) {
       var todo = urls.filter(Boolean);
       if (!todo.length) {
@@ -437,7 +461,7 @@
     var msg = $("#edit-msg");
     msg.className = "add-msg";
     msg.textContent = "压小并上传中…";
-    compress(f, 1000, 240 * 1024).then(uploadMedia).then(function (url) {
+    prepare(f, 1000, 240 * 1024, wantsOriginal("edit-original")).then(uploadMedia).then(function (url) {
       var old = state.editCover;
       state.editCover = url;
       if (old && old !== url) deleteMedia(old);
@@ -468,7 +492,7 @@
     msg.className = "add-msg";
     msg.textContent = "压小中…";
     Promise.all(files.map(function (f) {
-      return compress(f, 1600, 240 * 1024).catch(function () { return ""; });
+      return prepare(f, 1600, 240 * 1024, wantsOriginal("edit-original")).catch(function () { return ""; });
     })).then(function (urls) {
       var todo = urls.filter(Boolean);
       if (!todo.length) {
