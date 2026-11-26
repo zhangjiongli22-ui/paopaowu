@@ -257,7 +257,7 @@ try {
           <span class="lbl">截图</span>
           <div class="file-row">
             <label class="file-btn">选几张<input type="file" id="shots-file" accept="image/*" multiple></label>
-            <span class="hint">最多 30 张，会自动压小。</span>
+            <span class="hint">最多 30 张，压小后单独存。</span>
           </div>
           <div class="prev" id="shots-prev"></div>
         </div>
@@ -277,7 +277,7 @@ try {
         <h3>会存到哪</h3>
         <p>整份记录写进 Cloudflare KV，线上立刻能看；GitHub 上的 records.json 不动。</p>
         <p>以后用 push_files.py 推数据时，会先把你在这里加的条目并回本地，不会被覆盖。</p>
-        <p>图片在浏览器里压成小图嵌进数据里。加得太多整站会变慢，看到下面体积提醒就别再加了。</p>
+        <p>图片压小后单独存在 KV，记录里只留地址，不会把整份数据撑大。要删图直接在预览上点 ×，那张也会一起删掉。</p>
       </aside>
     </div>
   </section>
