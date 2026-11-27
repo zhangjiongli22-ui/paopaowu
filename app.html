@@ -2767,7 +2767,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       a.classList.toggle('on', nav === show);
     });
     moveRailInd();
-    applyTextEdits();
+    scheduleApply();
     if (show === 'archive') {
       renderArchive(arg);
     }
@@ -3877,7 +3877,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!view) return [];
     var out = [];
     view.querySelectorAll('h1,h2,h3,h4,p,blockquote,dt,dd,figcaption,.vtag').forEach(function (n) {
-      if (!n.textContent || !n.textContent.trim()) return;
       if (n.closest(TEXT_SKIP)) return;
       if (n.closest('a,button,select,label,input,textarea')) return;
       if (n.querySelector('input,textarea,button,select')) return;
@@ -3920,10 +3919,19 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       n.setAttribute('data-edit-idx', String(i));
     });
   }
+  var applyTimer = null;
+  function scheduleApply() {
+    if (editOn) return;
+    clearTimeout(applyTimer);
+    applyTimer = setTimeout(applyTextEdits, 90);
+  }
   setTimeout(function () { if (!editOn) clearEditables(); }, 0);
-  document.addEventListener('focusout', function (e) {
-    if (!editOn) return;
-    var n = e.target;
+  (function () {
+    var root = el('stage') || document.body;
+    if (!root || !window.MutationObserver) return;
+    new MutationObserver(scheduleApply).observe(root, { childList: true, subtree: true, characterData: true });
+  })();
+  function saveNode(n) {
     if (!n || !n.getAttribute || n.getAttribute('contenteditable') !== 'true') return;
     var view = document.querySelector('.view.on');
     var idx = n.getAttribute('data-edit-idx');
@@ -3931,6 +3939,18 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var m = loadText();
     m[view.id + ':' + idx] = n.innerHTML;
     saveText(m);
+  }
+  var saveTimer = null;
+  document.addEventListener('input', function (e) {
+    if (!editOn) return;
+    var n = e.target;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () { saveNode(n); }, 250);
+  });
+  document.addEventListener('focusout', function (e) {
+    if (!editOn) return;
+    clearTimeout(saveTimer);
+    saveNode(e.target);
   });
   document.addEventListener('click', function (e) {
     var b = e.target.closest ? e.target.closest('#edit-fab') : null;
