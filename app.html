@@ -2184,7 +2184,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     // 以前学旧 add.js 把它们剔掉，结果那些只存在 records.json、没进 comments_all 的锐评会被写没。
     var payload = {
       cats: (raw && raw.cats) || [],
-      items: (raw && raw.items) || []
+      items: (raw && raw.items) || [],
+      texts: (raw && raw.texts) || loadText()
     };
     return fetch('/api/data', {
       method: 'POST',
@@ -2217,6 +2218,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         return r.json();
       }).then(function (raw) {
         RAW = raw;
+        if (raw && raw.texts && typeof raw.texts === 'object') {
+          var merged = loadText();
+          Object.keys(raw.texts).forEach(function (k) { merged[k] = raw.texts[k]; });
+          saveText(merged);
+        }
         window.__PICKS__ = normRecords(raw);
         picks = window.__PICKS__.picks;
       }),
@@ -4000,6 +4006,27 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!root || !window.MutationObserver) return;
     new MutationObserver(scheduleApply).observe(root, { childList: true, subtree: true, characterData: true });
   })();
+  var pushTimer = null;
+  function pushTexts() {
+    var pass = '';
+    try { pass = localStorage.getItem('paopaowu_pass') || ''; } catch (e) {}
+    if (!pass) return;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(function () {
+      fetch('data/records.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (raw) {
+          if (!raw || !Array.isArray(raw.items)) return null;
+          raw.texts = loadText();
+          return fetch('/api/data', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ pass: pass, data: raw })
+          });
+        })
+        .catch(function () {});
+    }, 900);
+  }
   function saveNode(n) {
     if (!n || !n.getAttribute || n.getAttribute('contenteditable') !== 'true') return;
     if (!editScope) return;
@@ -4013,6 +4040,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var m = loadText();
     m[key] = { b: ED_BASE[key], v: n.innerHTML };
     saveText(m);
+    pushTexts();
   }
   var saveTimer = null;
   document.addEventListener('input', function (e) {
