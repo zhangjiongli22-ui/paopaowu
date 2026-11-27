@@ -1458,9 +1458,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .ed-msg{margin:0;font:11.5px var(--mono);color:var(--dim-2);min-height:14px}
 .edit-mode img[data-img]{outline:1px dashed rgba(201,168,107,.55);outline-offset:2px;cursor:pointer}
 /* 首页三张卡：把 DSH 那张稍微放大、往下压一点，让三张脸大致在一条线上 */
-.win-art img[data-img="home.dsh"]{transform:scale(1.16) translateY(8%);transform-origin:center 30%}
-.win-art img[data-img="home.feiyu"]{transform:scale(1.03);transform-origin:center 30%}
-.win-art img[data-img="home.kira"]{transform:scale(1.04) translateY(3%);transform-origin:center 30%}
+
+
+.ed-sl{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:8px;font:11.5px var(--mono);color:var(--dim-2)}
+.ed-sl input[type=range]{width:100%;accent-color:#c9a86b;height:22px}
 </style>
 </head>
 <body>
@@ -1991,6 +1992,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 <div class="ed-panel" id="ed-panel" hidden>
   <p class="ed-t" id="ed-t">换图</p>
   <div class="ed-thumb"><img id="ed-thumb" alt=""></div>
+  <label class="ed-sl"><span>缩放</span><input type="range" id="ed-scale" min="100" max="170" step="1" value="100"></label>
+  <label class="ed-sl"><span>上下</span><input type="range" id="ed-y" min="-50" max="50" step="1" value="0"></label>
+  <label class="ed-sl"><span>左右</span><input type="range" id="ed-x" min="-50" max="50" step="1" value="0"></label>
   <div class="ed-row">
     <button type="button" class="ed-b" id="ed-pick">上传替换</button>
     <button type="button" class="ed-b" id="ed-left">← 前移</button>
@@ -2319,6 +2323,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       }).then(function (raw) {
         RAW = raw;
         if (raw && raw.imgs && typeof raw.imgs === 'object') IMGOV = raw.imgs;
+        if (raw && raw.imgpos && typeof raw.imgpos === 'object') { IMGPOS = raw.imgpos; applyImgPos(); }
         if (raw && Array.isArray(raw.gallery) && raw.gallery.length) {
           window.__PICKS__ = window.__PICKS__ || {};
           window.__PICKS__.gallery = raw.gallery;
@@ -2935,6 +2940,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
     moveRailInd();
     applyAdminVis();
+    applyImgPos();
     scheduleApply();
     if (show === 'archive') {
       renderArchive(arg);
@@ -4165,7 +4171,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
     if (changed) saveText(m);
   })();
-  setTimeout(function () { if (!editOn) clearEditables(); bindImgEditor(); applyImgOverrides(); }, 0);
+  setTimeout(function () { if (!editOn) clearEditables(); bindImgEditor(); applyImgOverrides(); applyImgPos(); }, 0);
   (function () {
     var root = el('stage') || document.body;
     if (!root || !window.MutationObserver) return;
@@ -4215,7 +4221,55 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   });
 
   /* ---------- 图片编辑（编辑态下点图） ---------- */
+  var IMGPOS = {};
   var edTarget = null;
+  function posKey(img) { return img.getAttribute('data-img') || ''; }
+  function clampPos(p) {
+    var s = p.s || 1;
+    var max = Math.max(0, (s - 1) * 50);          /* 缩放不够就不许平移，保证不出黑边 */
+    return {
+      s: s,
+      x: Math.max(-max, Math.min(max, p.x || 0)),
+      y: Math.max(-max, Math.min(max, p.y || 0))
+    };
+  }
+  function applyImgPos() {
+    document.querySelectorAll('img[data-img]').forEach(function (img) {
+      var p = clampPos(IMGPOS[posKey(img)] || { s: 1, x: 0, y: 0 });
+      if (p.s === 1 && !p.x && !p.y) { img.style.transform = ''; return; }
+      img.style.transformOrigin = 'center center';
+      img.style.transform = 'translate(' + p.x + '%,' + p.y + '%) scale(' + p.s + ')';
+    });
+  }
+  function persistImgPos() {
+    var pass = getPass();
+    if (!pass) return;
+    fetch('data/records.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (raw) {
+        if (!raw || !Array.isArray(raw.items)) return null;
+        raw.imgpos = IMGPOS;
+        return fetch('/api/data', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ pass: pass, data: raw })
+        });
+      }).catch(function () {});
+  }
+  var posTimer = null;
+  function setPos(patch) {
+    if (!edTarget) return;
+    var k = posKey(edTarget);
+    if (!k) return;
+    var cur = IMGPOS[k] || { s: 1, x: 0, y: 0 };
+    IMGPOS[k] = clampPos({ s: patch.s != null ? patch.s : cur.s, x: patch.x != null ? patch.x : cur.x, y: patch.y != null ? patch.y : cur.y });
+    var p = IMGPOS[k];
+    edTarget.style.transformOrigin = 'center center';
+    edTarget.style.transform = (p.s === 1 && !p.x && !p.y) ? '' : 'translate(' + p.x + '%,' + p.y + '%) scale(' + p.s + ')';
+    var th = el('ed-thumb');
+    if (th) th.style.transform = edTarget.style.transform;
+    clearTimeout(posTimer);
+    posTimer = setTimeout(persistImgPos, 700);
+  }
   function imgKeyOf(img) { return img.getAttribute('data-img') || ''; }
   function applyImgOverrides() {
     document.querySelectorAll('img[data-img]').forEach(function (img) {
@@ -4260,6 +4314,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var b = el(id); if (b) b.hidden = !isGal;
     });
     var msg = el('ed-msg'); if (msg) msg.textContent = '';
+    var p = clampPos(IMGPOS[posKey(img)] || { s: 1, x: 0, y: 0 });
+    if (el('ed-scale')) el('ed-scale').value = Math.round(p.s * 100);
+    if (el('ed-y')) el('ed-y').value = Math.round(p.y);
+    if (el('ed-x')) el('ed-x').value = Math.round(p.x);
   }
   function closeImgPanel() {
     var panel = el('ed-panel');
@@ -4317,6 +4375,21 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       e.stopPropagation();
       openImgPanel(img);
     }, true);
+    var sc = el('ed-scale');
+    if (sc) sc.addEventListener('input', function () {
+      var s = Number(sc.value) / 100;
+      var max = Math.max(0, (s - 1) * 50);
+      var y0 = el('ed-y'), x0 = el('ed-x');
+      if (y0) { y0.min = -max; y0.max = max; if (Math.abs(Number(y0.value)) > max) y0.value = Math.max(-max, Math.min(max, Number(y0.value))) || 0; }
+      if (x0) { x0.min = -max; x0.max = max; if (Math.abs(Number(x0.value)) > max) x0.value = Math.max(-max, Math.min(max, Number(x0.value))) || 0; }
+      setPos({ s: s });
+    });
+    ['ed-y', 'ed-x'].forEach(function (id) {
+      var r = el(id);
+      if (r) r.addEventListener('input', function () {
+        setPos({ y: Number(el('ed-y').value), x: Number(el('ed-x').value) });
+      });
+    });
     var pick = el('ed-pick');
     if (pick) pick.addEventListener('click', function () { el('ed-file').click(); });
     var file = el('ed-file');
