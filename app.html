@@ -3914,11 +3914,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
   });
   /* ---------- 页面文字编辑（只存这台电脑） ---------- */
-  var TEXT_KEY = 'paopaowu_text_v3';
+  var TEXT_KEY = 'paopaowu_text_v4';
   var editOn = false;
   function loadText() { try { return JSON.parse(localStorage.getItem(TEXT_KEY) || '{}'); } catch (e) { return {}; } }
   function saveText(o) { try { localStorage.setItem(TEXT_KEY, JSON.stringify(o)); } catch (e) {} }
   var editScope = '';
+  var ED_BASE = {};
   var TEXT_SKIP = '#crit-list,#shelf,#timeline,.grid,.arc-rows,.flows,.stat-bars,.stat-chips,.gal-grid,.gal-col,.shots,#rec-form,form,.pgal,.shelf-nav,.crit-rail,.tl-rail,.rail,.site-note,.proto,.cr-form';
   function textScope() {
     var view = document.querySelector('.view.on');
@@ -3952,11 +3953,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var scope = textScope();
     textTargets().forEach(function (n, i) {
       if (!view.contains(n)) return;
-      var v = map[scope + ':' + i];
-      if (v != null) {
-        v = String(v).replace(/\scontenteditable="[^"]*"/gi, '');
-        if (n.innerHTML !== v) n.innerHTML = v;
-      }
+      var key = scope + ':' + i;
+      if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
+      var rec = map[key];
+      if (!rec) return;
+      if (typeof rec === 'string') rec = { v: rec };
+      if (rec.b != null && rec.b !== ED_BASE[key]) return;   /* 原始文字对不上：不是这一页的，别贴 */
+      var v = String(rec.v == null ? '' : rec.v).replace(/\scontenteditable="[^"]*"/gi, '');
+      if (n.innerHTML !== v) n.innerHTML = v;
     });
   }
   function setEditMode(on) {
@@ -4004,8 +4008,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!view || !view.contains(n)) return;
     var idx = n.getAttribute('data-edit-idx');
     if (idx == null) return;
+    var key = editScope + ':' + idx;
+    if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
     var m = loadText();
-    m[editScope + ':' + idx] = n.innerHTML;
+    m[key] = { b: ED_BASE[key], v: n.innerHTML };
     saveText(m);
   }
   var saveTimer = null;
