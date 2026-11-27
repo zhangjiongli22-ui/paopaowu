@@ -1326,6 +1326,30 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 #view-critique .page-head .count{display:none}
 #view-critique .page-head h1{margin-top:4px}
 #view-critique .page-head .lead{margin-top:10px}
+
+/* 统计页：时间都花在，整齐三列 */
+.stat-bars{display:grid;gap:0;margin-top:6px}
+.stat-bar{display:grid;grid-template-columns:clamp(52px,4.2vw,84px) minmax(120px,1fr) clamp(78px,7vw,124px);
+  gap:clamp(10px,1.2vw,20px);align-items:center;padding:10px 0;border-bottom:1px solid var(--line-soft)}
+.stat-bar:last-child{border-bottom:0}
+.stat-bar .k{font:var(--fs-mono) var(--mono);letter-spacing:.14em;color:var(--paper-2);white-space:nowrap}
+.stat-bar .bar{height:4px;background:rgba(242,236,225,.07);position:relative;overflow:hidden;min-width:0}
+.stat-bar .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--gold);opacity:.85}
+.stat-bar .v{font:var(--fs-mono) var(--mono);letter-spacing:.06em;color:var(--dim);
+  text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:720px){
+  .stat-bar{grid-template-columns:56px minmax(0,1fr) 74px;gap:10px;padding:9px 0}
+}
+/* 每日：分类配色 */
+.arc-kind{position:relative;padding-left:12px}
+.arc-kind::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:currentColor;opacity:.9}
+.arc-kind.k-work{color:var(--gold)}
+.arc-kind.k-fitness{color:#a8d6b6}
+.arc-kind.k-game{color:var(--aqua)}
+.arc-kind.k-piano{color:var(--sakura)}
+.arc-kind.k-study{color:#d6be8c}
+.arc-kind.k-media{color:#e2b278}
+.arc-kind.k-other{color:var(--dim)}
 </style>
 </head>
 <body>
@@ -3069,7 +3093,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var list = rows.map(function (x) {
         var dawn = isDawn(x);
         return '<div class="arc-row' + (dawn ? ' dawn' : '') + '"><time>' + (dawn ? '<i class="dawn-tag">次日凌晨</i>' : '') + esc(x.time || '—') + '</time>' +
-          '<span class="arc-kind">' + (KIND[x.kind] || '其他') + '</span>' +
+          '<span class="arc-kind k-' + esc(x.kind || 'other') + '">' + (KIND[x.kind] || '其他') + '</span>' +
           '<span class="arc-text">' + esc(x.text) + '</span>' +
           '<span class="arc-min">' + (x.minutes ? mins(x.minutes) : '') + '</span></div>';
       }).join('');
