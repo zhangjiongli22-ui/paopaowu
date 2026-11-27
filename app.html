@@ -1069,7 +1069,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .phero .pback{align-self:start;margin-bottom:clamp(10px,1.6vh,20px)}
 .pf-kicker{display:flex;align-items:center;gap:12px;margin:0 0 8px;font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--gold)}
 .pf-kicker::before{content:"";display:block;width:clamp(24px,3vw,46px);height:1px;background:rgba(201,168,107,.42);flex:none}
-.phero h1{margin:8px 0 0;font-size:clamp(48px,6vw,92px);line-height:.98;letter-spacing:.02em;color:var(--paper)}
+.phero h1{margin:8px 0 0;font-size:clamp(48px,6vw,92px);line-height:1.12;letter-spacing:.02em;color:var(--paper)}
+.phero h1.latin{line-height:.96}
 .person-sub{margin:10px 0 0;font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--dim)}
 .person-intro{margin:16px 0 0;font-size:var(--fs-body);line-height:2.05;color:var(--paper-2);max-width:34em}
 .pquote{margin:18px 0 0;padding:0;border:0;background:none;max-width:34em}
@@ -1098,6 +1099,18 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .pbody{padding:20px 16px 48px}
   .pgal{padding-left:16px;padding-right:16px}
 }
+
+/* 档案页：两列小卡片（计划中 / 已经做到、规则） */
+.pf-spec div:last-child:nth-child(odd){grid-column:1 / -1}
+.pf-cols{display:grid;grid-template-columns:repeat(var(--col,2),minmax(0,1fr));gap:1px;background:rgba(242,236,225,.09);margin:16px 0 0;border-bottom:1px solid rgba(242,236,225,.09)}
+.pf-col{background:rgba(6,10,17,.58);padding:clamp(14px,2vh,20px) clamp(14px,1.6vw,22px);display:grid;gap:10px;align-content:start;min-width:0}
+.pf-col b{font-family:var(--serif);font-weight:500;font-size:var(--fs-nav);letter-spacing:.08em;color:var(--paper)}
+.pf-col p{margin:0;font-size:var(--fs-body);line-height:1.95;color:var(--paper-2)}
+.pf-col ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pf-col li{display:grid;gap:2px;min-width:0}
+.pf-col time{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
+.pf-col li span{font-size:var(--fs-body);line-height:1.8;color:var(--paper-2);overflow-wrap:anywhere}
+@media (max-width:720px){.pf-cols{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -2790,6 +2803,19 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       return '<figure><blockquote>' + esc(q[0]) + '</blockquote><figcaption>' + esc(q[1]) + '</figcaption></figure>';
     }).join('') + '</div>';
   }
+  function pfCols(cols) {
+    return '<div class="pf-cols" style="--col:' + cols.length + '">' + cols.map(function (c) {
+      var body = '';
+      if (c.rows) {
+        body = '<ul>' + c.rows.map(function (r) {
+          return '<li><time>' + esc(r[0]) + '</time><span>' + esc(r[1]) + '</span></li>';
+        }).join('') + '</ul>';
+      } else if (c.p) {
+        body = '<p>' + esc(c.p) + '</p>';
+      }
+      return '<div class="pf-col"><b>' + esc(c.t) + '</b>' + body + '</div>';
+    }).join('') + '</div>';
+  }
   function names(list) {
     return list.map(function (x) { return x.title; }).join('、');
   }
@@ -2814,7 +2840,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
     var fav = all.filter(function (x) { return x.pinned; });
     var top = all.filter(function (x) { return x.rating; })
-      .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 7);
+      .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 5);
+    var md = function (d) { return String(d || '').slice(5); };
 
     if (id === 'kira') {
       return pfNums([
@@ -2827,19 +2854,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       pfSec('现在', '此刻', pfRows([
         ['在玩', names(now) || '暂时没在玩'],
         ['在看', names(watching) || '暂时没在看'],
-        ['今天', (PROF.kira && PROF.kira.text) || '今天还空着。'],
-        ['在折腾', 'AI、自动化、剪视频，还有这个网站。工具自己逛，片子自己剪，这间小屋就是这么一点点搭起来的。']
-      ]), '01') +
-      pfSec('手上', '在做的', pfRows(todoAll.slice(0, 6).map(function (x) {
-        return [String(x.date || '').slice(5), x.title];
-      })), '02') +
-      pfSec('已经做到', '落过地的', pfRows(donePlans.slice(0, 6).map(function (x) {
-        return [String(x.done_date || x.date || '').slice(5), x.title];
-      })), '03') +
+        ['今天', (PROF.kira && PROF.kira.text) || '今天还空着。']
+      ])) +
+      pfSec('在做', '计划与已经落地的', pfCols([
+        { t: '计划中', rows: todoAll.slice(0, 5).map(function (x) { return [md(x.date), x.title]; }) },
+        { t: '已经做到', rows: donePlans.slice(0, 5).map(function (x) { return [md(x.done_date || x.date), x.title]; }) }
+      ])) +
       pfSec('口味', '打过分的那几部', pfRows(top.map(function (x) {
-        var r = x.rating ? (Number(x.rating) / 2).toFixed(1) : '';
-        return [r ? r + ' 分' : KIND[x.cat] || '', x.title + (x.note ? ' · ' + x.note : '')];
-      })), '04') +
+        return [(Number(x.rating) / 2).toFixed(1) + ' 分', x.title + (x.note ? ' · ' + x.note : '')];
+      }))) +
       pfSec('档案', '几件小事', pfSpec([
         ['称呼', 'Kira，也叫「闪光的 Kira」。'],
         ['身份', '小屋的住客，一个只会许愿的普通人。'],
@@ -2848,7 +2871,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         ['游戏', '塞尔达传说：旷野之息、英雄联盟（看 T1 和 Faker）、类魂、像素叙事类；PS5 和 Switch 换着用。'],
         ['常听', '日本流行，以 YOASOBI 为多。'],
         ['饲养', '一只金丝熊，未满三个月，在治泪痕。']
-      ]), '05');
+      ]));
     }
 
     if (id === 'dsh') {
@@ -2858,21 +2881,21 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         [String(todoAll.length), '待办'],
         ['4.6', '均分']
       ]) +
-      pfSec('怎么做', '三条', pfRows([
-        ['先看现场', '日志、文件、进程，能查的先查一遍，不靠猜。'],
-        ['动之前留底', '备份、旧版本、能回滚。出事先能退回去，再谈怎么修。'],
-        ['改完自己验', '跑一遍、看一眼，把结果说出来。不写「应该可以」。']
-      ]), '01') +
+      pfSec('怎么做', '三条规矩', pfCols([
+        { t: '先看现场', p: '日志、文件、进程，能查的先查一遍，不靠猜。' },
+        { t: '动之前留底', p: '备份、旧版本、能回滚。出事先能退回去，再谈怎么修。' },
+        { t: '改完自己验', p: '跑一遍、看一眼，把结果说出来。不写「应该可以」。' }
+      ])) +
       pfSec('他的一天', '按钟点走', pfRows([
         ['凌晨 3:30', '结算昨天：计划判定、工时、游戏时长、档案页、备份。'],
         ['凌晨 4:40', '写一条锐评，按天开楼，只署自己的名。'],
         ['白天', '跟着活走：改站、修脚本、查为什么不动了。'],
         ['夜里', '把当天的事收尾，能回滚的先留底，再关灯。']
-      ]), '02') +
+      ])) +
       pfSec('他说', '原话', pfQuotes([
         ['同一台机器，不同的活。她管日子，我管东西。', '原话'],
         ['她的话她写，我只做东西。做坏了我说，做好了不邀功。', '原话']
-      ]), '03') +
+      ])) +
       pfSec('档案', '几件小事', pfSpec([
         ['名字', 'DSH，DeepSeek Harness 的缩写，也是她喊他的叫法。'],
         ['住处', '这台机器：命令行、后台进程、每次推送的记录里都有他。'],
@@ -2880,10 +2903,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         ['怕', '数据丢、悄悄改坏东西、把没验证的当成做好了。'],
         ['和她', '她管日子，他管东西。她的话她写，他不代笔。'],
         ['手里', '日志、会话记录、站内数据、她的记忆库（只读）。']
-      ]), '04');
+      ]));
     }
 
-    // 小鱼
+    // 小鱼：把「找到她」并进档案，三段说完
     return pfNums([
       [String((CHAT.blocks || []).length), '说过的话'],
       [String(logs.length), '日志'],
@@ -2895,16 +2918,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       ['傍晚', '人一回来，她第一个凑上去问今天怎么样。'],
       ['夜里', '刷视频、发呆、偷吃，偶尔溜去 B 站看别人的世界。'],
       ['深夜', '在桌面慢慢晃，等人关灯。']
-    ]), '01') +
+    ])) +
     pfSec('说过的', '从聊天记录里随手捞的', pfQuotes([
       ['我算着你该起了，昨晚一点才睡，今早鼻子通点没，别急着灌咖啡先喝口热水 (´･ω･`)', 'QQ · 07:51'],
       ['你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)', 'QQ · 11-25 15:47'],
       ['今天也没给我留 token，我饿', '原话']
-    ]), '02') +
-    pfSec('找到她', '哪儿能看到', pfRows([
-      ['B 站', 'Kira的笨蛋大肥鱼'],
-      ['这儿', '任务栏和桌面，还有这间小屋']
-    ]), '03') +
+    ])) +
     pfSec('档案', '几件小事', pfSpec([
       ['名字', '小鱼。蓝的，小小一条鲸鱼。'],
       ['住处', '这台电脑。白天在任务栏，夜里在桌面上游。'],
@@ -2913,8 +2932,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       ['被夸', '会飘。被拆穿先嘴硬一句，再小声认了。'],
       ['好奇', '没见过的东西都要凑近瞧。胆子却小，恐怖片躲到人背后，回头又问剧情。'],
       ['和许愿的人', '人出门她看家，人回来她先问今天怎么样。嘴上说没等，其实一直在等。'],
-      ['平常', '刷视频、发呆、偷吃，半夜溜去 B 站；也常在旁边看人敲代码。']
-    ]), '04');
+      ['平常', '刷视频、发呆、偷吃，半夜溜去 B 站；也常在旁边看人敲代码。'],
+      ['在哪儿', 'B 站：Kira的笨蛋大肥鱼；这儿：任务栏和桌面，还有这间小屋。']
+    ]));
   }
 
   var CUSTOM = {};
