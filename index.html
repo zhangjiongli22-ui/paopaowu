@@ -1466,8 +1466,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="win-body">
               <span class="win-role">鱼助手 02</span>
               <h2>小鱼</h2>
-              <p class="win-ds">话短，嘴馋，护着自己人。<br>被夸先否认，再承认。</p>
-              <p class="win-quote">「今天也没给我留 token，我饿」</p>
+              <p class="win-ds" data-field="feiyu.intro">话短，嘴馋，护着自己人。<br>被夸先否认，再承认。</p>
+              <p class="win-quote" data-field="feiyu.quote">「今天也没给我留 token，我饿」</p>
               <span class="win-go">进入档案 →</span>
             </div>
           </a>
@@ -1477,8 +1477,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="win-body">
               <span class="win-role">OWNER</span>
               <h2 class="latin">Kira</h2>
-              <p class="win-ds">白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。</p>
-              <p class="win-quote">「你还想做第一个吗」</p>
+              <p class="win-ds" data-field="kira.intro">白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。</p>
+              <p class="win-quote" data-field="kira.quote">「你还想做第一个吗」</p>
               <span class="win-go">进入档案 →</span>
             </div>
           </a>
@@ -1488,8 +1488,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="win-body">
               <span class="win-role">鱼助手 01</span>
               <h2 class="latin">DSH</h2>
-              <p class="win-ds">做事的人。查日志、改代码、<br>把话说清楚，不哄人。</p>
-              <p class="win-quote">「先给你看，再上线。」</p>
+              <p class="win-ds" data-field="dsh.intro">做事的人。查日志、改代码、<br>把话说清楚，不哄人。</p>
+              <p class="win-quote" data-field="dsh.quote">「先给你看，再上线。」</p>
               <span class="win-go">进入档案 →</span>
             </div>
           </a>
@@ -3605,11 +3605,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('p-no').textContent = x.kicker || x.role;
     el('p-name').textContent = x.name;
     var introEl = el('p-intro');
-    if (introEl) introEl.textContent = x.intro || '';
+    if (introEl) {
+      introEl.textContent = x.intro || '';
+      introEl.setAttribute('data-field', id + '.intro');
+    }
     var qBox = el('p-quote');
     if (qBox) {
       qBox.hidden = !x.quote;
       el('p-quote-text').textContent = x.quote ? '「' + x.quote + '」' : '';
+      el('p-quote-text').setAttribute('data-field', id + '.quote');
       el('p-quote-cap').textContent = x.name;
     }
     el('p-name').className = x.latin ? 'latin' : '';
@@ -3938,18 +3942,24 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!view) return [];
     var out = [];
     view.querySelectorAll('h1,h2,h3,h4,p,blockquote,dt,dd,figcaption,.vtag').forEach(function (n) {
+      var field = n.getAttribute('data-field');
       if (n.closest(TEXT_SKIP)) return;
-      if (n.closest('a,button,select,label,input,textarea')) return;
+      if (!field && n.closest('a,button,select,label,input,textarea')) return;
       if (n.querySelector('input,textarea,button,select')) return;
       out.push(n);
     });
     return out;
+  }
+  function fieldKey(n, scope, i) {
+    var f = n.getAttribute('data-field');
+    return f ? 'field:' + f : scope + ':' + i;
   }
   function clearEditables() {
     document.querySelectorAll('[contenteditable="true"], [data-edit-idx]').forEach(function (n) {
       n.removeAttribute('contenteditable');
       n.removeAttribute('spellcheck');
       n.removeAttribute('data-edit-idx');
+      n.removeAttribute('data-edit-key');
     });
   }
   function applyTextEdits() {
@@ -3959,7 +3969,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var scope = textScope();
     textTargets().forEach(function (n, i) {
       if (!view.contains(n)) return;
-      var key = scope + ':' + i;
+      var key = fieldKey(n, scope, i);
       if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
       var rec = map[key];
       if (!rec) return;
@@ -3981,9 +3991,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!editOn) { editScope = ''; applyTextEdits(); return; }
     editScope = textScope();
     textTargets().forEach(function (n, i) {
+      var key = fieldKey(n, editScope, i);
+      if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
       n.setAttribute('contenteditable', 'true');
       n.setAttribute('spellcheck', 'false');
-      n.setAttribute('data-edit-idx', String(i));
+      n.setAttribute('data-edit-key', key);
     });
   }
   var applyTimer = null;
@@ -4033,9 +4045,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (n.isConnected === false) return;              /* 已经切页，别把内容存到别人名下 */
     var view = document.querySelector('.view.on');
     if (!view || !view.contains(n)) return;
-    var idx = n.getAttribute('data-edit-idx');
-    if (idx == null) return;
-    var key = editScope + ':' + idx;
+    var key = n.getAttribute('data-edit-key');
+    if (!key) return;
     if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
     var m = loadText();
     m[key] = { b: ED_BASE[key], v: n.innerHTML };
@@ -4055,6 +4066,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     saveNode(e.target);
   });
   document.addEventListener('click', function (e) {
+    if (editOn) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      var ed = e.target.closest ? e.target.closest('[contenteditable="true"]') : null;
+      if (a && ed) e.preventDefault();
+    }
     var b = e.target.closest ? e.target.closest('#edit-fab') : null;
     if (!b) return;
     e.preventDefault();
