@@ -3974,7 +3974,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var rec = map[key];
       if (!rec) return;
       if (typeof rec === 'string') rec = { v: rec };
-      if (rec.b != null && rec.b !== ED_BASE[key]) return;   /* 原始文字对不上：不是这一页的，别贴 */
+      /* 键里已经带了「哪一页/哪个人」，这里直接贴，不再拿原文做闸门（那会让人改了又丢） */
       var v = String(rec.v == null ? '' : rec.v).replace(/\scontenteditable="[^"]*"/gi, '');
       if (n.innerHTML !== v) n.innerHTML = v;
     });
@@ -4047,18 +4047,18 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!view || !view.contains(n)) return;
     var key = n.getAttribute('data-edit-key');
     if (!key) return;
-    if (ED_BASE[key] == null) ED_BASE[key] = n.innerHTML;
     var m = loadText();
-    m[key] = { b: ED_BASE[key], v: n.innerHTML };
+    var prev = m[key];
+    /* 指纹只记「第一次改之前的原文」，反复改也不会把指纹改掉，否则下次会被判成串页而丢掉 */
+    var base = (prev && prev.b) ? prev.b : (ED_BASE[key] != null ? ED_BASE[key] : n.innerHTML);
+    m[key] = { b: base, v: n.innerHTML };
     saveText(m);
     pushTexts();
   }
   var saveTimer = null;
   document.addEventListener('input', function (e) {
     if (!editOn) return;
-    var n = e.target;
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () { saveNode(n); }, 250);
+    saveNode(e.target);      /* 边打边存，不等防抖，别让改动丢在半路 */
   });
   document.addEventListener('focusout', function (e) {
     if (!editOn) return;
