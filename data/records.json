@@ -8620,6 +8620,24 @@
    "kind": "game",
    "text": "游玩《蓝色星原：旅谣》约 240 分钟",
    "minutes": 240
+  },
+  {
+   "id": "log-20261127-fit1",
+   "cat": "log",
+   "date": "2026-11-27",
+   "time": "23:07",
+   "kind": "fitness",
+   "text": "跑步 20 分钟",
+   "minutes": 20
+  },
+  {
+   "id": "log-20261127-fit2",
+   "cat": "log",
+   "date": "2026-11-27",
+   "time": "23:07",
+   "kind": "fitness",
+   "text": "哑铃侧平举 15 分钟",
+   "minutes": 15
   }
  ],
  "__ovCount": 20
