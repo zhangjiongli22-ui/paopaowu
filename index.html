@@ -1364,6 +1364,53 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .edit-fab.on{background:var(--gold);color:var(--ink-900);border-color:var(--gold)}
 .edit-mode [contenteditable="true"]{outline:1px dashed rgba(201,168,107,.55);outline-offset:4px;background:rgba(201,168,107,.06)}
 @media (max-width:860px){.edit-fab{right:12px;bottom:12px;min-height:38px;padding:0 14px}}
+/* 平板 / 手机：三个人卡片与首屏 */
+@media (max-width:1024px){
+  .windows{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .win-art{aspect-ratio:16/10}
+  .win-body{padding:10px 16px 16px}
+  .windows .win:nth-child(3){grid-column:1 / -1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto}
+  .windows .win:nth-child(3) .win-art{aspect-ratio:auto;height:100%;min-height:220px;margin-bottom:0}
+  .windows .win:nth-child(3) .win-body{align-content:center}
+}
+@media (max-width:600px){
+  .windows{grid-template-columns:minmax(0,1fr);gap:14px}
+  .win-art{aspect-ratio:4/3;max-height:44vh}
+  .win-body h2{font-size:clamp(20px,6vw,26px)}
+  .win-ds{font-size:14px;line-height:1.8}
+}
+/* 平板：档案页 hero 恢复两栏 */
+@media (min-width:601px) and (max-width:1024px){
+  .phero{grid-template-columns:minmax(0,1fr) clamp(200px,26vw,290px);align-items:center;gap:clamp(18px,3vw,32px);
+    padding:22px clamp(20px,3vw,32px) 24px}
+  .phero-pic{width:100%;height:auto;aspect-ratio:4/5;order:0;justify-self:end}
+}
+/* 平板：详情页仍是两栏；手机：封面 -> 正文 -> 属性 */
+@media (min-width:601px) and (max-width:1024px){
+  .detail-grid{grid-template-columns:clamp(200px,26vw,260px) minmax(0,1fr);gap:clamp(20px,3vw,30px)}
+  .detail-left{max-width:none}
+  .detail-cover{max-width:none}
+}
+@media (max-width:600px){
+  .detail-grid{grid-template-columns:minmax(0,1fr)}
+  .detail-left{display:contents}
+  .detail-left .detail-cover{order:1;max-width:220px;margin:0 0 4px}
+  .detail-body{order:2}
+  .detail-left dl.meta{order:3;margin-top:8px}
+  .detail-left .desc{order:4}
+}
+/* 手机 / 平板：顶栏不再被拉满，章节行贴着牌子 */
+@media (max-width:860px){
+  .rail{align-self:start;height:auto;min-height:0}
+  .rail .chapters{margin-top:0}
+  .rail .brand{margin-top:0}
+}
+/* 手机 / 平板：整页改块流，避免网格行被拉高留出空带 */
+@media (max-width:860px){
+  .app{display:block}
+  .rail{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand foot" "nav nav";
+    align-items:center;gap:4px 12px;padding:10px 14px 8px}
+}
 </style>
 </head>
 <body>
@@ -3872,6 +3919,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   function loadText() { try { return JSON.parse(localStorage.getItem(TEXT_KEY) || '{}'); } catch (e) { return {}; } }
   function saveText(o) { try { localStorage.setItem(TEXT_KEY, JSON.stringify(o)); } catch (e) {} }
   var TEXT_SKIP = '#crit-list,#shelf,#timeline,.grid,.arc-rows,.flows,.stat-bars,.stat-chips,.gal-grid,.gal-col,.shots,#rec-form,form,.pgal,.shelf-nav,.crit-rail,.tl-rail,.rail,.site-note,.proto,.cr-form';
+  function textScope() {
+    var view = document.querySelector('.view.on');
+    if (!view) return '';
+    if (view.id === 'view-person') return 'person-' + (currentPerson || 'kira');
+    return view.id;
+  }
   function textTargets() {
     var view = document.querySelector('.view.on');
     if (!view) return [];
@@ -3895,8 +3948,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var view = document.querySelector('.view.on');
     if (!view || editOn) return;
     var map = loadText();
+    var scope = textScope();
     textTargets().forEach(function (n, i) {
-      var v = map[view.id + ':' + i];
+      var v = map[scope + ':' + i];
       if (v != null) {
         v = String(v).replace(/\scontenteditable="[^"]*"/gi, '');
         if (n.innerHTML !== v) n.innerHTML = v;
@@ -3925,6 +3979,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     clearTimeout(applyTimer);
     applyTimer = setTimeout(applyTextEdits, 90);
   }
+  (function purgeStale() {
+    var m = loadText();
+    var changed = false;
+    Object.keys(m).forEach(function (k) {
+      if (k.indexOf('view-person:') === 0) { delete m[k]; changed = true; }
+    });
+    if (changed) saveText(m);
+  })();
   setTimeout(function () { if (!editOn) clearEditables(); }, 0);
   (function () {
     var root = el('stage') || document.body;
@@ -3933,11 +3995,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   })();
   function saveNode(n) {
     if (!n || !n.getAttribute || n.getAttribute('contenteditable') !== 'true') return;
-    var view = document.querySelector('.view.on');
     var idx = n.getAttribute('data-edit-idx');
-    if (!view || idx == null) return;
+    var scope = textScope();
+    if (!scope || idx == null) return;
     var m = loadText();
-    m[view.id + ':' + idx] = n.innerHTML;
+    m[scope + ':' + idx] = n.innerHTML;
     saveText(m);
   }
   var saveTimer = null;
