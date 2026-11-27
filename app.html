@@ -1288,6 +1288,34 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .cmt-av.dsh{border-color:rgba(127,211,232,.5);color:#d3eef8;background:rgba(127,211,232,.12)}
 .cmt-av.kira{border-color:rgba(201,168,107,.55);color:#f2dfb8;background:rgba(201,168,107,.12)}
 .tl-mh h3 em{margin-left:10px;font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.16em;color:var(--dim-2)}
+
+/* 锐评：照旧站，900px 居中阅读栏；宽屏才出左侧日期索引 */
+.crit-cols{display:grid;grid-template-columns:minmax(0,900px);justify-content:center;gap:0;margin-top:clamp(16px,2.4vh,26px)}
+.crit-list{max-width:none}
+.crit-rail{display:none}
+@media (min-width:1500px){
+  .crit-cols{grid-template-columns:118px minmax(0,900px);gap:clamp(24px,3vw,48px)}
+  .crit-rail{display:grid}
+}
+/* 时间线：日期目录 + 卡片 */
+.tl-cols{display:grid;grid-template-columns:104px minmax(0,1fr);gap:clamp(16px,2.4vw,38px);align-items:start;margin-top:10px}
+.tl-rail{position:sticky;top:14px;display:grid;gap:2px;align-content:start}
+.tl-rail-t{font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--dim-2);padding:0 0 10px 11px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
+.tl-rail a{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:7px 0 7px 11px;
+  border-left:1px solid transparent;font:var(--fs-mono) var(--mono);letter-spacing:.1em;color:var(--dim);white-space:nowrap}
+.tl-rail a em{font-style:normal;color:var(--dim-2)}
+.tl-rail a:hover{color:var(--paper)}
+.tl-rail a.on{color:var(--gold);border-left-color:var(--gold)}
+.tl-days{min-width:0}
+.tl-month{scroll-margin-top:76px}
+@media (max-width:860px){
+  .tl-cols{grid-template-columns:minmax(0,1fr);gap:0}
+  .tl-rail{position:static;display:flex;gap:6px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none}
+  .tl-rail::-webkit-scrollbar{display:none}
+  .tl-rail-t{display:none}
+  .tl-rail a{border-left:0;border-bottom:1px solid transparent;padding:6px 10px;min-width:max-content}
+  .tl-rail a.on{border-bottom-color:var(--gold)}
+}
 </style>
 </head>
 <body>
@@ -1712,9 +1740,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       <div class="page">
         <header class="page-head">
           <div>
-            <p class="kicker">SCN.<b>04</b> — 锐评</p>
-            <h1>锐评</h1>
-            <p class="lead">一天一条，谁说的署谁的名。</p>
+            <p class="kicker">SCN.<b>06</b> — DAILY CRITIQUE</p>
+            <h1>小鱼的每日锐评</h1>
+            <p class="lead">每天记下了什么，也顺手对新的计划说两句。她写上面，我在下面接。</p>
           </div>
           <p class="count" id="crit-count">—</p>
         </header>
@@ -2817,15 +2845,29 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var map = {};
     rows.forEach(function (r) { (map[r.d] = map[r.d] || []).push(r); });
     var keys = Object.keys(map).sort().reverse();
-    el('timeline').innerHTML = keys.map(function (k) {
+    var rail = keys.map(function (k) {
+      return '<a href="#tl-' + k + '" data-day="' + k + '"><span>' + k.slice(5) + '</span><em>' + map[k].length + '</em></a>';
+    }).join('');
+    var days = keys.map(function (k) {
       var dt = new Date(k + 'T00:00:00');
       var head = k.slice(0, 4) + ' 年 ' + Number(k.slice(5, 7)) + ' 月 ' + Number(k.slice(8, 10)) + ' 日';
-      return '<section class="tl-month">' +
+      return '<section class="tl-month" id="tl-' + k + '">' +
         '<header class="tl-mh"><h3>' + head + '<em>' + WD[dt.getDay()] + '</em></h3>' +
         '<span>' + map[k].length + ' 条</span></header>' +
         '<div class="grid">' + map[k].map(function (r) { return cardHtml(r.x); }).join('') + '</div>' +
         '</section>';
     }).join('');
+    el('timeline').innerHTML = '<div class="tl-cols">' +
+      '<nav class="tl-rail" aria-label="按日期"><span class="tl-rail-t">日期</span>' + rail + '</nav>' +
+      '<div class="tl-days">' + days + '</div></div>';
+    el('timeline').querySelectorAll('.tl-rail a').forEach(function (a) {
+      a.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var sec = document.getElementById('tl-' + a.getAttribute('data-day'));
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el('timeline').querySelectorAll('.tl-rail a').forEach(function (o) { o.classList.toggle('on', o === a); });
+      });
+    });
   }
 
   function render() {
