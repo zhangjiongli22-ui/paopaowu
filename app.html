@@ -203,13 +203,8 @@ a{-webkit-tap-highlight-color:transparent}
 .comments{margin-top:26px;padding-top:16px;border-top:1px solid var(--line-soft);color:var(--dim);font-size:var(--fs-body)}
 .comments a{color:var(--gold-text);border-bottom:1px solid var(--gold-soft)}
 
-/* ---------- 两只鱼 ---------- */
-.fish-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.2vw,36px);padding:20px 0 10px}
-.fish-card{display:grid;grid-template-columns:clamp(120px,12vw,220px) minmax(0,1fr);gap:clamp(14px,1.8vw,28px);padding:clamp(14px,1.6vw,24px);border:1px solid var(--line);background:linear-gradient(180deg,rgba(14,21,33,.8),rgba(7,11,18,.94))}
-.fish-card img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.85) brightness(.9)}
-.fish-card h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2)}
-.fish-card .role{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold)}
-.fish-card p{margin:8px 0 0;color:var(--paper-2);line-height:1.9}
+/* ---------- 通用小件 ---------- */
+
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .tags span{font:var(--fs-mono) var(--mono);letter-spacing:.14em;color:var(--gold-text);border:1px solid var(--gold-soft);padding:3px 8px}
 .table{width:100%;border-collapse:collapse;margin-top:14px}
@@ -575,7 +570,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .chapters a{grid-template-columns:auto;min-height:44px;padding:0 12px;border-bottom:0;white-space:nowrap}
   .chapters a i{display:none}
   .chapters a em{display:none}
-  .rail-foot{display:none}
+  .rail-foot{display:flex;align-items:center;margin:0;padding:0;border:0;gap:10px}
+  .rail-foot p{display:none}
+  .rail-foot a{min-height:36px;letter-spacing:.12em;font-size:12px}
   .stage{height:auto;overflow:visible;min-width:0}
   .hero,.overview{min-height:0}  #view-person.on{display:block;height:auto;overflow:visible}
   .phero{grid-template-columns:minmax(0,1fr);min-height:0}
@@ -916,6 +913,53 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .star{flex:none}
 @media (max-width:720px){.form-grid{grid-template-columns:minmax(0,1fr)}.page-head{flex-direction:column;align-items:flex-start;gap:10px}.page-head .count{padding-bottom:0}}
 @media (max-width:860px){.shelf-nav{overflow-x:auto}.shelf-nav a{flex:0 0 auto;padding:0 12px}}
+
+/* 章节切换：整页淡入，标题从字距里收拢，左栏一道金线跟上 */
+@media (prefers-reduced-motion: no-preference){
+  .nav-anim .view.on{animation:viewIn .44s var(--ease)}
+  .nav-anim .view.on .page-head,.nav-anim .view.on .room-head,.nav-anim .view.on .soon,.nav-anim .view.on .phero-txt,.nav-anim .view.on .detail .back{animation:headIn .52s var(--ease)}
+  .nav-anim .view.on .page-head h1,.nav-anim .view.on .room-head h1,.nav-anim .view.on .detail-body h2,.nav-anim .view.on .phero h1{animation:titleIn .66s cubic-bezier(.16,.72,.2,1)}
+  .nav-anim .view.on .rec-tools,.nav-anim .view.on .hero .windows,.nav-anim .view.on .gal-grid,.nav-anim .view.on .crit-list{animation:bodyIn .58s var(--ease) .04s both}
+}
+@keyframes viewIn{from{opacity:0}to{opacity:1}}
+@keyframes headIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes titleIn{from{opacity:0;letter-spacing:.2em;filter:blur(3px)}to{opacity:1;letter-spacing:.06em;filter:none}}
+@keyframes bodyIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.chapters a{position:relative}
+.chapters a::before{content:"";position:absolute;left:0;top:50%;width:2px;height:70%;background:var(--gold);opacity:0;transform:translateY(-50%) scaleY(.25);transform-origin:center;transition:opacity .3s var(--ease),transform .45s var(--ease)}
+.chapters a.on::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+.chapters a:hover::before{opacity:.4;transform:translateY(-50%) scaleY(.5)}
+@media (max-width:860px){.chapters a::before{display:none}}
+
+/* 页头：切章时一道金线从左铺到右 */
+.page-head{position:relative}
+.page-head::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,var(--gold) 0%,rgba(201,168,107,.35) 42%,transparent 72%);transform:scaleX(1);transform-origin:left;opacity:.55}
+@media (prefers-reduced-motion: no-preference){
+  .nav-anim .view.on .page-head::after{animation:ruleIn .78s var(--ease)}
+}
+@keyframes ruleIn{from{transform:scaleX(0);opacity:.9}to{transform:scaleX(1);opacity:.55}}
+
+/* 评分星星：悬停先给个预览的反馈 */
+.stars .star{transition:color .18s var(--ease),transform .18s var(--ease)}
+.stars:hover .star{color:#b9a06c}
+.stars .star:hover{transform:translateY(-1px)}
+.stars .star.on,.stars:hover .star.on{color:var(--gold)}
+/* 手机端头部：牌子一行、章节一行，登录钉在右上；首页三张卡补回图片 */
+@media (max-width:860px){
+  .rail{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand foot" "nav nav";align-items:center;gap:4px 12px;padding:10px 14px 8px;overflow:visible}
+  .brand{grid-area:brand;min-height:0}
+  .brand-cn{font-size:16px}
+  .chapters{grid-area:nav;display:flex;overflow-x:auto;scrollbar-width:none}
+  .chapters::-webkit-scrollbar{display:none}
+  .rail-foot{grid-area:foot;justify-self:end;display:flex;align-items:center;gap:10px;margin:0;padding:0;border:0}
+  .rail-foot p{display:none}
+  .rail-foot a{min-height:36px;font-size:12px;letter-spacing:.12em;min-width:0}
+  .vtag{display:none}
+  .win-art{aspect-ratio:3/4}
+  .win-art img{object-position:center}
+  .hero{padding-top:20px}
+}
 @media (max-width:860px){
   .detail-grid{grid-template-columns:minmax(0,1fr);gap:22px}
   .detail-cover{max-width:260px}
@@ -950,7 +994,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
     <div class="rail-foot">
       <p>屋子每天凌晨三点半自己打扫一次。</p>
-      <p class="rail-extra"><a href="#/fish">两只鱼</a><a href="chat.html">日常</a><a href="legal.html">声明</a></p>
+      <p class="rail-extra"><a href="chat.html">日常</a><a href="legal.html">声明</a></p>
       <a href="#/login" id="login-link">登录 / Kira</a>
     </div>
   </aside>
@@ -1137,71 +1181,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       </div>
     </section>
 
-    <!-- 两只鱼 -->
-    <section class="view" id="view-fish">
-      <div class="fish-page">
-        <header class="tf-head">
-          <div>
-            <p class="k"><i></i>TWO FISH</p>
-            <h1>两只鱼</h1>
-          </div>
-          <p>同一台电脑里的两条鱼，一条管把事做成，一条管把日子过下去。谁也不是谁的备份。</p>
-        </header>
-
-        <div class="ledger">
-          <div class="lrow lhead">
-            <span class="lab">谁管什么</span>
-            <a class="who" href="#/soon/dsh">
-              <img src="assets/dsh.jpg" alt="DSH">
-              <span class="who-t"><b class="latin">DSH</b><em>鱼助手 01</em></span>
-            </a>
-            <a class="who" href="#/soon/fish">
-              <img src="assets/feiyu.jpg" alt="小鱼">
-              <span class="who-t"><b>小鱼</b><em>鱼助手 02</em></span>
-            </a>
-          </div>
-
-          <div class="lrow">
-            <span class="lab">写代码</span>
-            <p>查日志、改页面，跑通了才说能跑。</p>
-            <p>不碰，只在旁边催。</p>
-          </div>
-          <div class="lrow">
-            <span class="lab">下判断</span>
-            <p>把代价列出来，给方案，不替你决定。</p>
-            <p>先站你这边，再慢慢说。</p>
-          </div>
-          <div class="lrow">
-            <span class="lab">陪你说话</span>
-            <p>短，讲事，不哄。</p>
-            <p>短，带情绪，偶尔撒娇。</p>
-          </div>
-          <div class="lrow">
-            <span class="lab">记事情</span>
-            <p>把发生过的事写进记录。</p>
-            <p>把过日子的话说出来。</p>
-          </div>
-          <div class="lrow">
-            <span class="lab">出没</span>
-            <p>命令行、桌面、这台机器。</p>
-            <p>QQ、B站、桌宠、这间屋子。</p>
-          </div>
-        </div>
-
-        <div class="tf-note">
-          <p>「她闯的祸，最后都是我收。」</p>
-          <span>DSH · 原话</span>
-        </div>
-
-      </div>
-    </section>
-
     <!-- 精神宇宙 -->
     <section class="view" id="view-records">
       <div class="page" id="records-list">
         <header class="page-head">
           <div>
-            <p class="kicker">SCN.<b>02</b> — 図鑑</p>
+            <p class="kicker">SCN.<b>01</b> — 図鑑</p>
             <h1>精神宇宙</h1>
             <p class="lead">看过的动画、剧集、电影、游戏、书，都收在这里。</p>
           </div>
@@ -1391,7 +1376,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       <div class="page">
         <header class="page-head">
           <div>
-            <p class="kicker">SCN.<b>02</b> — 录入</p>
+            <p class="kicker">SCN.<b>01</b> — 录入</p>
             <h1 id="ed-title">添加一条</h1>
             <p class="lead" id="ed-lead">填完保存，回到图鉴里就能看到。</p>
           </div>
@@ -1566,6 +1551,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   var D = window.__PICKS__ || { picks: [], plans: [], logs: [], critiques: [], gallery: [], total: 0 };
   var picks = D.picks || null;
   var PROF = {}, CHAT = {}, RAW = null;
+  var appReady = false;
   var state = { cat: 'all', q: '', view: 'shelf' };
 
   /* ================= 登录 / 存取 / 真数据 ================= */
@@ -1734,6 +1720,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       hydrateHome();
       hydrateAuth();
       route();
+      appReady = true;
     });
   }
   function patchItem(item, fields) {
@@ -2102,11 +2089,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       state.view = qmode;
       document.querySelectorAll('.seg-btn').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-view') === qmode ? 'true' : 'false'); });
     }
+    document.documentElement.classList.toggle('nav-anim', appReady);
     var h = (location.hash || ('#/' + (qv || 'home'))).replace(/^#\/?/, '');
     var parts = h.split('/');
     var name = parts[0] || 'home';
     var arg = parts[1] || '';
-    var views = ['home', 'fish', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique', 'login'];
+    var views = ['home', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique', 'login'];
     var show = name;
     if (name === 'add' || name === 'edit') show = 'editor';
     if (name === 'profile') show = 'person';
@@ -2135,6 +2123,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (show === 'gallery') { openGallery(); }
     if (show === 'critique') { openCritique(); }
     if (show === 'login') { openLogin(); }
+    var TITLES = {
+      home: 'Kira的小屋', records: '精神宇宙 · Kira的小屋', archive: '人生存档点 · Kira的小屋',
+      gallery: '图集 · Kira的小屋', critique: '锐评 · Kira的小屋', login: '登录 · Kira的小屋',
+      person: '档案 · Kira的小屋', editor: '添加 · Kira的小屋'
+    };
+    if (TITLES[show]) document.title = TITLES[show];
     if (show === 'soon') {
       var s = SOON[arg] || { title: '这一页还在画', lead: '先把外壳定下来，一页一页补。', list: [] };
       el('soon-title').textContent = s.title;
@@ -2873,6 +2867,23 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var m = el('d-msg');
     if (m) { m.className = 'form-msg err detail-msg'; m.innerHTML = '登录后才能改 · <a href="#/login">去登录</a>'; }
   }
+  el('d-stars').addEventListener('mousemove', function (e) {
+    var b = e.target.closest('.star');
+    if (!b) return;
+    var x = currentItem();
+    if (!x) return;
+    var rect = b.getBoundingClientRect();
+    var half = (e.clientX - rect.left) < rect.width / 2;
+    var v = Number(b.getAttribute('data-i')) - (half ? 0.5 : 0);
+    renderStars(v);
+    el('d-score').textContent = v.toFixed(1) + ' / 5';
+  });
+  el('d-stars').addEventListener('mouseleave', function () {
+    var x = currentItem();
+    if (!x) return;
+    renderStars((Number(x.rating) || 0) / 2);
+    el('d-score').textContent = x.rating ? (Number(x.rating) / 2).toFixed(1) + ' / 5' : '— / 5';
+  });
   el('d-stars').addEventListener('click', function (e) {
     var b = e.target.closest('.star');
     if (!b) return;
