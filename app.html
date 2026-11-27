@@ -928,7 +928,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
 .chapters a{position:relative}
 .chapters a::before{content:"";position:absolute;left:0;top:50%;width:2px;height:70%;background:var(--gold);opacity:0;transform:translateY(-50%) scaleY(.25);transform-origin:center;transition:opacity .3s var(--ease),transform .45s var(--ease)}
-.chapters a.on::before{opacity:1;transform:translateY(-50%) scaleY(1)}
+
 .chapters a:hover::before{opacity:.4;transform:translateY(-50%) scaleY(.5)}
 @media (max-width:860px){.chapters a::before{display:none}}
 
@@ -966,6 +966,49 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .detail-actions{flex-wrap:wrap;gap:8px}
   .rev-head{gap:12px}
 }
+
+/* 总目录：金线滑到当前章 */
+.chapters{position:relative}
+.chapters .rail-ind{position:absolute;left:0;top:0;width:2px;height:20px;background:var(--gold);opacity:0;pointer-events:none;transition:transform .46s var(--ease),height .4s var(--ease),width .4s var(--ease),opacity .3s var(--ease)}
+.chapters .rail-ind.on{opacity:1}
+@media (max-width:860px){.chapters .rail-ind{height:2px;width:20px}}
+
+/* 图鉴分组：点标题收起／展开 */
+.shelf-head{cursor:pointer}
+.shelf-head h2{transition:color .3s var(--ease)}
+.shelf-head:hover h2{color:#e6cb97}
+.shelf-head .fold-mark{margin-left:12px;font:var(--fs-mono) var(--mono);color:var(--dim-2);transition:color .3s var(--ease)}
+.shelf-head:hover .fold-mark{color:var(--gold)}
+.shelf-head:focus-visible{outline:1px solid var(--gold-soft);outline-offset:4px}
+.shelf-sec .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .42s var(--ease),opacity .3s var(--ease)}
+.shelf-sec .fold > .grid{min-height:0;overflow:hidden}
+.shelf-sec.collapsed .fold{grid-template-rows:0fr;opacity:0}
+.shelf-sec.collapsed .shelf-head{padding-bottom:14px}
+
+/* 日常 */
+.chips .chip b{margin-left:8px;font-weight:400;color:var(--dim-2)}
+.chips .chip[aria-selected="true"] b{color:#231d10}
+.day-tools{align-items:baseline;gap:14px}
+.day-hint{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.1em;line-height:1.7;color:var(--dim-2)}
+.day-list{border-top:1px solid var(--line-soft)}
+.day-blk{padding:clamp(16px,1.8vw,26px) 0;border-bottom:1px solid var(--line-soft)}
+.day-head{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.day-head time{font:var(--fs-mono) var(--mono);letter-spacing:.14em;color:var(--dim-2)}
+.day-cat{font:var(--fs-mono) var(--mono);letter-spacing:.1em;color:var(--gold-text);border:1px solid var(--gold-soft);padding:2px 8px}
+.day-turns{display:grid;gap:6px}
+.turn{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:1px 0}
+.turn-who{font:var(--fs-mono) var(--mono);letter-spacing:.12em;color:var(--dim)}
+.turn.her .turn-who{color:var(--gold)}
+.turn-txt{margin:0;color:var(--paper-2);line-height:1.95}
+.turn.her .turn-txt{font-family:var(--serif);color:var(--paper)}
+.turn-hm{font:var(--fs-mono) var(--mono);letter-spacing:.06em;color:var(--dim-2)}
+@media (max-width:720px){
+  .day-tools{gap:8px}
+  .turn{grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
+  .turn-hm{justify-self:end;font-size:12px}
+  .turn-txt{grid-column:1 / -1}
+  .day-hint{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -985,6 +1028,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     </a>
 
     <nav class="chapters" aria-label="主要章节">
+      <i class="rail-ind" aria-hidden="true"></i>
       <a href="#/home" data-nav="home"><i>00</i><span>屋子</span><em>HOME</em></a>
       <a href="#/records" data-nav="records"><i>01</i><span>精神宇宙</span><em>図鑑</em></a>
       <a href="#/archive" data-nav="archive"><i>02</i><span>人生存档点</span><em>LOG</em></a>
@@ -994,7 +1038,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
     <div class="rail-foot">
       <p>屋子每天凌晨三点半自己打扫一次。</p>
-      <p class="rail-extra"><a href="chat.html">日常</a><a href="legal.html">声明</a></p>
+      <p class="rail-extra"><a href="#/daily">日常</a><a href="legal.html">声明</a></p>
       <a href="#/login" id="login-link">登录 / Kira</a>
     </div>
   </aside>
@@ -1354,6 +1398,25 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         <div class="gal-grid" id="gal-grid"></div>
       </div>
       <div class="gal-box" id="gal-box" hidden></div>
+    </section>
+
+    <!-- 日常 -->
+    <section class="view" id="view-daily">
+      <div class="page">
+        <header class="page-head">
+          <div>
+            <p class="kicker">SCN.<b>05</b> — 回想</p>
+            <h1>日常</h1>
+            <p class="lead">真聊过的，一段一段。各段之间不是连着发生的。</p>
+          </div>
+          <p class="count" id="day-count">—</p>
+        </header>
+        <div class="rec-tools day-tools">
+          <div class="chips" id="day-chips" role="tablist" aria-label="按类别筛选"></div>
+          <p class="day-hint" id="day-hint"></p>
+        </div>
+        <div class="day-list" id="day-list"></div>
+      </div>
     </section>
 
     <!-- 锐评 -->
@@ -1741,6 +1804,81 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var h = Math.floor(n / 60), m = n % 60;
     return h + 'h' + (m ? ' ' + pad2(m) + 'm' : '');
   }
+  /* 总目录：当前章节的金线滑过去 */
+  function moveRailInd() {
+    var nav = document.querySelector('.chapters');
+    var ind = nav && nav.querySelector('.rail-ind');
+    if (!nav || !ind) return;
+    var a = nav.querySelector('a.on');
+    if (!a) { ind.classList.remove('on'); return; }
+    ind.classList.add('on');
+    var flat = window.matchMedia('(max-width:860px)').matches;
+    if (flat) {
+      ind.style.height = '2px';
+      ind.style.width = Math.max(20, a.offsetWidth - 24) + 'px';
+      ind.style.transform = 'translate(' + (a.offsetLeft + 12) + 'px,' + (a.offsetTop + a.offsetHeight - 3) + 'px)';
+    } else {
+      ind.style.height = Math.max(20, a.offsetHeight - 14) + 'px';
+      ind.style.width = '2px';
+      ind.style.transform = 'translate(0,' + (a.offsetTop + 7) + 'px)';
+    }
+  }
+  window.addEventListener('resize', function () { moveRailInd(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveRailInd(); });
+
+  /* 日常：chat.json 里的真实对话，按类别筛 */
+  var DAILY = { cat: 'all' };
+  var DCAT = {
+    all: { name: '全部', hint: '按时间倒着排，最新的在最上面。' },
+    cute: { name: '甜甜的', hint: '真的甜、真的可爱的那几段。' },
+    daily: { name: '日常', hint: '就是普通的一天，不甜也没关系。' },
+    mushy: { name: '肉麻的', hint: '看完起鸡皮疙瘩那种。' },
+    scold: { name: '骂笨鱼', hint: '她嫌弃 Kira 的时候。' },
+    food: { name: '干饭', hint: 'token 就是饭。' }
+  };
+  function renderDaily(cat) {
+    if (cat) DAILY.cat = cat;
+    var all = ((CHAT && CHAT.blocks) || []).slice().sort(function (a, b) {
+      return ((a.d || '') + (a.hm || '')).localeCompare((b.d || '') + (b.hm || ''));
+    }).reverse();
+    var chips = el('day-chips'), list = el('day-list'), hintEl = el('day-hint'), cnt = el('day-count');
+    if (!chips || !list) return;
+    var counts = { all: all.length };
+    all.forEach(function (b) { counts[b.cat] = (counts[b.cat] || 0) + 1; });
+    chips.innerHTML = Object.keys(DCAT).filter(function (k) {
+      return k === 'all' || counts[k];
+    }).map(function (k) {
+      return '<button class="chip" role="tab" data-dcat="' + k + '" aria-selected="' + (DAILY.cat === k ? 'true' : 'false') + '">' +
+        DCAT[k].name + '<b>' + (counts[k] || 0) + '</b></button>';
+    }).join('');
+    chips.querySelectorAll('.chip').forEach(function (b) {
+      b.addEventListener('click', function () { renderDaily(b.getAttribute('data-dcat')); });
+    });
+    var rows = DAILY.cat === 'all' ? all : all.filter(function (b) { return b.cat === DAILY.cat; });
+    if (cnt) cnt.textContent = rows.length + ' 段';
+    if (hintEl) hintEl.textContent = (DCAT[DAILY.cat] || DCAT.all).hint;
+    if (!rows.length) {
+      list.innerHTML = '<p class="empty">这一类还没攒下什么，等她说。</p>';
+      return;
+    }
+    list.innerHTML = rows.map(function (b) {
+      var turns = (b.turns || []).filter(function (t) {
+        var s = String(t.text || '').trim();
+        return s && !/^\[[^\]]*\]$/.test(s);
+      }).map(function (t) {
+        var her = t.role !== 'user';
+        return '<div class="turn' + (her ? ' her' : '') + '">' +
+          '<span class="turn-who">' + (her ? '小鱼' : 'Kira') + '</span>' +
+          '<p class="turn-txt">' + esc(t.text || '').replace(/\n/g, '<br>') + '</p>' +
+          '<span class="turn-hm">' + esc(t.hm || '') + '</span></div>';
+      }).join('');
+      return '<article class="day-blk">' +
+        '<header class="day-head"><time>' + esc(String(b.d || '').replace(/-/g, '.')) + ' ' + esc(b.hm || '') + '</time>' +
+        '<span class="day-cat">' + esc((DCAT[b.cat] || DCAT.daily).name) + '</span></header>' +
+        '<div class="day-turns">' + turns + '</div></article>';
+    }).join('');
+  }
+
   function dataDay() {
     var logs2 = ((window.__PICKS__ || {}).logs) || [];
     var d = logs2.map(function (x) { return x.date; }).filter(Boolean).sort();
@@ -2094,7 +2232,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var parts = h.split('/');
     var name = parts[0] || 'home';
     var arg = parts[1] || '';
-    var views = ['home', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique', 'login'];
+    var views = ['home', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique', 'daily', 'login'];
     var show = name;
     if (name === 'add' || name === 'edit') show = 'editor';
     if (name === 'profile') show = 'person';
@@ -2107,6 +2245,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var nav = a.getAttribute('data-nav');
       a.classList.toggle('on', nav === show);
     });
+    moveRailInd();
     if (show === 'archive') {
       renderArchive(arg);
     }
@@ -2122,10 +2261,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }
     if (show === 'gallery') { openGallery(); }
     if (show === 'critique') { openCritique(); }
+    if (show === 'daily') { renderDaily(); }
     if (show === 'login') { openLogin(); }
     var TITLES = {
       home: 'Kira的小屋', records: '精神宇宙 · Kira的小屋', archive: '人生存档点 · Kira的小屋',
-      gallery: '图集 · Kira的小屋', critique: '锐评 · Kira的小屋', login: '登录 · Kira的小屋',
+      gallery: '图集 · Kira的小屋', critique: '锐评 · Kira的小屋', daily: '日常 · Kira的小屋', login: '登录 · Kira的小屋',
       person: '档案 · Kira的小屋', editor: '添加 · Kira的小屋'
     };
     if (TITLES[show]) document.title = TITLES[show];
@@ -2144,6 +2284,17 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('rec-count').textContent = (d.total || picks.length) + ' 条收藏';
     render();
     route();
+  }
+
+  var FOLDED = {};
+  function toggleFold(h) {
+    var id = h.getAttribute('data-fold');
+    FOLDED[id] = !FOLDED[id];
+    var sec = h.closest('.shelf-sec');
+    if (sec) sec.classList.toggle('collapsed', !!FOLDED[id]);
+    h.setAttribute('aria-expanded', FOLDED[id] ? 'false' : 'true');
+    var m = h.querySelector('.fold-mark');
+    if (m) m.textContent = FOLDED[id] ? '＋' : '−';
   }
 
   function filtered() {
@@ -2183,9 +2334,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     groups = groups.filter(function (g) { return g.rows.length; });
 
     el('shelf').innerHTML = groups.map(function (g) {
-      return '<section class="shelf-sec" id="' + g.id + '">' +
-        '<header class="shelf-head"><h2>' + g.t + '</h2><span class="en">' + g.en + '</span><span class="cnt">' + g.rows.length + ' 条</span></header>' +
-        '<div class="grid">' + g.rows.map(cardHtml).join('') + '</div>' +
+      var closed = !!FOLDED[g.id];
+      return '<section class="shelf-sec' + (closed ? ' collapsed' : '') + '" id="' + g.id + '">' +
+        '<header class="shelf-head" data-fold="' + g.id + '" role="button" tabindex="0" aria-expanded="' + (closed ? 'false' : 'true') + '">' +
+        '<h2>' + g.t + '</h2><span class="en">' + g.en + '</span><span class="cnt">' + g.rows.length + ' 条</span>' +
+        '<span class="fold-mark" aria-hidden="true">' + (closed ? '＋' : '−') + '</span></header>' +
+        '<div class="fold"><div class="grid">' + g.rows.map(cardHtml).join('') + '</div></div>' +
         '</section>';
     }).join('');
 
@@ -2785,11 +2939,23 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('records-detail').hidden = true;
   }
 
+  el('shelf').addEventListener('click', function (e) {
+    var h = e.target.closest ? e.target.closest('.shelf-head') : null;
+    if (!h) return;
+    toggleFold(h);
+  });
+  el('shelf').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var h = e.target.closest ? e.target.closest('.shelf-head') : null;
+    if (!h) return;
+    e.preventDefault();
+    toggleFold(h);
+  });
   el('chips').addEventListener('click', function (e) {
     var b = e.target.closest('.chip');
     if (!b) return;
     state.cat = b.getAttribute('data-cat');
-    document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-selected', c === b ? 'true' : 'false'); });
+    el('chips').querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-selected', c === b ? 'true' : 'false'); });
     render();
   });
   el('arc-tabs').addEventListener('click', function (e) {
