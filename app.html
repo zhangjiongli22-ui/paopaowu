@@ -2289,7 +2289,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       cats: (raw && raw.cats) || [],
       items: (raw && raw.items) || [],
       texts: (raw && raw.texts) || loadText(),
-      peoples: (raw && raw.peoples) || {}
+      peoples: (raw && raw.peoples) || {},
+      imgs: (raw && raw.imgs) || IMGOV,
+      imgpos: (raw && raw.imgpos) || IMGPOS,
+      gallery: (raw && raw.gallery) || (window.__PICKS__ && window.__PICKS__.gallery) || []
     };
     return fetch('/api/data', {
       method: 'POST',
