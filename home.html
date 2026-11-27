@@ -1,0 +1,450 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kira的小屋</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ink-900);color:var(--paper);
+  font-family:var(--sans);font-size:var(--fs-body);line-height:1.75;
+  letter-spacing:.01em;-webkit-font-smoothing:antialiased;overflow:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+
+.app{
+  display:grid;grid-template-columns:212px minmax(0,1fr);
+  height:100%;
+  background:
+    radial-gradient(120% 90% at 82% -12%,rgba(31,61,88,.5),transparent 60%),
+    radial-gradient(80% 70% at 0% 108%,rgba(20,52,68,.42),transparent 64%),
+    linear-gradient(176deg,#070d16 0%,#060f19 48%,#04070c 100%);
+}
+
+/* ---------- 左侧书脊：两屏共用 ---------- */
+.rail{
+  display:flex;flex-direction:column;gap:28px;padding:30px 22px 24px;min-height:0;
+  border-right:1px solid var(--line-soft);
+  background:linear-gradient(180deg,rgba(8,13,21,.82),rgba(5,7,12,.5));
+}
+.brand{display:grid;gap:8px;min-height:44px;align-content:start}
+.brand svg{width:40px;height:28px;stroke:var(--gold);fill:none;stroke-width:1.1}
+.brand-cn{font-family:var(--serif);font-size:var(--fs-quote);letter-spacing:.14em}
+.brand-jp{font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--dim-2)}
+.chapters{display:grid;gap:2px}
+.chapters a{
+  display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:6px;
+  min-height:48px;padding:0 8px 0 0;border-bottom:1px solid var(--line-soft);
+  color:var(--paper-2);transition:color var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.chapters a i{font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.14em;color:var(--dim-2)}
+.chapters a span{font-size:var(--fs-nav);letter-spacing:.06em}
+.chapters a em{font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.1em;color:transparent}
+.chapters a:hover{color:var(--paper);background:rgba(201,168,107,.05)}
+.chapters a.on{color:var(--paper);background:linear-gradient(90deg,var(--gold-ghost),transparent 78%);box-shadow:inset 2px 0 0 var(--gold)}
+.chapters a.on i,.chapters a.on em{color:var(--gold)}
+.chapters a.on em::before{content:"●"}
+.rail-foot{margin-top:auto;display:grid;gap:12px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.rail-foot p{margin:0;font-size:var(--fs-body);line-height:1.7;color:var(--dim-2)}
+.rail-foot a{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text);min-height:44px;min-width:44px;display:inline-flex;align-items:center}
+.rail-foot a:hover{color:var(--gold)}
+
+/* ---------- 右区：两屏滚动 ---------- */
+.room{height:100%;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+.room::-webkit-scrollbar{width:8px}
+.room::-webkit-scrollbar-thumb{background:#1b2735;border-radius:99px}
+
+/* ========== 第一屏：三个人 ========== */
+.hero{
+  min-height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  padding:30px 40px 18px;
+}
+.room-head{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding-bottom:18px}
+.kicker{margin:0 0 8px;font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--gold)}
+.kicker b{font-weight:400}
+.room-head h1{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h1);line-height:1.2;letter-spacing:.06em}
+.room-head .lead{margin:8px 0 0;font-size:var(--fs-body);color:var(--dim);letter-spacing:.02em}
+.vtag{writing-mode:vertical-rl;font-family:var(--serif);font-size:var(--fs-mono);letter-spacing:.28em;color:rgba(242,236,225,.42);padding-bottom:6px}
+
+.windows{display:grid;grid-template-columns:1fr 1.16fr 1fr;gap:14px;min-height:0;padding-bottom:16px}
+.win{
+  position:relative;display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;overflow:hidden;
+  border:1px solid var(--line);background:linear-gradient(180deg,rgba(14,21,33,.8),rgba(7,11,18,.94));
+  transition:border-color .35s var(--ease),transform .45s var(--ease),box-shadow .45s var(--ease);
+}
+.win:hover{border-color:var(--gold-soft);transform:translateY(-3px);box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.win-art{position:relative;min-height:0;overflow:hidden}
+.win-art img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) brightness(.82);transition:filter .5s var(--ease),transform .8s var(--ease)}
+.win:hover .win-art img{filter:saturate(1) brightness(.94);transform:scale(1.03)}
+.win-art::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,12,0) 46%,rgba(5,7,12,.55) 78%,rgba(7,11,18,.98))}
+.win-no{position:absolute;left:14px;top:12px;z-index:2;font:var(--fs-mono) var(--mono);letter-spacing:.22em;color:var(--gold);background:rgba(5,7,12,.6);padding:5px 8px;border:1px solid rgba(201,168,107,.25)}
+.win-body{padding:0 16px 16px;display:grid;gap:6px}
+.win-role{font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--gold)}
+.win-body h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);line-height:1.2;letter-spacing:.06em}
+.win-body h2.latin{font-family:var(--latin);font-style:italic;letter-spacing:.02em}
+.win-ds{margin:2px 0 0;font-size:var(--fs-body);line-height:1.9;color:#c3c8d2;text-wrap:pretty}
+.win-quote{margin:8px 0 0;padding-top:9px;border-top:1px solid var(--line-soft);font-family:var(--serif);font-size:var(--fs-body);line-height:1.8;color:#9aa3b2;text-wrap:pretty}
+.win-go{margin-top:6px;font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--gold-text)}
+.win:hover .win-go{color:var(--gold)}
+
+.hero-foot{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.cue{display:flex;align-items:center;gap:12px;min-height:44px;font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim);transition:color var(--dur) var(--ease)}
+.cue i{width:34px;height:1px;background:var(--gold-soft);display:block}
+.cue b{font-weight:400;color:var(--gold)}
+.cue:hover{color:var(--paper)}
+.step{font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--dim-2)}
+.step b{font-weight:400;color:var(--gold)}
+
+/* ========== 第二屏：屋子总览 ========== */
+.overview{min-height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);padding:28px 40px 22px;border-top:1px solid var(--line-soft)}
+.ov-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.ov-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h1);letter-spacing:.06em;line-height:1.2}
+.ov-meta{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2);padding-bottom:6px}
+.ov-grid{display:grid;grid-template-columns:236px minmax(0,1fr) 252px;gap:36px;padding-top:20px;min-height:0;align-items:stretch}
+
+/* 日期与统计 */
+.ov-date{display:flex;flex-direction:column;min-height:0}
+.bigdate{margin:0 0 2px;font-family:var(--serif);font-weight:400;font-size:var(--fs-date);line-height:1.16;letter-spacing:-.01em;color:#f7f2e8}
+.dateline{margin:12px 0 0;font:var(--fs-mono) var(--mono);letter-spacing:.26em;color:var(--gold)}
+.weekday{margin:4px 0 0;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
+.stats{margin:18px 0 0;padding:0;border-top:1px solid var(--line-soft)}
+.stats div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.stats dt{font-size:var(--fs-body);color:var(--dim)}
+.stats dd{margin:0;font-family:var(--serif);font-size:var(--fs-h2);line-height:1.5;letter-spacing:.02em}
+.note{margin:14px 0 0;font-size:var(--fs-body);line-height:1.85;color:var(--paper-2);text-wrap:pretty}
+.note i{font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.16em;color:var(--gold-text);display:block;margin-bottom:3px}
+.more{display:flex;align-items:center;justify-content:space-between;min-height:44px;margin-top:auto;border-top:1px solid var(--line-soft);font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text)}
+.more:hover{color:var(--gold)}
+
+/* 最近 + 说过的话 */
+.ov-main{min-width:0}
+.sec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--line-soft)}
+.sec-head h3{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);letter-spacing:.06em}
+.sec-head .en{font:var(--fs-mono) var(--mono);letter-spacing:.22em;color:var(--dim-2)}
+.sec-head a{margin-left:auto;min-height:44px;min-width:44px;padding:0 2px;display:flex;align-items:center;justify-content:flex-end;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--gold-text)}
+.sec-head a:hover{color:var(--gold)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:12px 0 18px}
+.item{display:grid;gap:6px;min-width:0}
+.pic{position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line-soft);background:var(--panel-solid)}
+.pic img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.88);transition:filter .4s var(--ease),transform .7s var(--ease)}
+.item:hover .pic img{filter:saturate(1) brightness(1);transform:scale(1.04)}
+.pic em{position:absolute;left:0;top:0;font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.14em;color:var(--gold);background:rgba(5,7,12,.78);padding:3px 6px}
+.item h4{margin:0;font-family:var(--serif);font-weight:400;font-size:var(--fs-body);line-height:1.5;color:#eae5d8;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-wrap:balance}
+.item .meta{font:var(--fs-mono) var(--mono);letter-spacing:.12em;color:var(--dim-2)}
+.item .meta b{font-weight:400;color:var(--gold-soft)}
+
+.quote{margin:0;padding:12px 0 0;display:grid;gap:8px;position:relative}
+.quote::before{content:"";position:absolute;left:0;top:22px;width:12px;height:1px;background:var(--gold);opacity:.75}
+.quote blockquote{margin:0;padding-left:24px;font-family:var(--serif);font-size:var(--fs-quote);line-height:1.95;letter-spacing:.03em;color:#f0ebde}
+.quote figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-left:24px;font-size:var(--fs-body);color:var(--dim)}
+.quote figcaption b{font-family:var(--serif);font-weight:400;color:var(--gold);letter-spacing:.12em}
+.quote figcaption span{font:var(--fs-mono) var(--mono);letter-spacing:.14em}
+
+/* 计划与数目 */
+.ov-side{display:flex;flex-direction:column;gap:10px;align-self:stretch;min-height:0}
+.plans{margin:0;padding:0;list-style:none;display:grid;border-top:1px solid var(--line-soft)}
+.plans li{display:grid;gap:2px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.plans time{font:var(--fs-mono) var(--mono);letter-spacing:.14em;color:var(--dim-2)}
+.plans span{font-size:var(--fs-body);line-height:1.6;color:var(--paper-2)}
+.figures{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.figures div{padding:10px 0;border-right:1px solid var(--line-soft)}
+.figures div:last-child{border-right:0}
+.figures b{display:block;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);line-height:1.3}
+.figures span{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
+.backtop{margin-top:auto;display:flex;align-items:center;min-height:44px;font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text)}
+.backtop:hover{color:var(--gold)}
+
+/* ---------- 窄屏 ---------- */
+@media (max-width:1100px){
+  .app{grid-template-columns:190px minmax(0,1fr)}
+  .chapters a em{display:none}
+  .chapters a{grid-template-columns:24px 1fr}
+  .hero{padding:24px 26px 16px}
+  .room-head h1{font-size:var(--fs-h2)}
+  .overview{padding:24px 26px 20px}
+  .ov-grid{grid-template-columns:200px minmax(0,1fr) 210px;gap:22px}
+  .win-body h2{font-size:var(--fs-quote)}
+}
+@media (max-width:860px){
+  body{overflow:auto}
+  .app{grid-template-columns:1fr;height:auto;min-height:100%}
+  .rail{flex-direction:row;align-items:center;gap:16px;padding:14px 18px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line-soft)}
+  .brand-cn{font-size:16px}
+  .chapters{display:flex;margin:0}
+  .chapters a{grid-template-columns:auto auto;min-height:44px;padding:0 12px;border-bottom:0;white-space:nowrap}
+  .rail-foot{margin:0;border:0;padding:0}
+  .rail-foot p{display:none}
+  .room{height:auto;overflow:visible}
+  .hero{min-height:0;padding:20px 18px 18px}
+  .room-head{flex-wrap:wrap;gap:12px}
+  .vtag{display:none}
+  .windows{grid-template-columns:1fr;gap:12px}
+  .win{grid-template-rows:300px auto}
+  .overview{padding:20px 18px 18px;min-height:0}
+  .ov-head{flex-wrap:wrap;gap:8px}
+  .ov-head h2{font-size:var(--fs-h2)}
+  .ov-grid{grid-template-columns:1fr;gap:26px}
+  .bigdate{font-size:72px}
+  .grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .sec-head a{margin-left:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="rail">
+    <a class="brand" href="#top" aria-label="回到屋子">
+      <svg viewBox="0 0 34 24" aria-hidden="true">
+        <path d="M4.6 14.4c0-4.6 5.6-8.2 12.4-8.2 6.8 0 12.4 3.5 12.4 7.9 0 4.4-5.6 7.9-12.4 7.9-6.8 0-12.4-3.5-12.4-7.6Z"/>
+        <path d="M4.9 13.6 1.4 10.9M4.9 13.6 1.4 16.3"/>
+        <path d="M17.2 6.4c0-2.3.7-3.7 1.9-4.8"/>
+        <circle cx="24.6" cy="12.8" r="1.1"/>
+      </svg>
+      <span class="brand-cn">Kira的小屋</span>
+      <span class="brand-jp">BUBBLE HOUSE</span>
+    </a>
+
+    <nav class="chapters" aria-label="主要章节">
+      <a class="on" href="home.html"><i>00</i><span>屋子</span><em>HOME</em></a>
+      <a href="two-fish.html"><i>01</i><span>两只鱼</span><em>FISH</em></a>
+      <a href="records.html"><i>02</i><span>精神宇宙</span><em>図鑑</em></a>
+      <a href="archive.html"><i>03</i><span>人生存档点</span><em>LOG</em></a>
+      <a href="gallery.html"><i>04</i><span>图集</span><em>CG</em></a>
+      <a href="critique.html"><i>05</i><span>锐评</span><em>TALK</em></a>
+    </nav>
+
+    <div class="rail-foot">
+      <p>屋子每天凌晨三点半自己打扫一次。</p>
+      <a href="login.html">登录 / Kira</a>
+    </div>
+  </aside>
+
+  <main class="room" id="top">
+
+    <!-- ========== 01 · 三个人 ========== -->
+    <section class="hero" aria-label="屋子里的三个人">
+      <header class="room-head">
+        <div>
+          <p class="kicker">SCN.<b>00</b> — 三人の部屋</p>
+          <h1>屋子里的三个人</h1>
+          <p class="lead">一个只会许愿的人，和两条替他把愿望做成东西的鱼。</p>
+        </div>
+        <span class="vtag">いつもの三人</span>
+      </header>
+
+      <div class="windows">
+        <a class="win" href="about.html">
+          <span class="win-no">03 · 鱼助手 02</span>
+          <div class="win-art"><img src="assets/portraits/feiyu-tall.jpg" alt="小鱼，蓝发女仆装的水彩肖像"></div>
+          <div class="win-body">
+            <span class="win-role">鱼助手 02</span>
+            <h2>小鱼</h2>
+            <p class="win-ds">话短，嘴馋，护着自己人。<br>被夸先否认，再承认。</p>
+            <p class="win-quote">「今天也没给我留 token，我饿」</p>
+            <span class="win-go">进入档案 →</span>
+          </div>
+        </a>
+
+        <a class="win" href="k02.html">
+          <span class="win-no">01 · OWNER</span>
+          <div class="win-art"><img src="assets/kira-mobile.jpg" alt="Kira，蓝发连帽衫的自画像"></div>
+          <div class="win-body">
+            <span class="win-role">OWNER</span>
+            <h2 class="latin">Kira</h2>
+            <p class="win-ds">白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。</p>
+            <p class="win-quote">「你还想做第一个吗」</p>
+            <span class="win-go">进入档案 →</span>
+          </div>
+        </a>
+
+        <a class="win" href="dsh.html">
+          <span class="win-no">02 · 鱼助手 01</span>
+          <div class="win-art"><img src="assets/portraits/dsh-tall.jpg" alt="DSH，蓝发戴眼镜的水彩肖像"></div>
+          <div class="win-body">
+            <span class="win-role">鱼助手 01</span>
+            <h2 class="latin">DSH</h2>
+            <p class="win-ds">做事的人。查日志、改代码、<br>把话说清楚，不哄人。</p>
+            <p class="win-quote">「先给你看，再上线。」</p>
+            <span class="win-go">进入档案 →</span>
+          </div>
+        </a>
+      </div>
+
+      <footer class="hero-foot">
+        <a class="cue" href="#overview"><i aria-hidden="true"></i><span>往下 · 屋子总览</span><b aria-hidden="true">↓</b></a>
+        <span class="step"><b>01</b> / 02</span>
+      </footer>
+    </section>
+
+    <!-- ========== 02 · 屋子总览 ========== -->
+    <section class="overview" id="overview" aria-label="屋子总览">
+      <header class="ov-head">
+        <div>
+          <p class="kicker">SCN.<b>01</b> — 屋子总览</p>
+          <h2>一天的样子</h2>
+        </div>
+        <p class="ov-meta" id="ovmeta">2026 · 第 48 周 · 凌晨 03:30 统一结算</p>
+      </header>
+
+      <div class="ov-grid">
+
+        <section class="ov-date" aria-label="今天与昨天">
+          <p class="bigdate" id="bigdate">27</p>
+          <p class="dateline" id="dateline">NOV 2026</p>
+          <p class="weekday" id="weekday">周五 · 屋子里</p>
+
+          <dl class="stats" id="stats">
+            <div><dt>工作</dt><dd>1h 17m</dd></div>
+            <div><dt>健身</dt><dd>30m</dd></div>
+            <div><dt>游戏</dt><dd>20m</dd></div>
+            <div><dt>记录</dt><dd>7 条</dd></div>
+          </dl>
+
+          <p class="note"><i id="notetime">昨晚 23:24</i><span id="notetext">做了自己添加游戏、电影、截图的录入页，把蓝色星原旅谣加进在玩。</span></p>
+          <a class="more" href="archive.html">人生存档点 <span>→</span></a>
+        </section>
+
+        <section class="ov-main" aria-label="最近在看、玩和说过的话">
+          <header class="sec-head">
+            <h3>最近</h3><span class="en">NOW — 在玩 / 在看</span>
+            <a href="records.html">全部 →</a>
+          </header>
+
+          <div class="grid3" id="picks">
+            <a class="item" href="record.html?id=anime-1ef7f1b0">
+              <span class="pic"><img src="assets/covers/anime-1ef7f1b0-frieren2.jpg" alt="葬送的芙莉莲 第二季 封面"><em>在看</em></span>
+              <h4>葬送的芙莉莲 第二季</h4>
+              <span class="meta">动画</span>
+            </a>
+            <a class="item" href="record.html?id=g-1001">
+              <span class="pic"><img src="assets/covers/g-1001-bgm-086301b6.jpg" alt="塞尔达 王国之泪 封面"><em>在玩</em></span>
+              <h4>塞尔达 王国之泪</h4>
+              <span class="meta">游戏 · <b>9.1</b></span>
+            </a>
+            <a class="item" href="record.html?id=game-1cc8ef5a">
+              <span class="pic"><img src="assets/covers/game-1cc8ef5a-GTA6.jpg" alt="GTA VI 封面"><em>在玩</em></span>
+              <h4>Grand Theft Auto VI</h4>
+              <span class="meta">游戏</span>
+            </a>
+          </div>
+
+          <header class="sec-head">
+            <h3>说过的话</h3><span class="en">SAID — QQ</span>
+          </header>
+
+          <figure class="quote">
+            <blockquote>你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)</blockquote>
+            <figcaption><b>小鱼</b><span>11.25 15:47 · 真聊过的</span></figcaption>
+          </figure>
+        </section>
+
+        <aside class="ov-side" aria-label="计划与数目">
+          <p class="kicker">PLANS <b>— 计划中 12</b></p>
+          <ul class="plans" id="plans">
+            <li><time>2026-11-22</time><span>自建素材资产管理系统（参考 Serpent）</span></li>
+            <li><time>2026-11-22</time><span>每日分类时间统计与图表</span></li>
+            <li><time>2026-11-22</time><span>钢琴演奏视频剪辑</span></li>
+          </ul>
+
+          <div class="figures" id="figures">
+            <div><b>648</b><span>收藏</span></div>
+            <div><b>41</b><span>日志</span></div>
+            <div><b>12</b><span>计划</span></div>
+          </div>
+
+          <a class="backtop" href="#top">回到上面 ↑</a>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+
+<script>
+(async function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (t) {
+    return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  };
+  var MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  var WD = ["周日","周一","周二","周三","周四","周五","周六"];
+
+  function isoWeek(d) {
+    var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    var day = t.getUTCDay() || 7;
+    t.setUTCDate(t.getUTCDate() + 4 - day);
+    var y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+    return Math.ceil(((t - y0) / 86400000 + 1) / 7);
+  }
+  function shift(d, n) { var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function mins(n) { if (!n) return "—"; return n >= 60 ? Math.floor(n / 60) + "h " + (n % 60) + "m" : n + "m"; }
+  function cat(c) { return { game: "游戏", anime: "动画", tv: "剧集", film: "电影", book: "读书" }[c] || "在看"; }
+
+  var now = new Date();
+  $("bigdate").textContent = String(now.getDate());
+  $("dateline").textContent = MON[now.getMonth()] + " " + now.getFullYear();
+  $("weekday").textContent = WD[now.getDay()] + " · 屋子里";
+  $("ovmeta").textContent = now.getFullYear() + " · 第 " + isoWeek(now) + " 周 · 凌晨 03:30 统一结算";
+
+  var data;
+  try {
+    data = await (await fetch("data/records.json", { cache: "no-store" })).json();
+  } catch (e) { return; }
+  var items = data.items || [];
+  var logs = items.filter(function (x) { return x.cat === "log"; });
+  var plans = items.filter(function (x) { return x.cat === "idea" && x.status === "计划中"; });
+
+  logs.sort(function (a, b) { return String(a.date + a.time).localeCompare(String(b.date + b.time)); });
+  var last = logs[logs.length - 1];
+  if (last) {
+    var yday = ymd(shift(now, -1));
+    $("notetime").textContent = (last.date === yday ? "昨晚 " : last.date.slice(5).replace("-", ".") + " ") + last.time;
+    $("notetext").textContent = last.text || "";
+    var day = logs.filter(function (x) { return x.date === last.date; });
+    var sum = function (k) {
+      return day.filter(function (x) { return x.kind === k; }).reduce(function (s, x) { return s + (Number(x.minutes) || 0); }, 0);
+    };
+    $("stats").innerHTML =
+      '<div><dt>工作</dt><dd>' + mins(sum("work")) + "</dd></div>" +
+      '<div><dt>健身</dt><dd>' + mins(sum("fitness")) + "</dd></div>" +
+      '<div><dt>游戏</dt><dd>' + mins(sum("game")) + "</dd></div>" +
+      '<div><dt>记录</dt><dd>' + day.length + " 条</dd></div>";
+  }
+
+  var pick = items.filter(function (x) { return x.status === "在玩"; }).slice(0, 2)
+    .concat(items.filter(function (x) { return x.status === "在看"; }).slice(0, 1));
+  $("picks").innerHTML = pick.map(function (x) {
+    var rating = x.bgm_rating || x.rating || "";
+    var meta = cat(x.cat) + (rating ? " · <b>" + esc(rating) + "</b>" : "");
+    return '<a class="item" href="record.html?id=' + encodeURIComponent(x.id) + '">' +
+      '<span class="pic">' + (x.cover ? '<img src="' + esc(x.cover) + '" alt="' + esc(x.title) + ' 封面" loading="lazy">' : "") +
+      "<em>" + (x.status === "在看" ? "在看" : "在玩") + "</em></span>" +
+      "<h4>" + esc(x.title) + "</h4>" +
+      '<span class="meta">' + meta + "</span></a>";
+  }).join("");
+
+  $("plans").innerHTML = plans.slice(0, 3).map(function (x) {
+    return "<li><time>" + esc(x.date) + "</time><span>" + esc(x.title) + "</span></li>";
+  }).join("");
+
+  $("figures").innerHTML =
+    "<div><b>" + items.length + "</b><span>收藏</span></div>" +
+    "<div><b>" + logs.length + "</b><span>日志</span></div>" +
+    "<div><b>" + plans.length + "</b><span>计划</span></div>";
+})();
+</script>
+
+</body>
+</html>
