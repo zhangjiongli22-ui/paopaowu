@@ -42,7 +42,7 @@ a{-webkit-tap-highlight-color:transparent}
 .chapters{display:grid}
 .chapters a{
   display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:6px;
-  min-height:clamp(44px,5.4vh,68px);padding-right:8px;border-bottom:1px solid var(--line-soft);
+  min-height:clamp(44px,5.4vh,68px);padding-right:8px;padding-left:14px;border-bottom:1px solid var(--line-soft);
   color:var(--paper-2);transition:color var(--dur) var(--ease),background var(--dur) var(--ease);
 }
 .chapters a i{font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.14em;color:var(--dim-2)}
@@ -969,7 +969,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
 /* 总目录：金线滑到当前章 */
 .chapters{position:relative}
-.chapters .rail-ind{position:absolute;left:0;top:0;width:2px;height:20px;background:var(--gold);opacity:0;pointer-events:none;transition:transform .46s var(--ease),height .4s var(--ease),width .4s var(--ease),opacity .3s var(--ease)}
+.chapters .rail-ind{position:absolute;left:1px;top:0;width:2px;height:20px;background:var(--gold);opacity:0;pointer-events:none;transition:transform .46s var(--ease),height .4s var(--ease),width .4s var(--ease),opacity .3s var(--ease)}
 .chapters .rail-ind.on{opacity:1}
 @media (max-width:860px){.chapters .rail-ind{height:2px;width:20px}}
 
@@ -985,29 +985,40 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .shelf-sec.collapsed .fold{grid-template-rows:0fr;opacity:0}
 .shelf-sec.collapsed .shelf-head{padding-bottom:14px}
 
-/* 日常 */
+/* 日常：一段一段的聊天记录，她的话在左、Kira 的话在右 */
 .chips .chip b{margin-left:8px;font-weight:400;color:var(--dim-2)}
 .chips .chip[aria-selected="true"] b{color:#231d10}
 .day-tools{align-items:baseline;gap:14px}
 .day-hint{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.1em;line-height:1.7;color:var(--dim-2)}
-.day-list{border-top:1px solid var(--line-soft)}
-.day-blk{padding:clamp(16px,1.8vw,26px) 0;border-bottom:1px solid var(--line-soft)}
-.day-head{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
-.day-head time{font:var(--fs-mono) var(--mono);letter-spacing:.14em;color:var(--dim-2)}
-.day-cat{font:var(--fs-mono) var(--mono);letter-spacing:.1em;color:var(--gold-text);border:1px solid var(--gold-soft);padding:2px 8px}
-.day-turns{display:grid;gap:6px}
-.turn{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:1px 0}
-.turn-who{font:var(--fs-mono) var(--mono);letter-spacing:.12em;color:var(--dim)}
-.turn.her .turn-who{color:var(--gold)}
-.turn-txt{margin:0;color:var(--paper-2);line-height:1.95}
+.day-list{margin-top:6px}
+.day-blk{position:relative;padding:2px 0 26px clamp(14px,2vw,26px);border-top:1px solid var(--line-soft);margin:0 0 16px}
+.day-blk:first-child{border-top:0;padding-top:0}
+.day-blk::before{content:"";position:absolute;left:0;top:10px;bottom:18px;width:1px;background:linear-gradient(180deg,var(--gold-soft),rgba(201,168,107,.04))}
+.day-head{display:flex;align-items:center;gap:12px;padding:6px 0 14px}
+.day-head time{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim-2)}
+.day-cat{font:var(--fs-mono) var(--mono);letter-spacing:.12em;padding:1px 9px;border:1px solid rgba(242,236,225,.18);color:var(--paper-2);background:rgba(242,236,225,.04)}
+.day-cat.mushy{border-color:rgba(232,167,189,.38);color:var(--sakura);background:rgba(232,167,189,.07)}
+.day-cat.scold{border-color:rgba(226,178,120,.38);color:#e2b278;background:rgba(226,178,120,.07)}
+.day-cat.food{border-color:rgba(160,214,178,.38);color:#a8d6b6;background:rgba(160,214,178,.07)}
+.day-cat.cute{border-color:rgba(232,167,189,.26);color:#e8bfcf;background:rgba(232,167,189,.05)}
+.day-turns{display:grid;gap:10px;justify-items:start}
+.turn{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline;gap:12px;
+  max-width:min(88%,760px);padding:11px 16px;border:1px solid var(--line);background:rgba(14,21,32,.52)}
+.turn.her{border-left:2px solid rgba(232,167,189,.5)}
+.turn.me{margin-left:0;justify-self:end;border-right:2px solid rgba(127,211,232,.45);background:rgba(11,22,32,.6)}
+.turn-who{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim-2);white-space:nowrap}
+.turn.her .turn-who{color:rgba(232,167,189,.85)}
+.turn.me .turn-who{color:rgba(127,211,232,.8)}
+.turn-txt{margin:0;color:var(--paper-2);line-height:1.9;white-space:pre-wrap}
 .turn.her .turn-txt{font-family:var(--serif);color:var(--paper)}
-.turn-hm{font:var(--fs-mono) var(--mono);letter-spacing:.06em;color:var(--dim-2)}
+.turn-hm{font:var(--fs-mono) var(--mono);letter-spacing:.06em;color:var(--dim-2);white-space:nowrap}
 @media (max-width:720px){
   .day-tools{gap:8px}
-  .turn{grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
+  .turn{max-width:100%;grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
   .turn-hm{justify-self:end;font-size:12px}
   .turn-txt{grid-column:1 / -1}
   .day-hint{font-size:12px}
+  .day-blk{padding-left:12px}
 }
 </style>
 </head>
@@ -1867,14 +1878,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         return s && !/^\[[^\]]*\]$/.test(s);
       }).map(function (t) {
         var her = t.role !== 'user';
-        return '<div class="turn' + (her ? ' her' : '') + '">' +
+        return '<div class="turn' + (her ? ' her' : ' me') + '">' +
           '<span class="turn-who">' + (her ? '小鱼' : 'Kira') + '</span>' +
           '<p class="turn-txt">' + esc(t.text || '').replace(/\n/g, '<br>') + '</p>' +
           '<span class="turn-hm">' + esc(t.hm || '') + '</span></div>';
       }).join('');
       return '<article class="day-blk">' +
         '<header class="day-head"><time>' + esc(String(b.d || '').replace(/-/g, '.')) + ' ' + esc(b.hm || '') + '</time>' +
-        '<span class="day-cat">' + esc((DCAT[b.cat] || DCAT.daily).name) + '</span></header>' +
+        '<span class="day-cat ' + esc(b.cat || 'daily') + '">' + esc((DCAT[b.cat] || DCAT.daily).name) + '</span></header>' +
         '<div class="day-turns">' + turns + '</div></article>';
     }).join('');
   }
