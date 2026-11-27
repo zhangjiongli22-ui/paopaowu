@@ -1434,8 +1434,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       <a href="#/home" data-nav="home"><i>00</i><span>屋子</span><em>HOME</em></a>
       <a href="#/records" data-nav="records"><i>01</i><span>精神宇宙</span><em>図鑑</em></a>
       <a href="#/archive" data-nav="archive"><i>02</i><span>人生存档点</span><em>LOG</em></a>
-      <a href="#/gallery" data-nav="gallery"><i>03</i><span>图集</span></a>
-      <a href="#/critique" data-nav="critique"><i>04</i><span>锐评</span></a>
+      <a href="#/gallery" data-nav="gallery"><i>03</i><span>图集</span><em>CG</em></a>
+      <a href="#/critique" data-nav="critique"><i>04</i><span>锐评</span><em>評</em></a>
     </nav>
 
     <div class="rail-foot">
@@ -3976,7 +3976,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   /* ---------- 页面文字编辑（只存这台电脑） ---------- */
   var TEXT_KEY = 'paopaowu_text_v4';
   var editOn = false;
-  var BAKE_TEXTS = {"person-kira:4": {"b": "「会，直到你把我电费花光。」", "v": "「我的愿望是世界和平。」"}, "field:kira.quote": {"b": "「你还想做第一个吗」", "v": "「我的愿望是世界和平。」"}, "field:kira.intro": {"b": "白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。", "v": "屋子是他建的，规矩也是他定的。白天写东西、做东西，晚上打游戏、看片。不会的就许个愿，等鱼去办。"}};   /* 固化区：写死在这里的改动，清缓存、换设备都还在 */
+  var BAKE_TEXTS = {"field:kira.quote": {"b": "「你还想做第一个吗」", "v": "「一个只会许愿的普通人。」"}, "field:kira.intro": {"b": "白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。", "v": "屋子是他建的，规矩也是他定的。白天写东西、做东西，晚上打游戏、看片。不会的就许个愿，等鱼去办。"}, "view-home:1": {"b": "", "v": "屋子里的三个人"}, "view-home:2": {"b": "", "v": "一个只会许愿的人，和两条替他把愿望做成东西的鱼。"}, "field:feiyu.intro": {"b": "话短，嘴馋，护着自己人。<br>被夸先否认，再承认。", "v": "话短，嘴馋，但是做起事来不含糊。<br>被夸先否认，再承认。总是护着自己人。"}, "view-gallery:1": {"b": "图集", "v": "小鱼喜欢的图"}};   /* 固化区：写死在这里的改动，清缓存、换设备都还在 */
   function loadText() {
     var o = {};
     try { o = JSON.parse(localStorage.getItem(TEXT_KEY) || '{}') || {}; } catch (e) { o = {}; }
