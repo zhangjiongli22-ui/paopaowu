@@ -1682,7 +1682,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <h1>精神宇宙</h1>
             <p class="lead">看过的动画、剧集、电影、游戏、书，都收在这里。</p>
           </div>
-          <div class="head-actions"><p class="count" id="rec-count">—</p><a class="add-btn" href="#/add">＋ 添加条目 / 截图</a></div>
+          <div class="head-actions"><p class="count" id="rec-count">—</p><a class="add-btn" data-admin href="#/add">＋ 添加条目 / 截图</a></div>
         </header>
 
         <div class="rec-tools">
@@ -1757,8 +1757,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             </section>
 
             <div class="detail-actions">
-              <a class="mini" id="d-edit" href="#/edit/">编辑这一条</a>
-              <button class="mini" type="button" id="d-addshot">＋ 加截图</button>
+              <a class="mini" id="d-edit" data-admin href="#/edit/">编辑这一条</a>
+              <button class="mini" type="button" id="d-addshot" data-admin>＋ 加截图</button>
               <button class="mini" type="button" id="d-fav" hidden>☆ 收藏</button>
               <input type="file" id="d-shot" accept="image/*" multiple hidden>
             </div>
@@ -1806,7 +1806,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         <section class="pgal" aria-label="图">
           <div class="pgal-head">
             <p class="pg-cap" id="pg-cap">图</p>
-            <label class="addph">＋ 添加照片<input type="file" id="p-add" accept="image/*" multiple hidden></label>
+            <label class="addph" data-admin>＋ 添加照片<input type="file" id="p-add" accept="image/*" multiple hidden></label>
           </div>
           <div class="wall" id="p-gallery"></div>
         </section>
@@ -2144,10 +2144,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   function isFishName(who) { return who === '大肥鱼' || who === '一只鱼'; }
   function shownWho(who) { return isFishName(who) ? '小鱼' : (who || ''); }
 
+  function applyAdminVis() {
+    var on = isAdmin();
+    document.querySelectorAll('[data-admin]').forEach(function (n) { n.hidden = !on; });
+  }
   function hydrateAuth() {
     var on = isAdmin();
     var fab = el('edit-fab');
     if (fab) fab.hidden = !on;
+    applyAdminVis();
     var link = el('login-link');
     if (link) { link.textContent = on ? 'Kira · 已登录' : '登录 / Kira'; link.href = '#/login'; }
     var st = el('login-state');
@@ -2925,6 +2930,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       a.classList.toggle('on', nav === show);
     });
     moveRailInd();
+    applyAdminVis();
     scheduleApply();
     if (show === 'archive') {
       renderArchive(arg);
@@ -3115,7 +3121,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var box = el('d-shots');
     if (!box) return;
     if (!arr.length) {
-      box.innerHTML = '<p class="shots-empty">还没有截图，点「＋ 加截图」直接选，不用跳页。</p>';
+      box.innerHTML = '<p class="shots-empty">' + (isAdmin() ? '还没有截图，点「＋ 加截图」直接选，不用跳页。' : '还没有截图。') + '</p>';
       return;
     }
     box.innerHTML = arr.map(function (src, i) {
@@ -3625,7 +3631,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   }
   function figHtml(g, i, num) {
     return '<figure data-i="' + i + '"><img data-img="pgal.' + (currentPerson || 'x') + '.' + i + '" src="' + g.src + '" alt="' + esc(g.cap) + '">' +
-      '<div class="ph-act">' +
+      '<div class="ph-act" data-admin>' +
         '<button type="button" data-act="cap">说明</button>' +
         '<button type="button" data-act="swap">换图</button>' +
         '<button type="button" data-act="del">删除</button>' +
@@ -4130,6 +4136,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   }
   var applyTimer = null;
   function scheduleApply() {
+    applyAdminVis();
     if (editOn) return;
     clearTimeout(applyTimer);
     applyTimer = setTimeout(applyTextEdits, 90);
