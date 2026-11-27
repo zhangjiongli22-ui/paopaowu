@@ -1457,6 +1457,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .ed-b.danger{color:#e3a0a0;border-color:rgba(227,160,160,.3)}
 .ed-msg{margin:0;font:11.5px var(--mono);color:var(--dim-2);min-height:14px}
 .edit-mode img[data-img]{outline:1px dashed rgba(201,168,107,.55);outline-offset:2px;cursor:pointer}
+/* 首页三张卡：把 DSH 那张稍微放大、往下压一点，让三张脸大致在一条线上 */
+.win-art img[data-img="home.dsh"]{transform:scale(1.16) translateY(8%);transform-origin:center 30%}
+.win-art img[data-img="home.feiyu"]{transform:scale(1.03);transform-origin:center 30%}
+.win-art img[data-img="home.kira"]{transform:scale(1.04) translateY(3%);transform-origin:center 30%}
 </style>
 </head>
 <body>
@@ -4057,8 +4061,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var o = {};
     try { o = JSON.parse(localStorage.getItem(TEXT_KEY) || '{}') || {}; } catch (e) { o = {}; }
     Object.keys(BAKE_TEXTS).forEach(function (k) {
-      if (!o[k]) o[k] = BAKE_TEXTS[k];
-      else if (typeof o[k] === 'object' && typeof BAKE_TEXTS[k] === 'object') o[k].b = BAKE_TEXTS[k].b;
+      var bk = BAKE_TEXTS[k];
+      if (!o[k]) { o[k] = bk; return; }
+      if (typeof o[k] !== 'object' || typeof bk !== 'object') return;
+      o[k].b = bk.b;
+      /* 本机还是原文（没改过）就按固化值来；自己改过就保留自己的 */
+      if (!o[k].v || o[k].v === bk.b) o[k].v = bk.v;
     });
     return o;
   }
