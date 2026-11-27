@@ -184,7 +184,7 @@ a{-webkit-tap-highlight-color:transparent}
 .detail{padding:clamp(22px,3vh,48px) clamp(22px,3.1vw,58px) clamp(24px,3vh,48px);min-height:100%}
 .back{display:inline-flex;align-items:center;gap:10px;min-height:44px;font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text);margin-bottom:14px}
 .back:hover{color:var(--gold)}
-.detail-grid{display:grid;grid-template-columns:clamp(240px,22vw,420px) minmax(0,1fr);gap:clamp(24px,3.4vw,64px);align-items:start;padding-top:6px;border-top:1px solid var(--line-soft)}
+.detail-grid{display:grid;grid-template-columns:clamp(250px,25vw,470px) minmax(0,1fr);gap:clamp(24px,3.4vw,64px);align-items:start;padding-top:6px;border-top:1px solid var(--line-soft)}
 .detail-cover{position:relative;aspect-ratio:3/4;border:1px solid var(--line);overflow:hidden;background:var(--panel-solid)}
 .detail-cover img{width:100%;height:100%;object-fit:cover}
 .detail-cover em{position:absolute;left:12px;top:12px;font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.18em;color:var(--gold);background:rgba(5,7,12,.8);border:1px solid rgba(201,168,107,.3);padding:4px 8px}
@@ -893,7 +893,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 @media (max-width:860px){.gal-grid{column-count:2}}
 .gal-box{position:fixed;inset:0;z-index:80;display:grid;place-items:center;gap:14px;padding:4vh 4vw;background:rgba(4,6,10,.92);cursor:zoom-out}
 .gal-box[hidden]{display:none}
-.gal-box img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;object-fit:contain;border:1px solid var(--line-soft)}
+.gal-box img{max-width:min(96vw,1680px);max-height:88vh;width:auto;height:auto;object-fit:contain;border:1px solid var(--line-soft)}
+#gal-box img{max-width:min(94vw,1280px);max-height:84vh}
+#shot-box{padding:2vh 2vw}
 .gal-box p{max-width:60em;margin:0;text-align:center;font-family:var(--serif);font-size:var(--fs-body);line-height:1.8;color:var(--paper-2)}
 .embed-frame{display:block;width:100%;height:calc(100vh - 0px);border:0;background:transparent}.embed-page{padding:0;margin:0;max-width:none}
 .form-msg{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.06em;line-height:1.75;color:var(--dim-2);min-height:1.5em}
