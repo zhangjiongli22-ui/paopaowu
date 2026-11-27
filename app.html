@@ -1219,6 +1219,42 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .shots .shot img{cursor:zoom-in;transition:transform .5s var(--ease),border-color .3s var(--ease)}
 .shots .shot:hover img{transform:scale(1.02);border-color:var(--gold-soft)}
 #shot-box p{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim)}
+
+/* 分类跳转条：每类一个强调色，当前那类高亮 */
+.shelf-nav{display:none;margin:8px 0 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  position:sticky;top:0;z-index:6;background:rgba(6,10,17,.92);backdrop-filter:blur(10px)}
+.shelf-nav.on{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.shelf-nav a{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  min-height:50px;padding:0 clamp(14px,1.4vw,22px);border-left:1px solid var(--line-soft);
+  font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim);white-space:nowrap;
+  transition:color .3s var(--ease),background .3s var(--ease)}
+.shelf-nav a:first-child{border-left:0}
+.shelf-nav a span{overflow:hidden;text-overflow:ellipsis}
+.shelf-nav a b{font-family:var(--latin);font-style:italic;font-size:1.3em;letter-spacing:.02em;color:var(--gold-text);transition:color .3s var(--ease)}
+.shelf-nav a[data-jump="rec-now"] b{color:var(--aqua)}
+.shelf-nav a[data-jump="rec-wish"] b{color:var(--sakura)}
+.shelf-nav a[data-jump="rec-done"] b{color:var(--paper-2)}
+.shelf-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.shelf-nav a:hover{color:var(--paper);background:rgba(201,168,107,.05)}
+.shelf-nav a.on{color:var(--paper);background:rgba(201,168,107,.07)}
+.shelf-nav a.on::after{transform:scaleX(1)}
+.shelf-nav a.on b{color:var(--gold)}
+.shelf-nav a[data-jump="rec-now"].on b{color:var(--aqua)}
+.shelf-nav a[data-jump="rec-wish"].on b{color:var(--sakura)}
+@media (max-width:860px){
+  .shelf-nav.on{grid-template-columns:repeat(4,max-content);overflow-x:auto;scrollbar-width:none}
+  .shelf-nav::-webkit-scrollbar{display:none}
+  .shelf-nav a{min-height:44px;padding:0 16px;gap:10px;min-width:max-content}
+  .shelf-nav a span{overflow:visible;text-overflow:clip}
+  .shelf-nav a b{font-size:1.15em}
+}
+/* 统计页：这个小站 */
+.site-nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+  background:rgba(242,236,225,.08);border:1px solid rgba(242,236,225,.08);margin:14px 0 10px}
+.site-nums div{background:rgba(6,10,17,.55);padding:16px 18px;display:grid;gap:5px;justify-items:center;text-align:center}
+.site-nums b{font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);line-height:1.15;color:var(--paper)}
+.site-nums span{font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
 </style>
 </head>
 <body>
@@ -3040,6 +3076,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         '<div class="flow-rows" hidden>' + detail + '</div></div>';
     }).join('');
 
+    var SITE = { days: 8, rounds: 29, today: 22 };
     body.innerHTML = '<div class="stat-hero">' +
         '<div class="stat-big"><b>' + list.length + '</b><span>全部条目</span></div>' +
         '<div class="stat-big"><b>' + rated.length + '</b><span>已评分</span></div>' +
@@ -3049,7 +3086,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       '<h3 class="stat-h">条目分布</h3><div class="stat-chips">' + chips + '</div>' +
       '<h3 class="stat-h">工作流时间统计 <span class="stat-count">' + shown.length + ' 类</span></h3>' +
       '<p class="stat-meta">立项 ' + projectFrom + ' · 记到 ' + projectTo + '</p>' +
-      '<div class="flows">' + flowHtml + '</div>';
+      '<div class="flows">' + flowHtml + '</div>' +
+      '<h3 class="stat-h">这个小站 <span class="stat-count">从 2026-11-20 到今天</span></h3>' +
+      '<div class="site-nums">' +
+        '<div><b>' + SITE.days + '</b><span>建站天数</span></div>' +
+        '<div><b>' + SITE.rounds + '</b><span>改动轮次</span></div>' +
+        '<div><b>' + SITE.today + '</b><span>今天改的</span></div>' +
+        '<div><b>' + list.length + '</b><span>收藏条目</span></div>' +
+      '</div>' +
+      '<p class="stat-meta">轮次按改动备忘里记下的每一小节算：11-20 立项、11-22 大改版、11-23 到 11-26 每天一轮修整、11-27 换成新的单页外壳再一项一项补齐。</p>';
 
     body.querySelectorAll('.flow-toggle').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -3447,6 +3492,24 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!b) return;
     renderArchive(b.getAttribute('data-tab'));
   });
+  (function shelfSpy() {
+    var stage = el('stage');
+    if (!stage || stage.__shelfSpy) return;
+    stage.__shelfSpy = true;
+    stage.addEventListener('scroll', function () {
+      var view = el('view-records');
+      if (!view || !view.classList.contains('on')) return;
+      var secs = document.querySelectorAll('#shelf .shelf-sec');
+      var best = null, bestTop = -Infinity;
+      secs.forEach(function (s) {
+        var top = s.getBoundingClientRect().top - 170;
+        if (top <= 0 && top > bestTop) { bestTop = top; best = s.id; }
+      });
+      document.querySelectorAll('#shelf-nav a').forEach(function (a) {
+        a.classList.toggle('on', a.getAttribute('data-jump') === best);
+      });
+    }, { passive: true });
+  })();
   el('shelf-nav').addEventListener('click', function (e) {
     var a = e.target.closest('a[data-jump]');
     if (!a) return;
