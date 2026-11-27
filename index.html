@@ -3885,13 +3885,23 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
     return out;
   }
+  function clearEditables() {
+    document.querySelectorAll('[contenteditable="true"], [data-edit-idx]').forEach(function (n) {
+      n.removeAttribute('contenteditable');
+      n.removeAttribute('spellcheck');
+      n.removeAttribute('data-edit-idx');
+    });
+  }
   function applyTextEdits() {
     var view = document.querySelector('.view.on');
     if (!view || editOn) return;
     var map = loadText();
     textTargets().forEach(function (n, i) {
       var v = map[view.id + ':' + i];
-      if (v != null && n.innerHTML !== v) n.innerHTML = v;
+      if (v != null) {
+        v = String(v).replace(/\scontenteditable="[^"]*"/gi, '');
+        if (n.innerHTML !== v) n.innerHTML = v;
+      }
     });
   }
   function setEditMode(on) {
@@ -3902,20 +3912,26 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       btn.classList.toggle('on', editOn);
       btn.textContent = editOn ? '完成编辑' : '编辑文字';
     }
-    var view = document.querySelector('.view.on');
-    if (!view) return;
+    clearEditables();
     if (!editOn) { applyTextEdits(); return; }
-    var map = loadText();
     textTargets().forEach(function (n, i) {
       n.setAttribute('contenteditable', 'true');
       n.setAttribute('spellcheck', 'false');
-      n.addEventListener('blur', function () {
-        var m = loadText();
-        m[view.id + ':' + i] = n.innerHTML;
-        saveText(m);
-      });
+      n.setAttribute('data-edit-idx', String(i));
     });
   }
+  setTimeout(function () { if (!editOn) clearEditables(); }, 0);
+  document.addEventListener('focusout', function (e) {
+    if (!editOn) return;
+    var n = e.target;
+    if (!n || !n.getAttribute || n.getAttribute('contenteditable') !== 'true') return;
+    var view = document.querySelector('.view.on');
+    var idx = n.getAttribute('data-edit-idx');
+    if (!view || idx == null) return;
+    var m = loadText();
+    m[view.id + ':' + idx] = n.innerHTML;
+    saveText(m);
+  });
   document.addEventListener('click', function (e) {
     var b = e.target.closest ? e.target.closest('#edit-fab') : null;
     if (!b) return;
@@ -3929,6 +3945,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var stage = el('stage');
     if (stage) stage.scrollTo({ top: 0, behavior: 'smooth' });
   });
+  window.addEventListener('hashchange', function () { if (editOn) setEditMode(false); });
   window.addEventListener('hashchange', route);
   bindLogin();
   hydrateAuth();
