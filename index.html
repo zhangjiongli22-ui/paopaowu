@@ -1469,6 +1469,14 @@ html.booting .edit-fab{visibility:hidden}
 img[data-img="home.kira"]{transform:translate(20.0%,8.0%) scale(1.42);transform-origin:center center}
 img[data-img="home.dsh"]{transform:translate(1.0%,10.999999999999998%) scale(1.22);transform-origin:center center}
 img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1.18);transform-origin:center center}
+
+/* 开屏：三张卡只淡入，不做位移（避免看起来像在往上跳） */
+@keyframes fadeOnly{from{opacity:0}to{opacity:1}}
+.nav-anim .view.on .hero .windows{animation:fadeOnly .5s var(--ease) .02s both}
+/* 卡面图片多留 2px 出血，缩放/合成时边缘不会透出白线 */
+.win-art img{inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:transform}
+.win-art{background:#070b12}
 </style>
 </head>
 <body>
