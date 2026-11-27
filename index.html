@@ -12,7 +12,10 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;background:var(--ink-900);color:var(--paper);
+  margin:0;background:
+    radial-gradient(120% 90% at 82% -12%,rgba(31,61,88,.36),transparent 60%),
+    radial-gradient(80% 70% at 0% 108%,rgba(20,52,68,.3),transparent 64%),
+    var(--ink-900);color:var(--paper);
   font-family:var(--sans);font-size:var(--fs-body);line-height:1.75;
   letter-spacing:.01em;-webkit-font-smoothing:antialiased;overflow:hidden;
 }
@@ -22,7 +25,7 @@ img{display:block;max-width:100%}
 
 .app{
   display:grid;grid-template-columns:212px minmax(0,1fr);
-  height:100%;
+  height:100%;max-width:1440px;margin:0 auto;border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft);
   background:
     radial-gradient(120% 90% at 82% -12%,rgba(31,61,88,.5),transparent 60%),
     radial-gradient(80% 70% at 0% 108%,rgba(20,52,68,.42),transparent 64%),
@@ -64,7 +67,7 @@ img{display:block;max-width:100%}
 
 /* ========== 第一屏：三个人 ========== */
 .hero{
-  min-height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  min-height:min(100%,860px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;
   padding:30px 40px 18px;
 }
 .room-head{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding-bottom:18px}
@@ -104,7 +107,7 @@ img{display:block;max-width:100%}
 .step b{font-weight:400;color:var(--gold)}
 
 /* ========== 第二屏：屋子总览 ========== */
-.overview{min-height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);padding:28px 40px 22px;border-top:1px solid var(--line-soft)}
+.overview{min-height:min(100%,860px);display:grid;grid-template-rows:auto minmax(0,1fr);padding:28px 40px 22px;border-top:1px solid var(--line-soft)}
 .ov-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
 .ov-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h1);letter-spacing:.06em;line-height:1.2}
 .ov-meta{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2);padding-bottom:6px}
