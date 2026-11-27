@@ -1196,6 +1196,13 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 /* 图集载入占位 */
 .gal-loading{margin:40px 0;color:var(--dim-2);font:var(--fs-mono) var(--mono);letter-spacing:.2em}
 @media (max-width:720px){.plan-row .plan-tag{display:none}}
+
+/* 图鉴卡片：左上状态角标、右下「已评价」 */
+.card .pic em{color:rgba(242,236,225,.8);background:rgba(4,7,11,.82);padding:3px 8px}
+.card .pic em.in{background:rgba(201,168,107,.9);color:#070c12}
+.card .pic b.rated{position:absolute;right:0;bottom:0;font:var(--fs-mono) var(--mono);font-weight:400;
+  letter-spacing:.14em;color:rgba(201,168,107,.85);background:rgba(4,7,11,.78);padding:3px 7px}
+.item .pic em.in{background:rgba(201,168,107,.9);color:#070c12}
 </style>
 </head>
 <body>
@@ -2143,7 +2150,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         g.innerHTML = now.map(function (x) {
           var start = startText(x);
           return '<a class="item" href="#/records/' + encodeURIComponent(x.id) + '">' +
-            '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面"><em>' + esc(x.status || '') + '</em></span>' +
+            '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面"><em class="' + (x.status === '在玩' || x.status === '在看' ? 'in' : '') + '">' + esc(x.status || '') + '</em></span>' +
             '<h4>' + esc(x.title) + '</h4><span class="meta">' + esc(CAT[x.cat] || '') +
             (start ? ' · ' + esc(start) : '') + '</span>' +
             (x.rating ? '<span class="meta-stars">' + starMini(x.rating) + '</span>' : '') + '</a>';
@@ -2628,9 +2635,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   }
   function cardHtml(x) {
     var start = startText(x);
+    var st = x.status || '';
+    var inprog = (st === '在玩' || st === '在看');
+    var rated = !!(x.rating || String(x.note || '').trim());
     return '<a class="card" href="#/records/' + encodeURIComponent(x.id) + '">' +
       '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面" loading="lazy">' +
-      '<em>' + (CAT[x.cat] || '看') + '</em></span>' +
+      (st ? '<em class="' + (inprog ? 'in' : '') + '">' + esc(st) + '</em>' : '') +
+      (rated ? '<b class="rated">已评价</b>' : '') +
+      '</span>' +
       '<h3>' + esc(x.title) + '</h3>' +
       '<span class="meta">' + starMini(x.rating) + (start ? '<time>' + esc(start) + '</time>' : '') + '</span>' +
       '</a>';
