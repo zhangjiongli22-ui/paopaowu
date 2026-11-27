@@ -206,6 +206,10 @@ try {
   .now-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
   .ch-index .ch-row::after{display:none}
 }
+@media (min-width:1200px){
+  .now-grid{grid-template-columns:1.55fr 1fr}
+  .now-col-wide .now-cards{grid-template-columns:repeat(var(--now-cols,5),minmax(0,1fr))}
+}
 </style><style>
 /* 2026-11-25 首页作品墙：每次随机挑，过一会儿自己换一张 */
 .pk-shot{opacity:1;transition:transform .45s var(--ease),box-shadow .45s var(--ease),filter .45s var(--ease),opacity .5s var(--ease)}
@@ -563,7 +567,7 @@ try {
   try {
     var data = await (await fetch("data/records.json", { cache: "no-store" })).json();
     var items = data.items || [];
-    var playing = items.filter(function (x) { return x.status === "在玩"; }).slice(0, 6);
+    var playing = items.filter(function (x) { return x.status === "在玩"; }).slice(0, 10);
     var watching = items.filter(function (x) { return x.status === "在看"; }).slice(0, 6);
     var g = document.getElementById("now-grid");
     if (g) {
@@ -576,11 +580,13 @@ try {
           '<span class="now-pic">' + cover + '<span class="now-st">' + esc(kind(x.cat)) + "</span></span>" +
           '<span class="now-tt">' + esc(x.title) + "</span></a>";
       };
-      var col = function (label, rows) {
-        return '<div class="now-col"><p class="now-k">' + label + "<b>" + rows.length + "</b></p>" +
-          '<div class="now-cards">' + rows.map(card).join("") + "</div></div>";
+      var col = function (label, rows, wide) {
+        var cols = wide ? Math.min(5, Math.max(3, Math.ceil(rows.length / 2))) : 0;
+        var style = cols ? ' style="--now-cols:' + cols + '"' : "";
+        return '<div class="now-col' + (wide ? " now-col-wide" : "") + '"><p class="now-k">' + label + "<b>" + rows.length + "</b></p>" +
+          '<div class="now-cards"' + style + ">" + rows.map(card).join("") + "</div></div>";
       };
-      g.innerHTML = col("在玩", playing) + col("在看", watching);
+      g.innerHTML = col("在玩", playing, true) + col("在看", watching);
     }
   } catch (e) {}
 })();
