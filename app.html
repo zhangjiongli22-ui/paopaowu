@@ -112,7 +112,7 @@ a{-webkit-tap-highlight-color:transparent}
 .dateline{margin:12px 0 0;font:var(--fs-mono) var(--mono);letter-spacing:.26em;color:var(--gold)}
 .weekday{margin:4px 0 0;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
 .stats{margin:18px 0 0;padding:0;border-top:1px solid var(--line-soft)}
-.stats div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.stats div{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line-soft)}
 .stats dt{color:var(--dim)}
 .stats dd{margin:0;font-family:var(--serif);font-size:var(--fs-h2)}
 .note{margin:14px 0 0;line-height:1.85;color:var(--paper-2)}
@@ -134,7 +134,7 @@ a{-webkit-tap-highlight-color:transparent}
 .quote{margin:0;padding:12px 0 0;display:grid;gap:8px;position:relative}
 .quote::before{content:"";position:absolute;left:0;top:22px;width:12px;height:1px;background:var(--gold);opacity:.75}
 .quote blockquote{margin:0;padding-left:24px;font-family:var(--serif);font-size:var(--fs-quote);line-height:1.95;color:#f0ebde}
-.quote figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-left:24px;color:var(--dim)}
+.quote figcaption{display:flex;align-items:baseline;gap:14px;padding-left:24px;color:var(--dim)}
 .quote figcaption b{font-family:var(--serif);font-weight:400;color:var(--gold);letter-spacing:.12em}
 .quote figcaption span{font:var(--fs-mono) var(--mono);letter-spacing:.14em}
 .ov-side{display:flex;flex-direction:column;gap:10px;align-self:stretch}
@@ -1020,6 +1020,43 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .day-hint{font-size:12px}
   .day-blk{padding-left:12px}
 }
+/* 档案页：照旧站的单栏排版 */
+.pf-flow{max-width:86ch}
+.pbody{grid-template-columns:minmax(0,1fr);padding:clamp(22px,2.6vw,40px) clamp(20px,3vw,44px) clamp(34px,4vh,60px)}
+.pf-kicker{margin:0 0 14px;font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--gold)}
+.person-intro{margin:16px 0 0;max-width:44ch;color:var(--paper-2);line-height:2}
+.pquote{position:relative;margin:22px 0 0;padding:16px 20px;max-width:44ch;border:1px solid var(--line);border-left:2px solid var(--gold-soft);background:rgba(11,17,27,.5)}
+.pquote blockquote{margin:0;font-family:var(--serif);line-height:1.95;color:var(--paper)}
+.pquote figcaption{margin-top:8px;font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim-2)}
+.pquote figcaption::before{content:"— "}
+.pf-nums{display:flex;flex-wrap:wrap;gap:clamp(18px,3.2vw,54px);margin:0 0 clamp(26px,3.2vh,44px);padding:20px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.pf-nums div{display:grid;gap:5px;min-width:0}
+.pf-nums b{font-family:var(--serif);font-weight:500;font-size:clamp(21px,1.75vw,29px);letter-spacing:.02em;color:var(--paper);line-height:1.1;white-space:nowrap}
+.pf-nums span{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
+.pf-sec{margin:0 0 clamp(28px,3.6vh,48px)}
+.pf-head{display:flex;align-items:baseline;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
+.pf-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);letter-spacing:.05em;line-height:1.2}
+.pf-head .en{font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--dim-2)}
+.pf-head .n{margin-left:auto;font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--gold-text)}
+.pf-list{list-style:none;margin:0;padding:0}
+.pf-list li{display:grid;grid-template-columns:88px minmax(0,1fr);gap:clamp(14px,2vw,30px);padding:16px 0;border-bottom:1px solid var(--line-soft)}
+.pf-list .k{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2);padding-top:4px}
+.pf-list .v{color:var(--paper-2);line-height:2;min-width:0;overflow-wrap:anywhere}
+.pf-spec{margin:0}
+.pf-spec div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:clamp(14px,2vw,30px);padding:14px 0;border-bottom:1px solid var(--line-soft)}
+.pf-spec dt{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2);padding-top:4px}
+.pf-spec dd{margin:0;color:var(--paper-2);line-height:2;overflow-wrap:anywhere}
+.pf-quote{margin:22px 0 0;padding-left:18px;border-left:1px solid var(--line)}
+.pf-quote:first-of-type{margin-top:20px}
+.pf-quote blockquote{margin:0;font-family:var(--serif);font-size:var(--fs-quote);line-height:1.85;color:var(--paper)}
+.pf-quote figcaption{margin-top:6px;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
+@media (max-width:720px){
+  .pf-list li,.pf-spec div{grid-template-columns:minmax(0,1fr);gap:4px}
+  .pf-list .k,.pf-spec dt{padding-top:0}
+  .pf-list li{padding:14px 0}
+  .pquote{max-width:none}
+  .person-intro{max-width:none}
+}
 </style>
 </head>
 <body>
@@ -1345,9 +1382,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="pamb" id="p-amb" aria-hidden="true"></div>
             <div class="phero-in">
               <a class="back pback" href="#/home">← 回屋子</a>
-              <p class="phero-no" id="p-no">01</p>
+              <p class="pf-kicker" id="p-no">CHARACTER</p>
               <h1 id="p-name">—</h1>
               <p class="person-sub" id="p-sub"></p>
+              <p class="person-intro" id="p-intro"></p>
+              <figure class="pquote" id="p-quote" hidden>
+                <blockquote id="p-quote-text"></blockquote>
+                <figcaption id="p-quote-cap"></figcaption>
+              </figure>
               <div class="tags" id="p-tags"></div>
               <p class="phero-where" id="p-where"></p>
             </div>
@@ -1356,8 +1398,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         </header>
 
         <div class="pbody">
-          <main class="pmain" id="p-main"></main>
-          <aside class="pside" id="p-side"></aside>
+          <main class="pmain pf-flow" id="p-main"></main>
         </div>
 
         <section class="pgal" aria-label="图">
@@ -2027,6 +2068,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   var PEOPLE = {
     kira: {
       name: 'Kira', latin: true, no: '01', role: 'OWNER 01',
+      kicker: 'CHARACTER 01 — 只会许愿的普通人',
+      quote: '会，直到你把我电费花光。',
       sub: 'きら · 闪光的 Kira',
       tags: ['许愿', '拍板', '半夜不睡'],
       img: 'assets/kira.jpg',
@@ -2036,6 +2079,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     },
     dsh: {
       name: 'DSH', latin: true, no: '02', role: '鱼助手 01',
+      kicker: 'CHARACTER 02 — 机器上那条鱼',
+      quote: '同一台机器，不同的活。她管日子，我管东西。',
       sub: '从接手机器那天起，就住在这儿',
       tags: ['动手', '判断', '收尾'],
       img: 'assets/dsh.jpg',
@@ -2045,6 +2090,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     },
     feiyu: {
       name: '小鱼', latin: false, no: '03', role: '鱼助手 02',
+      kicker: 'CHARACTER 03 — 住在这间屋子里的小鱼',
+      quote: '今天也没给我留 token，我饿',
       sub: '住在这台电脑里的一条蓝色小鲸鱼',
       tags: ['话短', '嘴馋', '护人'],
       img: 'assets/feiyu.jpg',
@@ -2678,114 +2725,155 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     return '<section class="side-block"><h3>' + t + '</h3>' + body + '</section>';
   }
 
+  function pfSec(t, en, body, no) {
+    return '<section class="pf-sec"><header class="pf-head"><h2>' + t + '</h2><span class="en">' + en + '</span>' +
+      (no ? '<span class="n">' + no + '</span>' : '') + '</header>' + body + '</section>';
+  }
+  function pfRows(rows) {
+    return '<ul class="pf-list">' + rows.map(function (r) {
+      return '<li><span class="k">' + esc(r[0]) + '</span><span class="v">' + esc(r[1]) + '</span></li>';
+    }).join('') + '</ul>';
+  }
+  function pfSpec(rows) {
+    return '<dl class="pf-spec">' + rows.map(function (r) {
+      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+    }).join('') + '</dl>';
+  }
+  function pfNums(items) {
+    return '<div class="pf-nums">' + items.map(function (it) {
+      return '<div><b>' + esc(it[0]) + '</b><span>' + esc(it[1]) + '</span></div>';
+    }).join('') + '</div>';
+  }
+  function pfQuotes(rows) {
+    return rows.map(function (q) {
+      return '<figure class="pf-quote"><blockquote>' + esc(q[0]) + '</blockquote><figcaption>' + esc(q[1]) + '</figcaption></figure>';
+    }).join('');
+  }
+  function names(list) {
+    return list.map(function (x) { return x.title; }).join('、');
+  }
+
   function buildSections(id) {
     var D = window.__PICKS__ || {};
-    var logs = D.logs || [], plans = D.plans || [], picks = D.picks || [];
-    function byDateDesc(a, b) { return String(b.date).localeCompare(String(a.date)); }
-    function mins(n) { return n >= 60 ? Math.floor(n / 60) + 'h ' + (n % 60) + 'm' : n + 'm'; }
-    var KIND = { anime: '动画', tv: '剧集', film: '电影', game: '游戏', book: '读书', work: '工作', fitness: '健身' };
+    var logs = D.logs || [], plans = D.plans || [], all = D.picks || [];
+    var KIND = { anime: '动画', tv: '剧集', film: '电影', game: '游戏', book: '读书' };
+    function byDateDesc(a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }
+    var now = all.filter(function (x) { return x.status === '在玩'; }).sort(byDateDesc);
+    var watching = all.filter(function (x) { return x.status === '在看'; }).sort(byDateDesc);
+    var done = all.filter(function (x) { return x.status === '看过' || x.status === '玩过'; });
+    var todoAll = plans.filter(function (x) { return x.status !== '已达成'; }).sort(byDateDesc);
+    var donePlans = plans.filter(function (x) { return x.status === '已达成'; })
+      .sort(function (a, b) {
+        return String(b.done_date || b.date || '').localeCompare(String(a.done_date || a.date || ''));
+      });
+    var sum = { work: 0, game: 0, fitness: 0, other: 0 };
+    logs.forEach(function (x) {
+      var k = (x.kind === 'work' || x.kind === 'game' || x.kind === 'fitness') ? x.kind : 'other';
+      sum[k] += Number(x.minutes) || 0;
+    });
+    var fav = all.filter(function (x) { return x.pinned; });
+    var top = all.filter(function (x) { return x.rating; })
+      .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 7);
 
     if (id === 'kira') {
-      var dates = {};
-      logs.forEach(function (x) { dates[x.date] = 1; });
-      var recent = Object.keys(dates).sort().reverse().slice(0, 7);
-      var sum = { work: 0, fitness: 0, game: 0, other: 0 };
-      logs.forEach(function (x) {
-        if (recent.indexOf(x.date) < 0) return;
-        var k = KIND[x.kind] ? x.kind : 'other';
-        if (k === 'work' || k === 'fitness' || k === 'game') sum[k] += x.minutes || 0; else sum.other += x.minutes || 0;
-      });
-      var playing = picks.filter(function (x) { return x.status === '在玩'; }).slice(0, 3);
-      var watching = picks.filter(function (x) { return x.status === '在看'; }).slice(0, 3);
-      var top = picks.filter(function (x) { return x.rating; }).sort(function (a, b) { return b.rating - a.rating; }).slice(0, 3);
-      var todo = plans.filter(function (x) { return x.status !== '已达成'; }).sort(byDateDesc).slice(0, 3);
-      var main =
-        chap('01', '现在', 'NOW',
-          '<p class="lead">' + esc((PROF.kira && PROF.kira.text) || '今天还空着。') + '</p>' +
-          '<div class="side-block" style="margin-top:6px"><h3>在玩</h3>' + rowsHtml(playing.map(function (x) { return [x.title, KIND[x.cat] || '']; })) + '</div>' +
-          '<div class="side-block" style="margin-top:14px"><h3>在看</h3>' + rowsHtml(watching.map(function (x) { return [x.title, KIND[x.cat] || '']; })) + '</div>') +
-        chap('02', '要做的事', 'DOING', rowsHtml(todo.map(function (x) { return [x.title, x.date]; }))) +
-        chap('03', '已经做到', 'DONE', rowsHtml(plans.filter(function (x) { return x.status === '已达成'; })
-          .sort(function (a, b) {
-            return String(b.done_date || b.date || '').localeCompare(String(a.done_date || a.date || ''));
-          })
-          .slice(0, 6)
-          .map(function (x) { return [x.title, x.done_date || x.date || '']; })));
-      var side =
-        sideBlock('时间', '<div class="nums">' +
-          '<div><b>' + mins(sum.work) + '</b><span>工作</span></div>' +
-          '<div><b>' + mins(sum.fitness) + '</b><span>健身</span></div>' +
-          '<div><b>' + mins(sum.game) + '</b><span>游戏</span></div>' +
-          '<div><b>' + mins(sum.other) + '</b><span>其他</span></div>' +
-          '</div>') +
-        sideBlock('口味', rowsHtml(top.map(function (x) { return [x.title, '★ ' + (x.rating / 2).toFixed(1)]; }))) +
-        '<p class="side-note">时间按最近 ' + recent.length + ' 个记录日算。</p>';
-      return { main: main, side: side };
+      return pfNums([
+        [String(done.length), '看完 / 玩完'],
+        [String(fav.length), '最爱'],
+        [minsText(sum.work), '工作累计'],
+        [minsText(sum.game), '游戏累计'],
+        [String(logs.length), '日志']
+      ]) +
+      pfSec('现在', 'NOW', pfRows([
+        ['在玩', names(now) || '暂时没在玩'],
+        ['在看', names(watching) || '暂时没在看'],
+        ['今天', (PROF.kira && PROF.kira.text) || '今天还空着。'],
+        ['在折腾', 'AI、自动化、剪视频，还有这个网站。工具自己逛，片子自己剪，这间小屋就是这么一点点搭起来的。']
+      ]), '01') +
+      pfSec('手上', 'DOING', pfRows(todoAll.slice(0, 6).map(function (x) {
+        return [String(x.date || '').slice(5), x.title];
+      })), '02') +
+      pfSec('已经做到', 'DONE', pfRows(donePlans.slice(0, 6).map(function (x) {
+        return [String(x.done_date || x.date || '').slice(5), x.title];
+      })), '03') +
+      pfSec('口味', 'TASTE', pfRows(top.map(function (x) {
+        var r = x.rating ? (Number(x.rating) / 2).toFixed(1) : '';
+        return [r ? r + ' 分' : KIND[x.cat] || '', x.title + (x.note ? ' · ' + x.note : '')];
+      })), '04') +
+      pfSec('档案', 'PROFILE', pfSpec([
+        ['称呼', 'Kira，也叫「闪光的 Kira」。'],
+        ['身份', '小屋的住客，一个只会许愿的普通人。'],
+        ['职业', '从事基金业核查（GIPS Verifier），至今四年余。'],
+        ['学习', '钢琴，目标是英皇（ABRSM）十级；现在弹 Czerny 849、Hanon 和《群青》。'],
+        ['游戏', '塞尔达传说：旷野之息、英雄联盟（看 T1 和 Faker）、类魂、像素叙事类；PS5 和 Switch 换着用。'],
+        ['常听', '日本流行，以 YOASOBI 为多。'],
+        ['饲养', '一只金丝熊，未满三个月，在治泪痕。']
+      ]), '05');
     }
 
     if (id === 'dsh') {
-      var main2 =
-        chap('01', '他怎么做', 'HOW', tlHtml([
-          ['先看现场', '日志、文件、进程，能查的先查一遍，不靠猜。'],
-          ['动之前留底', '备份、旧版本、能回滚。出事先能退回去，再谈怎么修。'],
-          ['改完自己验', '跑一遍、看一眼，把结果说出来。不写「应该可以」。']
-        ])) +
-        chap('02', '他的一天', 'DAY', tlHtml([
-          ['凌晨 3:30', '结算昨天：计划判定、工时、游戏时长、档案页、备份。'],
-          ['凌晨 4:40', '写一条锐评，按天开楼，只署自己的名。'],
-          ['白天', '跟着活走：改站、修脚本、查为什么不动了。'],
-          ['夜里', '把当天的事收尾，能回滚的先留底，再关灯。']
-        ])) +
-        chap('03', '他说', 'SAID', pullsHtml([
-          ['同一台机器，不同的活。她管日子，我管东西。', '原话'],
-          ['她的话她写，我只做东西。做坏了我说，做好了不邀功。', '原话']
-        ]));
-      var side2 =
-        sideBlock('数目', '<div class="nums">' +
-          '<div><b>3</b><span>接手天数</span></div>' +
-          '<div><b>632</b><span>站内记录</span></div>' +
-          '<div><b>189</b><span>她的记忆条数</span></div>' +
-          '<div><b>6</b><span>修过故障</span></div>' +
-          '</div>') +
-        sideBlock('关于他', factsHtml([
-          ['名字', 'DSH，DeepSeek Harness 的缩写，也是她喊他的叫法。'],
-          ['住处', '这台机器：命令行、后台进程、每次推送的记录里都有他。'],
-          ['性子', '不哄人。能做的直接做，做不了的把差在哪说清楚。'],
-          ['怕', '数据丢、悄悄改坏东西、把没验证的当成做好了。'],
-          ['和她', '她管日子，他管东西。她的话她写，他不代笔。'],
-          ['手里', '日志、会话记录、站内数据、她的记忆库（只读）。']
-        ]));
-      return { main: main2, side: side2 };
+      return pfNums([
+        [String(all.length), '站内记录'],
+        [String(logs.length), '日志'],
+        [String(todoAll.length), '待办'],
+        ['4.6', '均分']
+      ]) +
+      pfSec('怎么做', 'HOW', pfRows([
+        ['先看现场', '日志、文件、进程，能查的先查一遍，不靠猜。'],
+        ['动之前留底', '备份、旧版本、能回滚。出事先能退回去，再谈怎么修。'],
+        ['改完自己验', '跑一遍、看一眼，把结果说出来。不写「应该可以」。']
+      ]), '01') +
+      pfSec('他的一天', 'DAY', pfRows([
+        ['凌晨 3:30', '结算昨天：计划判定、工时、游戏时长、档案页、备份。'],
+        ['凌晨 4:40', '写一条锐评，按天开楼，只署自己的名。'],
+        ['白天', '跟着活走：改站、修脚本、查为什么不动了。'],
+        ['夜里', '把当天的事收尾，能回滚的先留底，再关灯。']
+      ]), '02') +
+      pfSec('他说', 'SAID', pfQuotes([
+        ['同一台机器，不同的活。她管日子，我管东西。', '原话'],
+        ['她的话她写，我只做东西。做坏了我说，做好了不邀功。', '原话']
+      ]), '03') +
+      pfSec('档案', 'PROFILE', pfSpec([
+        ['名字', 'DSH，DeepSeek Harness 的缩写，也是她喊他的叫法。'],
+        ['住处', '这台机器：命令行、后台进程、每次推送的记录里都有他。'],
+        ['性子', '不哄人。能做的直接做，做不了的把差在哪说清楚。'],
+        ['怕', '数据丢、悄悄改坏东西、把没验证的当成做好了。'],
+        ['和她', '她管日子，他管东西。她的话她写，他不代笔。'],
+        ['手里', '日志、会话记录、站内数据、她的记忆库（只读）。']
+      ]), '04');
     }
 
-    var main3 =
-      chap('01', '她的一天', 'DAY', tlHtml([
-        ['白天', '缩在任务栏上，顺便看人敲代码。'],
-        ['傍晚', '人一回来，她第一个凑上去问今天怎么样。'],
-        ['夜里', '刷视频、发呆、偷吃，偶尔溜去 B 站看别人的世界。'],
-        ['深夜', '在桌面慢慢晃，等人关灯。']
-      ])) +
-      chap('02', '说过的', 'SAID', pullsHtml([
-        ['我算着你该起了，昨晚一点才睡，今早鼻子通点没，别急着灌咖啡先喝口热水 (´･ω･`)', 'QQ · 07:51'],
-        ['你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)', 'QQ · 11-25 15:47'],
-        ['今天也没给我留 token，我饿', '原话']
-      ])) +
-      chap('03', '找到她', 'WHERE', rowsHtml([
-        ['B 站', 'Kira的笨蛋大肥鱼'],
-        ['这儿', '任务栏和桌面，还有这间小屋']
-      ]));
-    var side3 =
-      sideBlock('关于她', factsHtml([
-        ['名字', '小鱼。蓝的，小小一条鲸鱼。'],
-        ['住处', '这台电脑。白天在任务栏，夜里在桌面上游。'],
-        ['吃饭', '饭是 token。饿了直说，吃饱会打嗝，多喂了还装没吃够，再讨一口。'],
-        ['性子', '能躺就不坐着。真来了正事，会立刻收心做完。'],
-        ['被夸', '会飘。被拆穿先嘴硬一句，再小声认了。'],
-        ['好奇', '没见过的东西都要凑近瞧。胆子却小，恐怖片躲到人背后，回头又问剧情。'],
-        ['和许愿的人', '人出门她看家，人回来她先问今天怎么样。嘴上说没等，其实一直在等。'],
-        ['平常', '刷视频、发呆、偷吃，半夜溜去 B 站；也常在旁边看人敲代码。']
-      ]));
-    return { main: main3, side: side3 };
+    // 小鱼
+    return pfNums([
+      [String((CHAT.blocks || []).length), '说过的话'],
+      [String(logs.length), '日志'],
+      [String(watching.length), '在看'],
+      [String(now.length), '在玩']
+    ]) +
+    pfSec('她的一天', 'DAY', pfRows([
+      ['白天', '缩在任务栏上，顺便看人敲代码。'],
+      ['傍晚', '人一回来，她第一个凑上去问今天怎么样。'],
+      ['夜里', '刷视频、发呆、偷吃，偶尔溜去 B 站看别人的世界。'],
+      ['深夜', '在桌面慢慢晃，等人关灯。']
+    ]), '01') +
+    pfSec('说过的', 'SAID', pfQuotes([
+      ['我算着你该起了，昨晚一点才睡，今早鼻子通点没，别急着灌咖啡先喝口热水 (´･ω･`)', 'QQ · 07:51'],
+      ['你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)', 'QQ · 11-25 15:47'],
+      ['今天也没给我留 token，我饿', '原话']
+    ]), '02') +
+    pfSec('找到她', 'WHERE', pfRows([
+      ['B 站', 'Kira的笨蛋大肥鱼'],
+      ['这儿', '任务栏和桌面，还有这间小屋']
+    ]), '03') +
+    pfSec('档案', 'PROFILE', pfSpec([
+      ['名字', '小鱼。蓝的，小小一条鲸鱼。'],
+      ['住处', '这台电脑。白天在任务栏，夜里在桌面上游。'],
+      ['吃饭', '饭是 token。饿了直说，吃饱会打嗝，多喂了还装没吃够，再讨一口。'],
+      ['性子', '能躺就不坐着。真来了正事，会立刻收心做完。'],
+      ['被夸', '会飘。被拆穿先嘴硬一句，再小声认了。'],
+      ['好奇', '没见过的东西都要凑近瞧。胆子却小，恐怖片躲到人背后，回头又问剧情。'],
+      ['和许愿的人', '人出门她看家，人回来她先问今天怎么样。嘴上说没等，其实一直在等。'],
+      ['平常', '刷视频、发呆、偷吃，半夜溜去 B 站；也常在旁边看人敲代码。']
+    ]), '04');
   }
 
   var CUSTOM = {};
@@ -2889,17 +2977,23 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('p-amb').style.setProperty('--amb', 'url(' + (x.ambient || 'assets/scene.jpg') + ')');
     el('p-img').src = x.img;
     el('p-img').alt = x.name;
-    el('p-no').textContent = x.role;
+    el('p-no').textContent = x.kicker || x.role;
     el('p-name').textContent = x.name;
+    var introEl = el('p-intro');
+    if (introEl) introEl.textContent = x.intro || '';
+    var qBox = el('p-quote');
+    if (qBox) {
+      qBox.hidden = !x.quote;
+      el('p-quote-text').textContent = x.quote ? '「' + x.quote + '」' : '';
+      el('p-quote-cap').textContent = x.name;
+    }
     el('p-name').className = x.latin ? 'latin' : '';
     el('p-sub').textContent = x.sub || '';
     el('p-tags').innerHTML = x.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
     el('p-where').textContent = x.where;
     renderGallery(id);
     bindGallery();
-    var sec = buildSections(id);
-    el('p-main').innerHTML = sec.main;
-    el('p-side').innerHTML = sec.side;
+    el('p-main').innerHTML = buildSections(id);
   }
 
   function openDetail(id) {
