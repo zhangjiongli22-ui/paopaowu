@@ -790,9 +790,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .flow-toggle{grid-column:2;grid-row:2;justify-self:end;background:none;border:0;color:var(--dim);font:var(--fs-mono) var(--mono);letter-spacing:.1em;cursor:pointer;min-height:32px}
 .flow-toggle:hover{color:var(--gold)}
 .flow-rows{display:grid;margin-top:8px}
-.flow-row{display:grid;grid-template-columns:96px minmax(0,1fr) 70px;gap:12px;align-items:baseline;padding:5px 0}
-.flow-row time{font:var(--fs-mono) var(--mono);letter-spacing:.08em;color:var(--dim-2);white-space:nowrap}
-.flow-row p{margin:0;font-size:var(--fs-body);color:var(--paper-2)}
+.flow-row{display:grid;grid-template-columns:116px minmax(0,1fr) 70px;gap:12px;align-items:baseline;padding:6px 0}
+.flow-row time{font:var(--fs-mono) var(--mono);letter-spacing:.04em;color:var(--dim-2);white-space:nowrap}
+.flow-row p{margin:0;font-size:var(--fs-body);line-height:1.85;color:var(--paper-2);max-width:46ch}
 .flow-row span{font:var(--fs-mono) var(--mono);color:var(--dim);text-align:right}
 @media (max-width:860px){.stat-hero{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-big b{white-space:nowrap}}.arc-split{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(18px,2.4vw,40px);align-items:start}
 .arc-dates{position:sticky;top:0;display:grid;gap:14px;max-height:62vh;overflow-y:auto;padding-right:8px}
@@ -980,9 +980,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .shelf-head .fold-mark{margin-left:12px;font:var(--fs-mono) var(--mono);color:var(--dim-2);transition:color .3s var(--ease)}
 .shelf-head:hover .fold-mark{color:var(--gold)}
 .shelf-head:focus-visible{outline:1px solid var(--gold-soft);outline-offset:4px}
-.shelf-sec .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .42s var(--ease),opacity .3s var(--ease)}
-.shelf-sec .fold > .grid{min-height:0;overflow:hidden}
-.shelf-sec.collapsed .fold{grid-template-rows:0fr;opacity:0}
+.shelf-sec .fold{display:block}
+.shelf-sec.collapsed .fold{display:none}
 .shelf-sec.collapsed .shelf-head{padding-bottom:14px}
 
 /* 日常：一段一段的聊天记录，她的话在左、Kira 的话在右 */
@@ -1020,43 +1019,43 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .day-hint{font-size:12px}
   .day-blk{padding-left:12px}
 }
-/* 档案页：照旧站的单栏排版 */
-.pf-flow{max-width:86ch}
+/* 档案页：照旧站（about.html / kira.html）的排版 */
+.pf-flow{max-width:88ch}
 .pbody{grid-template-columns:minmax(0,1fr);padding:clamp(22px,2.6vw,40px) clamp(20px,3vw,44px) clamp(34px,4vh,60px)}
 .pf-kicker{margin:0 0 14px;font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--gold)}
-.person-intro{margin:16px 0 0;max-width:44ch;color:var(--paper-2);line-height:2}
-.pquote{position:relative;margin:22px 0 0;padding:16px 20px;max-width:44ch;border:1px solid var(--line);border-left:2px solid var(--gold-soft);background:rgba(11,17,27,.5)}
+.person-intro{margin:16px 0 0;max-width:46ch;color:var(--paper-2);line-height:2}
+.pquote{position:relative;margin:22px 0 0;padding:16px 20px;max-width:46ch;border:1px solid var(--line);border-left:2px solid var(--gold-soft);background:rgba(11,17,27,.5)}
 .pquote blockquote{margin:0;font-family:var(--serif);line-height:1.95;color:var(--paper)}
 .pquote figcaption{margin-top:8px;font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim-2)}
 .pquote figcaption::before{content:"— "}
-.pf-nums{display:flex;flex-wrap:wrap;gap:clamp(18px,3.2vw,54px);margin:0 0 clamp(26px,3.2vh,44px);padding:20px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.pf-nums{display:flex;flex-wrap:wrap;gap:clamp(18px,3.2vw,54px);margin:0;padding:20px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
 .pf-nums div{display:grid;gap:5px;min-width:0}
-.pf-nums b{font-family:var(--serif);font-weight:500;font-size:clamp(21px,1.75vw,29px);letter-spacing:.02em;color:var(--paper);line-height:1.1;white-space:nowrap}
-.pf-nums span{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
-.pf-sec{margin:0 0 clamp(28px,3.6vh,48px)}
-.pf-head{display:flex;align-items:baseline;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
-.pf-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);letter-spacing:.05em;line-height:1.2}
-.pf-head .en{font:var(--fs-mono) var(--mono);letter-spacing:.24em;color:var(--dim-2)}
-.pf-head .n{margin-left:auto;font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--gold-text)}
-.pf-list{list-style:none;margin:0;padding:0}
-.pf-list li{display:grid;grid-template-columns:88px minmax(0,1fr);gap:clamp(14px,2vw,30px);padding:16px 0;border-bottom:1px solid var(--line-soft)}
-.pf-list .k{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2);padding-top:4px}
-.pf-list .v{color:var(--paper-2);line-height:2;min-width:0;overflow-wrap:anywhere}
-.pf-spec{margin:0}
-.pf-spec div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:clamp(14px,2vw,30px);padding:14px 0;border-bottom:1px solid var(--line-soft)}
-.pf-spec dt{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2);padding-top:4px}
-.pf-spec dd{margin:0;color:var(--paper-2);line-height:2;overflow-wrap:anywhere}
-.pf-quote{margin:22px 0 0;padding-left:18px;border-left:1px solid var(--line)}
-.pf-quote:first-of-type{margin-top:20px}
-.pf-quote blockquote{margin:0;font-family:var(--serif);font-size:var(--fs-quote);line-height:1.85;color:var(--paper)}
-.pf-quote figcaption{margin-top:6px;font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
+.pf-nums b{font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);letter-spacing:.02em;color:var(--paper);line-height:1.35;white-space:nowrap}
+.pf-nums span{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--dim-2)}
+.pf-sec{padding:clamp(26px,4vh,46px) 0 0}
+.pf-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.pf-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(20px,1.5vw,26px);letter-spacing:.12em;line-height:1.25}
+.pf-head .note{font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.2em;color:var(--dim-2);white-space:nowrap}
+.pf-list{list-style:none;margin:16px 0 0;padding:0}
+.pf-list li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.pf-list .k{font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--gold-text);padding-top:2px}
+.pf-list .v{margin:0;font-size:var(--fs-body);line-height:1.95;color:var(--paper-2);min-width:0;overflow-wrap:anywhere}
+.pf-spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(242,236,225,.09);margin:16px 0 0}
+.pf-spec div{background:rgba(6,10,17,.58);padding:clamp(14px,2vh,20px) clamp(14px,1.6vw,22px);display:grid;gap:6px;min-width:0}
+.pf-spec dt{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text)}
+.pf-spec dd{margin:0;font-size:var(--fs-body);line-height:1.95;color:var(--paper-2);overflow-wrap:anywhere}
+.pf-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(242,236,225,.09);margin:16px 0 0;border-bottom:1px solid rgba(242,236,225,.09)}
+.pf-quotes figure{margin:0;background:rgba(6,10,17,.58);padding:clamp(14px,2vh,20px);display:grid;gap:10px;align-content:start}
+.pf-quotes blockquote{margin:0;font-family:var(--serif);font-size:var(--fs-body);line-height:1.95;color:var(--paper)}
+.pf-quotes figcaption{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
+@media (max-width:900px){.pf-quotes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:720px){
-  .pf-list li,.pf-spec div{grid-template-columns:minmax(0,1fr);gap:4px}
-  .pf-list .k,.pf-spec dt{padding-top:0}
-  .pf-list li{padding:14px 0}
-  .pquote{max-width:none}
-  .person-intro{max-width:none}
+  .pf-head .note{display:none}
+  .pf-spec{grid-template-columns:minmax(0,1fr)}
+  .pf-list li{grid-template-columns:minmax(0,1fr);gap:4px}
+  .person-intro,.pquote{max-width:none}
 }
+@media (max-width:600px){.pf-quotes{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -2725,9 +2724,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     return '<section class="side-block"><h3>' + t + '</h3>' + body + '</section>';
   }
 
-  function pfSec(t, en, body, no) {
-    return '<section class="pf-sec"><header class="pf-head"><h2>' + t + '</h2><span class="en">' + en + '</span>' +
-      (no ? '<span class="n">' + no + '</span>' : '') + '</header>' + body + '</section>';
+  function pfSec(title, note, body) {
+    return '<section class="pf-sec"><header class="pf-head"><h2>' + title + '</h2>' +
+      (note ? '<em class="note">' + note + '</em>' : '') + '</header>' + body + '</section>';
   }
   function pfRows(rows) {
     return '<ul class="pf-list">' + rows.map(function (r) {
@@ -2745,9 +2744,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }).join('') + '</div>';
   }
   function pfQuotes(rows) {
-    return rows.map(function (q) {
-      return '<figure class="pf-quote"><blockquote>' + esc(q[0]) + '</blockquote><figcaption>' + esc(q[1]) + '</figcaption></figure>';
-    }).join('');
+    return '<div class="pf-quotes">' + rows.map(function (q) {
+      return '<figure><blockquote>' + esc(q[0]) + '</blockquote><figcaption>' + esc(q[1]) + '</figcaption></figure>';
+    }).join('') + '</div>';
   }
   function names(list) {
     return list.map(function (x) { return x.title; }).join('、');
@@ -2783,23 +2782,23 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         [minsText(sum.game), '游戏累计'],
         [String(logs.length), '日志']
       ]) +
-      pfSec('现在', 'NOW', pfRows([
+      pfSec('现在', '此刻', pfRows([
         ['在玩', names(now) || '暂时没在玩'],
         ['在看', names(watching) || '暂时没在看'],
         ['今天', (PROF.kira && PROF.kira.text) || '今天还空着。'],
         ['在折腾', 'AI、自动化、剪视频，还有这个网站。工具自己逛，片子自己剪，这间小屋就是这么一点点搭起来的。']
       ]), '01') +
-      pfSec('手上', 'DOING', pfRows(todoAll.slice(0, 6).map(function (x) {
+      pfSec('手上', '在做的', pfRows(todoAll.slice(0, 6).map(function (x) {
         return [String(x.date || '').slice(5), x.title];
       })), '02') +
-      pfSec('已经做到', 'DONE', pfRows(donePlans.slice(0, 6).map(function (x) {
+      pfSec('已经做到', '落过地的', pfRows(donePlans.slice(0, 6).map(function (x) {
         return [String(x.done_date || x.date || '').slice(5), x.title];
       })), '03') +
-      pfSec('口味', 'TASTE', pfRows(top.map(function (x) {
+      pfSec('口味', '打过分的那几部', pfRows(top.map(function (x) {
         var r = x.rating ? (Number(x.rating) / 2).toFixed(1) : '';
         return [r ? r + ' 分' : KIND[x.cat] || '', x.title + (x.note ? ' · ' + x.note : '')];
       })), '04') +
-      pfSec('档案', 'PROFILE', pfSpec([
+      pfSec('档案', '几件小事', pfSpec([
         ['称呼', 'Kira，也叫「闪光的 Kira」。'],
         ['身份', '小屋的住客，一个只会许愿的普通人。'],
         ['职业', '从事基金业核查（GIPS Verifier），至今四年余。'],
@@ -2817,22 +2816,22 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         [String(todoAll.length), '待办'],
         ['4.6', '均分']
       ]) +
-      pfSec('怎么做', 'HOW', pfRows([
+      pfSec('怎么做', '三条', pfRows([
         ['先看现场', '日志、文件、进程，能查的先查一遍，不靠猜。'],
         ['动之前留底', '备份、旧版本、能回滚。出事先能退回去，再谈怎么修。'],
         ['改完自己验', '跑一遍、看一眼，把结果说出来。不写「应该可以」。']
       ]), '01') +
-      pfSec('他的一天', 'DAY', pfRows([
+      pfSec('他的一天', '按钟点走', pfRows([
         ['凌晨 3:30', '结算昨天：计划判定、工时、游戏时长、档案页、备份。'],
         ['凌晨 4:40', '写一条锐评，按天开楼，只署自己的名。'],
         ['白天', '跟着活走：改站、修脚本、查为什么不动了。'],
         ['夜里', '把当天的事收尾，能回滚的先留底，再关灯。']
       ]), '02') +
-      pfSec('他说', 'SAID', pfQuotes([
+      pfSec('他说', '原话', pfQuotes([
         ['同一台机器，不同的活。她管日子，我管东西。', '原话'],
         ['她的话她写，我只做东西。做坏了我说，做好了不邀功。', '原话']
       ]), '03') +
-      pfSec('档案', 'PROFILE', pfSpec([
+      pfSec('档案', '几件小事', pfSpec([
         ['名字', 'DSH，DeepSeek Harness 的缩写，也是她喊他的叫法。'],
         ['住处', '这台机器：命令行、后台进程、每次推送的记录里都有他。'],
         ['性子', '不哄人。能做的直接做，做不了的把差在哪说清楚。'],
@@ -2849,22 +2848,22 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       [String(watching.length), '在看'],
       [String(now.length), '在玩']
     ]) +
-    pfSec('她的一天', 'DAY', pfRows([
+    pfSec('她的一天', '按钟点走', pfRows([
       ['白天', '缩在任务栏上，顺便看人敲代码。'],
       ['傍晚', '人一回来，她第一个凑上去问今天怎么样。'],
       ['夜里', '刷视频、发呆、偷吃，偶尔溜去 B 站看别人的世界。'],
       ['深夜', '在桌面慢慢晃，等人关灯。']
     ]), '01') +
-    pfSec('说过的', 'SAID', pfQuotes([
+    pfSec('说过的', '从聊天记录里随手捞的', pfQuotes([
       ['我算着你该起了，昨晚一点才睡，今早鼻子通点没，别急着灌咖啡先喝口热水 (´･ω･`)', 'QQ · 07:51'],
       ['你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)', 'QQ · 11-25 15:47'],
       ['今天也没给我留 token，我饿', '原话']
     ]), '02') +
-    pfSec('找到她', 'WHERE', pfRows([
+    pfSec('找到她', '哪儿能看到', pfRows([
       ['B 站', 'Kira的笨蛋大肥鱼'],
       ['这儿', '任务栏和桌面，还有这间小屋']
     ]), '03') +
-    pfSec('档案', 'PROFILE', pfSpec([
+    pfSec('档案', '几件小事', pfSpec([
       ['名字', '小鱼。蓝的，小小一条鲸鱼。'],
       ['住处', '这台电脑。白天在任务栏，夜里在桌面上游。'],
       ['吃饭', '饭是 token。饿了直说，吃饱会打嗝，多喂了还装没吃够，再讨一口。'],
