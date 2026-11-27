@@ -1203,6 +1203,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .card .pic b.rated{position:absolute;right:0;bottom:0;font:var(--fs-mono) var(--mono);font-weight:400;
   letter-spacing:.14em;color:rgba(201,168,107,.85);background:rgba(4,7,11,.78);padding:3px 7px}
 .item .pic em.in{background:rgba(201,168,107,.9);color:#070c12}
+
+/* 详情页：状态切换按钮、评价按钮组 */
+.status-btn{min-height:34px;padding:0 12px;margin-left:6px;border:1px solid var(--line);background:rgba(201,168,107,.07);
+  color:var(--gold-text);font:var(--fs-mono) var(--mono);letter-spacing:.14em;cursor:pointer;
+  transition:color .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
+.status-btn:hover{color:var(--ink-900);background:var(--gold);border-color:var(--gold)}
+.status-btn.in{background:rgba(201,168,107,.88);color:#070c12;border-color:rgba(201,168,107,.88)}
+.status-btn.in:hover{background:#d9bb80}
+.rev-btns{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 </style>
 </head>
 <body>
@@ -1482,10 +1491,16 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
                 <button class="star" type="button" data-i="5" aria-label="5 星">★</button>
               </div>
               <span class="den" id="d-score">— / 5</span>
+              <button class="status-btn" type="button" id="d-status-btn" title="点一下切换状态">—</button>
             </div>
 
             <section class="review">
-              <header class="rev-head"><h3>我的评价</h3><button class="mini" type="button" id="d-note-edit">写一句</button></header>
+              <header class="rev-head"><h3>我的评价</h3>
+                <span class="rev-btns">
+                  <button class="mini" type="button" id="d-note-edit">写一句</button>
+                  <button class="mini" type="button" id="d-note-del" hidden>删掉评价</button>
+                </span>
+              </header>
               <p class="rev-text" id="d-note">还没写过。</p>
               <div class="rev-edit" id="d-note-box" hidden>
                 <textarea id="d-note-input" aria-label="我的评价" placeholder="看完想说的那一句，别写成简介。"></textarea>
@@ -3330,6 +3345,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('d-note-box').hidden = true;
     el('d-desc').textContent = x.desc || '还没写简介。';
     el('d-edit').href = '#/edit/' + encodeURIComponent(x.id);
+    var stBtn = el('d-status-btn');
+    if (stBtn) {
+      stBtn.textContent = x.status || '—';
+      stBtn.hidden = !x.status;
+      stBtn.classList.toggle('in', x.status === '在玩' || x.status === '在看');
+    }
+    var delBtn = el('d-note-del');
+    if (delBtn) delBtn.hidden = !(x.rating || String(x.note || '').trim());
     var fav = el('d-fav');
     if (fav) {
       fav.textContent = x.pinned ? '★ 已收藏' : '☆ 收藏';
@@ -3494,6 +3517,28 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       if (!keep) payload.status = x.cat === 'game' ? '玩过' : '看过';
     }
     rateSave(payload, x);
+  });
+  el('d-status-btn').addEventListener('click', function () {
+    var x = currentItem();
+    if (!x) return;
+    if (!isAdmin()) { needLogin(); return; }
+    var fmt = x.cat === 'game' ? ['想玩', '在玩', '玩过'] : ['想看', '在看', '看过'];
+    var cur = x.status || '';
+    var i = fmt.indexOf(cur);
+    var next = fmt[(i + 1) % fmt.length];
+    var payload = { id: x.id, status: next };
+    if (next === fmt[1]) payload.rated_on = null;
+    rateSave(payload, x);
+  });
+  el('d-note-del').addEventListener('click', function () {
+    var x = currentItem();
+    if (!x) return;
+    if (!isAdmin()) { needLogin(); return; }
+    if (!confirm('删掉这条评分和评价？')) return;
+    rateSave({
+      id: x.id, rating: null, note: '', rated_on: null,
+      status: (x.status === '在玩' || x.status === '在看') ? x.status : (x.cat === 'game' ? '想玩' : '想看')
+    }, x);
   });
   el('d-fav').addEventListener('click', function () {
     var x = currentItem();
