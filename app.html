@@ -1111,6 +1111,49 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .pf-col time{font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
 .pf-col li span{font-size:var(--fs-body);line-height:1.8;color:var(--paper-2);overflow-wrap:anywhere}
 @media (max-width:720px){.pf-cols{grid-template-columns:minmax(0,1fr)}}
+
+/* 图集：列式瀑布流（脚本按最短列分配，图片保持原比例、不裁不切） */
+.gal-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-count:auto;gap:16px;align-items:start;margin-top:10px}
+.gal-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.gal{position:relative;margin:0;overflow:hidden;border:1px solid rgba(242,236,225,.13);background:linear-gradient(180deg,rgba(12,18,27,.72),rgba(7,11,17,.84))}
+.gal img{display:block;width:100%;height:auto}
+.gal figcaption{padding:12px 13px 14px;color:var(--paper-2);font-size:var(--fs-body);line-height:1.7;border-top:1px solid var(--line-soft)}
+.gal figcaption::before{content:attr(data-no);display:block;margin-bottom:5px;font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:#8a6f3e}
+@media (max-width:720px){.gal-grid{gap:12px}.gal-col{gap:12px}}
+
+/* 锐评：左侧日期目录 */
+.crit-cols{display:grid;grid-template-columns:112px minmax(0,1fr);gap:clamp(18px,2.4vw,40px);align-items:start;margin-top:clamp(18px,2.4vh,28px)}
+.crit-rail{position:sticky;top:12px;display:grid;gap:2px;align-content:start}
+.crit-rail-t{font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--dim-2);padding:0 0 10px 11px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
+.crit-rail-btn{display:flex;align-items:baseline;justify-content:space-between;gap:8px;background:none;border:0;border-left:1px solid transparent;padding:7px 0 7px 11px;color:var(--dim);font:var(--fs-mono) var(--mono);letter-spacing:.1em;cursor:pointer;text-align:left}
+.crit-rail-btn em{font-style:normal;color:var(--dim-2)}
+.crit-rail-btn:hover{color:var(--paper)}
+.crit-rail-btn.on{color:var(--gold);border-left-color:var(--gold)}
+.crit-rail-btn.on em{color:var(--gold-text)}
+@media (max-width:860px){
+  .crit-cols{grid-template-columns:minmax(0,1fr);gap:0}
+  .crit-rail{position:static;display:flex;gap:6px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none}
+  .crit-rail::-webkit-scrollbar{display:none}
+  .crit-rail-t{display:none}
+  .crit-rail-btn{border-left:0;border-bottom:1px solid transparent;padding:6px 10px;white-space:nowrap}
+  .crit-rail-btn.on{border-bottom-color:var(--gold)}
+}
+
+/* 精神宇宙：分组标题 */
+.shelf-head{position:relative;display:flex;align-items:baseline;gap:14px;padding:0 0 12px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.shelf-head::before{content:"";position:absolute;left:0;top:2px;bottom:10px;width:2px;background:linear-gradient(180deg,var(--gold),rgba(201,168,107,.12))}
+.shelf-no{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold)}
+.shelf-head h2{margin:0;font-family:var(--serif);font-weight:500;font-size:var(--fs-h2);letter-spacing:.08em;line-height:1.15;color:var(--paper)}
+.shelf-head .en{font:var(--fs-mono) var(--mono);letter-spacing:.3em;color:var(--dim-2)}
+.shelf-head .cnt{margin-left:auto;font:var(--fs-mono) var(--mono);letter-spacing:.16em;color:var(--dim-2)}
+.shelf-head .fold-mark{margin-left:4px;font:var(--fs-mono) var(--mono);color:var(--dim-2);transition:color .3s var(--ease)}
+.shelf-head:hover h2{color:#e6cb97}
+.shelf-head:hover .fold-mark{color:var(--gold)}
+.shelf-sec.collapsed .shelf-head{border-bottom-color:var(--line-soft)}
+@media (max-width:720px){
+  .shelf-head{gap:10px;padding-left:12px}
+  .shelf-head .en{display:none}
+}
 </style>
 </head>
 <body>
@@ -1536,7 +1579,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
           </div>
           <p class="count" id="crit-count">—</p>
         </header>
-        <div class="crit-list" id="crit-list"></div>
+        <div class="crit-cols">
+          <nav class="crit-rail" id="crit-rail" aria-label="按日期"></nav>
+          <div class="crit-list" id="crit-list"></div>
+        </div>
       </div>
     </section>
 
@@ -2196,8 +2242,61 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }).join('');
     grid.querySelectorAll('.gal').forEach(function (f) {
       f.addEventListener('click', function () { showGal(Number(f.getAttribute('data-i'))); });
+      var im = f.querySelector('img');
+      if (im) {
+        im.addEventListener('load', layoutGallery);
+        if (im.complete) layoutGallery();
+      }
     });
+    layoutGallery();
+    setTimeout(layoutGallery, 260);
+    setTimeout(layoutGallery, 900);
   }
+  function layoutGallery() {
+    var grid = el('gal-grid');
+    if (!grid) return;
+    var figs = Array.prototype.slice.call(grid.querySelectorAll('.gal'));
+    if (!figs.length) return;
+    var vw = window.innerWidth;
+    var cols = vw <= 480 ? 1 : (vw <= 720 ? 2 : (vw <= 1100 ? 3 : 4));
+    var gap = vw <= 720 ? 12 : 16;
+    grid.style.gridTemplateColumns = 'repeat(' + cols + ',minmax(0,1fr))';
+    // 先量一遍现有高度前，把节点从上一轮的列容器里取出来
+    grid.innerHTML = '';
+    var boxes = [], heights = [];
+    for (var c = 0; c < cols; c++) {
+      var d = document.createElement('div');
+      d.className = 'gal-col';
+      grid.appendChild(d);
+      boxes.push(d);
+      heights.push(0);
+    }
+    figs.forEach(function (f) {
+      f.style.gridColumn = '';
+      f.style.gridRowEnd = '';
+    });
+    figs.forEach(function (f) {
+      var k = 0;
+      for (var j = 1; j < cols; j++) { if (heights[j] < heights[k]) k = j; }
+      boxes[k].appendChild(f);
+      heights[k] += (f.offsetHeight || 280) + gap;
+    });
+    // 编号按排下来的顺序走（从上往下、一列一列）
+    var n = 0;
+    figs.forEach(function (f) {
+      n++;
+      var cap = f.querySelector('figcaption');
+      if (cap) cap.setAttribute('data-no', 'CG.' + (n < 10 ? '0' : '') + n);
+    });
+    grid.style.setProperty('--gal-cols', cols);
+  }
+  var galTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(galTimer);
+    galTimer = setTimeout(function () {
+      if (el('view-gallery') && el('view-gallery').classList.contains('on')) layoutGallery();
+    }, 160);
+  });
   function showGal(i) {
     if (!galList.length) return;
     galIndex = (i + galList.length) % galList.length;
@@ -2248,13 +2347,44 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var html = dates.map(function (d) {
       var rows = byDate[d];
       var lastBy = {};
-      return '<section class="cr-day"><h2 class="cr-date">' + d + '<span>' + rows.length + ' 条</span></h2>' +
+      return '<section class="cr-day" id="cday-' + esc(d) + '"><h2 class="cr-date">' + d + '<span>' + rows.length + ' 条</span></h2>' +
         rows.map(function (x) {
           var to = x.reply_to && x.reply_to !== x.who ? x.reply_to : '';
           lastBy[x.who] = x;
           return critBlock(x, to);
         }).join('') + '</section>';
     }).join('');
+    var rail = el('crit-rail');
+    if (rail) {
+      rail.innerHTML = '<span class="crit-rail-t">日期</span>' + dates.map(function (d) {
+        return '<button type="button" class="crit-rail-btn" data-day="' + esc(d) + '"><span>' +
+          esc(String(d).slice(5)) + '</span><em>' + byDate[d].length + '</em></button>';
+      }).join('');
+      var firstBtn = rail.querySelector('.crit-rail-btn');
+      if (firstBtn) firstBtn.classList.add('on');
+      rail.querySelectorAll('.crit-rail-btn').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var sec = el('cday-' + b.getAttribute('data-day'));
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+      var stage = el('stage');
+      if (stage && !stage.__critSpy) {
+        stage.__critSpy = true;
+        stage.addEventListener('scroll', function () {
+          var list = document.querySelectorAll('#crit-rail .crit-rail-btn');
+          if (!list.length) return;
+          var best = null, bestTop = -Infinity;
+          list.forEach(function (b) {
+            var sec = el('cday-' + b.getAttribute('data-day'));
+            if (!sec) return;
+            var top = sec.getBoundingClientRect().top - 150;
+            if (top <= 0 && top > bestTop) { bestTop = top; best = b; }
+          });
+          list.forEach(function (b) { b.classList.toggle('on', b === best); });
+        }, { passive: true });
+      }
+    }
     var toChip = CRIT_REPLY_TO ? '<span class="cmt-to-chip">回复 <b>' + esc(shownWho(CRIT_REPLY_TO)) + '</b><button type="button" id="cr-to-clear">×</button></span>' : '';
     var hint = isAdmin() ? '署你的名，发出去就写进当天。' : '登录后才能留言 · <a href="#/login">去登录</a>';
     html += '<form class="cr-form" id="cr-form">' + toChip +
@@ -2445,10 +2575,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (rest.length) groups.push({ id: 'rec-other', t: '其他', en: 'OTHER', rows: rest });
     groups = groups.filter(function (g) { return g.rows.length; });
 
-    el('shelf').innerHTML = groups.map(function (g) {
+    el('shelf').innerHTML = groups.map(function (g, gi) {
       var closed = !!FOLDED[g.id];
+      var no = (gi + 1 < 10 ? '0' : '') + (gi + 1);
       return '<section class="shelf-sec' + (closed ? ' collapsed' : '') + '" id="' + g.id + '">' +
         '<header class="shelf-head" data-fold="' + g.id + '" role="button" tabindex="0" aria-expanded="' + (closed ? 'false' : 'true') + '">' +
+        '<span class="shelf-no" aria-hidden="true">' + no + '</span>' +
         '<h2>' + g.t + '</h2><span class="en">' + g.en + '</span><span class="cnt">' + g.rows.length + ' 条</span>' +
         '<span class="fold-mark" aria-hidden="true">' + (closed ? '＋' : '−') + '</span></header>' +
         '<div class="fold"><div class="grid">' + g.rows.map(cardHtml).join('') + '</div></div>' +
