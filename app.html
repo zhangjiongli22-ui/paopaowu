@@ -2177,6 +2177,34 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       });
     });
   }
+  function persistPeopleGallery(id, items) {
+    var pass = getPass();
+    if (!pass || !id) return Promise.resolve(false);
+    var payload = items.map(function (g) { return { src: g.src, cap: g.cap || '' }; });
+    return fetch('data/records.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (raw) {
+        if (!raw || !Array.isArray(raw.items)) return false;
+        raw.peoples = raw.peoples || {};
+        raw.peoples[id] = payload;
+        raw.texts = loadText();
+        return fetch('/api/data', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ pass: pass, data: raw })
+        }).then(function (r) { return r.ok; });
+      })
+      .catch(function () { return false; });
+  }
+  function syncPersonGallery(id) {
+    renderGallery(id);
+    var items = (galleryState(id).items || []).slice();
+    persistPeopleGallery(id, items).then(function (ok) {
+      if (!ok) return;
+      var cap = el('pg-cap');
+      if (cap) cap.setAttribute('data-saved', '1');
+    });
+  }
   function dataSave(raw) {
     var pass = getPass();
     if (!pass) return Promise.reject(new Error('还没登录'));
@@ -2185,7 +2213,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var payload = {
       cats: (raw && raw.cats) || [],
       items: (raw && raw.items) || [],
-      texts: (raw && raw.texts) || loadText()
+      texts: (raw && raw.texts) || loadText(),
+      peoples: (raw && raw.peoples) || {}
     };
     return fetch('/api/data', {
       method: 'POST',
@@ -2218,6 +2247,13 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         return r.json();
       }).then(function (raw) {
         RAW = raw;
+        if (raw && raw.peoples && typeof raw.peoples === 'object') {
+          Object.keys(raw.peoples).forEach(function (pid) {
+            var arr = raw.peoples[pid];
+            if (Array.isArray(arr) && arr.length) galleryState(pid).items = arr.slice();
+          });
+          if (currentPerson && el('view-person') && el('view-person').classList.contains('on')) renderGallery(currentPerson);
+        }
         if (raw && raw.texts && typeof raw.texts === 'object') {
           var merged = loadText();
           Object.keys(raw.texts).forEach(function (k) { merged[k] = raw.texts[k]; });
@@ -3559,11 +3595,25 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         var id = currentPerson;
         if (!id) return;
         var st = galleryState(id);
-        Array.prototype.forEach.call(add.files || [], function (f) {
-          st.items.push({ src: URL.createObjectURL(f), cap: '新加的照片' });
-        });
+        var files = Array.prototype.slice.call(add.files || []);
         add.value = '';
-        renderGallery(id);
+        if (!files.length) return;
+        if (!getPass()) { needLogin(); return; }
+        var cap = el('pg-cap');
+        var done = 0;
+        if (cap) cap.textContent = '上传 0/' + files.length;
+        Promise.all(files.map(function (f) {
+          return compressImage(f, 1600, 240 * 1024).then(mediaUpload).then(function (url) {
+            done++;
+            if (cap) cap.textContent = '上传 ' + done + '/' + files.length;
+            return url;
+          }).catch(function () { return ''; });
+        })).then(function (urls) {
+          var ok = urls.filter(Boolean);
+          if (!ok.length) { renderGallery(id); return; }
+          ok.forEach(function (u) { st.items.push({ src: u, cap: '新加的照片' }); });
+          syncPersonGallery(id);
+        });
       });
     }
     if (!box || box.__bound) return;
@@ -3579,9 +3629,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var act = btn.getAttribute('data-act');
       if (act === 'cap') {
         var v = prompt('照片说明', item.cap);
-        if (v !== null && v.trim()) { item.cap = v.trim(); renderGallery(currentPerson); }
+        if (v !== null && v.trim()) { item.cap = v.trim(); syncPersonGallery(currentPerson); }
       } else if (act === 'del') {
-        if (confirm('删掉这张照片？')) { st.items.splice(i, 1); renderGallery(currentPerson); }
+        if (confirm('删掉这张照片？')) { st.items.splice(i, 1); syncPersonGallery(currentPerson); }
       } else if (act === 'swap') {
         fig.querySelector('.ph-file').click();
       }
