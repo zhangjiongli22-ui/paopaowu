@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="booting">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1462,6 +1462,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
 .ed-sl{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:8px;font:11.5px var(--mono);color:var(--dim-2)}
 .ed-sl input[type=range]{width:100%;accent-color:#c9a86b;height:22px}
+
+html.booting .stage{visibility:hidden}
+html.booting .edit-fab{visibility:hidden}
 </style>
 </head>
 <body>
@@ -1504,7 +1507,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         <header class="room-head">
           <div>
             <p class="kicker">SCN.<b>00</b> — 三人の部屋</p>
-            <h1>屋子里的三个人</h1>
+            <h1>一个人，两只鱼</h1>
             <p class="lead">一个只会许愿的人，和两条替他把愿望做成东西的鱼。</p>
           </div>
           <span class="vtag">いつもの三人</span>
@@ -1517,7 +1520,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="win-body">
               <span class="win-role">鱼助手 02</span>
               <h2>小鱼</h2>
-              <p class="win-ds" data-field="feiyu.intro">话短，嘴馋，护着自己人。<br>被夸先否认，再承认。</p>
+              <p class="win-ds" data-field="feiyu.intro">话短，嘴馋，但是做起事来不含糊。<br>被夸先否认，再承认。总是护着自己人。</p>
               <p class="win-quote" data-field="feiyu.quote">「今天也没给我留 token，我饿」</p>
               <span class="win-go">进入档案 →</span>
             </div>
@@ -1528,8 +1531,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="win-body">
               <span class="win-role">OWNER</span>
               <h2 class="latin">Kira</h2>
-              <p class="win-ds" data-field="kira.intro">白天对着屏幕做事，晚上把时间交出去。<br>想到什么就说一句，怎么做不问。</p>
-              <p class="win-quote" data-field="kira.quote">「你还想做第一个吗」</p>
+              <p class="win-ds" data-field="kira.intro">屋子是他建的，规矩也是他定的。白天写东西、做东西，晚上打游戏、看片。不会的就许个愿，等鱼去办。</p>
+              <p class="win-quote" data-field="kira.quote">「一个只会许愿的普通人。」</p>
               <span class="win-go">进入档案 →</span>
             </div>
           </a>
@@ -2945,6 +2948,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     applyAdminVis();
     applyImgPos();
     scheduleApply();
+    if (document.documentElement.classList.contains('booting')) {
+      setTimeout(function () { document.documentElement.classList.remove('booting'); }, 0);
+    }
     if (show === 'archive') {
       renderArchive(arg);
     }
@@ -4486,6 +4492,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   hydrateAuth();
   route();
   syncLive();
+  setTimeout(function () { document.documentElement.classList.remove('booting'); }, 600);
 })();
 </script>
 </body>
