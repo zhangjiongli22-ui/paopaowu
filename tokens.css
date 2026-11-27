@@ -1,0 +1,49 @@
+/* Kira的小屋 · 设计变量（来自站点 style.css，2026-11-27 整理） */
+:root{
+  /* 墨与纸 */
+  --ink-900:#05070c;
+  --ink-800:#080d15;
+  --panel:rgba(11,17,27,.74);
+  --panel-solid:#0a1119;
+
+  --paper:#f2ece1;
+  --paper-2:#cdd4dc;
+  --dim:#93a0ae;
+  --dim-2:#6d7a88;
+
+  /* 金线做结构，青做交互，樱粉少用 */
+  --gold:#c9a86b;
+  --gold-soft:rgba(201,168,107,.45);
+  --gold-ghost:rgba(201,168,107,.14);
+  --gold-text:rgba(201,168,107,.82);
+  --aqua:#7fd3e8;
+  --sakura:#e8a7bd;
+
+  --line:rgba(242,236,225,.12);
+  --line-soft:rgba(242,236,225,.06);
+
+  /* 字体 */
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;
+  --latin:Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","HarmonyOS Sans SC","MiSans","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"Cascadia Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+
+  /* 字号阶梯（一屏最多用七档） */
+  --fs-mono:11px;
+  --fs-body:12px;
+  --fs-nav:14.5px;
+  --fs-quote:18px;
+  --fs-h2:26px;
+  --fs-h1:34px;
+  --fs-date:88px;
+
+  /* 间距 */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px;
+
+  /* 圆角：接近直角，只留 1px 的纸边 */
+  --r-sm:1px; --r-md:2px;
+
+  --ease:cubic-bezier(.22,.68,.24,1);
+  --dur:220ms;
+}
+@media (prefers-reduced-motion: reduce){ :root{ --dur:0ms; } }
