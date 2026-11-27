@@ -790,9 +790,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .flow-toggle{grid-column:2;grid-row:2;justify-self:end;background:none;border:0;color:var(--dim);font:var(--fs-mono) var(--mono);letter-spacing:.1em;cursor:pointer;min-height:32px}
 .flow-toggle:hover{color:var(--gold)}
 .flow-rows{display:grid;margin-top:8px}
-.flow-row{display:grid;grid-template-columns:116px minmax(0,1fr) 70px;gap:12px;align-items:baseline;padding:6px 0}
+.flow-row{display:grid;grid-template-columns:118px minmax(0,1fr) 74px;gap:clamp(16px,2vw,34px);align-items:baseline;padding:8px 0}
 .flow-row time{font:var(--fs-mono) var(--mono);letter-spacing:.04em;color:var(--dim-2);white-space:nowrap}
-.flow-row p{margin:0;font-size:var(--fs-body);line-height:1.85;color:var(--paper-2);max-width:46ch}
+.flow-row p{margin:0;font-size:var(--fs-body);line-height:1.85;color:var(--paper-2)}
 .flow-row span{font:var(--fs-mono) var(--mono);color:var(--dim);text-align:right}
 @media (max-width:860px){.stat-hero{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-big b{white-space:nowrap}}.arc-split{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(18px,2.4vw,40px);align-items:start}
 .arc-dates{position:sticky;top:0;display:grid;gap:14px;max-height:62vh;overflow-y:auto;padding-right:8px}
