@@ -3914,10 +3914,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
   });
   /* ---------- 页面文字编辑（只存这台电脑） ---------- */
-  var TEXT_KEY = 'paopaowu_text_v2';
+  var TEXT_KEY = 'paopaowu_text_v3';
   var editOn = false;
   function loadText() { try { return JSON.parse(localStorage.getItem(TEXT_KEY) || '{}'); } catch (e) { return {}; } }
   function saveText(o) { try { localStorage.setItem(TEXT_KEY, JSON.stringify(o)); } catch (e) {} }
+  var editScope = '';
   var TEXT_SKIP = '#crit-list,#shelf,#timeline,.grid,.arc-rows,.flows,.stat-bars,.stat-chips,.gal-grid,.gal-col,.shots,#rec-form,form,.pgal,.shelf-nav,.crit-rail,.tl-rail,.rail,.site-note,.proto,.cr-form';
   function textScope() {
     var view = document.querySelector('.view.on');
@@ -3950,6 +3951,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var map = loadText();
     var scope = textScope();
     textTargets().forEach(function (n, i) {
+      if (!view.contains(n)) return;
       var v = map[scope + ':' + i];
       if (v != null) {
         v = String(v).replace(/\scontenteditable="[^"]*"/gi, '');
@@ -3966,7 +3968,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       btn.textContent = editOn ? '完成编辑' : '编辑文字';
     }
     clearEditables();
-    if (!editOn) { applyTextEdits(); return; }
+    if (!editOn) { editScope = ''; applyTextEdits(); return; }
+    editScope = textScope();
     textTargets().forEach(function (n, i) {
       n.setAttribute('contenteditable', 'true');
       n.setAttribute('spellcheck', 'false');
@@ -3995,11 +3998,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   })();
   function saveNode(n) {
     if (!n || !n.getAttribute || n.getAttribute('contenteditable') !== 'true') return;
+    if (!editScope) return;
+    if (n.isConnected === false) return;              /* 已经切页，别把内容存到别人名下 */
+    var view = document.querySelector('.view.on');
+    if (!view || !view.contains(n)) return;
     var idx = n.getAttribute('data-edit-idx');
-    var scope = textScope();
-    if (!scope || idx == null) return;
+    if (idx == null) return;
     var m = loadText();
-    m[scope + ':' + idx] = n.innerHTML;
+    m[editScope + ':' + idx] = n.innerHTML;
     saveText(m);
   }
   var saveTimer = null;
