@@ -1527,10 +1527,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <p class="form-msg detail-msg" id="d-msg"></p>
             <div class="shots" id="d-shots"></div>
 
-            <div class="comment-box">
-              <textarea id="cmt" placeholder="写句评论（原型不发出去）" aria-label="评论"></textarea>
-              <button class="primary" type="button" id="cmt-send">发送</button>
-            </div>
           </div>
 
         </div>
@@ -3651,12 +3647,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var m = el('d-msg');
       if (m) { m.className = 'form-msg err detail-msg'; m.textContent = '没存上：' + err.message; }
     });
-  });
-  el('cmt-send').addEventListener('click', function () {
-    var t = el('cmt');
-    if (!t.value.trim()) return;
-    t.value = '';
-    t.placeholder = '原型不发出去，正式接登录后的评论。';
   });
   window.addEventListener('hashchange', route);
   bindLogin();
