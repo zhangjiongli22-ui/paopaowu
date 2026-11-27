@@ -1320,6 +1320,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 /* 小站统计：最下面一行脚注 */
 .site-note{margin:26px 0 0;padding-top:14px;border-top:1px solid var(--line-soft);
   font:var(--fs-mono) var(--mono);letter-spacing:.06em;line-height:1.9;color:var(--dim-2)}
+
+/* 锐评页头居中 */
+#view-critique .page-head{display:block;text-align:center;padding-bottom:clamp(16px,2.4vh,26px)}
+#view-critique .page-head .count{display:none}
+#view-critique .page-head h1{margin-top:4px}
+#view-critique .page-head .lead{margin-top:10px}
 </style>
 </head>
 <body>
@@ -2787,7 +2793,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   }
   function finishText(x) {
     if (x.finished_on) return String(x.finished_on).slice(0, 10);
-    if (x.finished_on === '') return '';
     if (DONE[x.status]) return startText(x);
     return '';
   }
