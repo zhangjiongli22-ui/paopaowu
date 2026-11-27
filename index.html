@@ -1465,6 +1465,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
 html.booting .stage{visibility:hidden}
 html.booting .edit-fab{visibility:hidden}
+/* 图片位置（自动生成，勿手改） */
+img[data-img="home.kira"]{transform:translate(20.0%,8.0%) scale(1.42);transform-origin:center center}
+img[data-img="home.dsh"]{transform:translate(1.0%,10.999999999999998%) scale(1.22);transform-origin:center center}
+img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1.18);transform-origin:center center}
 </style>
 </head>
 <body>
@@ -4492,7 +4496,14 @@ html.booting .edit-fab{visibility:hidden}
   hydrateAuth();
   route();
   syncLive();
-  setTimeout(function () { document.documentElement.classList.remove('booting'); }, 600);
+  (function () {
+    var rel = function () { document.documentElement.classList.remove('booting'); };
+    try {
+      var p = syncLive();
+      if (p && p.then) p.then(rel, rel);
+    } catch (e) {}
+    setTimeout(rel, 1200);
+  })();
 })();
 </script>
 </body>
