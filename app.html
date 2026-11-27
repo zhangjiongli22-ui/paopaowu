@@ -1177,6 +1177,25 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .ovb-note .sec-head,.daynote .sec-head{padding-bottom:8px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
 .ovb-note .sec-head h3,.daynote .sec-head h3{font-size:var(--fs-nav)}
 .quote blockquote{font-size:var(--fs-nav);line-height:1.9}
+
+/* 总览底部统计：格子居中、四边都有线 */
+.ovb .figures{border:1px solid rgba(242,236,225,.08)}
+.ovb .figures div{justify-items:center;text-align:center;padding:14px 10px}
+/* 存档点：右边那个「未解决」按钮 */
+.arc-side{display:flex;align-items:center;gap:14px;margin-left:auto}
+.view-link{background:none;border:1px solid var(--line-soft);padding:0 14px;min-height:38px;color:var(--dim);
+  font:var(--fs-mono) var(--mono);letter-spacing:.14em;cursor:pointer;transition:color .3s var(--ease),border-color .3s var(--ease)}
+.view-link:hover{color:var(--paper);border-color:var(--line)}
+.view-link.on{color:var(--gold);border-color:var(--gold-soft)}
+.plan-row em{display:block;margin-top:4px;font-style:normal;font-size:var(--fs-body);line-height:1.7;color:var(--dim)}
+/* 精神宇宙：分组标题上那条横线去掉；吸顶那排的上下线也去掉 */
+.shelf-head{border-bottom:0;padding-bottom:14px}
+.shelf-nav{border-top:0;border-bottom:0}
+/* 引言上那条金线去掉 */
+.quote::before{display:none}
+/* 图集载入占位 */
+.gal-loading{margin:40px 0;color:var(--dim-2);font:var(--fs-mono) var(--mono);letter-spacing:.2em}
+@media (max-width:720px){.plan-row .plan-tag{display:none}}
 </style>
 </head>
 <body>
@@ -1549,7 +1568,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <button class="seg-btn" role="tab" data-tab="plans" aria-selected="false">计划</button>
             <button class="seg-btn" role="tab" data-tab="stats" aria-selected="false">统计</button>
           </div>
-          <p class="arc-note">凌晨 4 点前的条目算前一天</p>
+          <div class="arc-side">
+            <p class="arc-note">凌晨 4 点前的条目算前一天</p>
+            <button class="view-link" id="arc-issue" type="button" hidden>未解决</button>
+          </div>
         </div>
 
         <div class="arc-scroll" id="arc-body"></div>
@@ -2261,23 +2283,36 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var cnt = el('gal-count'), grid = el('gal-grid');
     if (cnt) cnt.textContent = galList.length + ' 张';
     if (!grid) return;
-    grid.innerHTML = galList.map(function (x, i) {
-      return '<figure class="gal" data-i="' + i + '"><img src="' + x.src + '" alt="' + esc(x.cap || '') + '" loading="lazy">' +
-        (x.cap ? '<figcaption>' + esc(x.cap) + '</figcaption>' : '') + '</figure>';
-    }).join('');
-    grid.querySelectorAll('.gal').forEach(function (f) {
-      f.addEventListener('click', function () { showGal(Number(f.getAttribute('data-i'))); });
-      var im = f.querySelector('img');
-      if (im) {
-        im.addEventListener('load', layoutGallery);
-        if (im.complete) layoutGallery();
-      }
+    // 先把每张图的宽高量出来，再一次排好，避免边载入边重排、图乱跳
+    var ratios = {}, left = galList.length, done = false;
+    function build() {
+      if (done) return;
+      done = true;
+      grid.style.visibility = '';
+      grid.innerHTML = galList.map(function (x, i) {
+        var r = ratios[x.src];
+        var style = r ? ' style="aspect-ratio:' + (1 / r).toFixed(4) + '"' : '';
+        return '<figure class="gal" data-i="' + i + '"><img src="' + x.src + '" alt="' + esc(x.cap || '') + '"' + style + '>' +
+          (x.cap ? '<figcaption>' + esc(x.cap) + '</figcaption>' : '') + '</figure>';
+      }).join('');
+      grid.querySelectorAll('.gal').forEach(function (f) {
+        f.addEventListener('click', function () { showGal(Number(f.getAttribute('data-i'))); });
+      });
+      layoutGallery(true);
+    }
+    grid.style.visibility = 'hidden';
+    galList.forEach(function (x) {
+      var im = new Image();
+      im.onload = function () {
+        if (im.naturalWidth) ratios[x.src] = im.naturalHeight / im.naturalWidth;
+        if (--left <= 0) build();
+      };
+      im.onerror = function () { if (--left <= 0) build(); };
+      im.src = x.src;
     });
-    layoutGallery();
-    setTimeout(layoutGallery, 260);
-    setTimeout(layoutGallery, 900);
+    setTimeout(build, 1600);
   }
-  function layoutGallery() {
+  function layoutGallery(force) {
     var grid = el('gal-grid');
     if (!grid) return;
     var figs = Array.prototype.slice.call(grid.querySelectorAll('.gal'));
@@ -2285,6 +2320,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var vw = window.innerWidth;
     var cols = vw <= 480 ? 1 : (vw <= 720 ? 2 : (vw <= 1100 ? 3 : 4));
     var gap = vw <= 720 ? 12 : 16;
+    var sig = cols + '|' + Math.round(grid.clientWidth) + '|' + figs.length;
+    if (!force && grid.__sig === sig) return;
+    grid.__sig = sig;
     grid.style.gridTemplateColumns = 'repeat(' + cols + ',minmax(0,1fr))';
     // 先量一遍现有高度前，把节点从上一轮的列容器里取出来
     grid.innerHTML = '';
@@ -2835,8 +2873,30 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       return;
     }
 
+    var issueBtn = el('arc-issue');
+    if (issueBtn) {
+      issueBtn.hidden = ARC.tab !== 'plans';
+      issueBtn.textContent = ARC.issue ? '返回计划' : '未解决';
+      issueBtn.classList.toggle('on', !!ARC.issue);
+      if (!issueBtn.__bound) {
+        issueBtn.__bound = true;
+        issueBtn.addEventListener('click', function () {
+          ARC.issue = !ARC.issue;
+          renderArchive('plans');
+        });
+      }
+    }
     if (ARC.tab === 'plans') {
       var sorted = plans.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+      var issues = sorted.filter(function (x) { return x.status === '未解决' || x.cat === 'issue'; });
+      if (ARC.issue) {
+        body.innerHTML = '<section class="plan-group"><h3 class="plan-h">未解决<span>' + issues.length + '</span></h3>' +
+          issues.map(function (x) {
+            return '<div class="plan-row issue"><time>' + esc(x.date) + '</time><p>' + esc(x.title) +
+              (x.note ? '<em>' + esc(x.note) + '</em>' : '') + '</p><span class="plan-tag issue">未解决</span></div>';
+          }).join('') + '</section>' + (issues.length ? '' : '<p class="plan-empty">没有未解决的项目。</p>');
+        return;
+      }
       var groups = [
         ['未解决', sorted.filter(function (x) { return x.status === '未解决' || x.cat === 'issue'; })],
         ['计划中', sorted.filter(function (x) { return x.status !== '已达成' && x.status !== '未解决' && x.cat !== 'issue'; })],
