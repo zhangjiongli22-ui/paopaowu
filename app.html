@@ -1154,6 +1154,29 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .shelf-head{gap:10px;padding-left:12px}
   .shelf-head .en{display:none}
 }
+
+/* 图鉴卡片：星级 + 开始时间 */
+.stars5{display:inline-flex;gap:1px;line-height:1;font-size:clamp(12px,.86vw,15px);color:#7c8896}
+.stars5 i{font-style:normal}
+.stars5 i.on{color:var(--gold)}
+.stars5 i.half{background:linear-gradient(90deg,var(--gold) 50%,#7c8896 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card .meta,.item .meta{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font:var(--fs-mono) var(--mono);letter-spacing:.12em;color:var(--dim-2)}
+.card .meta time,.item .meta time{letter-spacing:.08em}
+.meta-stars{display:block;margin-top:2px}
+.card h3{margin:0;line-height:1.35}
+
+/* 总览：底部统计条跟档案页一样，格子对齐 */
+.ovb-foot{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.ovb-foot .backtop{justify-self:end}
+.ovb .figures{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:1px;
+  background:rgba(242,236,225,.08);border-top:1px solid rgba(242,236,225,.08);border-bottom:1px solid rgba(242,236,225,.08);
+  margin:18px 0 0;padding:0}
+.ovb .figures div{background:rgba(6,10,17,.55);padding:12px 14px;display:grid;gap:4px;border:0}
+.ovb .figures b{font-family:var(--serif);font-weight:500;font-size:var(--fs-nav);line-height:1.2}
+.ovb .figures span{font:var(--fs-mono) var(--mono);letter-spacing:.18em;color:var(--dim-2)}
+.ovb-note .sec-head,.daynote .sec-head{padding-bottom:8px;border-bottom:1px solid var(--line-soft);margin-bottom:6px}
+.ovb-note .sec-head h3,.daynote .sec-head h3{font-size:var(--fs-nav)}
+.quote blockquote{font-size:var(--fs-nav);line-height:1.9}
 </style>
 </head>
 <body>
@@ -1266,7 +1289,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div><dt>记录</dt><dd>7 条</dd></div>
           </dl>
           <div class="daynote">
-            <p class="kicker">每日</p>
+            <header class="sec-head"><h3>每日</h3><span class="en">LOG</span></header>
             <ul class="daylog" data-daylog></ul>
             <a class="more" href="#/archive">人生存档点 <span>→</span></a>
           </div>
@@ -1327,7 +1350,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div><dt>游戏</dt><dd>20m</dd></div>
             <div><dt>记录</dt><dd>7 条</dd></div>
           </dl>
-          <div class="ovb-note"><p class="kicker">每日</p><ul class="daylog" data-daylog></ul><a class="more" href="#/archive">人生存档点 →</a></div>
+          <div class="ovb-note"><header class="sec-head"><h3>每日</h3><span class="en">LOG</span></header><ul class="daylog" data-daylog></ul><a class="more" href="#/archive">人生存档点 →</a></div>
         </aside>
         <div class="ovb-right">
           <header class="mast"><h2>一天的样子</h2><p class="mast-meta">更新到 11 月 26 日<br>凌晨 3:30 整理的</p></header>
@@ -2096,10 +2119,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       });
       ov.querySelectorAll('.grid3').forEach(function (g) {
         g.innerHTML = now.map(function (x) {
-          var score = x.rating ? (Number(x.rating) / 2).toFixed(1) : '';
+          var start = startText(x);
           return '<a class="item" href="#/records/' + encodeURIComponent(x.id) + '">' +
             '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面"><em>' + esc(x.status || '') + '</em></span>' +
-            '<h4>' + esc(x.title) + '</h4><span class="meta">' + esc(CAT[x.cat] || '') + (score ? ' · <b>' + score + '</b>' : '') + '</span></a>';
+            '<h4>' + esc(x.title) + '</h4><span class="meta">' + esc(CAT[x.cat] || '') +
+            (start ? ' · ' + esc(start) : '') + '</span>' +
+            (x.rating ? '<span class="meta-stars">' + starMini(x.rating) + '</span>' : '') + '</a>';
         }).join('');
       });
       ov.querySelectorAll('.plans').forEach(function (ul) {
@@ -2548,13 +2573,28 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     });
   }
 
+  function starMini(rating) {
+    var v = (Number(rating) || 0) / 2;
+    if (!v) return '';
+    var out = '<span class="stars5" aria-label="' + v.toFixed(1) + ' 分（5 分制）">';
+    for (var i = 1; i <= 5; i++) {
+      var fill = Math.max(0, Math.min(1, v - (i - 1)));
+      out += '<i class="' + (fill >= 1 ? 'on' : (fill > 0 ? 'half' : '')) + '">★</i>';
+    }
+    return out + '</span>';
+  }
+  function startText(x) {
+    // 跟旧站一样：玩游戏记开始玩的日期，其它记开始看／收录的那天
+    var s = x.play_since || x.date || '';
+    return s ? String(s).slice(0, 10) : '';
+  }
   function cardHtml(x) {
-    var r = x.rating ? (Number(x.rating) / 2).toFixed(1) : (x.bgm_rating || '');
+    var start = startText(x);
     return '<a class="card" href="#/records/' + encodeURIComponent(x.id) + '">' +
       '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面" loading="lazy">' +
       '<em>' + (CAT[x.cat] || '看') + '</em></span>' +
       '<h3>' + esc(x.title) + '</h3>' +
-      '<span class="meta"><span>' + (CAT[x.cat] || '') + '</span>' + (r ? '<b>' + esc(r) + '</b>' : '') + '</span>' +
+      '<span class="meta">' + starMini(x.rating) + (start ? '<time>' + esc(start) + '</time>' : '') + '</span>' +
       '</a>';
   }
 
