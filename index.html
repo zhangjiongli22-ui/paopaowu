@@ -4497,12 +4497,21 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   route();
   syncLive();
   (function () {
-    var rel = function () { document.documentElement.classList.remove('booting'); };
+    var done = false;
+    var rel = function () {
+      if (done) return;
+      done = true;
+      try { applyTextEdits(); } catch (e) {}
+      try { applyImgOverrides(); } catch (e) {}
+      try { applyImgPos(); } catch (e) {}
+      try { applyAdminVis(); } catch (e) {}
+      document.documentElement.classList.remove('booting');
+    };
     try {
       var p = syncLive();
       if (p && p.then) p.then(rel, rel);
-    } catch (e) {}
-    setTimeout(rel, 1200);
+    } catch (e) { rel(); }
+    setTimeout(rel, 1500);
   })();
 })();
 </script>
