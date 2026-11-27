@@ -1,4 +1,4 @@
-/* Kira的小屋 · 设计变量（来自站点 style.css，2026-11-27 整理） */
+﻿/* Kira的小屋 · 设计变量（来自站点 style.css，2026-11-27 整理） */
 :root{
   /* 墨与纸 */
   --ink-900:#05070c;
@@ -29,13 +29,13 @@
   --mono:"Cascadia Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
 
   /* 字号阶梯（一屏最多用七档） */
-  --fs-mono:11px;
-  --fs-body:12px;
-  --fs-nav:14.5px;
-  --fs-quote:18px;
-  --fs-h2:26px;
-  --fs-h1:34px;
-  --fs-date:88px;
+  --fs-mono:clamp(12px, .86vw, 18px);
+  --fs-body:clamp(12px, .94vw, 19px);
+  --fs-nav:clamp(14px, 1.13vw, 23px);
+  --fs-quote:clamp(16px, 1.41vw, 28px);
+  --fs-h2:clamp(24px, 2.03vw, 40px);
+  --fs-h1:clamp(30px, 2.66vw, 52px);
+  --fs-date:clamp(72px, 6.88vw, 140px);
 
   /* 间距 */
   --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px;
