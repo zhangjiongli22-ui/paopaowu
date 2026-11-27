@@ -30,14 +30,14 @@
 
   function run() {
     try {
-      const cached = sessionStorage.getItem("wallpapers");
+      const cached = sessionStorage.getItem("wallpapers_v2");
       if (cached) { apply(JSON.parse(cached)); return; }
     } catch (e) {}
     fetch("data/wallpapers.json", { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         const list = data.items || [];
-        try { sessionStorage.setItem("wallpapers", JSON.stringify(list)); } catch (e) {}
+        try { sessionStorage.setItem("wallpapers_v2", JSON.stringify(list)); } catch (e) {}
         apply(list);
       })
       .catch(() => {});
