@@ -1316,6 +1316,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .tl-rail a{border-left:0;border-bottom:1px solid transparent;padding:6px 10px;min-width:max-content}
   .tl-rail a.on{border-bottom-color:var(--gold)}
 }
+
+/* 小站统计：最下面一行脚注 */
+.site-note{margin:26px 0 0;padding-top:14px;border-top:1px solid var(--line-soft);
+  font:var(--fs-mono) var(--mono);letter-spacing:.06em;line-height:1.9;color:var(--dim-2)}
 </style>
 </head>
 <body>
@@ -1788,7 +1792,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
                 <option value="玩过">玩过</option>
               </select>
             </label>
-            <label>日期<input name="date" type="date"></label>
+            <label>开始时间<input name="started_on" type="date"></label>
+            <label>完成时间<input name="finished_on" type="date"></label>
             <label>评分（0–10）<input name="rating" type="number" min="0" max="10" step="0.1" placeholder="8.4"></label>
             <label class="full">简介<textarea name="desc" placeholder="一两句就够，别写成简介搬运。"></textarea></label>
             <label class="full">封面<input name="cover" type="file" accept="image/*"></label>
@@ -2293,11 +2298,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       });
       ov.querySelectorAll('.grid3').forEach(function (g) {
         g.innerHTML = now.map(function (x) {
-          var start = startText(x);
+          var fin = finishText(x);
           return '<a class="item" href="#/records/' + encodeURIComponent(x.id) + '">' +
             '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面"><em class="' + (x.status === '在玩' || x.status === '在看' ? 'in' : '') + '">' + esc(x.status || '') + '</em></span>' +
             '<h4>' + esc(x.title) + '</h4><span class="meta">' + esc(CAT[x.cat] || '') +
-            (start ? ' · ' + esc(start) : '') + '</span>' +
+            (fin ? ' · ' + esc(fin) : '') + '</span>' +
             (x.rating ? '<span class="meta-stars">' + starMini(x.rating) + '</span>' : '') + '</a>';
         }).join('');
       });
@@ -2775,13 +2780,19 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }
     return out + '</span>';
   }
+  var DONE = { '看过': 1, '玩过': 1 };
   function startText(x) {
-    // 跟旧站一样：玩游戏记开始玩的日期，其它记开始看／收录的那天
-    var s = x.play_since || x.date || '';
+    var s = x.started_on || x.play_since || x.date || '';
     return s ? String(s).slice(0, 10) : '';
   }
+  function finishText(x) {
+    if (x.finished_on) return String(x.finished_on).slice(0, 10);
+    if (x.finished_on === '') return '';
+    if (DONE[x.status]) return startText(x);
+    return '';
+  }
   function cardHtml(x) {
-    var start = startText(x);
+    var fin = finishText(x);
     var st = x.status || '';
     var inprog = (st === '在玩' || st === '在看');
     var rated = !!(x.rating || String(x.note || '').trim());
@@ -2791,7 +2802,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       (rated ? '<b class="rated">已评价</b>' : '') +
       '</span>' +
       '<h3>' + esc(x.title) + '</h3>' +
-      '<span class="meta">' + starMini(x.rating) + (start ? '<time>' + esc(start) + '</time>' : '') + '</span>' +
+      '<span class="meta">' + starMini(x.rating) + (fin ? '<time>' + esc(fin) + '</time>' : '') + '</span>' +
       '</a>';
   }
 
@@ -2832,9 +2843,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   function renderTimeline(list) {
     var rows = [];
     list.forEach(function (x) {
-      var done = (x.status === '看过' || x.status === '玩过');
-      var d = x.rated_on || x.date;
-      if (done && d) rows.push({ x: x, d: String(d).slice(0, 10) });
+      var d = finishText(x);
+      if (d) rows.push({ x: x, d: String(d).slice(0, 10) });
     });
     rows.sort(function (a, b) { return b.d.localeCompare(a.d); });
     if (!rows.length) {
@@ -2931,12 +2941,13 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         f.elements['name_cn'].value = x.name_cn || '';
         f.elements['cat'].value = x.cat || 'anime';
         f.elements['status'].value = x.status || '在看';
-        f.elements['date'].value = x.date || '';
+        if (f.elements['started_on']) f.elements['started_on'].value = startText(x);
+        if (f.elements['finished_on']) f.elements['finished_on'].value = finishText(x);
         f.elements['rating'].value = (x.bgm_rating || x.rating || '');
         f.elements['desc'].value = x.desc || '';
       }
     } else {
-      f.elements['date'].value = new Date().toISOString().slice(0, 10);
+      if (f.elements['started_on']) f.elements['started_on'].value = new Date().toISOString().slice(0, 10);
     }
   }
 
@@ -2956,7 +2967,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       name_cn: (f.elements['name_cn'].value || '').trim(),
       cat: f.elements['cat'].value,
       status: f.elements['status'].value,
-      date: f.elements['date'].value,
+      started_on: (f.elements['started_on'] || {}).value || '',
+      finished_on: (f.elements['finished_on'] || {}).value || '',
+      date: (f.elements['started_on'] || {}).value || '',
       desc: (f.elements['desc'].value || '').trim()
     };
     var rv = f.elements['rating'].value;
@@ -3164,16 +3177,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       '<h3 class="stat-h">工作流时间统计 <span class="stat-count">' + shown.length + ' 类</span></h3>' +
       '<p class="stat-meta">立项 ' + projectFrom + ' · 记到 ' + projectTo + '</p>' +
       '<div class="flows">' + flowHtml + '</div>' +
-      '<h3 class="stat-h">这个小站 <span class="stat-count">从 2026-11-20 到今天</span></h3>' +
-      '<div class="site-nums">' +
-        '<div><b>' + SITE.days + '</b><span>建站天数</span></div>' +
-        '<div><b>' + SITE.rounds + '</b><span>对话轮次</span></div>' +
-        '<div><b>' + SITE.today + '</b><span>今天</span></div>' +
-        '<div><b>' + SITE.shell + '</b><span>这版外壳</span></div>' +
-        '<div><b>' + list.length + '</b><span>收藏条目</span></div>' +
-      '</div>' +
-      '<p class="stat-meta">轮次是翻会话记录数出来的「turn」数：11-20 建站到今天一共 ' + SITE.rounds +
-      ' 轮，今天 ' + SITE.today + ' 轮，其中把整站换成这个单页外壳的会话占 ' + SITE.shell + ' 轮。</p>';
+      '<p class="site-note">这个小站：从 2026-11-20 到今天 · 建站 ' + SITE.days + ' 天 · 共 ' +
+        SITE.rounds + ' 轮对话（今天 ' + SITE.today + ' 轮，其中 ' + SITE.shell + ' 轮花在换成这版外壳上）· ' +
+        list.length + ' 条收藏</p>'
+      ;;
 
     body.querySelectorAll('.flow-toggle').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -3505,7 +3512,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     function pushMeta(k, v) { if (v) meta.push('<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>'); }
     pushMeta('分类', CAT[x.cat]);
     pushMeta(x.cat === 'game' ? '发售' : '开始', x.air);
-    pushMeta('开始玩', x.play_since);
+    pushMeta('开始时间', startText(x));
+    pushMeta('完成时间', finishText(x));
     pushMeta('中文名', x.name_cn);
     pushMeta('话数', x.eps ? x.eps + ' 话' : '');
     pushMeta('导演/开发', x.director);
