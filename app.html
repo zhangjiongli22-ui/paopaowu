@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -57,6 +57,9 @@ a{-webkit-tap-highlight-color:transparent}
 .rail-foot{margin-top:auto;display:grid;gap:10px;padding-top:16px;border-top:1px solid var(--line-soft)}
 .rail-foot p{margin:0;font-size:var(--fs-body);line-height:1.7;color:var(--dim-2)}
 .rail-foot a{font:var(--fs-mono) var(--mono);letter-spacing:.2em;color:var(--gold-text);min-height:44px;min-width:44px;display:inline-flex;align-items:center}
+.rail-foot .rail-extra{display:flex;flex-wrap:wrap;gap:0 18px;margin:0}
+.rail-foot .rail-extra a{letter-spacing:.16em;color:var(--dim);min-height:32px}
+.rail-foot .rail-extra a:hover{color:var(--gold-text)}
 
 /* ---------- 右区 ---------- */
 .stage{position:relative;height:100%;overflow-y:auto;overscroll-behavior:contain}
@@ -895,7 +898,31 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .gal-box[hidden]{display:none}
 .gal-box img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;object-fit:contain;border:1px solid var(--line-soft)}
 .gal-box p{max-width:60em;margin:0;text-align:center;font-family:var(--serif);font-size:var(--fs-body);line-height:1.8;color:var(--paper-2)}
-.embed-frame{display:block;width:100%;height:calc(100vh - 0px);border:0;background:transparent}.embed-page{padding:0;margin:0;max-width:none}</style>
+.embed-frame{display:block;width:100%;height:calc(100vh - 0px);border:0;background:transparent}.embed-page{padding:0;margin:0;max-width:none}
+.form-msg{margin:0;font:var(--fs-mono) var(--mono);letter-spacing:.06em;line-height:1.75;color:var(--dim-2);min-height:1.5em}
+.form-msg.ok{color:var(--aqua)}
+.form-msg.err{color:var(--sakura)}
+.form-msg a{color:var(--gold-text)}
+.login-form{max-width:460px}
+.login-form .form-grid{grid-template-columns:1fr}
+.detail-msg{margin:8px 0 0}
+.gal-box{grid-template-rows:minmax(0,1fr) auto}
+.gal-box .gal-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:56px;border:1px solid var(--line);background:rgba(10,16,24,.72);color:var(--paper-2);font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.gal-box .gal-nav.prev{left:1.6vw}
+.gal-box .gal-nav.next{right:1.6vw}
+.gal-box .gal-nav:hover{color:var(--gold);border-color:var(--gold-soft)}
+@media (max-width:480px){.gal-grid{column-count:1}}
+.mini{white-space:nowrap}
+.star{flex:none}
+@media (max-width:720px){.form-grid{grid-template-columns:minmax(0,1fr)}.page-head{flex-direction:column;align-items:flex-start;gap:10px}.page-head .count{padding-bottom:0}}
+@media (max-width:860px){.shelf-nav{overflow-x:auto}.shelf-nav a{flex:0 0 auto;padding:0 12px}}
+@media (max-width:860px){
+  .detail-grid{grid-template-columns:minmax(0,1fr);gap:22px}
+  .detail-cover{max-width:260px}
+  .detail-actions{flex-wrap:wrap;gap:8px}
+  .rev-head{gap:12px}
+}
+</style>
 </head>
 <body>
 <div class="bg" id="bg" aria-hidden="true"></div>
@@ -923,7 +950,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
     <div class="rail-foot">
       <p>屋子每天凌晨三点半自己打扫一次。</p>
-      <a href="#">登录 / Kira</a>
+      <p class="rail-extra"><a href="#/fish">两只鱼</a><a href="chat.html">日常</a><a href="legal.html">声明</a></p>
+      <a href="#/login" id="login-link">登录 / Kira</a>
     </div>
   </aside>
 
@@ -1031,7 +1059,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
         <section class="lower">
           <div class="plansec">
-            <header class="sec-head"><h3>计划</h3><span class="en">想做的 12 件</span></header>
+            <header class="sec-head"><h3>计划</h3><span class="en" data-plans="想做的 {n} 件">想做的 12 件</span></header>
             <ul class="plans">
               <li><time>2026-11-22</time><span>自建素材资产管理系统（参考 Serpent）</span></li>
               <li><time>2026-11-22</time><span>每日分类时间统计与图表</span></li>
@@ -1079,7 +1107,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             </div>
           </section>
           <section>
-            <header class="sec-head"><h3>计划</h3><span class="en">PLANS — 计划中 12</span></header>
+            <header class="sec-head"><h3>计划</h3><span class="en" data-plans="PLANS — 计划中 {n}">PLANS — 计划中 12</span></header>
             <ul class="plans">
               <li><time>2026-11-22</time><span>自建素材资产管理系统（参考 Serpent）</span></li>
               <li><time>2026-11-22</time><span>每日分类时间统计与图表</span></li>
@@ -1102,7 +1130,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
           <section class="card ovcstats"><dl class="stats"><div><dt>工作</dt><dd>1h 17m</dd></div><div><dt>健身</dt><dd>30m</dd></div><div><dt>游戏</dt><dd>20m</dd></div><div><dt>记录</dt><dd>7 条</dd></div></dl></section>
           <section class="card ovcrecent"><header class="sec-head"><h3>最近</h3><span class="en">NOW</span></header><div class="grid3"><a class="item" href="#/records"><span class="pic"><img src="assets/covers/anime-1ef7f1b0-frieren2.jpg" alt=""><em>在看</em></span><h4>葬送的芙莉莲 第二季</h4><span class="meta">动画</span></a><a class="item" href="#/records"><span class="pic"><img src="assets/covers/g-1001-bgm-086301b6.jpg" alt=""><em>在玩</em></span><h4>塞尔达 王国之泪</h4><span class="meta">9.1</span></a><a class="item" href="#/records"><span class="pic"><img src="assets/covers/game-1cc8ef5a-GTA6.jpg" alt=""><em>在玩</em></span><h4>Grand Theft Auto VI</h4><span class="meta">游戏</span></a></div></section>
           <section class="card ovcnote"><p class="kicker">昨晚 23:24</p><p>做了自己添加游戏、电影、截图的录入页，把蓝色星原旅谣加进在玩。</p><a class="more" href="#/archive">人生存档点 →</a></section>
-          <section class="card ovcplans"><header class="sec-head"><h3>计划</h3><span class="en">计划中 12</span></header><ul><li><time>2026-11-22</time><span>自建素材资产管理系统（参考 Serpent）</span></li><li><time>2026-11-22</time><span>每日分类时间统计与图表</span></li><li><time>2026-11-22</time><span>钢琴演奏视频剪辑</span></li></ul></section>
+          <section class="card ovcplans"><header class="sec-head"><h3>计划</h3><span class="en" data-plans="计划中 {n}">计划中 12</span></header><ul><li><time>2026-11-22</time><span>自建素材资产管理系统（参考 Serpent）</span></li><li><time>2026-11-22</time><span>每日分类时间统计与图表</span></li><li><time>2026-11-22</time><span>钢琴演奏视频剪辑</span></li></ul></section>
           <figure class="card ovcquote"><header class="sec-head"><h3>说过的话</h3><span class="en">SAID</span></header><blockquote>你下午是不是又对着屏幕没挪窝，我这边静得能听见风扇声 (´･ω･`)</blockquote><figcaption><b>小鱼</b><span>11.25 15:47</span></figcaption></figure>
           <footer class="ovc-foot"><div class="figures"><div><b>648</b><span>收藏</span></div><div><b>41</b><span>日志</span></div><div><b>12</b><span>计划</span></div></div><a class="backtop" href="#/home">回到上面 ↑</a></footer>
         </div>
@@ -1248,8 +1276,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <div class="detail-actions">
               <a class="mini" id="d-edit" href="#/edit/">编辑这一条</a>
               <button class="mini" type="button" id="d-addshot">＋ 加截图</button>
+              <button class="mini" type="button" id="d-fav" hidden>☆ 收藏</button>
               <input type="file" id="d-shot" accept="image/*" multiple hidden>
             </div>
+            <p class="form-msg detail-msg" id="d-msg"></p>
             <div class="shots" id="d-shots"></div>
 
             <div class="comment-box">
@@ -1327,9 +1357,18 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
     <!-- 图集 -->
     <section class="view" id="view-gallery">
-      <div class="page embed-page"><iframe class="embed-frame" src="site/gallery.html" title="图集"></iframe>
-        
+      <div class="page">
+        <header class="page-head">
+          <div>
+            <p class="kicker">SCN.<b>03</b> — CG 図録</p>
+            <h1>图集</h1>
+            <p class="lead">小鱼挑的图。点开看大图，← → 翻，Esc 关上。</p>
+          </div>
+          <p class="count" id="gal-count">—</p>
+        </header>
+        <div class="gal-grid" id="gal-grid"></div>
       </div>
+      <div class="gal-box" id="gal-box" hidden></div>
     </section>
 
     <!-- 锐评 -->
@@ -1356,7 +1395,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <h1 id="ed-title">添加一条</h1>
             <p class="lead" id="ed-lead">填完保存，回到图鉴里就能看到。</p>
           </div>
-          <p class="count">原型：只存在这次打开里</p>
+          <p class="count" id="ed-state">登录后直接存进线上</p>
         </header>
 
         <form class="form" id="rec-form">
@@ -1388,9 +1427,35 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             <label class="full">封面<input name="cover" type="file" accept="image/*"></label>
             <label class="full">截图<input name="shots" type="file" accept="image/*" multiple></label>
           </div>
+          <p class="form-msg" id="ed-msg"></p>
           <div class="form-foot">
             <a class="ghost" href="#/records">取消</a>
             <button class="primary" type="submit">保存</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 登录 -->
+    <section class="view" id="view-login">
+      <div class="page">
+        <header class="page-head">
+          <div>
+            <p class="kicker">SCN.<b>05</b> — ADMIN</p>
+            <h1>登录</h1>
+            <p class="lead">登录之后才能改评分、写评价、加条目和留言。</p>
+          </div>
+          <p class="count" id="login-state">未登录</p>
+        </header>
+        <form class="form login-form" id="login-form" autocomplete="off">
+          <div class="form-grid">
+            <label>账号<input id="login-user" type="text" autocomplete="username" placeholder="kira"></label>
+            <label>密码<input id="login-pass" type="password" autocomplete="current-password"></label>
+          </div>
+          <p class="form-msg" id="login-msg"></p>
+          <div class="form-foot">
+            <button class="ghost" type="button" id="logout-btn" hidden>退出登录</button>
+            <button class="primary" type="submit">登录</button>
           </div>
         </form>
       </div>
@@ -1418,7 +1483,12 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   });
   document.addEventListener('keydown', function (e) {
     var box = document.getElementById('gal-box');
-    if (box && !box.hidden && e.key === 'Escape') box.hidden = true;
+    if (!box || box.hidden) return;
+    if (e.key === 'Escape') { box.hidden = true; return; }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      var b = box.querySelector(e.key === 'ArrowLeft' ? '.gal-nav.prev' : '.gal-nav.next');
+      if (b) b.click();
+    }
   });
 
   (function () {
@@ -1493,8 +1563,311 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   })();
 
 (function () {
-  var picks = (window.__PICKS__ && window.__PICKS__.picks) || null;
+  var D = window.__PICKS__ || { picks: [], plans: [], logs: [], critiques: [], gallery: [], total: 0 };
+  var picks = D.picks || null;
+  var PROF = {}, CHAT = {}, RAW = null;
   var state = { cat: 'all', q: '', view: 'shelf' };
+
+  /* ================= 登录 / 存取 / 真数据 ================= */
+  var LOGIN_HASH = '6f65bb65';
+  var RATE_PASS = 'kira:miku1998:paopaowu';
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function getPass() { try { return localStorage.getItem('paopaowu_pass') || ''; } catch (e) { return ''; } }
+  function isAdmin() {
+    try { return !!(localStorage.getItem('paopaowu_admin') || localStorage.getItem('paopaowu_pass')); }
+    catch (e) { return false; }
+  }
+  function loginToken(s) {
+    var x = 5381;
+    for (var i = 0; i < s.length; i++) { x = ((x << 5) + x) ^ s.charCodeAt(i); x >>>= 0; }
+    return x.toString(16);
+  }
+  function isFishName(who) { return who === '大肥鱼' || who === '一只鱼'; }
+  function shownWho(who) { return isFishName(who) ? '小鱼' : (who || ''); }
+
+  function hydrateAuth() {
+    var on = isAdmin();
+    var link = el('login-link');
+    if (link) { link.textContent = on ? 'Kira · 已登录' : '登录 / Kira'; link.href = '#/login'; }
+    var st = el('login-state');
+    if (st) st.textContent = on ? '已登录' : '未登录';
+    var out = el('logout-btn');
+    if (out) out.hidden = !on;
+  }
+  function openLogin() {
+    hydrateAuth();
+    var msg = el('login-msg');
+    if (msg && isAdmin()) { msg.className = 'form-msg ok'; msg.textContent = '现在是登录状态，可以直接改评分和留言。'; }
+  }
+  function bindLogin() {
+    var f = el('login-form');
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msg = el('login-msg');
+      var u = (el('login-user').value || '').trim();
+      var p = el('login-pass').value || '';
+      var token = u + ':' + p + ':paopaowu';
+      if (loginToken(token) !== LOGIN_HASH) {
+        msg.className = 'form-msg err';
+        msg.textContent = '账号或密码不对';
+        return;
+      }
+      var stamp = String(Date.now());
+      try {
+        localStorage.setItem('paopaowu_admin', stamp);
+        localStorage.setItem('paopaowu_pass', token);
+      } catch (err) {}
+      document.cookie = 'paopaowu_admin=' + stamp + '; path=/; max-age=31536000; SameSite=Lax';
+      document.cookie = 'paopaowu_pass=' + encodeURIComponent(token) + '; path=/; max-age=31536000; SameSite=Lax';
+      el('login-pass').value = '';
+      hydrateAuth();
+      msg.className = 'form-msg ok';
+      msg.textContent = '登录成功';
+      route();
+      setTimeout(function () { location.hash = '#/home'; }, 600);
+    });
+    var out = el('logout-btn');
+    if (out) out.addEventListener('click', function () {
+      try { localStorage.removeItem('paopaowu_admin'); localStorage.removeItem('paopaowu_pass'); } catch (e) {}
+      document.cookie = 'paopaowu_admin=; path=/; max-age=0';
+      document.cookie = 'paopaowu_pass=; path=/; max-age=0';
+      hydrateAuth();
+      var msg = el('login-msg');
+      if (msg) { msg.className = 'form-msg'; msg.textContent = '已退出'; }
+      route();
+    });
+  }
+
+  function compressImage(file, maxSide, maxBytes) {
+    return createImageBitmap(file).then(function (bmp) {
+      var w = bmp.width, h = bmp.height;
+      var scale = Math.min(1, maxSide / Math.max(w, h));
+      var q = 0.82;
+      function draw(sc, qq) {
+        var c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(w * sc));
+        c.height = Math.max(1, Math.round(h * sc));
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#0a1119';
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(bmp, 0, 0, c.width, c.height);
+        return c.toDataURL('image/jpeg', qq);
+      }
+      var url = draw(scale, q), guard = 0;
+      while (url.length * 0.75 > maxBytes && q > 0.42 && guard < 10) { q -= 0.06; guard++; url = draw(scale, q); }
+      if (url.length * 0.75 > maxBytes) {
+        scale = Math.min(1, maxSide * 0.72 / Math.max(w, h));
+        url = draw(scale, 0.72);
+      }
+      try { bmp.close(); } catch (e) {}
+      return url;
+    });
+  }
+  function mediaUpload(dataUrl) {
+    var pass = getPass();
+    if (!pass) return Promise.reject(new Error('还没登录'));
+    return fetch('/api/media', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ pass: pass, data: dataUrl })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (o) {
+        if (!r.ok || !o.ok) throw new Error(o.error || ('上传失败 ' + r.status));
+        return o.url;
+      });
+    });
+  }
+  function dataSave(raw) {
+    var pass = getPass();
+    if (!pass) return Promise.reject(new Error('还没登录'));
+    // 跟旧 add.js 一样：评论（cr-）存在 comments_all 里，读写时由 worker 合并，不塞回主表
+    var payload = {
+      cats: (raw && raw.cats) || [],
+      items: ((raw && raw.items) || []).filter(function (x) {
+        return String((x && x.id) || '').indexOf('cr-') !== 0;
+      })
+    };
+    return fetch('/api/data', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ pass: pass, data: payload })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (o) {
+        if (!r.ok || !o.ok) throw new Error(o.error || ('保存失败 ' + r.status));
+        return o;
+      });
+    });
+  }
+  function normRecords(raw) {
+    var items = (raw && raw.items) || [];
+    var MEDIA = { anime: 1, tv: 1, film: 1, game: 1, book: 1 };
+    var ps = [], plans2 = [], logs2 = [], crits = [];
+    items.forEach(function (x) {
+      if (x.cat === 'log') logs2.push(x);
+      else if (x.cat === 'critique') crits.push(x);
+      else if (x.cat === 'idea' || x.cat === 'issue') plans2.push(x);
+      else if (MEDIA[x.cat]) ps.push(x);
+    });
+    var g = (window.__PICKS__ && window.__PICKS__.gallery) || [];
+    return { total: ps.length, picks: ps, plans: plans2, logs: logs2, critiques: crits, gallery: g };
+  }
+  function syncLive() {
+    var jobs = [
+      fetch('data/records.json', { cache: 'no-store' }).then(function (r) {
+        if (!r.ok) throw new Error('records ' + r.status);
+        return r.json();
+      }).then(function (raw) {
+        RAW = raw;
+        window.__PICKS__ = normRecords(raw);
+        picks = window.__PICKS__.picks;
+      }),
+      fetch('data/profile.json', { cache: 'no-store' }).then(function (r) {
+        return r.ok ? r.json() : null;
+      }).then(function (j) { PROF = j || {}; }),
+      fetch('data/chat.json', { cache: 'no-store' }).then(function (r) {
+        return r.ok ? r.json() : null;
+      }).then(function (j) { CHAT = j || {}; })
+    ];
+    return Promise.all(jobs.map(function (p) { return p.catch(function () {}); })).then(function () {
+      hydrateHome();
+      hydrateAuth();
+      route();
+    });
+  }
+  function patchItem(item, fields) {
+    if (!RAW || !RAW.items) return Promise.reject(new Error('数据没读到，刷新一次再试'));
+    var hit = RAW.items.filter(function (x) { return String(x.id) === String(item.id); })[0];
+    if (!hit) return Promise.reject(new Error('主数据里没找到这条，可能是图鉴里新加的'));
+    Object.keys(fields).forEach(function (k) { hit[k] = fields[k]; });
+    return dataSave(RAW).then(function () {
+      Object.keys(fields).forEach(function (k) { item[k] = fields[k]; });
+    });
+  }
+
+  /* ---------------- 屋子的数字都从数据里算 ---------------- */
+  function minsText(n) {
+    n = Math.round(Number(n) || 0);
+    if (!n) return '0m';
+    if (n < 60) return n + 'm';
+    var h = Math.floor(n / 60), m = n % 60;
+    return h + 'h' + (m ? ' ' + pad2(m) + 'm' : '');
+  }
+  function dataDay() {
+    var logs2 = ((window.__PICKS__ || {}).logs) || [];
+    var d = logs2.map(function (x) { return x.date; }).filter(Boolean).sort();
+    return d.length ? d[d.length - 1] : '';
+  }
+  function latestTalk() {
+    var blocks = (CHAT.blocks || []).slice().sort(function (a, b) {
+      return String(a.d || '').localeCompare(String(b.d || ''));
+    });
+    for (var i = blocks.length - 1; i >= 0; i--) {
+      var turns = blocks[i].turns || [];
+      for (var j = turns.length - 1; j >= 0; j--) {
+        var line = String(turns[j].text || '').split('\n')[0].trim();
+        // 跳过 "[SIP]" 这类系统标记和太短的残句，只取真的说过的话
+        if (turns[j].role !== 'bot') continue;
+        if (!line || /^\[[^\]]*\]$/.test(line) || line.replace(/\s/g, '').length < 6) continue;
+        return { text: line, d: blocks[i].d, hm: turns[j].hm || blocks[i].hm };
+      }
+    }
+    return null;
+  }
+  function hydrateHome() {
+    var DD = window.__PICKS__ || {};
+    var allPicks = DD.picks || [], logs2 = DD.logs || [], plans2 = DD.plans || [];
+    var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    var WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    var day = dataDay();
+    var dt = day ? new Date(day + 'T00:00:00') : new Date();
+    var dayNum = String(dt.getDate());
+    var monLine = MON[dt.getMonth()] + ' ' + dt.getFullYear();
+    var wdLine = WD[dt.getDay()] + ' · 屋子里';
+    var rows = logs2.filter(function (x) { return x.date === day; });
+    var sum = { work: 0, fitness: 0, game: 0 };
+    rows.forEach(function (x) { if (sum[x.kind] != null) sum[x.kind] += Number(x.minutes) || 0; });
+    var vals = [minsText(sum.work), minsText(sum.fitness), minsText(sum.game), rows.length + ' 条'];
+    var todoAll = plans2.filter(function (x) { return x.status !== '已达成'; });
+    var todo = todoAll.slice().sort(function (a, b) {
+      return String(b.date || '').localeCompare(String(a.date || ''));
+    }).slice(0, 3);
+    var now = allPicks.filter(function (x) { return x.status === '在玩' || x.status === '在看'; })
+      .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 3);
+    var talk = latestTalk();
+    var workLogs = logs2.filter(function (x) { return x.kind === 'work'; })
+      .sort(function (a, b) { return (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')); });
+    var lastWork = workLogs[workLogs.length - 1];
+    var rated = allPicks.filter(function (x) { return x.rating; });
+    var avg = rated.length
+      ? (rated.reduce(function (a, x) { return a + Number(x.rating); }, 0) / rated.length / 2).toFixed(1)
+      : '—';
+    var following = allPicks.filter(function (x) { return x.status === '在看' || x.status === '在玩'; }).length;
+
+    document.querySelectorAll('.overview').forEach(function (ov) {
+      ov.querySelectorAll('.bigdate, .ovb-big, .ovcday b').forEach(function (n) { n.textContent = dayNum; });
+      ov.querySelectorAll('.dateline, .ovcday div p').forEach(function (n) { n.textContent = monLine; });
+      ov.querySelectorAll('.weekday, .ovb-wd, .ovcday div span').forEach(function (n) { n.textContent = wdLine; });
+      ov.querySelectorAll('.stats2, .stats, .ovcstats').forEach(function (dl) {
+        Array.prototype.forEach.call(dl.querySelectorAll('dd'), function (dd, i) {
+          if (vals[i]) dd.textContent = vals[i];
+        });
+      });
+      ov.querySelectorAll('.mast-meta').forEach(function (n) {
+        n.innerHTML = '更新到 ' + (dt.getMonth() + 1) + ' 月 ' + dt.getDate() + ' 日<br>凌晨 3:30 整理的';
+      });
+      ov.querySelectorAll('.grid3').forEach(function (g) {
+        g.innerHTML = now.map(function (x) {
+          var score = x.rating ? (Number(x.rating) / 2).toFixed(1) : '';
+          return '<a class="item" href="#/records/' + encodeURIComponent(x.id) + '">' +
+            '<span class="pic"><img src="' + esc(x.cover || 'assets/placeholder.svg') + '" alt="' + esc(x.title) + ' 封面"><em>' + esc(x.status || '') + '</em></span>' +
+            '<h4>' + esc(x.title) + '</h4><span class="meta">' + esc(CAT[x.cat] || '') + (score ? ' · <b>' + score + '</b>' : '') + '</span></a>';
+        }).join('');
+      });
+      ov.querySelectorAll('.plans').forEach(function (ul) {
+        ul.innerHTML = todo.map(function (x) {
+          return '<li><time>' + esc(x.date || '') + '</time><span>' + esc(x.title) + '</span></li>';
+        }).join('');
+      });
+      ov.querySelectorAll('[data-plans]').forEach(function (n) {
+        n.textContent = String(n.getAttribute('data-plans')).replace('{n}', todoAll.length);
+      });
+      ov.querySelectorAll('figure.quote, figure.ovcquote').forEach(function (fig) {
+        var q = fig.querySelector('blockquote'), cap = fig.querySelector('figcaption');
+        if (q && talk) q.textContent = talk.text;
+        if (cap && talk) {
+          cap.innerHTML = '<b>小鱼</b><span>' + esc(String(talk.d || '').slice(5)) + ' ' + esc(talk.hm || '') + '</span>';
+        }
+      });
+      ov.querySelectorAll('.figures').forEach(function (box) {
+        var six = box.hasAttribute('data-ovfigs') || box.children.length > 3;
+        var items = six
+          ? [[allPicks.filter(function (x) { return x.pinned; }).length || allPicks.length, '最爱'],
+             [logs2.length, '日志'], [todoAll.length, '想做'], [allPicks.length, '记录'],
+             [following, '在追'], [avg, '均分']]
+          : [[allPicks.length, '收藏'], [logs2.length, '日志'], [todoAll.length, '计划']];
+        box.innerHTML = items.map(function (it) {
+          return '<div><b>' + it[0] + '</b><span>' + it[1] + '</span></div>';
+        }).join('');
+      });
+      ov.querySelectorAll('.ovcnote').forEach(function (card) {
+        if (!lastWork) return;
+        var k = card.querySelector('.kicker');
+        var p2 = card.querySelector('p:not(.kicker)');
+        if (k) k.textContent = String(lastWork.date || '').slice(5) + ' ' + (lastWork.time || '');
+        if (p2) p2.textContent = lastWork.text || '';
+      });
+      ov.querySelectorAll('.daylog').forEach(function (ul) {
+        var rows2 = logs2.slice().sort(function (a, b) {
+          return (b.date + ' ' + (b.time || '')).localeCompare(a.date + ' ' + (a.time || ''));
+        }).slice(0, 4);
+        ul.innerHTML = rows2.map(function (x) {
+          return '<li><time>' + esc(String(x.date || '').slice(5)) + (x.time ? ' ' + esc(x.time) : '') + '</time><span>' + esc(x.text || '') + '</span></li>';
+        }).join('');
+      });
+    });
+  }
   var el = function (id) { return document.getElementById(id); };
   var esc = function (t) {
     return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
@@ -1573,45 +1946,55 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }
   };
 
+  var galList = [], galIndex = 0;
   function openGallery() {
-    var D = window.__PICKS__ || {};
-    var list = D.gallery || [];
-    el('gal-count').textContent = list.length + ' 张';
-    el('gal-grid').innerHTML = list.map(function (x, i) {
-      return '<figure class="gal" data-i="' + i + '"><img src="' + x.src + '" alt="' + esc(x.cap) + '" loading="lazy">' +
+    var DD = window.__PICKS__ || {};
+    galList = (DD.gallery || []).slice();
+    var cnt = el('gal-count'), grid = el('gal-grid');
+    if (cnt) cnt.textContent = galList.length + ' 张';
+    if (!grid) return;
+    grid.innerHTML = galList.map(function (x, i) {
+      return '<figure class="gal" data-i="' + i + '"><img src="' + x.src + '" alt="' + esc(x.cap || '') + '" loading="lazy">' +
         (x.cap ? '<figcaption>' + esc(x.cap) + '</figcaption>' : '') + '</figure>';
     }).join('');
-    el('gal-grid').querySelectorAll('.gal').forEach(function (f) {
-      f.addEventListener('click', function () {
-        var x = list[Number(f.getAttribute('data-i'))];
-        var box = el('gal-box');
-        box.innerHTML = '<img src="' + x.src + '" alt="' + esc(x.cap) + '"><p>' + esc(x.cap || '') + '</p>';
-        box.hidden = false;
-      });
+    grid.querySelectorAll('.gal').forEach(function (f) {
+      f.addEventListener('click', function () { showGal(Number(f.getAttribute('data-i'))); });
     });
+  }
+  function showGal(i) {
+    if (!galList.length) return;
+    galIndex = (i + galList.length) % galList.length;
+    var x = galList[galIndex], box = el('gal-box');
+    if (!box) return;
+    box.innerHTML = '<img src="' + x.src + '" alt="' + esc(x.cap || '') + '"><p>' + esc(x.cap || '') +
+      ' · ' + (galIndex + 1) + ' / ' + galList.length + '</p>' +
+      '<button type="button" class="gal-nav prev" aria-label="上一张">‹</button>' +
+      '<button type="button" class="gal-nav next" aria-label="下一张">›</button>';
+    box.querySelector('.prev').addEventListener('click', function (e) { e.stopPropagation(); showGal(galIndex - 1); });
+    box.querySelector('.next').addEventListener('click', function (e) { e.stopPropagation(); showGal(galIndex + 1); });
+    box.hidden = false;
   }
   function mdText(t) {
     return esc(t).replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>').replace(/\n/g, '</p><p>');
   }
-  var LOCAL_CRIT = [];
   var CRIT_REPLY_TO = '';
-  function critAvatar(who) { return (who || '?').slice(0, 1); }
+  function critAvatar(who) { return isFishName(who) ? '鱼' : (who || '?').slice(0, 1); }
   function critBlock(x, replyTo) {
-    var author = x.who === '大肥鱼';
+    var author = isFishName(x.who);
     return '<article class="cmt' + (replyTo ? ' is-reply' : '') + '">' +
       '<span class="cmt-av">' + esc(critAvatar(x.who)) + '</span>' +
-      '<div class="cmt-main"><p class="cmt-head"><b>' + esc(x.who || '') + '</b>' +
+      '<div class="cmt-main"><p class="cmt-head"><b>' + esc(shownWho(x.who)) + '</b>' +
         (author ? '<span class="cmt-badge">作者</span>' : '') +
-        (replyTo ? '<span class="cmt-to">回复 ' + esc(replyTo) + '</span>' : '') + '</p>' +
+        (replyTo ? '<span class="cmt-to">回复 ' + esc(shownWho(replyTo)) + '</span>' : '') + '</p>' +
         '<div class="cmt-text">' + mdText(x.text || '') + '</div>' +
         '<div class="cmt-foot"><span>' + esc(x.time || '') + ' · ' + esc(String(x.date || '').slice(5)) + '</span>' +
         '<button type="button" class="cmt-reply" data-who="' + esc(x.who || '') + '">回复</button>' +
-        '<button type="button" class="cmt-del" data-id="' + esc(x.id || '') + '">删除</button>' +
+        (isAdmin() ? '<button type="button" class="cmt-del" data-id="' + esc(x.id || '') + '">删除</button>' : '') +
         '<span class="cmt-like" aria-hidden="true">♡</span></div></div></article>';
   }
   function renderCritique() {
     var D = window.__PICKS__ || {};
-    var list = (D.critiques || []).concat(LOCAL_CRIT).slice();
+    var list = (D.critiques || []).slice();
     var orderKey = function (x) {
       var t = String(x.time || ''), hh = parseInt(t.slice(0, 2), 10), mm = parseInt(t.slice(3, 5), 10);
       if (isNaN(hh)) hh = 0; if (isNaN(mm)) mm = 0;
@@ -1635,10 +2018,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
           return critBlock(x, to);
         }).join('') + '</section>';
     }).join('');
-    var toChip = CRIT_REPLY_TO ? '<span class="cmt-to-chip">回复 <b>' + esc(CRIT_REPLY_TO) + '</b><button type="button" id="cr-to-clear">×</button></span>' : '';
+    var toChip = CRIT_REPLY_TO ? '<span class="cmt-to-chip">回复 <b>' + esc(shownWho(CRIT_REPLY_TO)) + '</b><button type="button" id="cr-to-clear">×</button></span>' : '';
+    var hint = isAdmin() ? '署你的名，发出去就写进当天。' : '登录后才能留言 · <a href="#/login">去登录</a>';
     html += '<form class="cr-form" id="cr-form">' + toChip +
       '<textarea id="cr-text" rows="3" placeholder="写点什么…"></textarea>' +
-      '<div class="cr-form-foot"><span class="cr-hint">署你的名，发布后只存在这次打开里。</span><button type="submit" class="mini">发布</button></div></form>';
+      '<div class="cr-form-foot"><span class="cr-hint" id="cr-hint">' + hint + '</span><button type="submit" class="mini"' + (isAdmin() ? '' : ' disabled') + '>发布</button></div></form>';
     el('crit-list').innerHTML = html;
 
     el('crit-list').querySelectorAll('.cmt-reply').forEach(function (b) {
@@ -1652,9 +2036,25 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (clear) clear.addEventListener('click', function () { CRIT_REPLY_TO = ''; renderCritique(); });
     el('crit-list').querySelectorAll('.cmt-del').forEach(function (b) {
       b.addEventListener('click', function () {
+        if (!confirm('删掉这条？删了不会回来。')) return;
+        var pass = getPass();
+        if (!pass) return;
         var id = b.getAttribute('data-id');
-        LOCAL_CRIT = LOCAL_CRIT.filter(function (x) { return x.id !== id; });
-        renderCritique();
+        b.disabled = true;
+        fetch('/api/comment/delete', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ id: id, pass: pass })
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (o) {
+            if (!r.ok || !o.ok) throw new Error(o.error || '删失败');
+          });
+        }).then(syncLive).then(function () {
+          renderCritique();
+        }).catch(function (err) {
+          b.disabled = false;
+          alert('没删掉：' + err.message);
+        });
       });
     });
     el('cr-form').addEventListener('submit', function (e) {
@@ -1662,12 +2062,32 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var ta = el('cr-text');
       var text = (ta.value || '').trim();
       if (!text) return;
-      var d = new Date();
-      LOCAL_CRIT.push({ id: 'local-' + Date.now(), who: 'Kira', reply_to: CRIT_REPLY_TO || '',
-        date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'),
-        time: String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'), text: text });
-      CRIT_REPLY_TO = '';
-      renderCritique();
+      var hintEl = el('cr-hint');
+      var pass = getPass();
+      if (!pass) {
+        if (hintEl) hintEl.innerHTML = '还没登录 · <a href="#/login">去登录</a> 一次，以后就不用再输。';
+        return;
+      }
+      var btn = e.target.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      if (hintEl) hintEl.textContent = '发送中…';
+      fetch('/api/comment', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ pass: pass, who: 'Kira', text: text, reply_to: CRIT_REPLY_TO || '' })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (o) {
+          if (!r.ok || !o.ok) throw new Error(o.error || ('发送失败 ' + r.status));
+        });
+      }).then(function () {
+        CRIT_REPLY_TO = '';
+        return syncLive();
+      }).then(function () {
+        renderCritique();
+      }).catch(function (err) {
+        if (hintEl) hintEl.textContent = '没发出去：' + err.message;
+        if (btn) btn.disabled = false;
+      });
     });
   }
   function openCritique() { renderCritique(); }
@@ -1686,7 +2106,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var parts = h.split('/');
     var name = parts[0] || 'home';
     var arg = parts[1] || '';
-    var views = ['home', 'fish', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique'];
+    var views = ['home', 'fish', 'person', 'records', 'archive', 'editor', 'soon', 'gallery', 'critique', 'login'];
     var show = name;
     if (name === 'add' || name === 'edit') show = 'editor';
     if (name === 'profile') show = 'person';
@@ -1714,6 +2134,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }
     if (show === 'gallery') { openGallery(); }
     if (show === 'critique') { openCritique(); }
+    if (show === 'login') { openLogin(); }
     if (show === 'soon') {
       var s = SOON[arg] || { title: '这一页还在画', lead: '先把外壳定下来，一页一页补。', list: [] };
       el('soon-title').textContent = s.title;
@@ -1807,30 +2228,31 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
   function render() {
     var list = filtered();
-    el('rec-count').textContent = ((window.__PICKS__ && window.__PICKS__.total) || picks.length) + ' 条收藏';
+    el('rec-count').textContent = picks.length + ' 条收藏';
     el('empty').hidden = list.length > 0;
     el('shelf').hidden = state.view !== 'shelf';
     el('shelf-nav').hidden = state.view !== 'shelf';
     el('shelf-nav').classList.toggle('on', state.view === 'shelf');
     el('timeline').hidden = state.view !== 'timeline';
     if (state.view === 'timeline') renderTimeline(list); else renderShelf(list);
-    el('proto').innerHTML = '原型载入 ' + picks.length + ' 条，正式接全量数据。';
+    el('proto').innerHTML = (RAW ? '数据来自线上 records.json · ' : '离线快照 · ') + picks.length + ' 条';
   }
 
   var editingId = '';
   var shotStore = {};
 
   function renderShots(x) {
-    var id = x.id;
-    var arr = (x.shots || []).concat(shotStore[id] || []);
+    var arr = (x.shots || []).slice();
     var box = el('d-shots');
+    if (!box) return;
     if (!arr.length) {
       box.innerHTML = '<p class="shots-empty">还没有截图，点「＋ 加截图」直接选，不用跳页。</p>';
       return;
     }
     box.innerHTML = arr.map(function (src, i) {
-      return '<figure class="shot"><img src="' + src + '" alt="截图 ' + (i + 1) + '"><button type="button" data-i="' + i + '" aria-label="删掉这张">×</button></figure>';
-    }).join('') + '<p class="shots-note">' + arr.length + ' 张 · 新增的只存在这次打开里</p>';
+      return '<figure class="shot"><img src="' + src + '" alt="截图 ' + (i + 1) + '" loading="lazy">' +
+        (isAdmin() ? '<button type="button" data-i="' + i + '" aria-label="删掉这张">×</button>' : '') + '</figure>';
+    }).join('') + '<p class="shots-note">' + arr.length + ' 张</p>';
   }
 
   function openEditor(id) {
@@ -1858,27 +2280,67 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   el('rec-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target;
+    var msg = el('ed-msg');
+    var btn = f.querySelector('button[type="submit"]');
+    function say(kind, text) {
+      if (!msg) return;
+      msg.className = 'form-msg' + (kind ? ' ' + kind : '');
+      msg.textContent = text;
+    }
+    if (!getPass()) { say('err', '还没登录，先去登录页登一次再存。'); return; }
     var obj = {
-      title: f.elements['title'].value.trim() || '没写标题',
-      name_cn: f.elements['name_cn'].value.trim(),
+      title: (f.elements['title'].value || '').trim() || '没写标题',
+      name_cn: (f.elements['name_cn'].value || '').trim(),
       cat: f.elements['cat'].value,
       status: f.elements['status'].value,
       date: f.elements['date'].value,
-      rating: f.elements['rating'].value ? Number(f.elements['rating'].value) : '',
-      bgm_rating: '',
-      desc: f.elements['desc'].value.trim(),
-      pinned: false,
-      cover: 'assets/placeholder.svg'
+      desc: (f.elements['desc'].value || '').trim()
     };
-    if (editingId) {
-      picks.forEach(function (x) { if (String(x.id) === String(editingId)) { Object.assign(x, obj, { id: x.id, cover: x.cover }); } });
-    } else {
-      obj.id = 'local-' + Date.now();
-      picks.unshift(obj);
-    }
-    el('rec-count').textContent = ((window.__PICKS__ && window.__PICKS__.total) || picks.length) + ' 条收藏';
-    location.hash = '#/records';
-    render();
+    var rv = f.elements['rating'].value;
+    if (rv !== '') obj.rating = Number(rv);
+    var coverFile = f.elements['cover'].files && f.elements['cover'].files[0];
+    var shotFiles = Array.prototype.slice.call((f.elements['shots'] && f.elements['shots'].files) || []);
+    if (btn) btn.disabled = true;
+    say('', '存中…');
+    (coverFile ? compressImage(coverFile, 1000, 240 * 1024).then(mediaUpload) : Promise.resolve(''))
+      .then(function (coverUrl) {
+        if (coverUrl) obj.cover = coverUrl;
+        return Promise.all(shotFiles.map(function (file) {
+          return compressImage(file, 1600, 240 * 1024).then(mediaUpload).catch(function () { return ''; });
+        })).then(function (urls) {
+          var ok = urls.filter(Boolean);
+          if (ok.length) obj.shots = ok;
+        });
+      })
+      .then(function () {
+        if (!RAW || !RAW.items) throw new Error('数据没读到，刷新一次再存');
+        if (editingId) {
+          var hit = RAW.items.filter(function (x) { return String(x.id) === String(editingId); })[0];
+          if (!hit) throw new Error('主数据里没找到这条');
+          Object.keys(obj).forEach(function (k) {
+            if (obj[k] !== '' && obj[k] != null) hit[k] = obj[k];
+          });
+          return dataSave(RAW).then(function () { return editingId; });
+        }
+        obj.id = 'u-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 4);
+        if (obj.status === '在玩') obj.play_since = obj.date;
+        RAW.items.unshift(obj);
+        return dataSave(RAW).then(function () { return obj.id; });
+      })
+      .then(function (id) {
+        f.reset();
+        editingId = '';
+        say('ok', '存好了');
+        return syncLive().then(function () {
+          location.hash = '#/records/' + encodeURIComponent(id);
+        });
+      })
+      .catch(function (err) {
+        say('err', '没存上：' + err.message);
+      })
+      .then(function () {
+        if (btn) btn.disabled = false;
+      });
   });
 
   var ARC = { tab: 'daily' };
@@ -2080,10 +2542,16 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var todo = plans.filter(function (x) { return x.status !== '已达成'; }).sort(byDateDesc).slice(0, 3);
       var main =
         chap('01', '现在', 'NOW',
-          '<p class="lead">' + esc(D.kiraToday || '今天还空着。') + '</p>' +
+          '<p class="lead">' + esc((PROF.kira && PROF.kira.text) || '今天还空着。') + '</p>' +
           '<div class="side-block" style="margin-top:6px"><h3>在玩</h3>' + rowsHtml(playing.map(function (x) { return [x.title, KIND[x.cat] || '']; })) + '</div>' +
           '<div class="side-block" style="margin-top:14px"><h3>在看</h3>' + rowsHtml(watching.map(function (x) { return [x.title, KIND[x.cat] || '']; })) + '</div>') +
-        chap('02', '要做的事', 'DOING', rowsHtml(todo.map(function (x) { return [x.title, x.date]; })));
+        chap('02', '要做的事', 'DOING', rowsHtml(todo.map(function (x) { return [x.title, x.date]; }))) +
+        chap('03', '已经做到', 'DONE', rowsHtml(plans.filter(function (x) { return x.status === '已达成'; })
+          .sort(function (a, b) {
+            return String(b.done_date || b.date || '').localeCompare(String(a.done_date || a.date || ''));
+          })
+          .slice(0, 6)
+          .map(function (x) { return [x.title, x.done_date || x.date || '']; })));
       var side =
         sideBlock('时间', '<div class="nums">' +
           '<div><b>' + mins(sum.work) + '</b><span>工作</span></div>' +
@@ -2289,6 +2757,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     function pushMeta(k, v) { if (v) meta.push('<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>'); }
     pushMeta('分类', CAT[x.cat]);
     pushMeta(x.cat === 'game' ? '发售' : '开始', x.air);
+    pushMeta('开始玩', x.play_since);
     pushMeta('中文名', x.name_cn);
     pushMeta('话数', x.eps ? x.eps + ' 话' : '');
     pushMeta('导演/开发', x.director);
@@ -2304,6 +2773,17 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     el('d-note-box').hidden = true;
     el('d-desc').textContent = x.desc || '还没写简介。';
     el('d-edit').href = '#/edit/' + encodeURIComponent(x.id);
+    var fav = el('d-fav');
+    if (fav) {
+      fav.textContent = x.pinned ? '★ 已收藏' : '☆ 收藏';
+      fav.setAttribute('aria-pressed', x.pinned ? 'true' : 'false');
+      fav.hidden = !isAdmin();
+    }
+    var dmsg = el('d-msg');
+    if (dmsg) {
+      dmsg.className = 'form-msg detail-msg';
+      dmsg.innerHTML = isAdmin() ? '' : '登录后才能改评分和评价 · <a href="#/login">去登录</a>';
+    }
     renderShots(x);
   }
   function closeDetail() {
@@ -2362,6 +2842,37 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       b.classList.toggle('half', fill > 0 && fill < 1);
     });
   }
+  function rateSave(payload, x) {
+    var msg = el('d-msg');
+    if (msg) { msg.className = 'form-msg'; msg.textContent = '保存中…'; }
+    var body = Object.assign({ pass: getPass() || RATE_PASS }, payload);
+    return fetch('/api/rate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (o) {
+        if (!r.ok || !o.ok) throw new Error(o.error || ('保存失败 ' + r.status));
+        return o.item;
+      });
+    }).then(function (saved) {
+      if (saved) {
+        Object.assign(x, saved);
+        var hit = RAW && RAW.items && RAW.items.filter(function (y) { return String(y.id) === String(x.id); })[0];
+        if (hit) Object.assign(hit, saved);
+      }
+      openDetail(x.id);
+      var m2 = el('d-msg');
+      if (m2) { m2.className = 'form-msg ok detail-msg'; m2.textContent = '已保存'; }
+    }).catch(function (err) {
+      var m3 = el('d-msg');
+      if (m3) { m3.className = 'form-msg err detail-msg'; m3.textContent = '没保存成功：' + err.message; }
+    });
+  }
+  function needLogin() {
+    var m = el('d-msg');
+    if (m) { m.className = 'form-msg err detail-msg'; m.innerHTML = '登录后才能改 · <a href="#/login">去登录</a>'; }
+  }
   el('d-stars').addEventListener('click', function (e) {
     var b = e.target.closest('.star');
     if (!b) return;
@@ -2370,13 +2881,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var rect = b.getBoundingClientRect();
     var half = (e.clientX - rect.left) < rect.width / 2;
     var v = Number(b.getAttribute('data-i')) - (half ? 0.5 : 0);
-    x.rating = v * 2;
     renderStars(v);
     el('d-score').textContent = v.toFixed(1) + ' / 5';
+    if (!isAdmin()) { needLogin(); return; }
+    rateSave({ id: x.id, rating: v * 2 }, x);
   });
   el('d-note-edit').addEventListener('click', function () {
     var x = currentItem();
     if (!x) return;
+    if (!isAdmin()) { needLogin(); return; }
     el('d-note-input').value = x.note || '';
     el('d-note-box').hidden = false;
     el('d-note-input').focus();
@@ -2385,32 +2898,71 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   el('d-note-save').addEventListener('click', function () {
     var x = currentItem();
     if (!x) return;
-    x.note = el('d-note-input').value.trim();
-    el('d-note').textContent = x.note || '还没写过。';
-    el('d-note-edit').textContent = x.note ? '改一下' : '写一句';
-    el('d-note-box').hidden = true;
+    if (!isAdmin()) { needLogin(); return; }
+    var text = el('d-note-input').value.trim();
+    var rating = Number(x.rating) || 0;
+    var payload = { id: x.id, note: text, rating: (rating || text) ? (rating || null) : null };
+    if (rating || text) {
+      var keep = (x.status === '在玩' || x.status === '在看');
+      payload.rated_on = x.date || '';
+      if (!keep) payload.status = x.cat === 'game' ? '玩过' : '看过';
+    }
+    rateSave(payload, x);
   });
-  el('d-addshot').addEventListener('click', function () { el('d-shot').click(); });
+  el('d-fav').addEventListener('click', function () {
+    var x = currentItem();
+    if (!x) return;
+    if (!isAdmin()) { needLogin(); return; }
+    rateSave({ id: x.id, pinned: !x.pinned }, x);
+  });
+  el('d-addshot').addEventListener('click', function () {
+    if (!isAdmin()) { needLogin(); return; }
+    el('d-shot').click();
+  });
   el('d-shot').addEventListener('change', function (e) {
-    var id = (location.hash.split('/')[2] || '');
-    id = decodeURIComponent(id);
-    var arr = shotStore[id] = shotStore[id] || [];
-    Array.prototype.forEach.call(e.target.files, function (f) {
-      arr.push(URL.createObjectURL(f));
-    });
+    var x = currentItem();
+    if (!x) return;
+    var files = Array.prototype.slice.call(e.target.files || []);
     e.target.value = '';
-    renderShots(id);
+    if (!files.length) return;
+    if (!getPass()) { needLogin(); return; }
+    var msg = el('d-msg');
+    if (msg) { msg.className = 'form-msg'; msg.textContent = '上传 0/' + files.length; }
+    var done = 0;
+    Promise.all(files.map(function (file) {
+      return compressImage(file, 1600, 240 * 1024).then(mediaUpload).then(function (url) {
+        done++;
+        if (msg) msg.textContent = '上传 ' + done + '/' + files.length;
+        return url;
+      }).catch(function () { return ''; });
+    })).then(function (urls) {
+      var ok = urls.filter(Boolean);
+      if (!ok.length) throw new Error('这几张都读不了');
+      var arr = (x.shots || []).concat(ok);
+      return patchItem(x, { shots: arr }).then(function () {
+        renderShots(x);
+        if (msg) { msg.className = 'form-msg ok detail-msg'; msg.textContent = '已保存 ' + ok.length + ' 张'; }
+      });
+    }).catch(function (err) {
+      if (msg) { msg.className = 'form-msg err detail-msg'; msg.textContent = '没存上：' + err.message; }
+    });
   });
   el('d-shots').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-i]');
     if (!b) return;
     var x = currentItem();
     if (!x) return;
+    if (!isAdmin()) { needLogin(); return; }
     var i = Number(b.getAttribute('data-i'));
-    var n = (x.shots || []).length;
-    if (i < n) { x.shots.splice(i, 1); }
-    else { var extra = shotStore[x.id] = shotStore[x.id] || []; extra.splice(i - n, 1); }
+    var arr = (x.shots || []).slice();
+    arr.splice(i, 1);
     renderShots(x);
+    patchItem(x, { shots: arr }).then(function () {
+      renderShots(x);
+    }).catch(function (err) {
+      var m = el('d-msg');
+      if (m) { m.className = 'form-msg err detail-msg'; m.textContent = '没存上：' + err.message; }
+    });
   });
   el('cmt-send').addEventListener('click', function () {
     var t = el('cmt');
@@ -2419,7 +2971,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     t.placeholder = '原型不发出去，正式接登录后的评论。';
   });
   window.addEventListener('hashchange', route);
+  bindLogin();
+  hydrateAuth();
   route();
+  syncLive();
 })();
 </script>
 </body>
