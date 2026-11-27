@@ -1,0 +1,12 @@
+# 让首页和页面永远取最新，避免浏览器/边缘节点先给你看旧版本
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/app.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/data/records.json
+  Cache-Control: no-store
