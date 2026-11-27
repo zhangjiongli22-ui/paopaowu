@@ -1473,7 +1473,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         <div class="detail-grid">
 
           <aside class="detail-left">
-            <figure class="detail-cover"><img id="d-cover" src="" alt=""><em id="d-status">在看</em></figure>
+            <figure class="detail-cover"><img id="d-cover" src="" alt=""></figure>
             <dl class="meta" id="d-meta"></dl>
             <p class="desc" id="d-desc"></p>
           </aside>
@@ -3323,7 +3323,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     if (!x) return;
     el('d-cover').src = x.cover || 'assets/placeholder.svg';
     el('d-cover').alt = x.title + ' 封面';
-    el('d-status').textContent = x.status || CAT[x.cat] || '';
     el('d-title').textContent = x.title;
     var meta = [];
     function pushMeta(k, v) { if (v) meta.push('<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>'); }
