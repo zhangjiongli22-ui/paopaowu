@@ -1276,6 +1276,18 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .cmt-reply,.cmt-del{background:none;border:0;color:var(--dim);font:var(--fs-mono) var(--mono);letter-spacing:.1em;cursor:pointer;min-height:28px}
 .cmt-reply:hover,.cmt-del:hover{color:var(--gold)}
 .cmt-like{color:rgba(255,255,255,.45);font-size:13px}
+
+/* 锐评：不要卡片框，平铺 + 细线分隔 */
+.cmt{display:grid;grid-template-columns:clamp(32px,2.2vw,40px) minmax(0,1fr);gap:clamp(12px,1.2vw,18px);
+  padding:0 0 clamp(16px,1.6vh,22px);border:0;border-bottom:1px solid var(--line-soft);background:none}
+.cmt:last-child{border-bottom:0;padding-bottom:4px}
+.cmt-av{width:100%;height:auto;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--serif);font-size:clamp(13px,.85vw,17px);background:rgba(242,236,225,.05);
+  border:1px solid var(--line);color:var(--paper-2)}
+.cmt-av.fish{border-color:rgba(232,167,189,.55);color:#f3dbe3;background:rgba(232,167,189,.12)}
+.cmt-av.dsh{border-color:rgba(127,211,232,.5);color:#d3eef8;background:rgba(127,211,232,.12)}
+.cmt-av.kira{border-color:rgba(201,168,107,.55);color:#f2dfb8;background:rgba(201,168,107,.12)}
+.tl-mh h3 em{margin-left:10px;font:var(--fs-mono) var(--mono);font-style:normal;letter-spacing:.16em;color:var(--dim-2)}
 </style>
 </head>
 <body>
@@ -2493,8 +2505,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   function critAvatar(who) { return isFishName(who) ? '鱼' : (who || '?').slice(0, 1); }
   function critBlock(x, replyTo) {
     var author = isFishName(x.who);
+    var side = author ? 'fish' : (x.who === 'Kira' ? 'kira' : 'dsh');
     return '<article class="cmt' + (replyTo ? ' is-reply' : '') + '">' +
-      '<span class="cmt-av">' + esc(critAvatar(x.who)) + '</span>' +
+      '<span class="cmt-av ' + side + '">' + esc(critAvatar(x.who)) + '</span>' +
       '<div class="cmt-main"><p class="cmt-head"><b>' + esc(shownWho(x.who)) + '</b>' +
         (author ? '<span class="cmt-badge">作者</span>' : '') +
         (replyTo ? '<span class="cmt-to">回复 ' + esc(shownWho(replyTo)) + '</span>' : '') + '</p>' +
@@ -2800,13 +2813,15 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       el('timeline').innerHTML = '<p class="empty">还没有看完 / 玩完的条目。</p>';
       return;
     }
+    var WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
     var map = {};
-    rows.forEach(function (r) { var k = r.d.slice(0, 7); (map[k] = map[k] || []).push(r); });
+    rows.forEach(function (r) { (map[r.d] = map[r.d] || []).push(r); });
     var keys = Object.keys(map).sort().reverse();
     el('timeline').innerHTML = keys.map(function (k) {
-      var parts = k.split('-');
+      var dt = new Date(k + 'T00:00:00');
+      var head = k.slice(0, 4) + ' 年 ' + Number(k.slice(5, 7)) + ' 月 ' + Number(k.slice(8, 10)) + ' 日';
       return '<section class="tl-month">' +
-        '<header class="tl-mh"><h3>' + parts[0] + ' 年 ' + Number(parts[1]) + ' 月</h3>' +
+        '<header class="tl-mh"><h3>' + head + '<em>' + WD[dt.getDay()] + '</em></h3>' +
         '<span>' + map[k].length + ' 条</span></header>' +
         '<div class="grid">' + map[k].map(function (r) { return cardHtml(r.x); }).join('') + '</div>' +
         '</section>';
