@@ -2910,7 +2910,6 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
         return;
       }
       var groups = [
-        ['未解决', sorted.filter(function (x) { return x.status === '未解决' || x.cat === 'issue'; })],
         ['计划中', sorted.filter(function (x) { return x.status !== '已达成' && x.status !== '未解决' && x.cat !== 'issue'; })],
         ['已达成', sorted.filter(function (x) { return x.status === '已达成'; })]
       ];
@@ -2923,7 +2922,7 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
             return '<div class="plan-row"><time>' + esc(x.date) + '</time><p>' + esc(x.title) + '</p>' +
               '<span class="plan-tag' + cls + '">' + g[0] + '</span></div>';
           }).join('') + '</section>';
-      }).join('') + (groups[0][1].length ? '' : '<p class="plan-empty">没有未解决的项目。</p>');
+      }).join('');
       return;
     }
 
