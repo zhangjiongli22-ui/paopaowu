@@ -1984,12 +1984,11 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   function dataSave(raw) {
     var pass = getPass();
     if (!pass) return Promise.reject(new Error('还没登录'));
-    // 跟旧 add.js 一样：评论（cr-）存在 comments_all 里，读写时由 worker 合并，不塞回主表
+    // 整表提交：条目的评论（cr- 开头）也一起带上。
+    // 以前学旧 add.js 把它们剔掉，结果那些只存在 records.json、没进 comments_all 的锐评会被写没。
     var payload = {
       cats: (raw && raw.cats) || [],
-      items: ((raw && raw.items) || []).filter(function (x) {
-        return String((x && x.id) || '').indexOf('cr-') !== 0;
-      })
+      items: (raw && raw.items) || []
     };
     return fetch('/api/data', {
       method: 'POST',
@@ -3647,6 +3646,13 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       var m = el('d-msg');
       if (m) { m.className = 'form-msg err detail-msg'; m.textContent = '没存上：' + err.message; }
     });
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.backtop') : null;
+    if (!b) return;
+    e.preventDefault();
+    var stage = el('stage');
+    if (stage) stage.scrollTo({ top: 0, behavior: 'smooth' });
   });
   window.addEventListener('hashchange', route);
   bindLogin();
