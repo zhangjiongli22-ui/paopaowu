@@ -1352,10 +1352,9 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .arc-kind.k-other{color:var(--dim)}
 
 /* 每日：次日凌晨那格整体居中 */
-.arc-row{position:relative}
-.arc-row.dawn{padding-top:32px}
-.arc-row time{display:inline-block;line-height:1.4}
-.arc-row .dawn-tag{position:absolute;left:0;top:8px;margin:0}
+.arc-row{align-items:center}
+.arc-row time{display:grid;justify-items:center;gap:3px;line-height:1.3;text-align:center}
+.arc-row .dawn-tag{position:static;margin:0}
 .dawn-tag{display: inline-block}
 /* 文字编辑按钮 */
 .edit-fab{position:fixed;right:20px;bottom:20px;z-index:75;min-height:42px;padding:0 18px;
@@ -2179,7 +2178,17 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
       }).then(function (j) { PROF = j || {}; }),
       fetch('data/chat.json', { cache: 'no-store' }).then(function (r) {
         return r.ok ? r.json() : null;
-      }).then(function (j) { CHAT = j || {}; })
+      }).then(function (j) { CHAT = j || {}; }),
+      fetch('data/gallery.json', { cache: 'no-store' }).then(function (r) {
+        return r.ok ? r.json() : null;
+      }).then(function (j) {
+        if (j && j.gallery && j.gallery.length) {
+          window.__PICKS__ = window.__PICKS__ || {};
+          window.__PICKS__.gallery = j.gallery;
+          galList = j.gallery.slice();
+          if (el('view-gallery') && el('view-gallery').classList.contains('on')) openGallery(true);
+        }
+      })
     ];
     return Promise.all(jobs.map(function (p) { return p.catch(function () {}); })).then(function () {
       hydrateHome();
@@ -3332,6 +3341,13 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     var top = all.filter(function (x) { return x.rating; })
       .sort(function (a, b) { return b.rating - a.rating; }).slice(0, 5);
     var md = function (d) { return String(d || '').slice(5); };
+    var firstDay = '';
+    all.concat(logs).concat(plans).forEach(function (x) {
+      var d = String(x.date || x.done_date || '').slice(0, 10);
+      if (d && (!firstDay || d < firstDay)) firstDay = d;
+    });
+    var pairedDays = 0;
+    if (firstDay) pairedDays = Math.max(1, Math.round((Date.now() - new Date(firstDay + 'T00:00:00').getTime()) / 86400000) + 1);
 
     if (id === 'kira') {
       return pfNums([
@@ -3365,11 +3381,16 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     }
 
     if (id === 'dsh') {
+      var workDays = {}, fixes = 0;
+      logs.forEach(function (x) {
+        if (x.date) workDays[String(x.date).slice(0, 10)] = 1;
+        if (/(修|故障|报错|坏了|卡住|不动|失败|崩|bug|异常)/i.test(x.text || '')) fixes++;
+      });
       return pfNums([
-        [String(all.length), '站内记录'],
-        [String(logs.length), '日志'],
-        [String(todoAll.length), '待办'],
-        ['4.6', '均分']
+        [String(Object.keys(workDays).length), '工作天数'],
+        [String(fixes), '修过的问题'],
+        [String(donePlans.length), '做成的事'],
+        [String(all.length), '站内记录']
       ]) +
       pfSec('怎么做', '三条规矩', pfCols([
         { t: '先看现场', p: '日志、文件、进程，能查的先查一遍，不靠猜。' },
@@ -3398,10 +3419,10 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 
     // 小鱼：把「找到她」并进档案，三段说完
     return pfNums([
-      [String((CHAT.blocks || []).length), '说过的话'],
-      [String(logs.length), '日志'],
-      [String(watching.length), '在看'],
-      [String(now.length), '在玩']
+      [String((CHAT.blocks || []).length), '记忆条目'],
+      [String(pairedDays), '陪伴天数'],
+      [String((D.gallery || []).length), '相册照片'],
+      [String(logs.length), '记下的日志']
     ]) +
     pfSec('她的一天', '按钟点走', pfRows([
       ['白天', '缩在任务栏上，顺便看人敲代码。'],
