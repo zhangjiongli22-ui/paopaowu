@@ -3976,7 +3976,16 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   /* ---------- 页面文字编辑（只存这台电脑） ---------- */
   var TEXT_KEY = 'paopaowu_text_v4';
   var editOn = false;
-  function loadText() { try { return JSON.parse(localStorage.getItem(TEXT_KEY) || '{}'); } catch (e) { return {}; } }
+  var BAKE_TEXTS = {};   /* 固化区：写死在这里的改动，清缓存、换设备都还在 */
+  function loadText() {
+    var o = {};
+    try { o = JSON.parse(localStorage.getItem(TEXT_KEY) || '{}') || {}; } catch (e) { o = {}; }
+    Object.keys(BAKE_TEXTS).forEach(function (k) {
+      if (!o[k]) o[k] = BAKE_TEXTS[k];
+      else if (typeof o[k] === 'object' && typeof BAKE_TEXTS[k] === 'object') o[k].b = BAKE_TEXTS[k].b;
+    });
+    return o;
+  }
   function saveText(o) { try { localStorage.setItem(TEXT_KEY, JSON.stringify(o)); } catch (e) {} }
   var editScope = '';
   var ED_BASE = {};
@@ -4054,11 +4063,19 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
     clearTimeout(applyTimer);
     applyTimer = setTimeout(applyTextEdits, 90);
   }
-  (function purgeStale() {
+  (function migrateOld() {
+    /* 以前升过存储键，旧键里的改动能搬就搬过来，不删任何东西 */
     var m = loadText();
+    var oldKeys = ['paopaowu_text_v3', 'paopaowu_text_v2'];
     var changed = false;
-    Object.keys(m).forEach(function (k) {
-      if (k.indexOf('view-person:') === 0) { delete m[k]; changed = true; }
+    oldKeys.forEach(function (ok) {
+      var o = null;
+      try { o = JSON.parse(localStorage.getItem(ok) || 'null'); } catch (e) { o = null; }
+      if (!o || typeof o !== 'object') return;
+      Object.keys(o).forEach(function (k) {
+        if (k.indexOf('$') === 0) return;
+        if (m[k] == null) { m[k] = o[k]; changed = true; }
+      });
     });
     if (changed) saveText(m);
   })();
