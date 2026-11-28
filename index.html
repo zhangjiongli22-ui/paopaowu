@@ -912,6 +912,14 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
 .gal-box .gal-nav:hover{color:var(--gold);border-color:var(--gold-soft)}
 @media (max-width:480px){.gal-grid{column-count:1}}
 .mini{white-space:nowrap}
+/* 原图开关：截图要不要压缩 */
+.raw-toggle::before{content:"";width:6px;height:6px;border:1px solid currentColor;border-radius:50%;margin-right:8px;opacity:.5}
+.raw-toggle[aria-pressed="true"]{color:var(--gold);border-color:var(--gold-soft);background:var(--gold-ghost)}
+.raw-toggle[aria-pressed="true"]::before{background:var(--gold);border-color:var(--gold);opacity:1}
+.raw-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:44px;cursor:pointer}
+.form-grid .raw-row input[type="checkbox"]{width:18px;height:18px;min-height:0;padding:0;flex:none;accent-color:var(--gold);cursor:pointer}
+.raw-row span{color:var(--paper-2)}
+.raw-row em{font-style:normal;color:var(--dim-2);letter-spacing:.1em}
 .star{flex:none}
 @media (max-width:720px){.form-grid{grid-template-columns:minmax(0,1fr)}.page-head{flex-direction:column;align-items:flex-start;gap:10px}.page-head .count{padding-bottom:0}}
 @media (max-width:860px){.shelf-nav{overflow-x:auto}.shelf-nav a{flex:0 0 auto;padding:0 12px}}
@@ -1821,6 +1829,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
             <div class="detail-actions">
               <a class="mini" id="d-edit" data-admin href="#/edit/">编辑这一条</a>
               <button class="mini" type="button" id="d-addshot" data-admin>＋ 加截图</button>
+              <button class="mini raw-toggle" type="button" id="d-raw" aria-pressed="false" title="开启后截图按原图上传，不压缩；单张上限 15MB">原图</button>
               <button class="mini" type="button" id="d-fav" hidden>☆ 收藏</button>
               <input type="file" id="d-shot" accept="image/*" multiple hidden>
             </div>
@@ -1998,6 +2007,10 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
             <label class="full">简介<textarea name="desc" placeholder="一两句就够，别写成简介搬运。"></textarea></label>
             <label class="full">封面<input name="cover" type="file" accept="image/*"></label>
             <label class="full">截图<input name="shots" type="file" accept="image/*" multiple></label>
+            <label class="full raw-row" for="f-raw">
+              <input type="checkbox" id="f-raw">
+              <span>截图按原图上传</span><em>不压缩，单张上限 15MB；关着就压到 1600px</em>
+            </label>
           </div>
           <p class="form-msg" id="ed-msg"></p>
           <div class="form-foot">
@@ -2271,6 +2284,43 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     });
   }
 
+  var RAW_SHOT_KEY = 'paopaowu_raw_shot';
+  var RAW_SHOT_MAX = 15 * 1024 * 1024;
+  function rawShotOn() {
+    try { return localStorage.getItem(RAW_SHOT_KEY) === '1'; } catch (e) { return false; }
+  }
+  function setRawShot(on) {
+    try { localStorage.setItem(RAW_SHOT_KEY, on ? '1' : '0'); } catch (e) {}
+    var b = document.getElementById('d-raw');
+    if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    var c = document.getElementById('f-raw');
+    if (c) c.checked = !!on;
+  }
+  function initRawShot() {
+    setRawShot(rawShotOn());
+    document.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('#d-raw') : null;
+      if (!b) return;
+      e.preventDefault();
+      setRawShot(!rawShotOn());
+    });
+    document.addEventListener('change', function (e) {
+      if (e.target && e.target.id === 'f-raw') setRawShot(e.target.checked);
+    });
+  }
+  // 截图：开关关着照旧压到 1600px / 240KB；开着原样上传（存 R2，单张上限 15MB）
+  function shotDataUrl(file) {
+    if (!rawShotOn()) return compressImage(file, 1600, 240 * 1024);
+    if (file.size > RAW_SHOT_MAX) {
+      return Promise.reject(new Error('这张 ' + (file.size / 1048576).toFixed(1) + 'MB，超过 15MB，先压一下再传'));
+    }
+    return new Promise(function (res, rej) {
+      var fr = new FileReader();
+      fr.onload = function () { res(String(fr.result || '')); };
+      fr.onerror = function () { rej(new Error('这张读不了')); };
+      fr.readAsDataURL(file);
+    });
+  }
   function compressImage(file, maxSide, maxBytes) {
     return createImageBitmap(file).then(function (bmp) {
       var w = bmp.width, h = bmp.height;
@@ -3287,7 +3337,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
       .then(function (coverUrl) {
         if (coverUrl) obj.cover = coverUrl;
         return Promise.all(shotFiles.map(function (file) {
-          return compressImage(file, 1600, 240 * 1024).then(mediaUpload).catch(function () { return ''; });
+          return shotDataUrl(file).then(mediaUpload).catch(function () { return ''; });
         })).then(function (urls) {
           var ok = urls.filter(Boolean);
           if (ok.length) obj.shots = ok;
@@ -4096,17 +4146,18 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     if (!files.length) return;
     if (!getPass()) { needLogin(); return; }
     var msg = el('d-msg');
-    if (msg) { msg.className = 'form-msg'; msg.textContent = '上传 0/' + files.length; }
-    var done = 0;
+    var rawShot = rawShotOn();
+    if (msg) { msg.className = 'form-msg'; msg.textContent = '上传 0/' + files.length + (rawShot ? '（原图）' : ''); }
+    var done = 0, lastErr = null;
     Promise.all(files.map(function (file) {
-      return compressImage(file, 1600, 240 * 1024).then(mediaUpload).then(function (url) {
+      return shotDataUrl(file).then(mediaUpload).then(function (url) {
         done++;
-        if (msg) msg.textContent = '上传 ' + done + '/' + files.length;
+        if (msg) msg.textContent = '上传 ' + done + '/' + files.length + (rawShot ? '（原图）' : '');
         return url;
-      }).catch(function () { return ''; });
+      }).catch(function (err) { lastErr = err; return ''; });
     })).then(function (urls) {
       var ok = urls.filter(Boolean);
-      if (!ok.length) throw new Error('这几张都读不了');
+      if (!ok.length) throw new Error((lastErr && lastErr.message) ? lastErr.message : '这几张都读不了');
       var arr = (x.shots || []).concat(ok);
       return patchItem(x, { shots: arr }).then(function () {
         renderShots(x);
@@ -4564,6 +4615,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   });
   window.addEventListener('hashchange', function () { if (editOn) setEditMode(false); });
   window.addEventListener('hashchange', route);
+  initRawShot();
   bindLogin();
   hydrateAuth();
   route();
