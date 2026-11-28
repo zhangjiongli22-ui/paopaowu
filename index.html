@@ -1741,6 +1741,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
             <button class="chip" role="tab" data-cat="film" aria-selected="false">电影</button>
             <button class="chip" role="tab" data-cat="game" aria-selected="false">游戏</button>
             <button class="chip" role="tab" data-cat="book" aria-selected="false">读书</button>
+            <button class="chip" role="tab" data-cat="manga" aria-selected="false">漫画</button>
           </div>
           <div class="seg" id="views" role="tablist" aria-label="视图">
             <button class="seg-btn" role="tab" data-view="shelf" aria-selected="true">分类</button>
@@ -1965,6 +1966,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
                 <option value="film">电影</option>
                 <option value="game">游戏</option>
                 <option value="book">读书</option>
+                <option value="manga">漫画</option>
               </select>
             </label>
             <label>状态
@@ -2350,7 +2352,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   }
   function normRecords(raw) {
     var items = (raw && raw.items) || [];
-    var MEDIA = { anime: 1, tv: 1, film: 1, game: 1, book: 1 };
+    var MEDIA = { anime: 1, tv: 1, film: 1, game: 1, book: 1, manga: 1 };
     var ps = [], plans2 = [], logs2 = [], crits = [];
     items.forEach(function (x) {
       if (x.cat === 'log') logs2.push(x);
@@ -2631,8 +2633,8 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     });
   };
 
-  var CAT = { anime: '动画', tv: '剧集', film: '电影', game: '游戏', book: '读书' };
-  var CATNO = { anime: '01', tv: '02', film: '03', game: '04', book: '05' };
+  var CAT = { anime: '动画', tv: '剧集', film: '电影', game: '游戏', book: '读书', manga: '漫画' };
+  var CATNO = { anime: '01', tv: '02', film: '03', game: '04', book: '05', manga: '06' };
 
   var GALLERY = {
     dsh: { title: '机器上的几张', items: [
@@ -3413,7 +3415,7 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
         Math.round((byKind[k] || 0) / maxKind * 100) + '%"></i></span><span class="v">' + mins(byKind[k] || 0) + '</span></div>';
     }).join('');
     var catCount = function (c) { return list.filter(function (x) { return x.cat === c; }).length; };
-    var chips = [['动画', 'anime'], ['剧集', 'tv'], ['电影', 'film'], ['游戏', 'game'], ['读书', 'book']]
+    var chips = [['动画', 'anime'], ['剧集', 'tv'], ['电影', 'film'], ['游戏', 'game'], ['读书', 'book'], ['漫画', 'manga']]
       .map(function (it) { return '<span class="stat-chip"><b>' + catCount(it[1]) + '</b>' + it[0] + '</span>'; }).join('') +
       '<span class="stat-chip"><b>' + plans.length + '</b>计划</span><span class="stat-chip"><b>' + logs.length + '</b>日志</span>';
 
