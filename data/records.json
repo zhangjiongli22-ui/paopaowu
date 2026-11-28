@@ -8691,6 +8691,15 @@
    "kind": "game",
    "text": "游玩《蓝色星原 旅谣》约 30 分钟",
    "minutes": 30
+  },
+  {
+   "id": "log-a03bd749",
+   "cat": "log",
+   "date": "2026-11-26",
+   "time": "18:12",
+   "kind": "game",
+   "text": "游玩《蓝色星原 旅谣》约 402 分钟",
+   "minutes": 402
   }
  ],
  "__ovCount": 20
