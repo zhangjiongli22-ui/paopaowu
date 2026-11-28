@@ -1495,20 +1495,15 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
 .rec-scroll{flex:none;min-height:0;overflow:visible;padding-bottom:24px}
 .arc-scroll,.cr-scroll,.gal-scroll{overflow:visible;max-height:none}
 
-/* 横屏平板：左侧目录 + 整页滚动（左栏吸顶），不要内部滚动区 */
-@media (orientation: landscape) and (min-width: 861px) and (max-width: 1440px){
-  body{overflow:auto}
-  .app{display:grid;grid-template-columns:clamp(212px,16.5vw,320px) minmax(0,1fr);height:auto;min-height:100%}
-  .rail{display:flex;flex-direction:column;align-self:start;position:sticky;top:0;height:100vh;
-    overflow-y:auto;overscroll-behavior:contain}
-  .stage{height:auto;overflow:visible;min-width:0}
-}
-/* 大屏电脑：右侧自己的滚动区保持不变 */
-@media (orientation: landscape) and (min-width: 1441px){
-  .stage{height:100vh;overflow-y:auto;overscroll-behavior:contain}
+/* 宽屏（电脑 + 横屏平板）：左栏目录 + 右侧内容区自己滚动 */
+@media (min-width: 861px){
+  body{overflow:hidden}
+  .app{display:grid;grid-template-columns:clamp(212px,16.5vw,340px) minmax(0,1fr);height:100%}
+  .rail{display:flex;flex-direction:column;height:auto;min-height:0;align-self:stretch}
+  .stage{height:100vh;overflow-y:auto;overscroll-behavior:contain;min-width:0}
 }
 
-/* 手机 / 竖屏平板：整页滚动，顶栏横排 */
+/* 手机 / 竖屏平板：顶栏横排，整页滚动 */
 @media (max-width: 860px), (orientation: portrait) and (max-width: 1024px){
   body{overflow:auto}
   .app{display:block;height:auto;min-height:100%}
