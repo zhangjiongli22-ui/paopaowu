@@ -4215,12 +4215,20 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
       n.setAttribute('data-edit-key', key);
     });
   }
-  var applyTimer = null;
+  var applyBusy = false;
   function scheduleApply() {
     applyAdminVis();
-    if (editOn) return;
-    clearTimeout(applyTimer);
-    applyTimer = setTimeout(applyTextEdits, 90);
+    if (editOn || applyBusy) return;
+    applyBusy = true;
+    try {
+      /* 在 MutationObserver 回调里同步贴：浏览器这一帧还没绘制，看不到旧内容 */
+      applyTextEdits();
+      applyImgOverrides();
+      applyImgPos();
+    } catch (e) {
+    } finally {
+      applyBusy = false;
+    }
   }
   (function migrateOld() {
     /* 以前升过存储键，旧键里的改动能搬就搬过来，不删任何东西 */
