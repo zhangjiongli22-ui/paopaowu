@@ -1515,6 +1515,9 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
 #view-records.on, #view-archive.on{height:auto;min-height:100%;overflow:visible}
 .rec-scroll, .arc-scroll{flex:none;min-height:0;overflow:visible;max-height:none}
 .page{min-height:100%}
+
+/* 切页时先藏住，回填完再显示，杜绝闪回 */
+.view.sw{visibility:hidden}
 </style>
 </head>
 <body>
@@ -2988,6 +2991,8 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     if (name === 'add' || name === 'edit') show = 'editor';
     if (name === 'profile') show = 'person';
     if (views.indexOf(show) < 0) show = 'home';
+    var __target = el('view-' + show);
+    if (__target) __target.classList.add('sw');
     views.forEach(function (v) {
       var node = el('view-' + v);
       if (node) node.classList.toggle('on', v === show);
@@ -2998,6 +3003,11 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     });
     moveRailInd();
     applyAdminVis();
+    (function () {
+      var v = document.querySelector('.view.on');
+      if (!v || !v.classList.contains('sw')) return;
+      v.classList.remove('sw');
+    })();
     /* 同步回填：同一个任务里完成，浏览器不会先画出旧内容 */
     try { applyTextEdits(); } catch (e) {}
     try { applyImgOverrides(); } catch (e) {}
@@ -4558,6 +4568,9 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   hydrateAuth();
   route();
   syncLive();
+  setTimeout(function () {
+    document.querySelectorAll('.view.sw').forEach(function (v) { v.classList.remove('sw'); });
+  }, 260);
   /* 每日轮换壁纸：按天取一张，先预载再换，避免闪 */
   (function () {
     try {
