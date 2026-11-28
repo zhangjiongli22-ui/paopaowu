@@ -1490,6 +1490,20 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
 }
 
 .bg{transition:opacity .7s var(--ease)}
+
+/* 列表页一律整页滚动：内层不再单独出滚动条（平板/小屏尤其明显） */
+.rec-scroll{flex:none;min-height:0;overflow:visible;padding-bottom:24px}
+.arc-scroll,.cr-scroll,.gal-scroll{overflow:visible;max-height:none}
+.view{min-height:0}
+.page{min-height:0}
+@media (min-width:861px){
+  .stage{height:100vh;overflow-y:auto;overscroll-behavior:contain}
+}
+@media (max-width:1366px){
+  .app{display:block;height:auto;min-height:100%}
+  .stage{height:auto;overflow:visible}
+  .rail{align-self:start;height:auto;min-height:0}
+}
 </style>
 </head>
 <body>
