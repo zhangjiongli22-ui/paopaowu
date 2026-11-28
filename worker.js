@@ -60,12 +60,12 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/ping") {
-      return new Response(JSON.stringify({ ok: true, ts: Date.now(), v: "ping-2" }), {
+      return new Response(JSON.stringify({ ok: true, ts: Date.now(), v: "ping-3", media: env.MEDIA ? "r2" : "kv" }), {
         headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
       });
     }
 
-    // 图片：单独存 KV，记录里只放 /img/<uuid>，不占 records.json 的体积
+    // 图片：2026-11-28 起存 R2（binding MEDIA，桶 paopaowu-media）；之前的老图还在 KV，读的时候先 R2 后 KV
     if (url.pathname.startsWith("/img/")) {
       const id = url.pathname.slice("/img/".length);
       if (!MEDIA_ID.test(id)) return new Response("not found", { status: 404 });
@@ -74,6 +74,23 @@ export default {
         const hit = await caches.default.match(key);
         if (hit) return hit;
       } catch (e) {}
+      if (env.MEDIA) {
+        try {
+          const obj = await env.MEDIA.get(id);
+          if (obj) {
+            const r2res = new Response(obj.body, {
+              headers: {
+                "content-type": (obj.httpMetadata && obj.httpMetadata.contentType) || "image/jpeg",
+                "cache-control": "public, max-age=31536000, immutable",
+              },
+            });
+            try {
+              await caches.default.put(key, r2res.clone());
+            } catch (e) {}
+            return r2res;
+          }
+        } catch (e) {}
+      }
       const m = await env.RATINGS.get("media:" + id, "json");
       if (!m || !m.data) return new Response("not found", { status: 404 });
       const res = new Response(bytesFromBase64(m.data), {
@@ -95,10 +112,16 @@ export default {
         const raw = String(body.data || "");
         const m = raw.match(/^data:(image\/[a-z0-9.+-]+);base64,([A-Za-z0-9+/=]+)$/i);
         if (!m) throw new Error("不是图片");
-        if (m[2].length > 12 * 1024 * 1024) throw new Error("图太大");
+        if (m[2].length > 24 * 1024 * 1024) throw new Error("图太大（单张上限约 18MB，先压一下再传）");
         const id = crypto.randomUUID();
-        await env.RATINGS.put("media:" + id, JSON.stringify({ type: m[1], data: m[2], at: Date.now() }));
-        return jsonRes({ ok: true, id, url: "/img/" + id });
+        if (env.MEDIA) {
+          await env.MEDIA.put(id, bytesFromBase64(m[2]), {
+            httpMetadata: { contentType: m[1], cacheControl: "public, max-age=31536000, immutable" },
+          });
+        } else {
+          await env.RATINGS.put("media:" + id, JSON.stringify({ type: m[1], data: m[2], at: Date.now() }));
+        }
+        return jsonRes({ ok: true, id, url: "/img/" + id, store: env.MEDIA ? "r2" : "kv" });
       } catch (e) {
         return jsonRes({ ok: false, error: String(e).slice(0, 140) }, 400);
       }
@@ -110,6 +133,11 @@ export default {
         if ((await shiftPass(body.pass || "")) !== PASS_HASH) return jsonRes({ ok: false, error: "密码不对" }, 403);
         const id = String(body.id || "");
         if (!MEDIA_ID.test(id)) throw new Error("id 不对");
+        if (env.MEDIA) {
+          try {
+            await env.MEDIA.delete(id);
+          } catch (e) {}
+        }
         await env.RATINGS.delete("media:" + id);
         try {
           await caches.default.delete(new Request(url.origin + "/img/" + id));
