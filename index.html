@@ -2660,12 +2660,12 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     kira: {
       name: 'Kira', latin: true, no: '01', role: 'OWNER 01',
       kicker: 'CHARACTER 01 — 只会许愿的普通人',
-      quote: '会，直到你把我电费花光。',
+      quote: '「一个只会许愿的普通人。」',
       sub: 'きら · 闪光的 Kira',
       tags: ['许愿', '拍板', '半夜不睡'],
       img: 'assets/kira.jpg',
       ambient: 'assets/scene.jpg',
-      intro: '屋子是他建的，规矩也是他定的。白天写东西、做东西，晚上打游戏、看片。不会的就许个愿，等鱼去办。',
+      intro: '话短，嘴馋，但是做起事来不含糊。 被夸先否认，再承认。总是护着自己人。',
       where: '在 · 这台电脑前、手机、B 站'
     },
     dsh: {
@@ -2998,7 +2998,10 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
     });
     moveRailInd();
     applyAdminVis();
-    applyImgPos();
+    /* 同步回填：同一个任务里完成，浏览器不会先画出旧内容 */
+    try { applyTextEdits(); } catch (e) {}
+    try { applyImgOverrides(); } catch (e) {}
+    try { applyImgPos(); } catch (e) {}
     scheduleApply();
     if (document.documentElement.classList.contains('booting')) {
       setTimeout(function () { document.documentElement.classList.remove('booting'); }, 0);
