@@ -1510,6 +1510,11 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   .stage{height:auto;overflow:visible}
   .rail{align-self:start;height:auto;min-height:0}
 }
+
+/* 列表页视图放开高度，交给 .stage / body 滚 */
+#view-records.on, #view-archive.on{height:auto;min-height:100%;overflow:visible}
+.rec-scroll, .arc-scroll{flex:none;min-height:0;overflow:visible;max-height:none}
+.page{min-height:100%}
 </style>
 </head>
 <body>
