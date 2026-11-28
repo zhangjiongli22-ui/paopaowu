@@ -1488,6 +1488,8 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   .rec-scroll{overflow:visible;flex:none;min-height:0;padding-bottom:24px}
   .arc-scroll,.cr-scroll,.gal-scroll{overflow:visible;max-height:none}
 }
+
+.bg{transition:opacity .7s var(--ease)}
 </style>
 </head>
 <body>
@@ -4518,6 +4520,29 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   hydrateAuth();
   route();
   syncLive();
+  /* 每日轮换壁纸：按天取一张，先预载再换，避免闪 */
+  (function () {
+    try {
+      var day = Math.floor(Date.now() / 86400000);
+      fetch('data/wallpapers.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          var items = (j && j.items) || [];
+          if (!items.length) return;
+          var src = items[day % items.length];
+          var im = new Image();
+          im.onload = function () {
+            var bg = el('bg');
+            if (bg) { bg.style.opacity = '0'; }
+            document.documentElement.style.setProperty('--page-bg', 'url("' + src + '")');
+            requestAnimationFrame(function () { if (bg) bg.style.opacity = '1'; });
+          };
+          im.src = src;
+        })
+        .catch(function () {});
+    } catch (e) {}
+  })();
+
   (function () {
     var done = false;
     var rel = function () {
