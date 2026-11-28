@@ -8,6 +8,42 @@
  ],
  "items": [
   {
+   "id": "book-a6ba6306",
+   "cat": "book",
+   "title": "白夜行",
+   "name_cn": "白夜行",
+   "status": "看过",
+   "date": "2026-11-28",
+   "time": "10:07",
+   "cover": "assets/covers/book-2394690c.jpg",
+   "desc": "",
+   "finished_on": "2026-11-28"
+  },
+  {
+   "id": "book-0229f4c0",
+   "cat": "book",
+   "title": "象之首",
+   "name_cn": "象首迷宫",
+   "status": "看过",
+   "date": "2026-11-28",
+   "time": "10:07",
+   "cover": "assets/covers/book-448224.jpg",
+   "desc": "",
+   "finished_on": "2026-11-28"
+  },
+  {
+   "id": "book-153c7b34",
+   "cat": "book",
+   "title": "恶意",
+   "name_cn": "恶意",
+   "status": "看过",
+   "date": "2026-11-28",
+   "time": "10:07",
+   "cover": "assets/covers/book-341d0ad2.jpg",
+   "desc": "",
+   "finished_on": "2026-11-28"
+  },
+  {
    "id": "g-1006",
    "cat": "game",
    "title": "蓝色星原 旅谣",
@@ -8709,6 +8745,23 @@
    "kind": "game",
    "text": "游玩《蓝色星原 旅谣》约 105 分钟",
    "minutes": 105
+  },
+  {
+   "id": "game-0b01b1b0",
+   "cat": "game",
+   "title": "火焰纹章 Engage",
+   "name_cn": "火焰之纹章：结合",
+   "status": "在玩",
+   "date": "2026-11-28",
+   "time": "15:19",
+   "platform": "Nintendo Switch",
+   "air": "2023-01-20",
+   "developer": "Intelligent Systems",
+   "bgm_id": 401215,
+   "bgm_rating": 7.3,
+   "cover": "assets/covers/game-0b01b1b0-engage.jpg",
+   "cover_title": "《火焰纹章：结合》封面（Bangumi）",
+   "desc": "「火焰纹章」系列最新作，舞台是由四个王国与一处圣地组成的「艾雷欧斯大陆」。千年前，人们借异界英雄「纹章士」的力量与各国战士并肩作战，封印了邪龙；如今封印渐弱，邪龙复活的征兆开始显现。\r\n\r\n主角是神龙「琉尔」，在邪龙之战后沉睡了千年，醒来已不记得自己是谁。为阻止邪龙复活，与沿途结识的伙伴一同作战——一作策略角色扮演（SRPG）。\r\n\r\n主角能唤醒寄宿在戒指里的纹章士，戴上戒指借用其力量可以提升能力、使出更强的招式；角色与纹章士「Engage（结合）」之后，还能放出强力必杀。"
   }
  ],
  "__ovCount": 20
