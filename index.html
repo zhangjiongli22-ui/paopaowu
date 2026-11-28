@@ -1369,6 +1369,8 @@ figure:hover .ph-act,figure:focus-within .ph-act{opacity:1}
   .windows{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
   .win-art{aspect-ratio:16/10}
   .win-body{padding:10px 16px 16px}
+}
+@media (min-width:601px) and (max-width:1024px){
   .windows .win:nth-child(3){grid-column:1 / -1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto}
   .windows .win:nth-child(3) .win-art{aspect-ratio:auto;height:100%;min-height:220px;margin-bottom:0}
   .windows .win:nth-child(3) .win-body{align-content:center}
@@ -1477,6 +1479,15 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
 .win-art img{inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);
   backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:transform}
 .win-art{background:#070b12}
+
+/* 平板：整页滚动，别把上半部分钉死、只留一条小滚动区 */
+@media (max-width:1024px){
+  .app{display:block;height:auto;min-height:100%}
+  .stage{height:auto;overflow:visible}
+  .rail{align-self:start;height:auto;min-height:0}
+  .rec-scroll{overflow:visible;flex:none;min-height:0;padding-bottom:24px}
+  .arc-scroll,.cr-scroll,.gal-scroll{overflow:visible;max-height:none}
+}
 </style>
 </head>
 <body>
@@ -4087,6 +4098,9 @@ img[data-img="home.feiyu"]{transform:translate(4.0%,-8.999999999999996%) scale(1
   function loadText() {
     var o = {};
     try { o = JSON.parse(localStorage.getItem(TEXT_KEY) || '{}') || {}; } catch (e) { o = {}; }
+    Object.keys(o).forEach(function (k) {
+      if (k.indexOf('view-person:') === 0) delete o[k];   /* 旧键会串页，直接不认 */
+    });
     Object.keys(BAKE_TEXTS).forEach(function (k) {
       var bk = BAKE_TEXTS[k];
       if (!o[k]) { o[k] = bk; return; }
